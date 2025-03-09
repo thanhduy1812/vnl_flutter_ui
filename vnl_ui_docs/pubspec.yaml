@@ -37,7 +37,7 @@ dependencies:
   vnl_common_ui:
     # path: ../vnl_common_ui
     git:
-      url: https://github.com/thanhduy1812/vnl_flutter_ui.git
+      url: https://github.com/vnlook/vnl_flutter_ui.git
       ref: master
       path: vnl_common_ui
   go_router: ^14.2.3

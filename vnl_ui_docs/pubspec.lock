@@ -866,8 +866,8 @@ packages:
     description:
       path: vnl_common_ui
       ref: master
-      resolved-ref: "766432edb703270febe26fef232c40441b65de13"
-      url: "https://github.com/thanhduy1812/vnl_flutter_ui.git"
+      resolved-ref: "087ca69e6366446e5e117e2f0948f76e5e9d66a4"
+      url: "https://github.com/vnlook/vnl_flutter_ui.git"
     source: git
     version: "0.0.1"
   web:
