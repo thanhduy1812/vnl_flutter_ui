@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vnl_common_ui/vnl_ui.dart' as shadcnui;
+import 'package:vnl_common_ui/vnl_ui.dart' as vnlui;
 
 class MaterialExample1 extends StatefulWidget {
   const MaterialExample1({super.key});
@@ -40,15 +40,15 @@ class _MaterialExample1State extends State<MaterialExample1> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            const shadcnui.Gap(64),
-            shadcnui.ShadcnUI(
-                child: shadcnui.Card(
+            const vnlui.Gap(64),
+            vnlui.ShadcnUI(
+                child: vnlui.Card(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text('You can also use shadcn_flutter widgets inside Material widgets'),
-                  const shadcnui.Gap(16),
-                  shadcnui.PrimaryButton(
+                  const vnlui.Gap(16),
+                  vnlui.PrimaryButton(
                     onPressed: () {
                       showDialog(
                         context: context,
@@ -70,17 +70,17 @@ class _MaterialExample1State extends State<MaterialExample1> {
                     },
                     child: const Text('Open Material Dialog'),
                   ),
-                  const shadcnui.Gap(8),
-                  shadcnui.SecondaryButton(
+                  const vnlui.Gap(8),
+                  vnlui.SecondaryButton(
                     onPressed: () {
-                      shadcnui.showDialog(
+                      vnlui.showDialog(
                         context: context,
                         builder: (context) {
-                          return shadcnui.AlertDialog(
+                          return vnlui.AlertDialog(
                             title: const Text('Hello'),
                             content: const Text('This is shadcn_flutter dialog'),
                             actions: [
-                              shadcnui.PrimaryButton(
+                              vnlui.PrimaryButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },

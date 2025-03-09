@@ -122,26 +122,26 @@ class _IntroductionPageState extends State<IntroductionPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('Github: ')
+              // const Text('Github: ')
+              //     .thenButton(
+              //         onPressed: () {
+              //           launchUrlString('https://github.com/sunarya-thito/shadcn_flutter');
+              //         },
+              //         child: const Text('https://github.com/sunarya-thito/shadcn_flutter'))
+              //     .li(),
+              // const Text('pub.dev: ')
+              //     .thenButton(
+              //         onPressed: () {
+              //           launchUrlString('https://pub.dev/packages/shadcn_flutter');
+              //         },
+              //         child: const Text('https://pub.dev/packages/shadcn_flutter'))
+              //     .li(),
+              const Text('Website: ')
                   .thenButton(
                       onPressed: () {
-                        launchUrlString('https://github.com/sunarya-thito/shadcn_flutter');
+                        launchUrlString('https://vnlook.com/');
                       },
-                      child: const Text('https://github.com/sunarya-thito/shadcn_flutter'))
-                  .li(),
-              const Text('pub.dev: ')
-                  .thenButton(
-                      onPressed: () {
-                        launchUrlString('https://pub.dev/packages/shadcn_flutter');
-                      },
-                      child: const Text('https://pub.dev/packages/shadcn_flutter'))
-                  .li(),
-              const Text('Discord: ')
-                  .thenButton(
-                      onPressed: () {
-                        launchUrlString('https://discord.gg/ZzfBPQG4sV');
-                      },
-                      child: const Text('https://discord.gg/ZzfBPQG4sV'))
+                      child: const Text('https://vnlook.com/'))
                   .li(),
             ],
           ).p(),

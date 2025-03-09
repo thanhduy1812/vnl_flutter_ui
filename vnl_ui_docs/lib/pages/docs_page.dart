@@ -146,7 +146,7 @@ class DocsPageState extends State<DocsPage> {
         'Getting Started',
         List.unmodifiable([
           ShadcnDocsPage('Introduction', 'introduction'),
-          ShadcnDocsPage('Installation', 'installation'),
+          // ShadcnDocsPage('Installation', 'installation'),
           ShadcnDocsPage('Theme', 'theme'),
           ShadcnDocsPage('Typography', 'typography'),
           ShadcnDocsPage('Layout', 'layout'),
@@ -734,9 +734,10 @@ class DocsPageState extends State<DocsPage> {
       // ),
       padding: padding,
       title: Basic(
-        leading: FlutterLogo(
-          size: 32 * theme.scaling,
-        ),
+        // leading: FlutterLogo(
+        //   size: 32 * theme.scaling,
+        // ),
+        leading: Image.asset("assets/icon/icon.png", width: 32 * theme.scaling),
         content: Row(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
