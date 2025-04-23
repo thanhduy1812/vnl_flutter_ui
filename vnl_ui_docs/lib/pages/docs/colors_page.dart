@@ -189,7 +189,7 @@ class _ColorsPageState extends State<ColorsPage> {
                         borderRadius: theme.borderRadiusMd,
                         border: shade == 500
                             ? Border.all(
-                                width: 30,
+                                width: 3,
                                 color: theme.colorScheme.foreground,
                                 strokeAlign: BorderSide.strokeAlignOutside)
                             : null,
@@ -209,7 +209,7 @@ class _ColorsPageState extends State<ColorsPage> {
               ),
               const Gap(8),
               Text(
-                '${shade == 500 ? '500 (Base)' : shade}',
+                '${shade == 500 ? '500 Base' : shade}',
                 textAlign: TextAlign.center,
               ).xSmall().mono().muted(),
             ],
