@@ -2,6 +2,33 @@ import 'package:flutter/widgets.dart';
 
 class BootstrapIcons {
   BootstrapIcons._();
+
+  static const IconData icon123 = IconData(63103, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData alarmFill = IconData(61697, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData alarm = IconData(61698, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData alignBottom = IconData(61699, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData alignCenter = IconData(61700, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData alignEnd = IconData(61701, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData alignMiddle = IconData(61702, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData alignStart = IconData(61703, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData alignTop = IconData(61704, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData alt = IconData(61705, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData appIndicator = IconData(61706, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData app = IconData(61707, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData archiveFill = IconData(61708, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData archive = IconData(61709, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData arrow90degDown = IconData(61710, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData arrow90degLeft = IconData(61711, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData arrow90degRight = IconData(61712, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData arrow90degUp = IconData(61713, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData arrowBarDown = IconData(61714, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData arrowBarLeft = IconData(61715, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData arrowBarRight = IconData(61716, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData arrowBarUp = IconData(61717, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData arrowClockwise = IconData(61718, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData arrowCounterclockwise = IconData(61719, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData arrowDownCircleFill = IconData(61720, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
+  static const IconData arrowDownCircle = IconData(61721, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
   static const IconData icon123 = IconData(63103, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
   static const IconData alarmFill = IconData(61697, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');
   static const IconData alarm = IconData(61698, fontFamily: 'BootstrapIcons', fontPackage: 'vnl_common_ui');

@@ -79,7 +79,7 @@ class _ScrollViewInterceptorState extends State<ScrollViewInterceptor> with Sing
         FlutterError.reportError(FlutterErrorDetails(
           exception: e,
           stack: s,
-          library: 'vnl_ui',
+          library: 'vnl_common_ui',
           context: ErrorDescription('while dispatching a pointer scroll event'),
         ));
       }
