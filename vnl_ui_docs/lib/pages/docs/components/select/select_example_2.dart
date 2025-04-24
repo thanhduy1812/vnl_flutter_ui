@@ -33,7 +33,7 @@ class _SelectExample2State extends State<SelectExample2> {
 
   @override
   Widget build(BuildContext context) {
-    return Select<String>(
+    return VNLSelect<String>(
       itemBuilder: (context, item) {
         return Text(item);
       },

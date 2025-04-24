@@ -28,7 +28,7 @@ class _CarouselExample2State extends State<CarouselExample2> {
           Expanded(
             child: SizedBox(
               width: 200,
-              child: Carousel(
+              child: VNLCarousel(
                 transition: const CarouselTransition.sliding(gap: 24),
                 alignment: CarouselAlignment.center,
                 controller: controller,

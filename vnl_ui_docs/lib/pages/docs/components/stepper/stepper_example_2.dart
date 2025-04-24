@@ -13,7 +13,7 @@ class _StepperExample2State extends State<StepperExample2> {
 
   @override
   Widget build(BuildContext context) {
-    return Stepper(
+    return VNLStepper(
       controller: controller,
       direction: Axis.horizontal,
       steps: [

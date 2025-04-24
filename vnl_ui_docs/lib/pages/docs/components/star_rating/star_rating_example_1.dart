@@ -11,7 +11,7 @@ class _StarRatingExample1State extends State<StarRatingExample1> {
   double value = 1.5;
   @override
   Widget build(BuildContext context) {
-    return StarRating(
+    return VNLStarRating(
       starSize: 32,
       value: value,
       onChanged: (value) {

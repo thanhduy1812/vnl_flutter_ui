@@ -60,7 +60,7 @@ class _InnerWidgetState extends State<InnerWidget> {
   @override
   Widget build(BuildContext context) {
     rebuildCount++;
-    return Card(
+    return VNLCard(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -90,7 +90,7 @@ class _LeafWidgetState extends State<LeafWidget> {
   @override
   Widget build(BuildContext context) {
     rebuildCount++;
-    return Card(
+    return VNLCard(
       child: ModelBuilder<int>(
         #secondCounter,
         builder: (context, model, child) {

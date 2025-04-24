@@ -18,7 +18,7 @@ class PopoverExample1 extends StatelessWidget {
             borderRadius: theme.borderRadiusLg,
           ),
           builder: (context) {
-            return SurfaceCard(
+            return ModalContainer(
               child: SizedBox(
                 width: 300,
                 child: Column(
@@ -27,35 +27,35 @@ class PopoverExample1 extends StatelessWidget {
                   children: [
                     const Text('Dimensions').large().medium(),
                     const Text('Set the dimensions for the layer.').muted(),
-                    Form(
+                    VNLForm(
                       controller: FormController(),
                       child: const FormTableLayout(
                         rows: [
                           FormField<double>(
                             key: FormKey(#width),
                             label: Text('Width'),
-                            child: TextField(
+                            child: VNLTextField(
                               initialValue: '100%',
                             ),
                           ),
                           FormField<double>(
                             key: FormKey(#maxWidth),
                             label: Text('Max. Width'),
-                            child: TextField(
+                            child: VNLTextField(
                               initialValue: '300px',
                             ),
                           ),
                           FormField<double>(
                             key: FormKey(#height),
                             label: Text('Height'),
-                            child: TextField(
+                            child: VNLTextField(
                               initialValue: '25px',
                             ),
                           ),
                           FormField<double>(
                             key: FormKey(#maxHeight),
                             label: Text('Max. Height'),
-                            child: TextField(
+                            child: VNLTextField(
                               initialValue: 'none',
                             ),
                           ),

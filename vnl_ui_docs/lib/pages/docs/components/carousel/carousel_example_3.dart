@@ -20,7 +20,7 @@ class _CarouselExample3State extends State<CarouselExample3> {
         children: [
           SizedBox(
             height: 200,
-            child: Carousel(
+            child: VNLCarousel(
               transition: const CarouselTransition.fading(),
               controller: controller,
               draggable: false,

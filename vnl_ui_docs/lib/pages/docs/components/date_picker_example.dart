@@ -27,7 +27,7 @@ class DatePickerExample extends StatelessWidget {
           child: DatePickerExample2(),
         ),
         WidgetUsageExample(
-          title: 'Date Input Example',
+          title: 'Date Range Picker Example 3',
           path: 'lib/pages/docs/components/date_picker/date_picker_example_3.dart',
           child: DatePickerExample3(),
         ),

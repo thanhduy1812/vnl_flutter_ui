@@ -11,7 +11,7 @@ class _PaginationExample1State extends State<PaginationExample1> {
   int page = 1;
   @override
   Widget build(BuildContext context) {
-    return Pagination(
+    return VNLPagination(
       page: page,
       totalPages: 20,
       onPageChanged: (value) {

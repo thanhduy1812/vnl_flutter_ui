@@ -16,7 +16,7 @@ class _ProgressExample1State extends State<ProgressExample1> {
       children: [
         SizedBox(
           width: 400,
-          child: Progress(
+          child: VNLProgress(
             progress: _progress.clamp(0, 100),
             min: 0,
             max: 100,

@@ -5,7 +5,7 @@ class TextAreaExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const TextArea(
+    return const VNLTextArea(
       initialValue: 'Hello, World!',
       expandableHeight: true,
       initialHeight: 300,

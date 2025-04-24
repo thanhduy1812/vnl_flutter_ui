@@ -5,18 +5,10 @@ class FormattedInputExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FormattedInput(
-      trailing: IconButton.text(
-        density: ButtonDensity.compact,
-        icon: const Icon(Icons.calendar_month),
-        onPressed: () {},
-      ),
+    return VNLFormattedInput(
       onChanged: (value) {
-        if (value == null) {
-          return;
-        }
         List<String> parts = [];
-        for (FormattedValuePart part in value.parts) {
+        for (FormattedValuePart part in value.values) {
           parts.add(part.value ?? '');
         }
         print(parts.join('/'));

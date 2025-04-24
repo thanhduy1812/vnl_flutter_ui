@@ -71,7 +71,7 @@ class DocsPage extends StatefulWidget {
   DocsPageState createState() => DocsPageState();
 }
 
-enum ShadcnFeatureTag {
+enum VNLookFeatureTag {
   newFeature,
   updated,
   experimental,
@@ -82,7 +82,7 @@ enum ShadcnFeatureTag {
     ThemeData copy;
     String badgeText;
     switch (this) {
-      case ShadcnFeatureTag.newFeature:
+      case VNLookFeatureTag.newFeature:
         copy = theme.copyWith(
           colorScheme: theme.colorScheme.copyWith(
             primary: Colors.green,
@@ -90,7 +90,7 @@ enum ShadcnFeatureTag {
         );
         badgeText = 'New';
         break;
-      case ShadcnFeatureTag.updated:
+      case VNLookFeatureTag.updated:
         copy = theme.copyWith(
           colorScheme: theme.colorScheme.copyWith(
             primary: Colors.blue,
@@ -98,7 +98,7 @@ enum ShadcnFeatureTag {
         );
         badgeText = 'Updated';
         break;
-      case ShadcnFeatureTag.workInProgress:
+      case VNLookFeatureTag.workInProgress:
         copy = theme.copyWith(
           colorScheme: theme.colorScheme.copyWith(
             primary: Colors.orange,
@@ -106,7 +106,7 @@ enum ShadcnFeatureTag {
         );
         badgeText = 'WIP';
         break;
-      case ShadcnFeatureTag.experimental:
+      case VNLookFeatureTag.experimental:
         copy = theme.copyWith(
           colorScheme: theme.colorScheme.copyWith(
             primary: Colors.purple,
@@ -124,204 +124,206 @@ enum ShadcnFeatureTag {
   }
 }
 
-class ShadcnDocsPage {
+class VNLookDocsPage {
   final String title;
   final String name; // name for go_router
-  final ShadcnFeatureTag? tag;
+  final VNLookFeatureTag? tag;
 
-  ShadcnDocsPage(this.title, this.name, [this.tag]);
+  VNLookDocsPage(this.title, this.name, [this.tag]);
 }
 
-class ShadcnDocsSection {
+class VNLookDocsSection {
   final String title;
-  final List<ShadcnDocsPage> pages;
+  final List<VNLookDocsPage> pages;
   final IconData icon;
 
-  ShadcnDocsSection(this.title, this.pages, [this.icon = Icons.book]);
+  VNLookDocsSection(this.title, this.pages, [this.icon = Icons.book]);
 }
 
 class DocsPageState extends State<DocsPage> {
-  static final List<ShadcnDocsSection> sections = [
-    ShadcnDocsSection(
+  static final List<VNLookDocsSection> sections = [
+    VNLookDocsSection(
         'Getting Started',
         List.unmodifiable([
-          ShadcnDocsPage('Introduction', 'introduction'),
-          // ShadcnDocsPage('Installation', 'installation'),
-          ShadcnDocsPage('Theme', 'theme'),
-          ShadcnDocsPage('Typography', 'typography'),
-          ShadcnDocsPage('Layout', 'layout'),
-          ShadcnDocsPage('Web Preloader', 'web_preloader'),
-          ShadcnDocsPage('Components', 'components'),
-          ShadcnDocsPage('Icons', 'icons'),
-          ShadcnDocsPage('Colors', 'colors'),
-          ShadcnDocsPage('Material/Cupertino', 'external'),
-          ShadcnDocsPage('State Management', 'state'),
+          VNLookDocsPage('Introduction', 'introduction'),
+          VNLookDocsPage('Installation', 'installation'),
+          VNLookDocsPage('Theme', 'theme'),
+          VNLookDocsPage('Typography', 'typography'),
+          VNLookDocsPage('Layout', 'layout'),
+          VNLookDocsPage('Web Preloader', 'web_preloader'),
+          VNLookDocsPage('Components', 'components'),
+          VNLookDocsPage('Icons', 'icons'),
+          VNLookDocsPage('Colors', 'colors'),
+          VNLookDocsPage('Material/Cupertino', 'external'),
+          VNLookDocsPage('State Management', 'state'),
         ]),
         Icons.book),
     // COMPONENTS BEGIN
-    ShadcnDocsSection(
+    VNLookDocsSection(
       'Animation',
       [
-        ShadcnDocsPage('Animated Value', 'animated_value_builder'),
+        VNLookDocsPage('Animated Value', 'animated_value_builder'),
         // https://nyxbui.design/docs/components/number-ticker
-        ShadcnDocsPage('Number Ticker', 'number_ticker'),
-        ShadcnDocsPage('Repeated Animation', 'repeated_animation_builder'),
-        ShadcnDocsPage('Timeline Animation', 'timeline_animation'),
+        VNLookDocsPage('Number Ticker', 'number_ticker'),
+        VNLookDocsPage('Repeated Animation', 'repeated_animation_builder'),
+        VNLookDocsPage('Timeline Animation', 'timeline_animation'),
       ],
     ),
-    ShadcnDocsSection('Control', [
-      ShadcnDocsPage('Button', 'button'),
-      ShadcnDocsPage('Audio Control', 'audio_control', ShadcnFeatureTag.workInProgress),
-      ShadcnDocsPage('Video Control', 'video_control', ShadcnFeatureTag.workInProgress),
+    VNLookDocsSection('Control', [
+      VNLookDocsPage('Button', 'button'),
+      VNLookDocsPage('Audio Control', 'audio_control', VNLookFeatureTag.workInProgress),
+      VNLookDocsPage('Video Control', 'video_control', VNLookFeatureTag.workInProgress),
     ]),
-    ShadcnDocsSection(
+    VNLookDocsSection(
       'Disclosure',
       [
-        ShadcnDocsPage('Accordion', 'accordion'),
-        ShadcnDocsPage('Collapsible', 'collapsible'),
+        VNLookDocsPage('Accordion', 'accordion'),
+        VNLookDocsPage('Collapsible', 'collapsible'),
       ],
     ),
-    ShadcnDocsSection(
+    VNLookDocsSection(
       'Display',
       [
-        ShadcnDocsPage('Avatar', 'avatar'),
-        ShadcnDocsPage('Avatar Group', 'avatar_group'),
-        // ShadcnDocsPage(
-        // 'Data Table', 'data_table', ShadcnFeatureTag.experimental),
+        VNLookDocsPage('Avatar', 'avatar'),
+        VNLookDocsPage('Avatar Group', 'avatar_group'),
+        // VNLookDocsPage(
+        // 'Data Table', 'data_table', VNLookFeatureTag.experimental),
         // TODO also make it zoomable like: https://zoom-chart-demo.vercel.app/
-        // ShadcnDocsPage('Chart', 'chart', ShadcnFeatureTag.workInProgress),
-        ShadcnDocsPage('Code Snippet', 'code_snippet'),
-        ShadcnDocsPage('Table', 'table'),
-        ShadcnDocsPage('Tracker', 'tracker'),
+        // VNLookDocsPage('Chart', 'chart', VNLookFeatureTag.workInProgress),
+        VNLookDocsPage('Code Snippet', 'code_snippet'),
+        VNLookDocsPage('Table', 'table'),
+        VNLookDocsPage('Tracker', 'tracker'),
       ],
     ),
-    ShadcnDocsSection(
+    VNLookDocsSection(
       'Feedback',
       [
-        ShadcnDocsPage('Alert', 'alert'),
-        ShadcnDocsPage('Alert Dialog', 'alert_dialog'),
-        ShadcnDocsPage('Circular Progress', 'circular_progress'),
-        ShadcnDocsPage('Progress', 'progress'),
-        ShadcnDocsPage('Linear Progress', 'linear_progress'),
-        ShadcnDocsPage('Skeleton', 'skeleton'),
-        ShadcnDocsPage('Toast', 'toast'),
+        VNLookDocsPage('Alert', 'alert'),
+        VNLookDocsPage('Alert Dialog', 'alert_dialog'),
+        VNLookDocsPage('Circular Progress', 'circular_progress'),
+        VNLookDocsPage('Progress', 'progress'),
+        VNLookDocsPage('Linear Progress', 'linear_progress'),
+        VNLookDocsPage('Skeleton', 'skeleton'),
+        VNLookDocsPage('Toast', 'toast'),
       ],
     ),
-    ShadcnDocsSection(
+    VNLookDocsSection(
       'Form',
       [
         // mostly same as file input, except it only accepts audio file
         // and adds the ability to play the audio
-        // ShadcnDocsPage(
-        //     'Audio Input', 'audio_input', ShadcnFeatureTag.workInProgress),
+        // VNLookDocsPage(
+        //     'Audio Input', 'audio_input', VNLookFeatureTag.workInProgress),
         // update: NVM, merge the component with file input
-        // ShadcnDocsPage('Button', 'button'),
+        // VNLookDocsPage('Button', 'button'),
         // moved to control
-        ShadcnDocsPage('Checkbox', 'checkbox'),
-        ShadcnDocsPage('Chip Input', 'chip_input'),
-        ShadcnDocsPage('Color Picker', 'color_picker'),
-        ShadcnDocsPage('Date Picker', 'date_picker'),
+        VNLookDocsPage('Checkbox', 'checkbox'),
+        VNLookDocsPage('Chip Input', 'chip_input'),
+        VNLookDocsPage('Color Picker', 'color_picker'),
+        VNLookDocsPage('Date Picker', 'date_picker'),
         // TODO: https://file-vault-delta.vercel.app/ also https://uploader.sadmn.com/
-        ShadcnDocsPage('File Picker', 'file_picker', ShadcnFeatureTag.workInProgress),
-        ShadcnDocsPage('Form', 'form'),
-        ShadcnDocsPage('Formatted Input', 'formatted_input', ShadcnFeatureTag.experimental),
+        VNLookDocsPage('File Picker', 'file_picker', VNLookFeatureTag.workInProgress),
+        VNLookDocsPage('Form', 'form'),
+        VNLookDocsPage('Formatted Input', 'formatted_input', VNLookFeatureTag.experimental),
         // TODO: Image Input (with cropper and rotate tool, upload from file or take photo from camera)
-        // ShadcnDocsPage(
-        // 'Image Input', 'image_input', ShadcnFeatureTag.workInProgress),
+        // VNLookDocsPage(
+        // 'Image Input', 'image_input', VNLookFeatureTag.workInProgress),
         // replaced with File Input
-        ShadcnDocsPage('Text Input', 'input'),
+        VNLookDocsPage('Text Input', 'input'),
         // TODO: same as text input, but has dropdown autocomplete like chip input, the difference is, it does not convert
         // the value into chips
-        ShadcnDocsPage('AutoComplete', 'autocomplete'),
+        VNLookDocsPage('AutoComplete', 'autocomplete'),
         // TODO: same as input, except it only accepts number, and can be increased or decreased
         // using scroll, also has increment and decrement button
         // in between increment and decrement button, theres
         // a divider that can be dragged to increase or decrease the value
-        ShadcnDocsPage('Number Input', 'number_input'),
-        ShadcnDocsPage('Input OTP', 'input_otp'),
-        ShadcnDocsPage('Phone Input', 'phone_input'),
-        ShadcnDocsPage('Radio Group', 'radio_group'),
+        VNLookDocsPage('Number Input', 'number_input'),
+        VNLookDocsPage('Input OTP', 'input_otp'),
+        VNLookDocsPage('Phone Input', 'phone_input'),
+        VNLookDocsPage('Radio Group', 'radio_group'),
         //https://www.radix-ui.com/themes/docs/components/radio-cards
-        ShadcnDocsPage('Radio Card', 'radio_card'),
-        ShadcnDocsPage('Select', 'select'),
-        ShadcnDocsPage('Slider', 'slider'),
-        ShadcnDocsPage('Star Rating', 'star_rating'),
-        ShadcnDocsPage('Switch', 'switch'),
-        ShadcnDocsPage('Text Area', 'text_area'),
-        ShadcnDocsPage('Time Picker', 'time_picker'),
-        ShadcnDocsPage('Toggle', 'toggle'),
-        ShadcnDocsPage('Multi Select', 'multiselect'),
+        VNLookDocsPage('Radio Card', 'radio_card'),
+        VNLookDocsPage('Select', 'select'),
+        VNLookDocsPage('Slider', 'slider'),
+        VNLookDocsPage('Star Rating', 'star_rating'),
+        VNLookDocsPage('Switch', 'switch'),
+        VNLookDocsPage('Text Area', 'text_area'),
+        VNLookDocsPage('Time Picker', 'time_picker'),
+        VNLookDocsPage('Toggle', 'toggle'),
+        VNLookDocsPage('Multi Select', 'multiselect'),
+        VNLookDocsPage('Item Picker', 'item_picker', VNLookFeatureTag.experimental),
       ],
     ),
-    ShadcnDocsSection(
+    VNLookDocsSection(
       'Layout',
       [
-        ShadcnDocsPage('Card', 'card'),
-        ShadcnDocsPage('Carousel', 'carousel'),
-        ShadcnDocsPage('Divider', 'divider'),
-        ShadcnDocsPage('Resizable', 'resizable'),
+        VNLookDocsPage('Card', 'card'),
+        VNLookDocsPage('Carousel', 'carousel'),
+        VNLookDocsPage('Divider', 'divider'),
+        VNLookDocsPage('Resizable', 'resizable'),
         // https://nextjs-shadcn-dnd.vercel.app/ (make it headless)
-        ShadcnDocsPage('Sortable', 'sortable'),
-        ShadcnDocsPage('Steps', 'steps'),
-        ShadcnDocsPage('Stepper', 'stepper'),
-        ShadcnDocsPage('Timeline', 'timeline'),
-        ShadcnDocsPage('Scaffold', 'scaffold'),
-        ShadcnDocsPage('App Bar', 'app_bar'),
-        ShadcnDocsPage('Card Image', 'card_image'),
+        VNLookDocsPage('Sortable', 'sortable'),
+        VNLookDocsPage('Steps', 'steps'),
+        VNLookDocsPage('Stepper', 'stepper'),
+        VNLookDocsPage('Timeline', 'timeline'),
+        VNLookDocsPage('Scaffold', 'scaffold'),
+        VNLookDocsPage('App Bar', 'app_bar'),
+        VNLookDocsPage('Card Image', 'card_image'),
       ],
     ),
-    ShadcnDocsSection(
+    VNLookDocsSection(
       'Navigation',
       [
-        ShadcnDocsPage('Breadcrumb', 'breadcrumb'),
-        ShadcnDocsPage('Menubar', 'menubar'),
-        ShadcnDocsPage('Navigation Menu', 'navigation_menu'),
-        ShadcnDocsPage('Pagination', 'pagination'),
-        ShadcnDocsPage('Tabs', 'tabs'),
-        ShadcnDocsPage('Tab List', 'tab_list'),
+        VNLookDocsPage('Breadcrumb', 'breadcrumb'),
+        VNLookDocsPage('Menubar', 'menubar'),
+        VNLookDocsPage('Navigation Menu', 'navigation_menu'),
+        VNLookDocsPage('Pagination', 'pagination'),
+        VNLookDocsPage('Tabs', 'tabs'),
+        VNLookDocsPage('Tab List', 'tab_list'),
         // TODO: like a chrome tab, complete with its view
-        ShadcnDocsPage('Tab Pane', 'tab_pane', ShadcnFeatureTag.newFeature),
-        ShadcnDocsPage('Tree', 'tree'),
+        VNLookDocsPage('Tab Pane', 'tab_pane'),
+        VNLookDocsPage('Tree', 'tree'),
         // aka Bottom Navigation Bar
-        ShadcnDocsPage('Navigation Bar', 'navigation_bar'),
-        ShadcnDocsPage('Navigation Rail', 'navigation_rail'),
-        ShadcnDocsPage('Expandable Sidebar', 'expandable_sidebar', ShadcnFeatureTag.newFeature),
+        VNLookDocsPage('Navigation Bar', 'navigation_bar'),
+        VNLookDocsPage('Navigation Rail', 'navigation_rail'),
+        VNLookDocsPage('Expandable Sidebar', 'expandable_sidebar'),
         // aka Drawer
-        ShadcnDocsPage('Navigation Sidebar', 'navigation_sidebar'),
-        ShadcnDocsPage('Dot Indicator', 'dot_indicator'),
+        VNLookDocsPage('Navigation Sidebar', 'navigation_sidebar'),
+        VNLookDocsPage('Dot Indicator', 'dot_indicator'),
       ],
     ),
-    ShadcnDocsSection(
+    VNLookDocsSection(
       'Overlay',
       [
-        ShadcnDocsPage('Dialog', 'dialog'),
-        ShadcnDocsPage('Drawer', 'drawer'),
-        ShadcnDocsPage('Hover Card', 'hover_card'),
-        ShadcnDocsPage('Popover', 'popover'),
-        ShadcnDocsPage('Sheet', 'sheet'),
-        ShadcnDocsPage('Tooltip', 'tooltip'),
+        VNLookDocsPage('Dialog', 'dialog'),
+        VNLookDocsPage('Drawer', 'drawer'),
+        VNLookDocsPage('Hover Card', 'hover_card'),
+        VNLookDocsPage('Popover', 'popover'),
+        VNLookDocsPage('Sheet', 'sheet'),
+        VNLookDocsPage('Swiper', 'swiper', VNLookFeatureTag.newFeature),
+        VNLookDocsPage('Tooltip', 'tooltip'),
         // TODO: window as in like a window in desktop
-        ShadcnDocsPage('Window', 'window', ShadcnFeatureTag.experimental),
+        VNLookDocsPage('Window', 'window', VNLookFeatureTag.experimental),
       ],
     ),
 
-    ShadcnDocsSection(
+    VNLookDocsSection(
       'Utility',
       [
-        ShadcnDocsPage('Badge', 'badge'),
-        ShadcnDocsPage('Chip', 'chip'),
-        ShadcnDocsPage('Calendar', 'calendar'),
-        ShadcnDocsPage('Command', 'command'),
-        ShadcnDocsPage('Context Menu', 'context_menu'),
-        ShadcnDocsPage('Dropdown Menu', 'dropdown_menu'),
+        VNLookDocsPage('Badge', 'badge'),
+        VNLookDocsPage('Chip', 'chip'),
+        VNLookDocsPage('Calendar', 'calendar'),
+        VNLookDocsPage('Command', 'command'),
+        VNLookDocsPage('Context Menu', 'context_menu'),
+        VNLookDocsPage('Dropdown Menu', 'dropdown_menu'),
         // TODO https://www.radix-ui.com/themes/docs/components/kbd
-        ShadcnDocsPage('Keyboard Display', 'keyboard_display'),
+        VNLookDocsPage('Keyboard Display', 'keyboard_display'),
         // TODO: Same progress as image input
-        ShadcnDocsPage('Image Tools', 'image_tools', ShadcnFeatureTag.workInProgress),
+        VNLookDocsPage('Image Tools', 'image_tools', VNLookFeatureTag.workInProgress),
         // TODO: Mostly same as refresh indicator, but it does not provide indicator
         // the indicator itself is provided by scaffold
-        ShadcnDocsPage('Refresh Trigger', 'refresh_trigger'),
-        ShadcnDocsPage('Overflow Marquee', 'overflow_marquee'),
+        VNLookDocsPage('Refresh Trigger', 'refresh_trigger'),
+        VNLookDocsPage('Overflow Marquee', 'overflow_marquee'),
       ],
     ),
     // COMPONENTS END
@@ -356,7 +358,7 @@ class DocsPageState extends State<DocsPage> {
       if (componentCategories.contains(section.title)) {
         count += section.pages.length;
         for (var page in section.pages) {
-          if (page.tag == ShadcnFeatureTag.workInProgress) {
+          if (page.tag == VNLookFeatureTag.workInProgress) {
             workInProgress++;
           }
         }
@@ -457,18 +459,18 @@ class DocsPageState extends State<DocsPage> {
             context: context,
             offset: const Offset(0, 8) * Theme.of(context).scaling,
             builder: (context) {
-              return DropdownMenu(
+              return VNLDropdownMenu(
                 children: [
                   MenuButton(
                     child: Text(getReleaseTagName()),
                     onPressed: (context) {
-                      launchUrlString('https://sunarya-thito.github.io/shadcn_flutter/');
+                      launchUrlString('https://sunarya-thito.github.io/vnl_ui/');
                     },
                   ),
                   MenuButton(
                     child: const Text('Experimental'),
                     onPressed: (context) {
-                      launchUrlString('https://sunarya-thito.github.io/shadcn_flutter/experimental/');
+                      launchUrlString('https://sunarya-thito.github.io/vnl_ui/experimental/');
                     },
                   ),
                 ],
@@ -500,7 +502,7 @@ class DocsPageState extends State<DocsPage> {
   @override
   Widget build(BuildContext context) {
     Map<String, OnThisPage> onThisPage = widget.onThisPage;
-    ShadcnDocsPage? page = sections.expand((e) => e.pages).where((e) => e.name == widget.name).firstOrNull;
+    VNLookDocsPage? page = sections.expand((e) => e.pages).where((e) => e.name == widget.name).firstOrNull;
 
     final theme = Theme.of(context);
 
@@ -511,7 +513,7 @@ class DocsPageState extends State<DocsPage> {
         child: Builder(builder: (context) {
           return StageContainer(
             builder: (context, padding) {
-              return Scaffold(
+              return VNLScaffold(
                 headers: [
                   Container(
                     color: theme.colorScheme.background.scaleAlpha(0.3),
@@ -521,7 +523,7 @@ class DocsPageState extends State<DocsPage> {
                       children: [
                         MediaQueryVisibility(
                           minWidth: breakpointWidth,
-                          alternateChild: AppBar(
+                          alternateChild: VNLAppBar(
                             padding: EdgeInsets.symmetric(
                               vertical: 12 * theme.scaling,
                               horizontal: 18 * theme.scaling,
@@ -539,7 +541,7 @@ class DocsPageState extends State<DocsPage> {
                               GhostButton(
                                 density: ButtonDensity.icon,
                                 onPressed: () {
-                                  openInNewTab('https://github.com/sunarya-thito/shadcn_flutter');
+                                  openInNewTab('https://github.com/sunarya-thito/vnl_ui');
                                 },
                                 child: FaIcon(
                                   FontAwesomeIcons.github,
@@ -550,7 +552,7 @@ class DocsPageState extends State<DocsPage> {
                               GhostButton(
                                   density: ButtonDensity.icon,
                                   onPressed: () {
-                                    openInNewTab('https://pub.dev/packages/shadcn_flutter');
+                                    openInNewTab('https://pub.dev/packages/vnl_ui');
                                   },
                                   child: ColorFiltered(
                                     // turns into white
@@ -595,7 +597,7 @@ class DocsPageState extends State<DocsPage> {
                                 theme),
                           ),
                         ),
-                        const Divider(),
+                        const VNLDivider(),
                       ],
                     ),
                   ),
@@ -618,45 +620,55 @@ class DocsPageState extends State<DocsPage> {
                     Expanded(
                       child: FocusTraversalGroup(
                         child: widget.scrollable
-                            ? SingleChildScrollView(
-                                controller: scrollController,
-                                clipBehavior: Clip.none,
-                                padding: !hasOnThisPage
-                                    ? const EdgeInsets.symmetric(
-                                          horizontal: 40,
-                                          vertical: 32,
-                                        ).copyWith(
-                                          right: padding.right + 32,
-                                        ) *
-                                        theme.scaling
-                                    : const EdgeInsets.symmetric(
-                                          horizontal: 40,
-                                          vertical: 32,
-                                        ).copyWith(right: 24) *
-                                        theme.scaling,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  children: [
-                                    Breadcrumb(
-                                      separator: Breadcrumb.arrowSeparator,
+                            ? Builder(builder: (context) {
+                                var mq = MediaQuery.of(context);
+                                return SingleChildScrollView(
+                                  controller: scrollController,
+                                  clipBehavior: Clip.none,
+                                  padding: !hasOnThisPage
+                                      ? const EdgeInsets.symmetric(
+                                                horizontal: 40,
+                                                vertical: 32,
+                                              ).copyWith(
+                                                right: padding.right + 32,
+                                              ) *
+                                              theme.scaling +
+                                          mq.padding
+                                      : const EdgeInsets.symmetric(
+                                                horizontal: 40,
+                                                vertical: 32,
+                                              ).copyWith(right: 24) *
+                                              theme.scaling +
+                                          mq.padding,
+                                  child: MediaQuery(
+                                    data: mq.copyWith(
+                                      padding: EdgeInsets.zero,
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children: [
-                                        TextButton(
-                                          onPressed: () {
-                                            context.goNamed('introduction');
-                                          },
-                                          density: ButtonDensity.compact,
-                                          child: const Text('Docs'),
+                                        VNLBreadcrumb(
+                                          separator: VNLBreadcrumb.arrowSeparator,
+                                          children: [
+                                            TextButton(
+                                              onPressed: () {
+                                                context.goNamed('introduction');
+                                              },
+                                              density: ButtonDensity.compact,
+                                              child: const Text('Docs'),
+                                            ),
+                                            ...widget.navigationItems,
+                                            if (page != null) Text(page.title),
+                                          ],
                                         ),
-                                        ...widget.navigationItems,
-                                        if (page != null) Text(page.title),
+                                        Gap(16 * theme.scaling),
+                                        widget.child,
                                       ],
                                     ),
-                                    Gap(16 * theme.scaling),
-                                    widget.child,
-                                  ],
-                                ),
-                              )
+                                  ),
+                                );
+                              })
                             : Container(
                                 clipBehavior: Clip.none,
                                 padding: !hasOnThisPage
@@ -680,8 +692,8 @@ class DocsPageState extends State<DocsPage> {
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
-                                    Breadcrumb(
-                                      separator: Breadcrumb.arrowSeparator,
+                                    VNLBreadcrumb(
+                                      separator: VNLBreadcrumb.arrowSeparator,
                                       children: [
                                         TextButton(
                                           onPressed: () {
@@ -720,8 +732,8 @@ class DocsPageState extends State<DocsPage> {
     );
   }
 
-  AppBar _buildAppBar(EdgeInsets padding, ThemeData theme) {
-    return AppBar(
+  VNLAppBar _buildAppBar(EdgeInsets padding, ThemeData theme) {
+    return VNLAppBar(
       // padding: (breakpointWidth2 < mediaQuerySize.width
       //         ? padding * theme.scaling
       //         : padding.copyWith(
@@ -813,7 +825,7 @@ class DocsPageState extends State<DocsPage> {
                   ),
                   Gap(18 * scaling),
                   const Text(
-                    'shadcn_flutter',
+                    'vnl_ui',
                   ).medium().mono(),
                   Gap(12 * scaling),
                   buildFlavorTag(),
@@ -842,11 +854,11 @@ class DocsPageState extends State<DocsPage> {
                             for (var page in section.pages)
                               DocsNavigationButton(
                                 onPressed: () {
-                                  if (page.tag == ShadcnFeatureTag.workInProgress) {
+                                  if (page.tag == VNLookFeatureTag.workInProgress) {
                                     showDialog(
                                       context: context,
                                       builder: (context) {
-                                        return AlertDialog(
+                                        return VNLAlertDialog(
                                           title: const Text('Work in Progress'),
                                           content: const Text(
                                               'This page is still under development. Please come back later.'),
@@ -892,7 +904,7 @@ class _DocsSidebar extends StatefulWidget {
     required this.pageName,
   });
 
-  final List<ShadcnDocsSection> sections;
+  final List<VNLookDocsSection> sections;
   final String pageName;
 
   @override
@@ -983,7 +995,7 @@ class _DocsSidebarSection extends StatefulWidget {
     required this.pageName,
   });
 
-  final ShadcnDocsSection section;
+  final VNLookDocsSection section;
   final String pageName;
 
   @override
@@ -1018,7 +1030,7 @@ class _DocsSidebarButton extends StatefulWidget {
     required this.pageName,
   });
 
-  final ShadcnDocsPage page;
+  final VNLookDocsPage page;
   final String pageName;
 
   @override
@@ -1042,11 +1054,11 @@ class _DocsSidebarButtonState extends State<_DocsSidebarButton> {
   }
 
   void _onPressed() {
-    if (widget.page.tag == ShadcnFeatureTag.workInProgress) {
+    if (widget.page.tag == VNLookFeatureTag.workInProgress) {
       showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
+          return VNLAlertDialog(
             title: const Text('Work in Progress'),
             content: const Text('This page is still under development. Please come back later.'),
             actions: [

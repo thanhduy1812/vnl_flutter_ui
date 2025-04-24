@@ -49,7 +49,7 @@ class SidebarButton extends StatelessWidget {
     }
     return Theme(
       data: data,
-      child: Button(
+      child: VNLButton(
         onPressed: onPressed,
         alignment: AlignmentDirectional.centerStart,
         style: ButtonVariance.text.copyWith(
@@ -109,7 +109,7 @@ class _DocsNavigationButtonState extends State<DocsNavigationButton> {
     }
     return Theme(
       data: data,
-      child: Button(
+      child: VNLButton(
         onPressed: widget.onPressed,
         alignment: AlignmentDirectional.centerStart,
         style: ButtonVariance.link.copyWith(

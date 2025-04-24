@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:vnl_common_ui/vnl_ui.dart';
 
 class MultiSelectExample3 extends StatefulWidget {
@@ -31,11 +33,25 @@ class _MultiSelectExample3State extends State<MultiSelectExample3> {
     return name.toLowerCase().contains(searchQuery);
   }
 
+  Color _getColorByChip(String text) {
+    Random random = Random(text.hashCode);
+    double hue = random.nextDouble() * 360;
+    return HSLColor.fromAHSL(1, hue, 0.5, 0.5).toColor();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiSelect<String>(
       itemBuilder: (context, item) {
-        return Text(item);
+        var color = _getColorByChip(item);
+        return MultiSelectChip(
+          value: item,
+          style: const ButtonStyle.primary().withBackgroundColor(
+            color: color,
+            hoverColor: color.withLuminance(0.3),
+          ),
+          child: Text(item),
+        );
       },
       popup: SelectPopup.builder(
         searchPlaceholder: const Text('Search fruit'),
@@ -66,6 +82,9 @@ class _MultiSelectExample3State extends State<MultiSelectExample3> {
                   for (final value in entry.value)
                     SelectItemButton(
                       value: value,
+                      style: const ButtonStyle.ghost().withBackgroundColor(
+                        hoverColor: _getColorByChip(value).withLuminance(0.3),
+                      ),
                       child: Text(value),
                     ),
                 ],

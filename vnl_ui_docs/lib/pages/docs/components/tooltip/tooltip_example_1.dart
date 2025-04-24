@@ -5,7 +5,7 @@ class TooltipExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Tooltip(
+    return VNLTooltip(
       tooltip: const TooltipContainer(
         child: Text('This is a tooltip.'),
       ),

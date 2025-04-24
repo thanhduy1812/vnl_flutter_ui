@@ -15,7 +15,7 @@ class _InputOTPExample1State extends State<InputOTPExample1> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        InputOTP(
+        VNLInputOTP(
           onChanged: (value) {
             setState(() {
               this.value = value.otpToString();

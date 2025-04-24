@@ -7,7 +7,7 @@ class OverflowMarqueeExample1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SizedBox(
       width: 200,
-      child: OverflowMarquee(
+      child: VNLOverflowMarquee(
         child: Text(
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         ),

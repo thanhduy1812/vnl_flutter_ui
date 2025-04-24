@@ -8,28 +8,22 @@ class InputExample2 extends StatefulWidget {
 }
 
 class _InputExample2State extends State<InputExample2> {
-  final TextEditingController _searchController = TextEditingController(text: 'Hello World');
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: _searchController,
-      placeholder: const Text('Search something...'),
-      leading: StatedWidget.builder(
+    return VNLTextField(initialValue: 'Hello World!', placeholder: const Text('Search something...'), features: [
+      InputFeature.leading(StatedWidget.builder(
         builder: (context, states) {
-          if (states.focused) {
+          if (states.hovered) {
             return const Icon(Icons.search);
           } else {
             return const Icon(Icons.search).iconMutedForeground();
           }
         },
+      ), visibility: InputFeatureVisibility.textEmpty),
+      InputFeature.clear(
+        visibility:
+            (InputFeatureVisibility.textNotEmpty & InputFeatureVisibility.focused) | InputFeatureVisibility.hovered,
       ),
-      trailing: IconButton.text(
-        icon: const Icon(Icons.close),
-        density: ButtonDensity.compact,
-        onPressed: () {
-          _searchController.clear();
-        },
-      ),
-    );
+    ]);
   }
 }

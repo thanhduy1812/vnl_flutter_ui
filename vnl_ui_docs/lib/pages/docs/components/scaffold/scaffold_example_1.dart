@@ -18,10 +18,10 @@ class _ScaffoldExample1State extends State<ScaffoldExample1> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return VNLScaffold(
       loadingProgressIndeterminate: true,
       headers: [
-        AppBar(
+        VNLAppBar(
           title: const Text('Counter App'),
           subtitle: const Text('A simple counter app'),
           leading: [
@@ -44,7 +44,7 @@ class _ScaffoldExample1State extends State<ScaffoldExample1> {
             ),
           ],
         ),
-        const Divider(),
+        const VNLDivider(),
       ],
       child: Center(
         child: Column(

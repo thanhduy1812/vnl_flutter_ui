@@ -41,7 +41,7 @@ class _StepperExample6State extends State<StepperExample6> {
           crossAxisAlignment: WrapCrossAlignment.center,
           runAlignment: WrapAlignment.center,
           children: [
-            Toggle(
+            VNLToggle(
               value: direction == Axis.horizontal,
               onChanged: (value) {
                 if (value) {
@@ -56,7 +56,7 @@ class _StepperExample6State extends State<StepperExample6> {
               },
               child: const Text('Horizontal'),
             ),
-            Toggle(
+            VNLToggle(
               value: direction == Axis.vertical,
               onChanged: (value) {
                 if (value) {
@@ -73,7 +73,7 @@ class _StepperExample6State extends State<StepperExample6> {
             ),
             const VerticalDivider().sized(height: 16),
             for (var i = 0; i < _variants.length; i++)
-              Toggle(
+              VNLToggle(
                 value: _currentVariant == i,
                 onChanged: (value) {
                   setState(() {
@@ -84,7 +84,7 @@ class _StepperExample6State extends State<StepperExample6> {
               ),
             const VerticalDivider().sized(height: 16),
             for (var i = 0; i < _stepSize.length; i++)
-              Toggle(
+              VNLToggle(
                 value: _currentStepSize == i,
                 onChanged: (value) {
                   setState(() {
@@ -97,7 +97,7 @@ class _StepperExample6State extends State<StepperExample6> {
             AnimatedBuilder(
               animation: controller,
               builder: (context, child) {
-                return Toggle(
+                return VNLToggle(
                   value: controller.value.stepStates[1] == StepState.failed,
                   onChanged: (value) {
                     if (value) {
@@ -113,7 +113,7 @@ class _StepperExample6State extends State<StepperExample6> {
           ],
         ),
         const Gap(16),
-        Stepper(
+        VNLStepper(
           controller: controller,
           direction: direction,
           size: _stepSize[_currentStepSize],

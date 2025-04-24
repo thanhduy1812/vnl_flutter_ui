@@ -7,7 +7,7 @@ class AppBarExample1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedContainer(
       clipBehavior: Clip.antiAlias,
-      child: AppBar(
+      child: VNLAppBar(
         header: const Text('This is Header'),
         title: const Text('This is Title'),
         subtitle: const Text('This is Subtitle'),

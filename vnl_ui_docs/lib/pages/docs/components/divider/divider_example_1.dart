@@ -11,9 +11,9 @@ class DividerExample1 extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text('Item 1'),
-          Divider(),
+          VNLDivider(),
           Text('Item 2'),
-          Divider(),
+          VNLDivider(),
           Text('Item 3'),
         ],
       ),

@@ -15,13 +15,19 @@ class _NumberInputExample1State extends State<NumberInputExample1> {
       children: [
         SizedBox(
           width: 100,
-          child: NumberInput(
-            initialValue: value,
+          child: VNLTextField(
+            initialValue: value.toString(),
             onChanged: (value) {
               setState(() {
-                this.value = value;
+                this.value = double.tryParse(value) ?? 0;
               });
             },
+            features: const [
+              InputFeature.spinner(),
+            ],
+            submitFormatters: [
+              TextInputFormatters.mathExpression(),
+            ],
           ),
         ),
         gap(8),

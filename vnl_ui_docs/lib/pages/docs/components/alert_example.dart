@@ -23,7 +23,7 @@ class AlertExample extends StatelessWidget {
         WidgetUsageExample(
           title: 'Alert Example with destructive',
           path: 'lib/pages/docs/components/alert/alert_example_2.dart',
-          child: Alert(
+          child: VNLAlert(
             title: Text('Alert title'),
             content: Text('This is alert content.'),
             trailing: Icon(Icons.dangerous_outlined),

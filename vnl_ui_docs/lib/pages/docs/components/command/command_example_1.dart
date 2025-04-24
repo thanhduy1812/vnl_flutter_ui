@@ -5,7 +5,7 @@ class CommandExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Command(
+    return VNLCommand(
       builder: (context, query) async* {
         Map<String, List<String>> items = {
           'Suggestions': ['Calendar', 'Search Emoji', 'Launch'],

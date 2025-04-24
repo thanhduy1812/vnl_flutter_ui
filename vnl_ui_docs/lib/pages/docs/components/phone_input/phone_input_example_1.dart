@@ -14,7 +14,7 @@ class _PhoneInputExample1State extends State<PhoneInputExample1> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        PhoneInput(
+        VNLPhoneInput(
           initialCountry: Country.indonesia,
           onChanged: (value) {
             setState(() {

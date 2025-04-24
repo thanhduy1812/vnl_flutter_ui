@@ -46,7 +46,7 @@ class _InnerWidgetState extends State<InnerWidget> {
   @override
   Widget build(BuildContext context) {
     innerRebuildCount++;
-    return Card(
+    return VNLCard(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

@@ -5,7 +5,7 @@ class StepsExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Steps(
+    return const VNLSteps(
       children: [
         StepItem(
           title: Text('Create a project'),

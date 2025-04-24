@@ -13,7 +13,7 @@ class _DatePickerExample1State extends State<DatePickerExample1> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        DatePicker(
+        VNLDatePicker(
           value: _value,
           mode: PromptMode.popover,
           stateBuilder: (date) {
@@ -29,7 +29,7 @@ class _DatePickerExample1State extends State<DatePickerExample1> {
           },
         ),
         const Gap(16),
-        DatePicker(
+        VNLDatePicker(
           value: _value,
           mode: PromptMode.dialog,
           dialogTitle: const Text('Select Date'),

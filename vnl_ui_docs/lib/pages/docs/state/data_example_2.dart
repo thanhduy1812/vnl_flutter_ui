@@ -67,7 +67,7 @@ class _InnerChildWidgetState extends State<InnerChildWidget> {
   Widget build(BuildContext context) {
     int? childCounterData = Data.maybeFindMessenger(context);
     innerRebuildCount++;
-    return Card(
+    return VNLCard(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -110,7 +110,7 @@ class _MostInnerChildState extends State<MostInnerChildWidget> {
     mostInnerRebuildCount++;
     return ForwardableData(
       data: counter,
-      child: Card(
+      child: VNLCard(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -152,7 +152,7 @@ class _LeafWidgetState extends State<LeafWidget> {
   Widget build(BuildContext context) {
     int parentCounter = Data.of(context);
     leafRebuildCount++;
-    return Card(
+    return VNLCard(
       child: Text('Rebuild: $leafRebuildCount - Leaf Data: $parentCounter'),
     );
   }

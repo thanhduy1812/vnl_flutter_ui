@@ -6,7 +6,7 @@ class NavigationMenuExample1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return NavigationMenu(
+    return VNLNavigationMenu(
       children: [
         NavigationMenuItem(
           content: NavigationMenuContentList(
@@ -14,7 +14,7 @@ class NavigationMenuExample1 extends StatelessWidget {
             children: [
               NavigationMenuContent(
                 title: const Text('Introduction'),
-                content: const Text('Component library for Flutter based on Shadcn/UI design.'),
+                content: const Text('Component library for Flutter based on VNL UI design.'),
                 onPressed: () {},
               ),
               NavigationMenuContent(
@@ -29,7 +29,7 @@ class NavigationMenuExample1 extends StatelessWidget {
               ),
               Clickable(
                 mouseCursor: const WidgetStatePropertyAll(SystemMouseCursors.click),
-                child: Card(
+                child: VNLCard(
                   borderRadius: theme.borderRadiusMd,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -40,9 +40,9 @@ class NavigationMenuExample1 extends StatelessWidget {
                         size: 32,
                       ),
                       const Gap(16),
-                      const Text('shadcn_flutter').mono().semiBold().large(),
+                      const Text('vnl_ui').mono().semiBold().large(),
                       const Gap(8),
-                      const Text('Beautifully designed components from Shadcn/UI is now available for Flutter').muted(),
+                      const Text('Beautifully designed components from VNL UI is now available for Flutter').muted(),
                     ],
                   ),
                 ).constrained(maxWidth: 192),

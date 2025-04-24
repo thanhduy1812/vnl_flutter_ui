@@ -11,7 +11,7 @@ class _RefreshTriggerExample1State extends State<RefreshTriggerExample1> {
   final GlobalKey<RefreshTriggerState> _refreshTriggerKey = GlobalKey<RefreshTriggerState>();
   @override
   Widget build(BuildContext context) {
-    return RefreshTrigger(
+    return VNLRefreshTrigger(
       key: _refreshTriggerKey,
       onRefresh: () async {
         await Future.delayed(const Duration(seconds: 2));

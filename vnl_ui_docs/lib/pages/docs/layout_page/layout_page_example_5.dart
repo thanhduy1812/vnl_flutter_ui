@@ -14,7 +14,7 @@ class LayoutPageExample5 extends StatelessWidget {
           Text('Item 2'),
           Text('Item 3'),
         ],
-      ).separator(const Divider()),
+      ).separator(const VNLDivider()),
     );
   }
 }

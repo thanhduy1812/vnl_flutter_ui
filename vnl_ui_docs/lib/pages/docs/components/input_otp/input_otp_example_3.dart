@@ -5,7 +5,7 @@ class InputOTPExample3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InputOTP(
+    return VNLInputOTP(
       children: [
         InputOTPChild.character(allowDigit: true, obscured: true),
         InputOTPChild.character(allowDigit: true, obscured: true),

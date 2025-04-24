@@ -14,7 +14,7 @@ class _MenubarExample1State extends State<MenubarExample1> {
   int _selectedProfile = 1;
   @override
   Widget build(BuildContext context) {
-    return Menubar(
+    return VNLMenubar(
       children: [
         const MenuButton(
           subMenu: [

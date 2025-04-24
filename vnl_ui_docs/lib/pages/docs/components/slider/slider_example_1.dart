@@ -11,7 +11,7 @@ class _SliderExample1State extends State<SliderExample1> {
   SliderValue value = const SliderValue.single(0.5);
   @override
   Widget build(BuildContext context) {
-    return Slider(
+    return VNLSlider(
       value: value,
       onChanged: (value) {
         setState(() {

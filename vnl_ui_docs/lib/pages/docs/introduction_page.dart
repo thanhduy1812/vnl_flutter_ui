@@ -30,9 +30,9 @@ class _IntroductionPageState extends State<IntroductionPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Text('Introduction').h1(),
-          const Text('Beautifully designed components from Shadcn/UI is now available for Flutter.').lead(),
+          const Text('Beautifully designed components from VNL UI is now available for Flutter.').lead(),
           const Text(
-            'Welcome to shadcn_flutter, a versatile and comprehensive set '
+            'Welcome to vnl_ui, a versatile and comprehensive set '
             'of UI components designed specifically for Flutter desktop and '
             'web applications. With the growing popularity of Flutter for '
             'building cross-platform apps, we recognized the need for a '
@@ -57,9 +57,9 @@ class _IntroductionPageState extends State<IntroductionPage> {
             children: [
               const Text('84 components and growing!').li(),
               const Text(
-                      'Supports both Material and Cupertino Widgets with theme being able to adapt to the current shadcn_flutter theme.')
+                      'Supports both Material and Cupertino Widgets with theme being able to adapt to the current vnl_ui theme.')
                   .li(),
-              const Text('Pre-made themes from Shadcn/UI.').li(),
+              const Text('Pre-made themes from VNL UI.').li(),
               const Text('Supports mobile, web, and desktop platforms.').li(),
               const Text('Supports middle drag scrolling.').li(),
               const Text('Various widget extensions for typography purposes.').li(),
@@ -71,14 +71,14 @@ class _IntroductionPageState extends State<IntroductionPage> {
                   'Please be cautious when using this package in production.')
               .p(),
           const Text(
-            'This package is not affiliated with Shadcn/UI. This package is a community-driven project.',
+            'This package is not affiliated with VNL UI. This package is a community-driven project.',
           ).p(),
           const Text('Frequently Asked Questions').h2().anchored(faqKey),
           Accordion(
             items: [
               const AccordionItem(
                 trigger: AccordionTrigger(child: Text('Does this support GoRouter?')),
-                content: Text('Yes, it does. You can use GoRouter with shadcn_flutter. '),
+                content: Text('Yes, it does. You can use GoRouter with vnl_ui. '),
               ),
               const AccordionItem(
                 trigger: AccordionTrigger(
@@ -101,10 +101,10 @@ class _IntroductionPageState extends State<IntroductionPage> {
                   child: Text('Can I configure which style i would like to use? (Default/New York)'),
                 ),
                 content: const Text('Unfortunately you can\'t. This package only supports New York style. '
-                        'But if you wish to have default style of Shadcn/UI, i would recommend ')
+                        'But if you wish to have default style of VNL UI, i would recommend ')
                     .thenButton(
                         onPressed: () {
-                          launchUrlString('https://github.com/nank1ro/flutter-shadcn-ui');
+                          launchUrlString('https://github.com/nank1ro/flutter-vnl-ui');
                         },
                         child: const Text('this package'))
                     .thenText(' by ')
@@ -122,26 +122,26 @@ class _IntroductionPageState extends State<IntroductionPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              // const Text('Github: ')
-              //     .thenButton(
-              //         onPressed: () {
-              //           launchUrlString('https://github.com/sunarya-thito/shadcn_flutter');
-              //         },
-              //         child: const Text('https://github.com/sunarya-thito/shadcn_flutter'))
-              //     .li(),
-              // const Text('pub.dev: ')
-              //     .thenButton(
-              //         onPressed: () {
-              //           launchUrlString('https://pub.dev/packages/shadcn_flutter');
-              //         },
-              //         child: const Text('https://pub.dev/packages/shadcn_flutter'))
-              //     .li(),
-              const Text('Website: ')
+              const Text('Github: ')
                   .thenButton(
                       onPressed: () {
-                        launchUrlString('https://vnlook.com/');
+                        launchUrlString('https://github.com/sunarya-thito/vnl_ui');
                       },
-                      child: const Text('https://vnlook.com/'))
+                      child: const Text('https://github.com/sunarya-thito/vnl_ui'))
+                  .li(),
+              const Text('pub.dev: ')
+                  .thenButton(
+                      onPressed: () {
+                        launchUrlString('https://pub.dev/packages/vnl_ui');
+                      },
+                      child: const Text('https://pub.dev/packages/vnl_ui'))
+                  .li(),
+              const Text('Discord: ')
+                  .thenButton(
+                      onPressed: () {
+                        launchUrlString('https://discord.gg/ZzfBPQG4sV');
+                      },
+                      child: const Text('https://discord.gg/ZzfBPQG4sV'))
                   .li(),
             ],
           ).p(),

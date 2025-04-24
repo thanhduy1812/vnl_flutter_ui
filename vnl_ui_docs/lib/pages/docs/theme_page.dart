@@ -131,7 +131,7 @@ class _ThemePageState extends State<ThemePage> {
               Expanded(child: Text('You can customize how rounded your app looks by changing the radius.')),
             ],
           ).p(),
-          Slider(
+          VNLSlider(
             value: SliderValue.single(radius),
             onChanged: (value) {
               setState(() {
@@ -149,11 +149,10 @@ class _ThemePageState extends State<ThemePage> {
           const Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                  child: Text('You can customize the scale of shadcn_flutter components by changing the scaling.')),
+              Expanded(child: Text('You can customize the scale of vnl_ui components by changing the scaling.')),
             ],
           ).p(),
-          Slider(
+          VNLSlider(
             value: SliderValue.single(scaling),
             onChanged: (value) {
               setState(() {
@@ -168,9 +167,9 @@ class _ThemePageState extends State<ThemePage> {
             divisions: 20,
           ).p(),
           const Gap(16),
-          const Alert(
+          const VNLAlert(
             leading: Icon(RadixIcons.infoCircled),
-            content: Text('This does not scale the entire app. Only shadcn_flutter components are affected.'),
+            content: Text('This does not scale the entire app. Only vnl_ui components are affected.'),
           ),
           const Text('Surface opacity').h2().anchored(surfaceOpacityKey),
           const Row(
@@ -179,7 +178,7 @@ class _ThemePageState extends State<ThemePage> {
               Expanded(child: Text('You can customize the opacity of the surface by changing the surface opacity.')),
             ],
           ).p(),
-          Slider(
+          VNLSlider(
             value: SliderValue.single(surfaceOpacity),
             onChanged: (value) {
               setState(() {
@@ -200,7 +199,7 @@ class _ThemePageState extends State<ThemePage> {
               Expanded(child: Text('You can customize the blur of the surface by changing the surface blur.')),
             ],
           ).p(),
-          Slider(
+          VNLSlider(
             value: SliderValue.single(surfaceBlur),
             onChanged: (value) {
               setState(() {
@@ -228,7 +227,7 @@ class _ThemePageState extends State<ThemePage> {
 
   String buildCustomCode() {
     bool isDark = colorScheme.background.computeLuminance() < 0.5;
-    String buffer = 'ShadcnApp(';
+    String buffer = 'VNLookApp(';
     buffer += '\n...';
     buffer += '\n\ttheme: ThemeData(';
     buffer += '\n\t\tcolorScheme: ColorScheme(';
@@ -257,7 +256,7 @@ class _ThemePageState extends State<ThemePage> {
   String buildPremadeCode() {
     // return 'ColorSchemes.${nameFromColorScheme(colorScheme)}()';
     String name = nameFromColorScheme(colorScheme)!;
-    String buffer = 'ShadcnApp(';
+    String buffer = 'VNLookApp(';
     buffer += '\n...';
     buffer += '\n\ttheme: ThemeData(';
     buffer += '\n\t\tcolorScheme: ColorSchemes.$name(),';

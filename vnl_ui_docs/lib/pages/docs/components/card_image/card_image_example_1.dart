@@ -22,12 +22,12 @@ class CardImageExample1 extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               for (int i = 0; i < 10; i++)
-                CardImage(
+                VNLCardImage(
                   onPressed: () {
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return AlertDialog(
+                        return VNLAlertDialog(
                           title: const Text('Card Image'),
                           content: const Text('You clicked on a card image.'),
                           actions: [

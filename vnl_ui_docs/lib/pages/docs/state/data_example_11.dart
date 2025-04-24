@@ -64,7 +64,7 @@ class _InnerWidgetState extends State<InnerWidget> {
     // if you're using var, you must specify the type of the model
     var firstCounter = Model.of<int>(context, #firstCounter);
     rebuildCount++;
-    return Card(
+    return VNLCard(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -91,7 +91,7 @@ class _LeafWidgetState extends State<LeafWidget> {
     // typed-variable doesn't need to specify the type of the model
     int secondCounter = Model.of(context, #secondCounter);
     rebuildCount++;
-    return Card(
+    return VNLCard(
       child: Text('Second Counter: $secondCounter (Rebuild Count: $rebuildCount)'),
     );
   }

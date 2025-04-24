@@ -14,7 +14,7 @@ class _TabsExample1State extends State<TabsExample1> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Tabs(
+        VNLTabs(
           index: index,
           children: const [
             TabItem(child: Text('Tab 1')),

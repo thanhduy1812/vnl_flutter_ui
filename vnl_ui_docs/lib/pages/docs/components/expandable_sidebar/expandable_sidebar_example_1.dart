@@ -37,7 +37,7 @@ class _ExpandableSidebarExample1State extends State<ExpandableSidebarExample1> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          NavigationRail(
+          VNLNavigationRail(
             backgroundColor: theme.colorScheme.card,
             labelType: NavigationLabelType.expanded,
             labelPosition: NavigationLabelPosition.end,

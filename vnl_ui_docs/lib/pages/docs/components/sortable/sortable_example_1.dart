@@ -37,7 +37,7 @@ class _SortableExample1State extends State<SortableExample1> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-              child: Card(
+              child: VNLCard(
                 child: SortableDropFallback<String>(
                   onAccept: (value) {
                     setState(() {
@@ -72,7 +72,7 @@ class _SortableExample1State extends State<SortableExample1> {
             ),
             gap(12),
             Expanded(
-              child: Card(
+              child: VNLCard(
                 child: SortableDropFallback<String>(
                   onAccept: (value) {
                     setState(() {

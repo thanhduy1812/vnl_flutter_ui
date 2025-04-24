@@ -22,7 +22,7 @@ class DataExample6State extends State<DataExample6> {
           children: [
             Text('Current Value: $counter - Rebuild Count: $rebuildCount'),
             const Gap(24),
-            Toggle(
+            VNLToggle(
               value: toggle,
               onChanged: (value) {
                 setState(() {
@@ -73,7 +73,7 @@ class _InnerWidgetState extends State<InnerWidget> {
   Widget build(BuildContext context) {
     final counter = Data.of<int>(context);
     innerRebuildCount++;
-    return Card(
+    return VNLCard(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [Text('Data: $counter - InnerWidget Rebuild Count: $innerRebuildCount'), const Gap(12), widget.child],
@@ -95,7 +95,7 @@ class _MostInnerWidgetState extends State<MostInnerWidget> {
   Widget build(BuildContext context) {
     final toggle = Data.of<bool>(context);
     mostInnerRebuildCount++;
-    return Card(
+    return VNLCard(
       child: Text('Data: $toggle - MostInnerWidget Rebuild Count: $mostInnerRebuildCount'),
     );
   }

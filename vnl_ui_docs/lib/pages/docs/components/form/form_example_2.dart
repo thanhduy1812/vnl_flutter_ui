@@ -17,12 +17,12 @@ class _FormExample2State extends State<FormExample2> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 480,
-      child: Form(
+      child: VNLForm(
         onSubmit: (context, values) {
           showDialog(
             context: context,
             builder: (context) {
-              return AlertDialog(
+              return VNLAlertDialog(
                 title: const Text('Form Values'),
                 content: Text(values.toString()),
                 actions: [
@@ -48,14 +48,14 @@ class _FormExample2State extends State<FormExample2> {
                   hint: const Text('This is your public display name'),
                   validator: const LengthValidator(min: 4),
                   showErrors: const {FormValidationMode.changed, FormValidationMode.submitted},
-                  child: const TextField(),
+                  child: const VNLTextField(),
                 ),
                 FormField(
                   key: _passwordKey,
                   label: const Text('Password'),
                   validator: const LengthValidator(min: 8),
                   showErrors: const {FormValidationMode.changed, FormValidationMode.submitted},
-                  child: const TextField(
+                  child: const VNLTextField(
                     obscureText: true,
                   ),
                 ),
@@ -64,7 +64,7 @@ class _FormExample2State extends State<FormExample2> {
                   label: const Text('Confirm Password'),
                   validator: CompareWith.equal(_passwordKey, message: 'Passwords do not match'),
                   showErrors: const {FormValidationMode.changed, FormValidationMode.submitted},
-                  child: const TextField(
+                  child: const VNLTextField(
                     obscureText: true,
                   ),
                 ),
@@ -76,7 +76,7 @@ class _FormExample2State extends State<FormExample2> {
                   showErrors: const {FormValidationMode.changed, FormValidationMode.submitted},
                   child: Align(
                     alignment: AlignmentDirectional.centerEnd,
-                    child: Checkbox(
+                    child: VNLCheckbox(
                         state: state,
                         onChanged: (value) {
                           setState(() {

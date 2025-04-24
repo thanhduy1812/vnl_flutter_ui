@@ -11,7 +11,7 @@ class _DotIndicatorExample1State extends State<DotIndicatorExample1> {
   int _index = 0;
   @override
   Widget build(BuildContext context) {
-    return DotIndicator(
+    return VNLDotIndicator(
         index: _index,
         length: 5,
         onChanged: (index) {

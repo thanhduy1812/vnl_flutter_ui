@@ -31,7 +31,7 @@ class _WidgetUsageExampleState extends State<WidgetUsageExample> {
       children: [
         if (widget.title != null) Text(widget.title!).h2(),
         if (widget.title != null) const Gap(12),
-        TabList(
+        VNLTabList(
           index: index,
           onChanged: (value) {
             setState(() {

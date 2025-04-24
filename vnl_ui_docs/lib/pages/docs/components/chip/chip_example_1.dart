@@ -9,14 +9,14 @@ class ChipExample1 extends StatelessWidget {
       spacing: 8,
       runSpacing: 8,
       children: [
-        Chip(
+        VNLChip(
           trailing: ChipButton(
             onPressed: () {},
             child: const Icon(Icons.close),
           ),
           child: const Text('Apple'),
         ),
-        Chip(
+        VNLChip(
           style: const ButtonStyle.primary(),
           trailing: ChipButton(
             onPressed: () {},
@@ -24,7 +24,7 @@ class ChipExample1 extends StatelessWidget {
           ),
           child: const Text('Banana'),
         ),
-        Chip(
+        VNLChip(
           style: const ButtonStyle.outline(),
           trailing: ChipButton(
             onPressed: () {},
@@ -32,7 +32,7 @@ class ChipExample1 extends StatelessWidget {
           ),
           child: const Text('Cherry'),
         ),
-        Chip(
+        VNLChip(
           style: const ButtonStyle.ghost(),
           trailing: ChipButton(
             onPressed: () {},
@@ -40,7 +40,7 @@ class ChipExample1 extends StatelessWidget {
           ),
           child: const Text('Durian'),
         ),
-        Chip(
+        VNLChip(
           style: const ButtonStyle.destructive(),
           trailing: ChipButton(
             onPressed: () {},

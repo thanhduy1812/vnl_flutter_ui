@@ -25,7 +25,7 @@ class _NumberTickerExample1State extends State<NumberTickerExample1> {
           },
         ),
         const Gap(24),
-        TextField(
+        VNLTextField(
           initialValue: _number.toString(),
           controller: _controller,
           onEditingComplete: () {

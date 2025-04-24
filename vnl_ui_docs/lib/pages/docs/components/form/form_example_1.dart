@@ -17,12 +17,12 @@ class _FormExample1State extends State<FormExample1> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 480,
-      child: Form(
+      child: VNLForm(
         onSubmit: (context, values) {
           showDialog(
             context: context,
             builder: (context) {
-              return AlertDialog(
+              return VNLAlertDialog(
                 title: const Text('Form Values'),
                 content: Text(jsonEncode(values.map(
                   (key, value) {
@@ -50,7 +50,7 @@ class _FormExample1State extends State<FormExample1> {
                   label: const Text('Username'),
                   hint: const Text('This is your public display name'),
                   validator: const LengthValidator(min: 4),
-                  child: const TextField(
+                  child: const VNLTextField(
                     initialValue: 'sunarya-thito',
                   ),
                 ),
@@ -58,7 +58,7 @@ class _FormExample1State extends State<FormExample1> {
                   key: _passwordKey,
                   label: const Text('Password'),
                   validator: const LengthValidator(min: 8),
-                  child: const TextField(
+                  child: const VNLTextField(
                     obscureText: true,
                   ),
                 ),
@@ -66,7 +66,7 @@ class _FormExample1State extends State<FormExample1> {
                   key: _confirmPasswordKey,
                   label: const Text('Confirm Password'),
                   validator: CompareWith.equal(_passwordKey, message: 'Passwords do not match'),
-                  child: const TextField(
+                  child: const VNLTextField(
                     obscureText: true,
                   ),
                 ),

@@ -5,8 +5,8 @@ class BreadcrumbExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Breadcrumb(
-      separator: Breadcrumb.arrowSeparator,
+    return VNLBreadcrumb(
+      separator: VNLBreadcrumb.arrowSeparator,
       children: [
         TextButton(
           onPressed: () {},

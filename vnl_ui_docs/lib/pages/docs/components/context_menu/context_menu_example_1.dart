@@ -15,7 +15,7 @@ class _ContextMenuExample1State extends State<ContextMenuExample1> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return ContextMenu(
+    return VNLContextMenu(
         items: [
           const MenuButton(
             trailing: MenuShortcut(

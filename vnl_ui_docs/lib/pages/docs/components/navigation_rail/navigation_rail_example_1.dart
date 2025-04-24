@@ -27,11 +27,11 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return VNLScaffold(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          NavigationRail(
+          VNLNavigationRail(
             alignment: alignment,
             labelType: labelType,
             index: selected,
@@ -62,7 +62,7 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
             child: Container(
               color: Colors.primaries[Colors.primaries.length - selected - 1],
               padding: const EdgeInsets.all(24),
-              child: Card(
+              child: VNLCard(
                 child: Wrap(
                   alignment: WrapAlignment.center,
                   runAlignment: WrapAlignment.center,
@@ -70,7 +70,7 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                   runSpacing: 8,
                   spacing: 8,
                   children: [
-                    Select<NavigationRailAlignment>(
+                    VNLSelect<NavigationRailAlignment>(
                       value: alignment,
                       itemBuilder: (BuildContext context, NavigationRailAlignment item) {
                         return Text(item.name);
@@ -92,7 +92,7 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                           ),
                       ])),
                     ),
-                    Select<NavigationLabelType>(
+                    VNLSelect<NavigationLabelType>(
                       value: labelType,
                       itemBuilder: (BuildContext context, NavigationLabelType item) {
                         return Text(item.name);
@@ -117,7 +117,7 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                         ),
                       ),
                     ),
-                    Select<NavigationLabelPosition>(
+                    VNLSelect<NavigationLabelPosition>(
                       value: labelPosition,
                       itemBuilder: (BuildContext context, NavigationLabelPosition item) {
                         return Text(item.name);
@@ -141,7 +141,7 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                         ),
                       ),
                     ),
-                    Checkbox(
+                    VNLCheckbox(
                       state: customButtonStyle ? CheckboxState.checked : CheckboxState.unchecked,
                       onChanged: (value) {
                         setState(() {
@@ -150,7 +150,7 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                       },
                       trailing: const Text('Custom Button Style'),
                     ),
-                    Checkbox(
+                    VNLCheckbox(
                       state: expanded ? CheckboxState.checked : CheckboxState.unchecked,
                       onChanged: (value) {
                         setState(() {

@@ -15,7 +15,7 @@ class _ToggleExample2State extends State<ToggleExample2> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Toggle(
+        VNLToggle(
           value: flag == 0,
           style: const ButtonStyle.outline(density: ButtonDensity.compact),
           onChanged: (v) {
@@ -25,7 +25,7 @@ class _ToggleExample2State extends State<ToggleExample2> {
           },
           child: const Text('B').bold().center(),
         ).sized(width: 40, height: 40),
-        Toggle(
+        VNLToggle(
           value: flag == 1,
           style: const ButtonStyle.outline(density: ButtonDensity.compact),
           onChanged: (v) {
@@ -35,7 +35,7 @@ class _ToggleExample2State extends State<ToggleExample2> {
           },
           child: const Text('I').italic().center(),
         ).sized(width: 40, height: 40),
-        Toggle(
+        VNLToggle(
           value: flag == 2,
           style: const ButtonStyle.outline(density: ButtonDensity.compact),
           onChanged: (v) {

@@ -44,9 +44,9 @@ class _AutoCompleteExample1State extends State<AutoCompleteExample1> {
 
   @override
   Widget build(BuildContext context) {
-    return AutoComplete(
+    return VNLAutoComplete(
       suggestions: _currentSuggestions,
-      child: TextField(
+      child: VNLTextField(
         controller: _controller,
         onChanged: _updateSuggestions,
         trailing: const IconButton.text(

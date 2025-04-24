@@ -138,7 +138,7 @@ class _TreeExample1State extends State<TreeExample1> {
           ],
         ),
         const Gap(8),
-        Checkbox(
+        VNLCheckbox(
           state: expandIcon ? CheckboxState.checked : CheckboxState.unchecked,
           onChanged: (value) {
             setState(() {
@@ -148,7 +148,7 @@ class _TreeExample1State extends State<TreeExample1> {
           trailing: const Text('Expand Icon'),
         ),
         const Gap(8),
-        Checkbox(
+        VNLCheckbox(
           state: usePath ? CheckboxState.checked : CheckboxState.unchecked,
           onChanged: (value) {
             setState(() {
@@ -158,7 +158,7 @@ class _TreeExample1State extends State<TreeExample1> {
           trailing: const Text('Use Path Branch Line'),
         ),
         const Gap(8),
-        Checkbox(
+        VNLCheckbox(
           state: recursiveSelection ? CheckboxState.checked : CheckboxState.unchecked,
           onChanged: (value) {
             setState(() {

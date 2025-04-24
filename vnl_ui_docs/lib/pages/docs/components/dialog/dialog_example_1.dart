@@ -11,7 +11,7 @@ class DialogExample1 extends StatelessWidget {
           context: context,
           builder: (context) {
             final FormController controller = FormController();
-            return AlertDialog(
+            return VNLAlertDialog(
               title: const Text('Edit profile'),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -21,20 +21,20 @@ class DialogExample1 extends StatelessWidget {
                   const Gap(16),
                   ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 400),
-                    child: Form(
+                    child: VNLForm(
                       controller: controller,
                       child: const FormTableLayout(rows: [
                         FormField<String>(
                           key: FormKey(#name),
                           label: Text('Name'),
-                          child: TextField(
+                          child: VNLTextField(
                             initialValue: 'Thito Yalasatria Sunarya',
                           ),
                         ),
                         FormField<String>(
                           key: FormKey(#username),
                           label: Text('Username'),
-                          child: TextField(
+                          child: VNLTextField(
                             initialValue: '@sunaryathito',
                           ),
                         ),

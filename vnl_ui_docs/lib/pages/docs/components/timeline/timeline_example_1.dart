@@ -5,7 +5,7 @@ class TimelineExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Timeline(
+    return VNLTimeline(
       data: [
         TimelineData(
           time: const Text('2022-01-01'),

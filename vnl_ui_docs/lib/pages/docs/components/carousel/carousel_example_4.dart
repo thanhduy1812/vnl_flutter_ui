@@ -16,7 +16,7 @@ class _CarouselExample4State extends State<CarouselExample4> {
     return SizedBox(
       width: 800,
       height: 200,
-      child: Carousel(
+      child: VNLCarousel(
         transition: const CarouselTransition.sliding(gap: 24),
         controller: controller,
         draggable: false,

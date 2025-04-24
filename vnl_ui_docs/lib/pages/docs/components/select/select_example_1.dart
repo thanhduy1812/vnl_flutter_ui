@@ -11,7 +11,7 @@ class _SelectExample1State extends State<SelectExample1> {
   String? selectedValue;
   @override
   Widget build(BuildContext context) {
-    return Select<String>(
+    return VNLSelect<String>(
       itemBuilder: (context, item) {
         return Text(item);
       },

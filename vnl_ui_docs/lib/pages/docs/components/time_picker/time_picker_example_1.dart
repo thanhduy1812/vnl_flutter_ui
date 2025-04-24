@@ -13,7 +13,7 @@ class _TimePickerExample1State extends State<TimePickerExample1> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TimePicker(
+        VNLTimePicker(
           value: _value,
           mode: PromptMode.popover,
           onChanged: (value) {
@@ -23,7 +23,7 @@ class _TimePickerExample1State extends State<TimePickerExample1> {
           },
         ),
         const Gap(16),
-        TimePicker(
+        VNLTimePicker(
           value: _value,
           mode: PromptMode.dialog,
           dialogTitle: const Text('Select Time'),

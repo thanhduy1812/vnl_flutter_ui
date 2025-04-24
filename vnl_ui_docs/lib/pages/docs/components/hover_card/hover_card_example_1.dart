@@ -5,7 +5,7 @@ class HoverCardExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HoverCard(
+    return VNLHoverCard(
       hoverBuilder: (context) {
         return const SurfaceCard(
           child: Basic(

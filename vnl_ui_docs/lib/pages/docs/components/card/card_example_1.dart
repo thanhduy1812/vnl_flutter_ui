@@ -5,7 +5,7 @@ class CardExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return VNLCard(
       padding: const EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -16,11 +16,11 @@ class CardExample1 extends StatelessWidget {
           const SizedBox(height: 24),
           const Text('Name').semiBold().small(),
           const SizedBox(height: 4),
-          const TextField(placeholder: Text('Name of your project')),
+          const VNLTextField(placeholder: Text('Name of your project')),
           const SizedBox(height: 16),
           const Text('Description').semiBold().small(),
           const SizedBox(height: 4),
-          const TextField(placeholder: Text('Description of your project')),
+          const VNLTextField(placeholder: Text('Description of your project')),
           const SizedBox(height: 24),
           Row(
             children: [

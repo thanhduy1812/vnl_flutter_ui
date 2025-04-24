@@ -27,7 +27,7 @@ class _CarouselExample1State extends State<CarouselExample1> {
           Expanded(
             child: SizedBox(
               height: 200,
-              child: Carousel(
+              child: VNLCarousel(
                 // frameTransform: Carousel.fadingTransform,
                 transition: const CarouselTransition.sliding(gap: 24),
                 controller: controller,

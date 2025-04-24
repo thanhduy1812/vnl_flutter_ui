@@ -8,13 +8,13 @@ class KeyboardDisplayExample1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Column(
       children: [
-        KeyboardDisplay(keys: [
+        VNLKeyboardDisplay(keys: [
           LogicalKeyboardKey.control,
           LogicalKeyboardKey.alt,
           LogicalKeyboardKey.delete,
         ]),
         Gap(24),
-        KeyboardDisplay.fromActivator(
+        VNLKeyboardDisplay.fromActivator(
           activator: SingleActivator(
             LogicalKeyboardKey.keyA,
             control: true,

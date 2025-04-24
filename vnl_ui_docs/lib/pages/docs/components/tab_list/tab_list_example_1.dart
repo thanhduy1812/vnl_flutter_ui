@@ -15,7 +15,7 @@ class _TabListExample1State extends State<TabListExample1> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        TabList(
+        VNLTabList(
           index: index,
           onChanged: (value) {
             setState(() {

@@ -12,7 +12,7 @@ class _ToggleExample1State extends State<ToggleExample1> {
 
   @override
   Widget build(BuildContext context) {
-    return Toggle(
+    return VNLToggle(
       value: value,
       onChanged: (v) {
         setState(() {

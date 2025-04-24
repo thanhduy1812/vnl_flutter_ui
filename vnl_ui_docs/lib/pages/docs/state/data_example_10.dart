@@ -30,7 +30,7 @@ class DataExample10State extends State<DataExample10> {
             ValueListenableBuilder(
               valueListenable: toggle,
               builder: (context, value, child) {
-                return Toggle(
+                return VNLToggle(
                   value: value,
                   onChanged: (value) {
                     toggle.value = value;
@@ -78,7 +78,7 @@ class _InnerWidgetState extends State<InnerWidget> {
   @override
   Widget build(BuildContext context) {
     innerRebuildCount++;
-    return Card(
+    return VNLCard(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -107,7 +107,7 @@ class _MostInnerWidgetState extends State<MostInnerWidget> {
   @override
   Widget build(BuildContext context) {
     mostInnerRebuildCount++;
-    return Card(
+    return VNLCard(
       child: DataBuilder<bool>(
         builder: (context, data, child) {
           return Text('Data: $data - MostInnerWidget Rebuild Count: $mostInnerRebuildCount');

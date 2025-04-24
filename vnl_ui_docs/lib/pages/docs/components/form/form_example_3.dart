@@ -13,7 +13,7 @@ class _FormExample3State extends State<FormExample3> {
   final _dummyData = [
     'sunarya-thito',
     'septogeddon',
-    'shadcn',
+    'vnl',
   ];
 
   final _usernameKey = const TextFieldKey('username');
@@ -23,12 +23,12 @@ class _FormExample3State extends State<FormExample3> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 480,
-      child: Form(
+      child: VNLForm(
         onSubmit: (context, values) {
           showDialog(
             context: context,
             builder: (context) {
-              return AlertDialog(
+              return VNLAlertDialog(
                 title: const Text('Form Values'),
                 content: Text(jsonEncode(values.map(
                   (key, value) {
@@ -65,7 +65,7 @@ class _FormExample3State extends State<FormExample3> {
                         // only validate when the form is submitted
                         mode: {FormValidationMode.submitted},
                       ),
-                  child: const TextField(
+                  child: const VNLTextField(
                     initialValue: 'sunarya-thito',
                   ),
                 ),
@@ -74,7 +74,7 @@ class _FormExample3State extends State<FormExample3> {
                   label: const Text('Password'),
                   validator: const LengthValidator(min: 8),
                   showErrors: const {FormValidationMode.submitted, FormValidationMode.changed},
-                  child: const TextField(
+                  child: const VNLTextField(
                     obscureText: true,
                   ),
                 ),
@@ -83,7 +83,7 @@ class _FormExample3State extends State<FormExample3> {
                   label: const Text('Confirm Password'),
                   showErrors: const {FormValidationMode.submitted, FormValidationMode.changed},
                   validator: CompareWith.equal(_passwordKey, message: 'Passwords do not match'),
-                  child: const TextField(
+                  child: const VNLTextField(
                     obscureText: true,
                   ),
                 ),

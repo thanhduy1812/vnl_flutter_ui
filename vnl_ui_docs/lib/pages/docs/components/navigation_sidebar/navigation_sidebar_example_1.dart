@@ -22,7 +22,7 @@ class _NavigationSidebarExample1State extends State<NavigationSidebarExample1> {
     return SizedBox(
       height: 400,
       child: OutlinedContainer(
-        child: NavigationSidebar(
+        child: VNLNavigationSidebar(
           index: selected,
           onSelected: (index) {
             setState(() {

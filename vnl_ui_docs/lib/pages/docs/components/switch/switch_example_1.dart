@@ -12,7 +12,7 @@ class _SwitchExample1State extends State<SwitchExample1> {
 
   @override
   Widget build(BuildContext context) {
-    return Switch(
+    return VNLSwitch(
       value: value,
       onChanged: (value) {
         setState(() {

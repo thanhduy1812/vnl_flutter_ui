@@ -5,7 +5,7 @@ class AlertExample2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Alert.destructive(
+    return const VNLAlert.destructive(
       title: Text('Alert title'),
       content: Text('This is alert content.'),
       trailing: Icon(Icons.dangerous_outlined),

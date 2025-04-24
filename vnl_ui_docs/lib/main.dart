@@ -27,6 +27,7 @@ import 'package:docs/pages/docs/components/formatted_input_example.dart';
 import 'package:docs/pages/docs/components/hover_card_example.dart';
 import 'package:docs/pages/docs/components/input_example.dart';
 import 'package:docs/pages/docs/components/input_otp_example.dart';
+import 'package:docs/pages/docs/components/item_picker_example.dart';
 import 'package:docs/pages/docs/components/keyboard_display_example.dart';
 import 'package:docs/pages/docs/components/linear_progress_example.dart';
 import 'package:docs/pages/docs/components/material_example.dart';
@@ -56,6 +57,7 @@ import 'package:docs/pages/docs/components/sortable_example.dart';
 import 'package:docs/pages/docs/components/star_rating_example.dart';
 import 'package:docs/pages/docs/components/stepper_example.dart';
 import 'package:docs/pages/docs/components/steps_example.dart';
+import 'package:docs/pages/docs/components/swiper_example.dart';
 import 'package:docs/pages/docs/components/switch_example.dart';
 import 'package:docs/pages/docs/components/tab_list_example.dart';
 import 'package:docs/pages/docs/components/tab_pane_example.dart';
@@ -83,8 +85,8 @@ import 'package:docs/pages/docs/web_preloader_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vnl_common_ui/vnl_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 import 'package:yaml/yaml.dart';
 
 import 'pages/docs/components/badge_example.dart';
@@ -726,6 +728,20 @@ class MyAppState extends State<MyApp> {
                 return const FormattedInputExample();
               },
               name: 'formatted_input'),
+          GoRoute(
+            path: 'swiper',
+            name: 'swiper',
+            builder: (context, state) {
+              return const SwiperExample();
+            },
+          ),
+          GoRoute(
+            path: 'item_picker',
+            name: 'item_picker',
+            builder: (context, state) {
+              return const ItemPickerExample();
+            },
+          )
         ]),
   ];
   late ColorScheme colorScheme;
@@ -818,10 +834,10 @@ class MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Data.inherit(
       data: this,
-      child: ShadcnApp.router(
+      child: VNLookApp.router(
         routerConfig: router,
         debugShowCheckedModeBanner: false,
-        title: 'VNLook UI',
+        title: 'VNL UI Flutter',
         scaling: AdaptiveScaling(scaling),
         enableScrollInterception: true,
         // popoverHandler: DialogOverlayHandler(),

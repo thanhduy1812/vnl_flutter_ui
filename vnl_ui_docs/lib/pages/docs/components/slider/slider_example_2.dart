@@ -14,7 +14,7 @@ class _SliderExample2State extends State<SliderExample2> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Slider(
+        VNLSlider(
           value: value,
           onChanged: (value) {
             setState(() {

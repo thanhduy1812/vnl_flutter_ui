@@ -41,19 +41,19 @@ class _MaterialExample1State extends State<MaterialExample1> {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             const vnlui.Gap(64),
-            vnlui.ShadcnUI(
-                child: vnlui.Card(
+            vnlui.VNLookUI(
+                child: vnlui.VNLCard(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text('You can also use shadcn_flutter widgets inside Material widgets'),
+                  const Text('You can also use vnl_ui widgets inside Material widgets'),
                   const vnlui.Gap(16),
                   vnlui.PrimaryButton(
                     onPressed: () {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return AlertDialog(
+                          return vnlui.VNLAlertDialog(
                             title: const Text('Hello'),
                             content: const Text('This is Material dialog'),
                             actions: [
@@ -76,9 +76,9 @@ class _MaterialExample1State extends State<MaterialExample1> {
                       vnlui.showDialog(
                         context: context,
                         builder: (context) {
-                          return vnlui.AlertDialog(
+                          return vnlui.VNLAlertDialog(
                             title: const Text('Hello'),
-                            content: const Text('This is shadcn_flutter dialog'),
+                            content: const Text('This is vnl_ui dialog'),
                             actions: [
                               vnlui.PrimaryButton(
                                 onPressed: () {
@@ -91,7 +91,7 @@ class _MaterialExample1State extends State<MaterialExample1> {
                         },
                       );
                     },
-                    child: const Text('Open shadcn_flutter Dialog'),
+                    child: const Text('Open vnl_ui Dialog'),
                   ),
                 ],
               ),

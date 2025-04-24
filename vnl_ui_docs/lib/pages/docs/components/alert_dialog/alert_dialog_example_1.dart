@@ -11,7 +11,7 @@ class AlertDialogExample1 extends StatelessWidget {
         showDialog(
           context: context,
           builder: (context) {
-            return AlertDialog(
+            return VNLAlertDialog(
               title: const Text('Alert title'),
               content: const Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
               actions: [
