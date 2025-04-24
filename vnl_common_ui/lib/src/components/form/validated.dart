@@ -7,7 +7,12 @@ class Validated<T> extends StatefulWidget {
   final Validator<T> validator;
   final Widget? child;
 
-  const Validated({super.key, required this.builder, required this.validator, this.child});
+  const Validated({
+    super.key,
+    required this.builder,
+    required this.validator,
+    this.child,
+  });
 
   @override
   State<Validated> createState() => _ValidatedState();
@@ -17,7 +22,7 @@ class _ValidatedState extends State<Validated> {
   final formKey = const FormKey(#validated);
   @override
   Widget build(BuildContext context) {
-    return Form(
+    return VNLForm(
       child: FormEntry(
         key: formKey,
         validator: widget.validator,

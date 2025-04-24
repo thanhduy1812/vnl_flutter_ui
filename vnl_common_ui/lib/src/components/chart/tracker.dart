@@ -72,7 +72,10 @@ class TrackerData {
   ///
   /// This constructor initializes a new instance of [TrackerData]
   /// with the specified tooltip and tracker level.
-  const TrackerData({required this.tooltip, required this.level});
+  const TrackerData({
+    required this.tooltip,
+    required this.level,
+  });
 }
 
 class TrackerTheme {
@@ -80,10 +83,22 @@ class TrackerTheme {
   final double? gap;
   final double? itemHeight;
 
-  const TrackerTheme({this.radius, this.gap, this.itemHeight});
+  const TrackerTheme({
+    this.radius,
+    this.gap,
+    this.itemHeight,
+  });
 
-  TrackerTheme copyWith({double? radius, double? gap, double? itemHeight}) {
-    return TrackerTheme(radius: radius ?? this.radius, gap: gap ?? this.gap, itemHeight: itemHeight ?? this.itemHeight);
+  TrackerTheme copyWith({
+    double? radius,
+    double? gap,
+    double? itemHeight,
+  }) {
+    return TrackerTheme(
+      radius: radius ?? this.radius,
+      gap: gap ?? this.gap,
+      itemHeight: itemHeight ?? this.itemHeight,
+    );
   }
 
   @override
@@ -94,7 +109,11 @@ class TrackerTheme {
   }
 
   @override
-  int get hashCode => Object.hash(radius, gap, itemHeight);
+  int get hashCode => Object.hash(
+        radius,
+        gap,
+        itemHeight,
+      );
 
   @override
   String toString() => 'TrackerTheme(radius: $radius, gap: $gap, itemHeight: $itemHeight)';
@@ -117,7 +136,10 @@ class Tracker extends StatelessWidget {
   ///
   /// This constructor initializes a new instance of [Tracker]
   /// with the specified data.
-  const Tracker({super.key, required this.data});
+  const Tracker({
+    super.key,
+    required this.data,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -131,11 +153,16 @@ class Tracker extends StatelessWidget {
             Expanded(
               child: InstantTooltip(
                 tooltipBuilder: (context) {
-                  return TooltipContainer(child: data.tooltip);
+                  return TooltipContainer(
+                    child: data.tooltip,
+                  );
                 },
-                child: Container(height: trackerTheme?.itemHeight ?? 32, color: data.level.color),
+                child: Container(
+                  height: trackerTheme?.itemHeight ?? 32,
+                  color: data.level.color,
+                ),
               ),
-            ),
+            )
         ],
       ).gap(trackerTheme?.gap ?? theme.scaling * 2),
     );

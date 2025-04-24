@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-class TextArea extends StatefulWidget {
+class VNLTextArea extends StatefulWidget {
   final TextEditingController? controller;
   final bool filled;
   final Widget? placeholder;
@@ -45,7 +45,7 @@ class TextArea extends StatefulWidget {
   final Clip clipBehavior;
   final bool autofocus;
 
-  const TextArea({
+  const VNLTextArea({
     super.key,
     this.expandableHeight = false,
     this.expandableWidth = false,
@@ -92,10 +92,10 @@ class TextArea extends StatefulWidget {
   });
 
   @override
-  State<TextArea> createState() => _TextAreaState();
+  State<VNLTextArea> createState() => _TextAreaState();
 }
 
-class _TextAreaState extends State<TextArea> {
+class _TextAreaState extends State<VNLTextArea> {
   late double _height;
   late double _width;
 
@@ -107,7 +107,7 @@ class _TextAreaState extends State<TextArea> {
   }
 
   @override
-  void didUpdateWidget(covariant TextArea oldWidget) {
+  void didUpdateWidget(covariant VNLTextArea oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.initialHeight != oldWidget.initialHeight) {
       _height = widget.initialHeight;
@@ -122,93 +122,93 @@ class _TextAreaState extends State<TextArea> {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
     return SizedBox(
-      height: _height,
-      width: _width,
-      child: Stack(
-        fit: StackFit.passthrough,
-        children: [
-          Positioned.fill(
-            child: TextField(
-              expands: true,
-              controller: widget.controller,
-              onSubmitted: widget.onSubmitted,
-              onEditingComplete: widget.onEditingComplete,
-              focusNode: widget.focusNode,
-              onTap: widget.onTap,
-              enabled: widget.enabled,
-              readOnly: widget.readOnly,
-              obscureText: widget.obscureText,
-              obscuringCharacter: widget.obscuringCharacter,
-              initialValue: widget.initialValue,
-              maxLength: widget.maxLength,
-              maxLengthEnforcement: widget.maxLengthEnforcement,
-              maxLines: null,
-              minLines: null,
-              textAlign: widget.textAlign,
-              border: widget.border,
-              filled: widget.filled,
-              placeholder: widget.placeholder,
-              leading: widget.leading,
-              trailing: widget.trailing,
-              padding: widget.padding,
-              borderRadius: widget.borderRadius,
-              textAlignVertical: widget.textAlignVertical,
-              undoController: widget.undoController,
-              onChanged: widget.onChanged,
-              autofillHints: widget.autofillHints,
-              onTapOutside: widget.onTapOutside,
-              inputFormatters: widget.inputFormatters,
-              style: widget.style,
-              contextMenuBuilder: widget.contextMenuBuilder,
-              keyboardType: widget.keyboardType,
-              textInputAction: widget.textInputAction,
-              clipBehavior: widget.clipBehavior,
-              autofocus: widget.autofocus,
-            ),
-          ),
-          Positioned(
-            bottom: -1 * scaling,
-            right: -1 * scaling,
-            width: (8 + 8) * scaling,
-            height: (8 + 8) * scaling,
-            child: MouseRegion(
-              hitTestBehavior: HitTestBehavior.translucent,
-              cursor:
-                  widget.expandableWidth
-                      ? widget.expandableHeight
-                          ? SystemMouseCursors.resizeDownRight
-                          : SystemMouseCursors.resizeLeftRight
-                      : widget.expandableHeight
-                      ? SystemMouseCursors.resizeUpDown
-                      : SystemMouseCursors.basic,
-              child: GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onPanUpdate: (details) {
-                  if (widget.expandableHeight && _height.isFinite) {
-                    setState(() {
-                      _height += details.delta.dy;
-                      _height = _height.clamp(widget.minHeight, widget.maxHeight);
-                      widget.onHeightChanged?.call(_height);
-                    });
-                  }
-                  if (widget.expandableWidth && _width.isFinite) {
-                    setState(() {
-                      _width += details.delta.dx;
-                      _width = _width.clamp(widget.minWidth, widget.maxWidth);
-                      widget.onWidthChanged?.call(_width);
-                    });
-                  }
-                },
-                child: Padding(
-                  padding: EdgeInsets.all(4.0 * scaling),
-                  child: CustomPaint(painter: _TextAreaDragHandlePainter(theme.colorScheme.foreground)),
-                ),
+        height: _height,
+        width: _width,
+        child: Stack(
+          fit: StackFit.passthrough,
+          children: [
+            Positioned.fill(
+              child: VNLTextField(
+                expands: true,
+                controller: widget.controller,
+                onSubmitted: widget.onSubmitted,
+                onEditingComplete: widget.onEditingComplete,
+                focusNode: widget.focusNode,
+                onTap: widget.onTap,
+                enabled: widget.enabled,
+                readOnly: widget.readOnly,
+                obscureText: widget.obscureText,
+                obscuringCharacter: widget.obscuringCharacter,
+                initialValue: widget.initialValue,
+                maxLength: widget.maxLength,
+                maxLengthEnforcement: widget.maxLengthEnforcement,
+                maxLines: null,
+                minLines: null,
+                textAlign: widget.textAlign,
+                border: widget.border,
+                filled: widget.filled,
+                placeholder: widget.placeholder,
+                leading: widget.leading,
+                trailing: widget.trailing,
+                padding: widget.padding,
+                borderRadius: widget.borderRadius,
+                textAlignVertical: widget.textAlignVertical,
+                undoController: widget.undoController,
+                onChanged: widget.onChanged,
+                autofillHints: widget.autofillHints,
+                onTapOutside: widget.onTapOutside,
+                inputFormatters: widget.inputFormatters,
+                style: widget.style,
+                contextMenuBuilder: widget.contextMenuBuilder,
+                keyboardType: widget.keyboardType,
+                textInputAction: widget.textInputAction,
+                clipBehavior: widget.clipBehavior,
+                autofocus: widget.autofocus,
               ),
             ),
-          ),
-        ],
-      ),
-    );
+            Positioned(
+              bottom: -1 * scaling,
+              right: -1 * scaling,
+              width: (8 + 8) * scaling,
+              height: (8 + 8) * scaling,
+              child: MouseRegion(
+                hitTestBehavior: HitTestBehavior.translucent,
+                cursor: widget.expandableWidth
+                    ? widget.expandableHeight
+                        ? SystemMouseCursors.resizeDownRight
+                        : SystemMouseCursors.resizeLeftRight
+                    : widget.expandableHeight
+                        ? SystemMouseCursors.resizeUpDown
+                        : SystemMouseCursors.basic,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onPanUpdate: (details) {
+                    if (widget.expandableHeight && _height.isFinite) {
+                      setState(() {
+                        _height += details.delta.dy;
+                        _height = _height.clamp(widget.minHeight, widget.maxHeight);
+                        widget.onHeightChanged?.call(_height);
+                      });
+                    }
+                    if (widget.expandableWidth && _width.isFinite) {
+                      setState(() {
+                        _width += details.delta.dx;
+                        _width = _width.clamp(widget.minWidth, widget.maxWidth);
+                        widget.onWidthChanged?.call(_width);
+                      });
+                    }
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.all(4.0 * scaling),
+                    child: CustomPaint(
+                      painter: _TextAreaDragHandlePainter(theme.colorScheme.foreground),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ));
   }
 }
 
@@ -219,11 +219,10 @@ class _TextAreaDragHandlePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint =
-        Paint()
-          ..color = color
-          ..strokeWidth = 1
-          ..strokeCap = StrokeCap.round;
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = 1
+      ..strokeCap = StrokeCap.round;
     final start = Offset(size.width, 0);
     final end = Offset(0, size.height);
     final start2 = Offset(size.width, size.height / 2);

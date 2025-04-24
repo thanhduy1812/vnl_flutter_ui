@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-class AutoComplete extends StatefulWidget {
+typedef AutoCompleteCompleter = String Function(String suggestion);
+
+class VNLAutoComplete extends StatefulWidget {
   final List<String> suggestions;
   final Widget child;
   final BoxConstraints? popoverConstraints;
@@ -10,7 +12,8 @@ class AutoComplete extends StatefulWidget {
   final AlignmentDirectional? popoverAnchorAlignment;
   final AlignmentDirectional? popoverAlignment;
   final AutoCompleteMode mode;
-  const AutoComplete({
+  final AutoCompleteCompleter completer;
+  const VNLAutoComplete({
     super.key,
     required this.suggestions,
     required this.child,
@@ -19,10 +22,15 @@ class AutoComplete extends StatefulWidget {
     this.popoverAnchorAlignment,
     this.popoverAlignment,
     this.mode = AutoCompleteMode.replaceWord,
+    this.completer = _defaultCompleter,
   });
 
   @override
-  State<AutoComplete> createState() => _AutoCompleteState();
+  State<VNLAutoComplete> createState() => _AutoCompleteState();
+
+  static String _defaultCompleter(String suggestion) {
+    return suggestion;
+  }
 }
 
 class _AutoCompleteItem extends StatefulWidget {
@@ -30,7 +38,11 @@ class _AutoCompleteItem extends StatefulWidget {
   final bool selected;
   final VoidCallback onSelected;
 
-  const _AutoCompleteItem({required this.suggestion, required this.selected, required this.onSelected});
+  const _AutoCompleteItem({
+    required this.suggestion,
+    required this.selected,
+    required this.onSelected,
+  });
 
   @override
   State<_AutoCompleteItem> createState() => _AutoCompleteItemState();
@@ -43,9 +55,7 @@ class _AutoCompleteItemState extends State<_AutoCompleteItem> {
       value: widget.selected,
       alignment: AlignmentDirectional.centerStart,
       onChanged: (value) {
-        if (value) {
-          widget.onSelected();
-        }
+        widget.onSelected();
       },
       child: Text(widget.suggestion),
     );
@@ -67,7 +77,7 @@ class _AutoCompleteItemState extends State<_AutoCompleteItem> {
   }
 }
 
-class _AutoCompleteState extends State<AutoComplete> {
+class _AutoCompleteState extends State<VNLAutoComplete> {
   final ValueNotifier<List<String>> _suggestions = ValueNotifier([]);
   final ValueNotifier<int> _selectedIndex = ValueNotifier(-1);
   final PopoverController _popoverController = PopoverController();
@@ -100,29 +110,30 @@ class _AutoCompleteState extends State<AutoComplete> {
           final theme = Theme.of(context);
           return TextFieldTapRegion(
             child: ConstrainedBox(
-              constraints: widget.popoverConstraints ?? BoxConstraints(maxHeight: 300 * theme.scaling),
+              constraints: widget.popoverConstraints ??
+                  BoxConstraints(
+                    maxHeight: 300 * theme.scaling,
+                  ),
               child: SurfaceCard(
                 padding: const EdgeInsets.all(4) * theme.scaling,
                 child: AnimatedBuilder(
-                  animation: Listenable.merge([_suggestions, _selectedIndex]),
-                  builder: (context, child) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: _suggestions.value.length,
-                      itemBuilder: (context, index) {
-                        final suggestion = _suggestions.value[index];
-                        return _AutoCompleteItem(
-                          suggestion: suggestion,
-                          selected: index == _selectedIndex.value,
-                          onSelected: () {
-                            _selectedIndex.value = index;
-                            _handleProceed();
-                          },
-                        );
-                      },
-                    );
-                  },
-                ),
+                    animation: Listenable.merge([_suggestions, _selectedIndex]),
+                    builder: (context, child) {
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: _suggestions.value.length,
+                          itemBuilder: (context, index) {
+                            final suggestion = _suggestions.value[index];
+                            return _AutoCompleteItem(
+                              suggestion: suggestion,
+                              selected: index == _selectedIndex.value,
+                              onSelected: () {
+                                _selectedIndex.value = index;
+                                _handleProceed();
+                              },
+                            );
+                          });
+                    }),
               ),
             ),
           );
@@ -136,23 +147,24 @@ class _AutoCompleteState extends State<AutoComplete> {
 
   void _handleProceed() {
     final selectedIndex = _selectedIndex.value;
-    if (selectedIndex == -1) {
+    if (selectedIndex < 0 || selectedIndex >= _suggestions.value.length) {
       return;
     }
     _popoverController.close();
+    var suggestion = _suggestions.value[selectedIndex];
+    suggestion = widget.completer(
+      suggestion,
+    );
     switch (widget.mode) {
       case AutoCompleteMode.append:
-        final suggestion = _suggestions.value[selectedIndex];
         TextFieldAppendTextIntent intent = TextFieldAppendTextIntent(text: suggestion);
         invokeActionOnFocusedWidget(intent);
         break;
       case AutoCompleteMode.replaceWord:
-        final suggestion = _suggestions.value[selectedIndex];
         TextFieldReplaceCurrentWordIntent intent = TextFieldReplaceCurrentWordIntent(text: suggestion);
         invokeActionOnFocusedWidget(intent);
         break;
       case AutoCompleteMode.replaceAll:
-        final suggestion = _suggestions.value[selectedIndex];
         TextFieldSetTextIntent intent = TextFieldSetTextIntent(text: suggestion);
         invokeActionOnFocusedWidget(intent);
         break;
@@ -160,7 +172,7 @@ class _AutoCompleteState extends State<AutoComplete> {
   }
 
   @override
-  void didUpdateWidget(covariant AutoComplete oldWidget) {
+  void didUpdateWidget(covariant VNLAutoComplete oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (!listEquals(oldWidget.suggestions, widget.suggestions)) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -183,52 +195,59 @@ class _AutoCompleteState extends State<AutoComplete> {
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-      listenable: _selectedIndex,
-      builder: (context, child) {
-        return FocusableActionDetector(
-          onFocusChange: _onFocusChanged,
-          shortcuts: {
-            LogicalKeySet(LogicalKeyboardKey.arrowDown): const _MoveSelectionIntent(1),
-            LogicalKeySet(LogicalKeyboardKey.arrowUp): const _MoveSelectionIntent(-1),
-            if (widget.suggestions.isNotEmpty && _selectedIndex.value != -1)
-              LogicalKeySet(LogicalKeyboardKey.tab): const _AcceptSelectionIntent(),
-          },
-          actions: {
-            _MoveSelectionIntent: CallbackAction<_MoveSelectionIntent>(
-              onInvoke: (intent) {
-                final direction = intent.direction;
-                final selectedIndex = _selectedIndex.value;
-                final suggestions = _suggestions.value;
-                if (suggestions.isEmpty) {
-                  return;
-                }
-                final newSelectedIndex = (selectedIndex + direction) % suggestions.length;
-                _selectedIndex.value = newSelectedIndex < 0 ? suggestions.length - 1 : newSelectedIndex;
-                return;
-              },
-            ),
-            _AcceptSelectionIntent: CallbackAction<_AcceptSelectionIntent>(
-              onInvoke: (intent) {
-                _handleProceed();
-                return;
-              },
-            ),
-          },
-          child: widget.child,
-        );
-      },
-    );
+        listenable: _selectedIndex,
+        builder: (context, child) {
+          return FocusableActionDetector(
+            onFocusChange: _onFocusChanged,
+            shortcuts: _popoverController.hasOpenPopover
+                ? {
+                    LogicalKeySet(LogicalKeyboardKey.arrowDown): const NavigateSuggestionIntent(1),
+                    LogicalKeySet(LogicalKeyboardKey.arrowUp): const NavigateSuggestionIntent(-1),
+                    if (widget.suggestions.isNotEmpty && _selectedIndex.value != -1)
+                      LogicalKeySet(LogicalKeyboardKey.tab): const AcceptSuggestionIntent(),
+                  }
+                : null,
+            actions: _popoverController.hasOpenPopover
+                ? {
+                    NavigateSuggestionIntent: CallbackAction<NavigateSuggestionIntent>(
+                      onInvoke: (intent) {
+                        final direction = intent.direction;
+                        final selectedIndex = _selectedIndex.value;
+                        final suggestions = _suggestions.value;
+                        if (suggestions.isEmpty) {
+                          return;
+                        }
+                        final newSelectedIndex = (selectedIndex + direction) % suggestions.length;
+                        _selectedIndex.value = newSelectedIndex < 0 ? suggestions.length - 1 : newSelectedIndex;
+                        return;
+                      },
+                    ),
+                    AcceptSuggestionIntent: CallbackAction<AcceptSuggestionIntent>(
+                      onInvoke: (intent) {
+                        _handleProceed();
+                        return;
+                      },
+                    ),
+                  }
+                : null,
+            child: widget.child,
+          );
+        });
   }
 }
 
-enum AutoCompleteMode { append, replaceWord, replaceAll }
-
-class _MoveSelectionIntent extends Intent {
-  final int direction;
-
-  const _MoveSelectionIntent(this.direction);
+enum AutoCompleteMode {
+  append,
+  replaceWord,
+  replaceAll,
 }
 
-class _AcceptSelectionIntent extends Intent {
-  const _AcceptSelectionIntent();
+class NavigateSuggestionIntent extends Intent {
+  final int direction;
+
+  const NavigateSuggestionIntent(this.direction);
+}
+
+class AcceptSuggestionIntent extends Intent {
+  const AcceptSuggestionIntent();
 }

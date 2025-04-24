@@ -1,6 +1,6 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-class Card extends StatelessWidget {
+class VNLCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? padding;
   final bool filled;
@@ -14,7 +14,7 @@ class Card extends StatelessWidget {
   final double? surfaceBlur;
   final Duration? duration;
 
-  const Card({
+  const VNLCard({
     super.key,
     required this.child,
     this.padding,
@@ -45,7 +45,12 @@ class Card extends StatelessWidget {
       surfaceOpacity: surfaceOpacity,
       surfaceBlur: surfaceBlur,
       duration: duration,
-      child: DefaultTextStyle.merge(child: child, style: TextStyle(color: theme.colorScheme.cardForeground)),
+      child: DefaultTextStyle.merge(
+        child: child,
+        style: TextStyle(
+          color: theme.colorScheme.cardForeground,
+        ),
+      ),
     );
   }
 }
@@ -87,9 +92,12 @@ class SurfaceCard extends StatelessWidget {
     final scaling = theme.scaling;
     var padding = this.padding;
     if (isSheetOverlay) {
-      return Padding(padding: padding ?? (EdgeInsets.all(16 * scaling)), child: child);
+      return Padding(
+        padding: padding ?? (EdgeInsets.all(16 * scaling)),
+        child: child,
+      );
     }
-    return Card(
+    return VNLCard(
       clipBehavior: clipBehavior,
       borderRadius: borderRadius,
       borderWidth: borderWidth,

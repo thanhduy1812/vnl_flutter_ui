@@ -134,8 +134,8 @@ class _CodeSnippetState extends State<CodeSnippet> {
                         bottom: theme.scaling * 16,
                       ),
                       child: data == null
-                          ? SelectableText(widget.code).muted().mono().small()
-                          : SelectableText.rich(
+                          ? VNLSelectableText(widget.code).muted().mono().small()
+                          : VNLSelectableText.rich(
                               data.highlight(widget.code),
                             ).mono().small(),
                     ),
@@ -159,10 +159,10 @@ class _CodeSnippetState extends State<CodeSnippet> {
                           showDuration: const Duration(seconds: 2),
                           builder: (context, overlay) {
                             final localizations =
-                                ShadcnLocalizations.of(context);
-                            return Alert(
+                                VNLookLocalizations.of(context);
+                            return VNLAlert(
                               leading: const Icon(
-                                Icons.check,
+                                LucideIcons.copyCheck,
                               ).iconSmall(),
                               title: Text(localizations.toastSnippetCopied),
                             );
@@ -171,9 +171,7 @@ class _CodeSnippetState extends State<CodeSnippet> {
                       }
                     });
                   },
-                  child: const Icon(
-                    Icons.copy,
-                  ).iconSmall(),
+                  child: const Icon(LucideIcons.copy).iconSmall(),
                 ),
               ],
             ).gap(4),

@@ -52,13 +52,13 @@ class ControlledStarRating extends StatelessWidget with ControlledComponent<doub
 
   @override
   Widget build(BuildContext context) {
-    return ControlledComponentBuilder(
+    return ControlledComponentAdapter(
       controller: controller,
       initialValue: initialValue,
       onChanged: onChanged,
       enabled: enabled,
       builder: (context, data) {
-        return StarRating(
+        return VNLStarRating(
           value: data.value,
           onChanged: data.onChanged,
           enabled: data.enabled,
@@ -81,7 +81,7 @@ class ControlledStarRating extends StatelessWidget with ControlledComponent<doub
   }
 }
 
-class StarRating extends StatefulWidget {
+class VNLStarRating extends StatefulWidget {
   final double value;
   final ValueChanged<double>? onChanged;
   final double step;
@@ -99,7 +99,7 @@ class StarRating extends StatefulWidget {
   final double? starRotation;
   final bool? enabled;
 
-  const StarRating({
+  const VNLStarRating({
     super.key,
     required this.value,
     this.onChanged,
@@ -120,10 +120,10 @@ class StarRating extends StatefulWidget {
   });
 
   @override
-  State<StarRating> createState() => _StarRatingState();
+  State<VNLStarRating> createState() => _StarRatingState();
 }
 
-class _StarRatingState extends State<StarRating> with FormValueSupplier<double, StarRating> {
+class _StarRatingState extends State<VNLStarRating> with FormValueSupplier<double, VNLStarRating> {
   double? _changingValue;
   bool _focused = false;
 
@@ -134,7 +134,7 @@ class _StarRatingState extends State<StarRating> with FormValueSupplier<double, 
   }
 
   @override
-  void didUpdateWidget(covariant StarRating oldWidget) {
+  void didUpdateWidget(covariant VNLStarRating oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.value != oldWidget.value) {
       formValue = widget.value;
@@ -166,14 +166,10 @@ class _StarRatingState extends State<StarRating> with FormValueSupplier<double, 
           squash: starSquash,
           innerRadiusRatio: starInnerRadiusRatio,
           rotation: starRotation,
-          side:
-              focusBorder && _focused
-                  ? BorderSide(
-                    color: theme.colorScheme.ring,
-                    width: 2.0 * scaling,
-                    strokeAlign: BorderSide.strokeAlignOutside,
-                  )
-                  : BorderSide.none,
+          side: focusBorder && _focused
+              ? BorderSide(
+                  color: theme.colorScheme.ring, width: 2.0 * scaling, strokeAlign: BorderSide.strokeAlignOutside)
+              : BorderSide.none,
         ),
       ),
     );
@@ -229,29 +225,65 @@ class _StarRatingState extends State<StarRating> with FormValueSupplier<double, 
               },
             ),
           },
-          child: GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () {
-              if (widget.onChanged != null && roundedValue != widget.value) {
-                widget.onChanged!(roundedValue);
-              }
+          child: MouseRegion(
+            onHover: (event) {
+              if (!_enabled) return;
+              if (widget.onChanged == null) return;
+              double size = context.size!.width;
+              double progress = (event.localPosition.dx / size).clamp(0.0, 1.0);
+              double newValue = (progress * widget.max).clamp(0.0, widget.max);
+              setState(() {
+                _changingValue = newValue;
+              });
             },
-            child: Flex(
-              direction: widget.direction,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                for (var i = 0; i < widget.max.ceil(); i++)
-                  MouseRegion(
-                    hitTestBehavior: HitTestBehavior.translucent,
-                    onHover: (event) {
-                      if (!_enabled) return;
-                      if (widget.onChanged == null) return;
-                      double progress = (event.localPosition.dx / starSize).clamp(0.0, 1.0);
-                      setState(() {
-                        _changingValue = (i + progress);
-                      });
-                    },
-                    child: Stack(
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {
+                if (widget.onChanged != null && roundedValue != widget.value) {
+                  widget.onChanged!(roundedValue);
+                }
+              },
+              onTapDown: (details) {
+                if (!_enabled) return;
+                if (widget.onChanged == null) return;
+                double totalStarSize = starSize + (starSpacing * (widget.max.ceil() - 1));
+                double progress = (details.localPosition.dx / totalStarSize).clamp(0.0, 1.0);
+                double newValue = (progress * widget.max).clamp(0.0, widget.max);
+                widget.onChanged!(newValue);
+              },
+              onPanUpdate: (details) {
+                if (!_enabled) return;
+                if (widget.onChanged == null) return;
+                int totalStars = widget.max.ceil();
+                double totalStarSize = starSize * totalStars + (starSpacing * (totalStars - 1));
+                double progress = (details.localPosition.dx / totalStarSize).clamp(0.0, 1.0);
+                double newValue = (progress * widget.max).clamp(0.0, widget.max);
+                setState(() {
+                  _changingValue = newValue;
+                });
+              },
+              onPanEnd: (details) {
+                if (!_enabled) return;
+                if (widget.onChanged == null) return;
+                widget.onChanged!(_changingValue ?? roundedValue);
+                setState(() {
+                  _changingValue = null;
+                });
+              },
+              onPanCancel: () {
+                if (!_enabled) return;
+                if (widget.onChanged == null) return;
+                widget.onChanged!(_changingValue ?? roundedValue);
+                setState(() {
+                  _changingValue = null;
+                });
+              },
+              child: Flex(
+                direction: widget.direction,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  for (var i = 0; i < widget.max.ceil(); i++)
+                    Stack(
                       fit: StackFit.passthrough,
                       children: [
                         ShaderMask(
@@ -262,7 +294,10 @@ class _StarRatingState extends State<StarRating> with FormValueSupplier<double, 
                                     (_enabled ? theme.colorScheme.primary : theme.colorScheme.mutedForeground),
                                 widget.backgroundColor ?? theme.colorScheme.muted,
                               ],
-                              stops: [(roundedValue - i).clamp(0.0, 1.0), (roundedValue - i).clamp(0.0, 1.0)],
+                              stops: [
+                                (roundedValue - i).clamp(0.0, 1.0),
+                                (roundedValue - i).clamp(0.0, 1.0),
+                              ],
                               begin:
                                   widget.direction == Axis.horizontal ? Alignment.centerLeft : Alignment.bottomCenter,
                               end: widget.direction == Axis.horizontal ? Alignment.centerRight : Alignment.topCenter,
@@ -274,9 +309,9 @@ class _StarRatingState extends State<StarRating> with FormValueSupplier<double, 
                         _buildStar(context, true),
                       ],
                     ),
-                  ),
-              ],
-            ).gap(starSpacing),
+                ],
+              ).gap(starSpacing),
+            ),
           ),
         );
       },

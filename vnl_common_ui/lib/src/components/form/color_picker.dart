@@ -60,7 +60,7 @@ class ControlledColorInput extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return ControlledComponentBuilder<ColorDerivative>(
+    return ControlledComponentAdapter<ColorDerivative>(
       initialValue: initialValue,
       onChanged: onChanged,
       enabled: enabled,
@@ -114,11 +114,11 @@ class ColorHistoryGrid extends StatelessWidget {
     if (color == null) {
       return const AspectRatio(
         aspectRatio: 1,
-        child: Button(
+        child: VNLButton(
           style: ButtonStyle.outline(
             density: ButtonDensity.compact,
           ),
-          child: Icon(Icons.close),
+          child: Icon(LucideIcons.x),
         ),
       );
     }
@@ -132,7 +132,7 @@ class ColorHistoryGrid extends StatelessWidget {
           : null,
       child: AspectRatio(
         aspectRatio: 1,
-        child: Button(
+        child: VNLButton(
           style: const ButtonStyle.outline(
             density: ButtonDensity.compact,
           ),
@@ -770,7 +770,7 @@ class _ColorInputSetState extends State<ColorInputSet> {
   int _tabIndex = 0;
   @override
   Widget build(BuildContext context) {
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     final theme = Theme.of(context);
     return LayoutBuilder(builder: (context, constraints) {
       return IntrinsicWidth(
@@ -778,7 +778,7 @@ class _ColorInputSetState extends State<ColorInputSet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Tabs(
+            VNLTabs(
                 index: _tabIndex,
                 onChanged: (value) {
                   setState(() {
@@ -1039,7 +1039,7 @@ class _ColorPickerSetState extends State<ColorPickerSet> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     String aLabel;
     String bLabel;
     String cLabel;
@@ -1121,7 +1121,7 @@ class _ColorPickerSetState extends State<ColorPickerSet> {
                 if (widget.onPickFromScreen != null)
                   IconButton.outline(
                     onPressed: widget.onPickFromScreen,
-                    icon: const Icon(BootstrapIcons.eyedropper),
+                    icon: const Icon(LucideIcons.pipette),
                   ),
               ],
             ),
@@ -1237,7 +1237,7 @@ class _ColorPickerSetState extends State<ColorPickerSet> {
                     ),
                   ),
                 Gap(theme.scaling * 16),
-                TextField(
+                VNLTextField(
                   controller: _hexController,
                   onEditingComplete: () {
                     var hex = _hexController.text;
@@ -1274,7 +1274,7 @@ class _ColorPickerSetState extends State<ColorPickerSet> {
                           children: [
                             Text(aLabel).muted().small(),
                             Gap(theme.scaling * 4),
-                            TextField(
+                            VNLTextField(
                               controller: _aController,
                               onEditingComplete: _onColorChange,
                               inputFormatters: [
@@ -1292,7 +1292,7 @@ class _ColorPickerSetState extends State<ColorPickerSet> {
                           children: [
                             Text(bLabel).muted().small(),
                             Gap(theme.scaling * 4),
-                            TextField(
+                            VNLTextField(
                               controller: _bController,
                               onEditingComplete: _onColorChange,
                               inputFormatters: [
@@ -1310,7 +1310,7 @@ class _ColorPickerSetState extends State<ColorPickerSet> {
                           children: [
                             Text(cLabel).muted().small(),
                             Gap(theme.scaling * 4),
-                            TextField(
+                            VNLTextField(
                               controller: _cController,
                               onEditingComplete: _onColorChange,
                               inputFormatters: [
@@ -1329,7 +1329,7 @@ class _ColorPickerSetState extends State<ColorPickerSet> {
                             children: [
                               Text(localizations.colorAlpha).muted().small(),
                               Gap(theme.scaling * 4),
-                              TextField(
+                              VNLTextField(
                                 onEditingComplete: _onColorChange,
                                 controller: _alphaController,
                                 inputFormatters: [
@@ -1539,7 +1539,7 @@ class _MiniColorPickerSetState extends State<MiniColorPickerSet> {
           if (widget.onPickFromScreen != null)
             IconButton.outline(
               onPressed: widget.onPickFromScreen,
-              icon: const Icon(BootstrapIcons.eyedropper),
+              icon: const Icon(LucideIcons.pipette),
             ),
         ],
       ),
@@ -1582,7 +1582,7 @@ class ColorInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     final theme = Theme.of(context);
     return ObjectFormField(
       enabled: enabled,
@@ -1638,7 +1638,7 @@ class ColorInput extends StatelessWidget {
         return [
           if (allowPickFromScreen)
             IconButton.outline(
-              icon: Icon(BootstrapIcons.eyedropper, size: 16 * theme.scaling),
+              icon: Icon(LucideIcons.pipette, size: 16 * theme.scaling),
               onPressed: () async {
                 await handler.close();
                 if (!context.mounted) return;
@@ -1928,9 +1928,9 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     final theme = Theme.of(context);
-    return AlertDialog(
+    return VNLAlertDialog(
       title: widget.title,
       content: ColorInputPopup(
         color: _color,
@@ -1950,7 +1950,7 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
                 pickedFromScreen: true,
               ));
             },
-            icon: Icon(BootstrapIcons.eyedropper, size: 16 * theme.scaling),
+            icon: Icon(LucideIcons.pipette, size: 16 * theme.scaling),
           ),
         SecondaryButton(
           onPressed: () {
@@ -2006,7 +2006,7 @@ class _ColorPickerPopupState extends State<_ColorPickerPopup> {
 
   @override
   Widget build(BuildContext context) {
-    return SurfaceCard(
+    return ModalContainer(
       child: ColorInputPopup(
         color: _color,
         onChanged: (value) {

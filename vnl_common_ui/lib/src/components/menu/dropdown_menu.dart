@@ -17,7 +17,7 @@ OverlayCompleter<T?> showDropdown<T>({
   EdgeInsetsGeometry? margin,
   bool follow = true,
   bool consumeOutsideTaps = false,
-  ValueChanged<PopoverAnchorState>? onTickFollow,
+  ValueChanged<PopoverOverlayWidgetState>? onTickFollow,
   bool allowInvertHorizontal = true,
   bool allowInvertVertical = true,
   bool dismissBackdropFocus = true,
@@ -49,9 +49,14 @@ OverlayCompleter<T?> showDropdown<T>({
     regionGroupId: key,
     modal: modal,
     dismissBackdropFocus: dismissBackdropFocus,
-    overlayBarrier: OverlayBarrier(borderRadius: BorderRadius.circular(theme.radiusMd)),
+    overlayBarrier: OverlayBarrier(
+      borderRadius: BorderRadius.circular(theme.radiusMd),
+    ),
     builder: (context) {
-      return Data.inherit(data: DropdownMenuData(key), child: builder(context));
+      return Data.inherit(
+        data: DropdownMenuData(key),
+        child: builder(context),
+      );
     },
   );
 }
@@ -62,24 +67,31 @@ class DropdownMenuData {
   DropdownMenuData(this.key);
 }
 
-class DropdownMenu extends StatefulWidget {
+class VNLDropdownMenu extends StatefulWidget {
   final double? surfaceOpacity;
   final double? surfaceBlur;
   final List<MenuItem> children;
 
-  const DropdownMenu({super.key, this.surfaceOpacity, this.surfaceBlur, required this.children});
+  const VNLDropdownMenu({
+    super.key,
+    this.surfaceOpacity,
+    this.surfaceBlur,
+    required this.children,
+  });
 
   @override
-  State<DropdownMenu> createState() => _DropdownMenuState();
+  State<VNLDropdownMenu> createState() => _DropdownMenuState();
 }
 
-class _DropdownMenuState extends State<DropdownMenu> {
+class _DropdownMenuState extends State<VNLDropdownMenu> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isSheetOverlay = SheetOverlayHandler.isSheetOverlay(context);
     return ConstrainedBox(
-      constraints: const BoxConstraints(minWidth: 192),
+      constraints: const BoxConstraints(
+        minWidth: 192,
+      ),
       child: MenuGroup(
         regionGroupId: Data.maybeOf<DropdownMenuData>(context)?.key,
         subMenuOffset: const Offset(8, -4) * theme.scaling,

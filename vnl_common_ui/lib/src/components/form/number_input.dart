@@ -2,8 +2,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-class NumberInput extends StatefulWidget {
-  static final _decimalFormatter = FilteringTextInputFormatter.allow(RegExp(r'^-?[0-9]+\.?[0-9]*$'));
+@Deprecated('Use TextField with InputFeature.spinner() instead.')
+class VNLNumberInput extends StatefulWidget {
+  static final _decimalFormatter = FilteringTextInputFormatter.allow(
+    RegExp(r'^-?[0-9]+\.?[0-9]*$'),
+  );
   final TextEditingController? controller;
   final double initialValue;
   final Widget? leading;
@@ -21,7 +24,7 @@ class NumberInput extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final VoidCallback? onEditingComplete;
 
-  const NumberInput({
+  const VNLNumberInput({
     super.key,
     this.padding,
     this.controller,
@@ -42,10 +45,10 @@ class NumberInput extends StatefulWidget {
   });
 
   @override
-  State<NumberInput> createState() => _NumberInputState();
+  State<VNLNumberInput> createState() => _NumberInputState();
 }
 
-class _NumberInputState extends State<NumberInput> with FormValueSupplier<num, NumberInput> {
+class _NumberInputState extends State<VNLNumberInput> with FormValueSupplier<num, VNLNumberInput> {
   late TextEditingController _controller;
   late double _lastValidValue;
 
@@ -70,7 +73,7 @@ class _NumberInputState extends State<NumberInput> with FormValueSupplier<num, N
   }
 
   @override
-  void didUpdateWidget(covariant NumberInput oldWidget) {
+  void didUpdateWidget(covariant VNLNumberInput oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.controller != oldWidget.controller) {
       _controller.removeListener(_onTextChanged);
@@ -88,11 +91,18 @@ class _NumberInputState extends State<NumberInput> with FormValueSupplier<num, N
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return OutlinedContainer(borderRadius: theme.borderRadiusMd, child: buildTextField(context, theme));
+    return OutlinedContainer(
+      borderRadius: theme.borderRadiusMd,
+      child: buildTextField(context, theme),
+    );
   }
 
   AbstractButtonStyle get _buttonStyle {
-    return widget.buttonStyle ?? const ButtonStyle.text(density: ButtonDensity.compact, size: ButtonSize.small);
+    return widget.buttonStyle ??
+        const ButtonStyle.text(
+          density: ButtonDensity.compact,
+          size: ButtonSize.small,
+        );
   }
 
   Widget buildButton(BuildContext context, ThemeData theme) {
@@ -147,7 +157,7 @@ class _NumberInputState extends State<NumberInput> with FormValueSupplier<num, N
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Flexible(
-                    child: Button(
+                    child: VNLButton(
                       style: _buttonStyle,
                       enabled: widget.enabled ?? (widget.max == null || _lastValidValue < widget.max!),
                       onPressed: () {
@@ -160,11 +170,13 @@ class _NumberInputState extends State<NumberInput> with FormValueSupplier<num, N
                           setState(() {});
                         }
                       },
-                      child: const Icon(Icons.arrow_drop_up),
+                      child: const Icon(
+                        Icons.arrow_drop_up,
+                      ),
                     ),
                   ),
                   Flexible(
-                    child: Button(
+                    child: VNLButton(
                       style: _buttonStyle,
                       enabled: widget.enabled ?? (widget.min == null || _lastValidValue > widget.min!),
                       onPressed: () {
@@ -177,20 +189,23 @@ class _NumberInputState extends State<NumberInput> with FormValueSupplier<num, N
                           setState(() {});
                         }
                       },
-                      child: const Icon(Icons.arrow_drop_down),
+                      child: const Icon(
+                        Icons.arrow_drop_down,
+                      ),
                     ),
                   ),
                 ],
               ),
               const Positioned.fill(
                 child: Center(
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.resizeUpDown,
-                    hitTestBehavior: HitTestBehavior.translucent,
-                    child: SizedBox(width: double.infinity, height: 8),
-                  ),
-                ),
-              ),
+                    child: MouseRegion(
+                        cursor: SystemMouseCursors.resizeUpDown,
+                        hitTestBehavior: HitTestBehavior.translucent,
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 8,
+                        ))),
+              )
             ],
           ),
         ),
@@ -225,8 +240,10 @@ class _NumberInputState extends State<NumberInput> with FormValueSupplier<num, N
   Widget buildTextField(BuildContext context, ThemeData theme) {
     final scaling = theme.scaling;
     return ConstrainedBox(
-      constraints: BoxConstraints(minWidth: 50 * scaling),
-      child: TextField(
+      constraints: BoxConstraints(
+        minWidth: 50 * scaling,
+      ),
+      child: VNLTextField(
         border: false,
         minLines: 1,
         maxLines: 1,
@@ -237,11 +254,14 @@ class _NumberInputState extends State<NumberInput> with FormValueSupplier<num, N
             if (widget.showButtons) buildButton(context, theme),
           ],
         ),
-        padding: widget.padding ?? EdgeInsetsDirectional.only(start: 10 * scaling),
+        padding: widget.padding ??
+            EdgeInsetsDirectional.only(
+              start: 10 * scaling,
+            ),
         style: widget.style,
         inputFormatters: [
           if (!widget.allowDecimals) FilteringTextInputFormatter.digitsOnly,
-          if (widget.allowDecimals) NumberInput._decimalFormatter,
+          if (widget.allowDecimals) VNLNumberInput._decimalFormatter,
         ],
         controller: _controller,
         onChanged: (_) {
@@ -269,13 +289,12 @@ class _NumberInputState extends State<NumberInput> with FormValueSupplier<num, N
           }
           widget.onEditingComplete?.call();
         },
-        borderRadius:
-            widget.showButtons
-                ? BorderRadiusDirectional.only(
-                  topStart: Radius.circular(4 * scaling),
-                  bottomStart: Radius.circular(4 * scaling),
-                )
-                : BorderRadius.circular(4 * scaling),
+        borderRadius: widget.showButtons
+            ? BorderRadiusDirectional.only(
+                topStart: Radius.circular(4 * scaling),
+                bottomStart: Radius.circular(4 * scaling),
+              )
+            : BorderRadius.circular(4 * scaling),
         enabled: widget.enabled ?? true,
         initialValue: _valueAsString,
         keyboardType: TextInputType.numberWithOptions(decimal: widget.allowDecimals),

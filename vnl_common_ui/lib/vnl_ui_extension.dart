@@ -1,5 +1,5 @@
-library shadcn_flutter_extension;
+library vnl_ui_extension;
 
 // This file exports extensions only.
 
-export 'src/theme/theme_extension.dart';
+export 'src/theme/theme_extension.dart'; 

@@ -1,6 +1,9 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-enum PromptMode { dialog, popover }
+enum PromptMode {
+  dialog,
+  popover,
+}
 
 class ObjectFormField<T> extends StatefulWidget {
   final T? value;
@@ -20,6 +23,7 @@ class ObjectFormField<T> extends StatefulWidget {
   final ButtonShape shape;
   final List<Widget> Function(BuildContext context, ObjectFormHandler<T> handler)? dialogActions;
   final bool? enabled;
+  final bool decorate;
 
   const ObjectFormField({
     super.key,
@@ -40,6 +44,7 @@ class ObjectFormField<T> extends StatefulWidget {
     this.shape = ButtonShape.rectangle,
     this.dialogActions,
     this.enabled,
+    this.decorate = true,
   });
 
   @override
@@ -109,10 +114,11 @@ class ObjectFormFieldState<T> extends State<ObjectFormField<T>> with FormValueSu
           editorBuilder: widget.editorBuilder,
           dialogActions: widget.dialogActions,
           prompt: prompt,
+          decorate: widget.decorate,
         );
       },
     ).then((value) {
-      if (mounted && value is _ObjectFormFieldDialogResult<T>) {
+      if (mounted && value is ObjectFormFieldDialogResult<T>) {
         this.value = value.value;
       }
     });
@@ -126,7 +132,9 @@ class ObjectFormFieldState<T> extends State<ObjectFormField<T>> with FormValueSu
       context: context,
       alignment: widget.popoverAlignment ?? Alignment.topLeft,
       anchorAlignment: widget.popoverAnchorAlignment ?? Alignment.bottomLeft,
-      overlayBarrier: OverlayBarrier(borderRadius: BorderRadius.circular(theme.radiusLg)),
+      overlayBarrier: OverlayBarrier(
+        borderRadius: BorderRadius.circular(theme.radiusLg),
+      ),
       modal: true,
       offset: Offset(0, 8 * scaling),
       builder: (context) {
@@ -135,6 +143,7 @@ class ObjectFormFieldState<T> extends State<ObjectFormField<T>> with FormValueSu
           editorBuilder: widget.editorBuilder,
           popoverPadding: widget.popoverPadding,
           prompt: prompt,
+          decorate: widget.decorate,
           onChanged: (value) {
             if (mounted) {
               this.value = value;
@@ -174,6 +183,7 @@ class _ObjectFormFieldDialog<T> extends StatefulWidget {
   final Widget? dialogTitle;
   final List<Widget> Function(BuildContext context, ObjectFormHandler<T> handler)? dialogActions;
   final ValueChanged<T?> prompt;
+  final bool decorate;
 
   const _ObjectFormFieldDialog({
     super.key,
@@ -182,16 +192,17 @@ class _ObjectFormFieldDialog<T> extends StatefulWidget {
     this.dialogTitle,
     this.dialogActions,
     required this.prompt,
+    this.decorate = true,
   });
 
   @override
   State<_ObjectFormFieldDialog<T>> createState() => _ObjectFormFieldDialogState<T>();
 }
 
-class _ObjectFormFieldDialogResult<T> {
+class ObjectFormFieldDialogResult<T> {
   final T? value;
 
-  _ObjectFormFieldDialogResult(this.value);
+  ObjectFormFieldDialogResult(this.value);
 }
 
 class _ObjectFormFieldDialogState<T> extends State<_ObjectFormFieldDialog<T>> implements ObjectFormHandler<T> {
@@ -231,27 +242,34 @@ class _ObjectFormFieldDialogState<T> extends State<_ObjectFormFieldDialog<T>> im
 
   @override
   Widget build(BuildContext context) {
-    final localizations = ShadcnLocalizations.of(context);
+    if (!widget.decorate) {
+      return widget.editorBuilder(context, this);
+    }
+    final localizations = VNLookLocalizations.of(context);
     final theme = Theme.of(context);
     return Data<ObjectFormHandler<T>>.inherit(
       data: this,
-      child: AlertDialog(
+      child: VNLAlertDialog(
         title: widget.dialogTitle,
-        content: Padding(padding: EdgeInsets.only(top: 8 * theme.scaling), child: widget.editorBuilder(context, this)),
+        content: Padding(
+          padding: EdgeInsets.only(top: 8 * theme.scaling),
+          child: widget.editorBuilder(
+            context,
+            this,
+          ),
+        ),
         actions: [
           if (widget.dialogActions != null) ...widget.dialogActions!(context, this),
           SecondaryButton(
-            child: Text(localizations.buttonCancel),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
+              child: Text(localizations.buttonCancel),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
           PrimaryButton(
-            child: Text(localizations.buttonSave),
-            onPressed: () {
-              Navigator.of(context).pop(_ObjectFormFieldDialogResult(_value));
-            },
-          ),
+              child: Text(localizations.buttonSave),
+              onPressed: () {
+                Navigator.of(context).pop(ObjectFormFieldDialogResult(_value));
+              }),
         ],
       ),
     );
@@ -264,6 +282,7 @@ class _ObjectFormFieldPopup<T> extends StatefulWidget {
   final EdgeInsetsGeometry? popoverPadding;
   final ValueChanged<T?>? onChanged;
   final ValueChanged<T?> prompt;
+  final bool decorate;
 
   const _ObjectFormFieldPopup({
     super.key,
@@ -272,6 +291,7 @@ class _ObjectFormFieldPopup<T> extends StatefulWidget {
     required this.prompt,
     this.popoverPadding,
     this.onChanged,
+    this.decorate = true,
   });
 
   @override
@@ -314,12 +334,18 @@ class _ObjectFormFieldPopupState<T> extends State<_ObjectFormFieldPopup<T>> impl
 
   @override
   Widget build(BuildContext context) {
+    if (!widget.decorate) {
+      return widget.editorBuilder(context, this);
+    }
     final theme = Theme.of(context);
     return Data<ObjectFormHandler<T>>.inherit(
       data: this,
       child: SurfaceCard(
         padding: widget.popoverPadding ?? (const EdgeInsets.symmetric(vertical: 16, horizontal: 16) * theme.scaling),
-        child: widget.editorBuilder(context, this),
+        child: widget.editorBuilder(
+          context,
+          this,
+        ),
       ),
     );
   }

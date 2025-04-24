@@ -9,8 +9,8 @@ import 'package:vnl_common_ui/vnl_ui.dart';
 
 import 'platform_interface.dart' if (dart.library.js_interop) 'platform/platform_implementations_web.dart';
 
-class ShadcnApp extends StatefulWidget {
-  const ShadcnApp({
+class VNLookApp extends StatefulWidget {
+  const VNLookApp({
     super.key,
     this.navigatorKey,
     this.home,
@@ -54,13 +54,13 @@ class ShadcnApp extends StatefulWidget {
     this.tooltipHandler,
     this.menuHandler,
     this.enableThemeAnimation = true,
-  }) : routeInformationProvider = null,
-       routeInformationParser = null,
-       routerDelegate = null,
-       backButtonDispatcher = null,
-       routerConfig = null;
+  })  : routeInformationProvider = null,
+        routeInformationParser = null,
+        routerDelegate = null,
+        backButtonDispatcher = null,
+        routerConfig = null;
 
-  const ShadcnApp.router({
+  const VNLookApp.router({
     super.key,
     this.routeInformationProvider,
     this.routeInformationParser,
@@ -101,15 +101,15 @@ class ShadcnApp extends StatefulWidget {
     this.tooltipHandler,
     this.menuHandler,
     this.enableThemeAnimation = true,
-  }) : assert(routerDelegate != null || routerConfig != null),
-       navigatorObservers = null,
-       navigatorKey = null,
-       onGenerateRoute = null,
-       home = null,
-       onGenerateInitialRoutes = null,
-       onUnknownRoute = null,
-       routes = null,
-       initialRoute = null;
+  })  : assert(routerDelegate != null || routerConfig != null),
+        navigatorObservers = null,
+        navigatorKey = null,
+        onGenerateRoute = null,
+        home = null,
+        onGenerateInitialRoutes = null,
+        onUnknownRoute = null,
+        routes = null,
+        initialRoute = null;
 
   final GlobalKey<NavigatorState>? navigatorKey;
 
@@ -179,11 +179,11 @@ class ShadcnApp extends StatefulWidget {
   final bool enableThemeAnimation;
 
   @override
-  State<ShadcnApp> createState() => _ShadcnAppState();
+  State<VNLookApp> createState() => _VNLookAppState();
 }
 
-class ShadcnScrollBehavior extends ScrollBehavior {
-  const ShadcnScrollBehavior();
+class VNLookScrollBehavior extends ScrollBehavior {
+  const VNLookScrollBehavior();
 
   @override
   ScrollPhysics getScrollPhysics(BuildContext context) {
@@ -202,7 +202,10 @@ class ShadcnScrollBehavior extends ScrollBehavior {
           case TargetPlatform.linux:
           case TargetPlatform.macOS:
           case TargetPlatform.windows:
-            return Scrollbar(controller: details.controller, child: child);
+            return Scrollbar(
+              controller: details.controller,
+              child: child,
+            );
           case TargetPlatform.android:
           case TargetPlatform.fuchsia:
           case TargetPlatform.iOS:
@@ -238,8 +241,8 @@ class ShadcnScrollBehavior extends ScrollBehavior {
   }
 }
 
-class _ShadcnAppState extends State<ShadcnApp> {
-  final ShadcnFlutterPlatformImplementations _platform = ShadcnFlutterPlatformImplementations();
+class _VNLookAppState extends State<VNLookApp> {
+  final VNLookPlatformImplementations _platform = VNLookPlatformImplementations();
   late HeroController _heroController;
 
   void _dispatchAppInitialized() {
@@ -252,10 +255,10 @@ class _ShadcnAppState extends State<ShadcnApp> {
   void initState() {
     super.initState();
     _platform.onThemeChanged(widget.theme);
-    // _heroController = ShadcnApp.createMaterialHeroController();
+    // _heroController = VNLookApp.createMaterialHeroController();
     _heroController = HeroController(
       createRectTween: (begin, end) {
-        return ShadcnRectArcTween(begin: begin, end: end);
+        return VNLookRectArcTween(begin: begin, end: end);
       },
     );
     // Future.delayed(const Duration(milliseconds: 10), _dispatchAppInitialized);
@@ -272,7 +275,7 @@ class _ShadcnAppState extends State<ShadcnApp> {
   }
 
   @override
-  void didUpdateWidget(covariant ShadcnApp oldWidget) {
+  void didUpdateWidget(covariant VNLookApp oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (kIsWeb && widget.disableBrowserContextMenu != oldWidget.disableBrowserContextMenu) {
       if (widget.disableBrowserContextMenu) {
@@ -298,12 +301,12 @@ class _ShadcnAppState extends State<ShadcnApp> {
       m.DefaultMaterialLocalizations.delegate,
       c.DefaultCupertinoLocalizations.delegate,
       DefaultWidgetsLocalizations.delegate,
-      ShadcnLocalizationsDelegate.delegate,
+      VNLookLocalizationsDelegate.delegate,
     ];
   }
 
   Widget _builder(BuildContext context, Widget? child) {
-    return ShadcnLayer(
+    return VNLookLayer(
       theme: widget.theme,
       scaling: widget.scaling,
       initialRecentColors: widget.initialRecentColors,
@@ -334,7 +337,9 @@ class _ShadcnAppState extends State<ShadcnApp> {
         builder: _builder,
         title: widget.title,
         onGenerateTitle: widget.onGenerateTitle,
-        textStyle: widget.theme.typography.sans.copyWith(color: widget.theme.colorScheme.foreground),
+        textStyle: widget.theme.typography.sans.copyWith(
+          color: widget.theme.colorScheme.foreground,
+        ),
         color: primaryColor,
         locale: widget.locale,
         localizationsDelegates: _localizationsDelegates,
@@ -369,7 +374,9 @@ class _ShadcnAppState extends State<ShadcnApp> {
       builder: _builder,
       title: widget.title,
       onGenerateTitle: widget.onGenerateTitle,
-      textStyle: widget.theme.typography.sans.copyWith(color: widget.theme.colorScheme.foreground),
+      textStyle: widget.theme.typography.sans.copyWith(
+        color: widget.theme.colorScheme.foreground,
+      ),
       color: primaryColor,
       locale: widget.locale,
       localizationsDelegates: _localizationsDelegates,
@@ -390,13 +397,17 @@ class _ShadcnAppState extends State<ShadcnApp> {
     Widget result = _buildWidgetApp(context);
     assert(() {
       if (widget.debugShowMaterialGrid) {
-        result = GridPaper(color: const Color(0xE0F9BBE0), interval: 8.0, subdivisions: 1, child: result);
+        result = GridPaper(
+          color: const Color(0xE0F9BBE0),
+          interval: 8.0,
+          subdivisions: 1,
+          child: result,
+        );
       }
       return true;
     }());
     return m.Theme(
-      data:
-          widget.materialTheme ??
+      data: widget.materialTheme ??
           m.ThemeData.from(
             colorScheme: m.ColorScheme.fromSeed(
               seedColor: widget.theme.colorScheme.primary,
@@ -408,8 +419,7 @@ class _ShadcnAppState extends State<ShadcnApp> {
             ),
           ),
       child: c.CupertinoTheme(
-        data:
-            widget.cupertinoTheme ??
+        data: widget.cupertinoTheme ??
             c.CupertinoThemeData(
               brightness: widget.theme.brightness,
               primaryColor: widget.theme.colorScheme.primary,
@@ -422,8 +432,11 @@ class _ShadcnAppState extends State<ShadcnApp> {
           color: m.Colors.transparent,
           child: m.ScaffoldMessenger(
             child: ScrollConfiguration(
-              behavior: (widget.scrollBehavior ?? const ShadcnScrollBehavior()),
-              child: HeroControllerScope(controller: _heroController, child: result),
+              behavior: (widget.scrollBehavior ?? const VNLookScrollBehavior()),
+              child: HeroControllerScope(
+                controller: _heroController,
+                child: result,
+              ),
             ),
           ),
         ),
@@ -432,7 +445,7 @@ class _ShadcnAppState extends State<ShadcnApp> {
   }
 }
 
-class ShadcnLayer extends StatelessWidget {
+class VNLookLayer extends StatelessWidget {
   final Widget? child;
   final ThemeData theme;
   final ThemeData? darkTheme;
@@ -448,7 +461,7 @@ class ShadcnLayer extends StatelessWidget {
   final OverlayHandler? menuHandler;
   final bool enableThemeAnimation;
 
-  const ShadcnLayer({
+  const VNLookLayer({
     super.key,
     required this.theme,
     this.scaling,
@@ -480,37 +493,38 @@ class ShadcnLayer extends StatelessWidget {
       popoverHandler: popoverHandler ?? (mobileMode ? const SheetOverlayHandler() : const PopoverOverlayHandler()),
       tooltipHandler:
           tooltipHandler ?? (mobileMode ? const FixedTooltipOverlayHandler() : const PopoverOverlayHandler()),
-      child: ShadcnAnimatedTheme(
+      child: VNLookAnimatedTheme(
         duration: kDefaultDuration,
         data: scaledTheme,
-        child: Builder(
-          builder: (context) {
-            var theme = Theme.of(context);
-            return DataMessengerRoot(
-              child: ScrollViewInterceptor(
-                enabled: enableScrollInterception,
-                child: ShadcnSkeletonizerConfigLayer(
-                  theme: theme,
-                  child: DefaultTextStyle.merge(
-                    style: theme.typography.base.copyWith(color: theme.colorScheme.foreground),
-                    child: IconTheme.merge(
-                      data: theme.iconTheme.medium.copyWith(color: theme.colorScheme.foreground),
-                      child: RecentColorsScope(
-                        initialRecentColors: initialRecentColors,
-                        maxRecentColors: maxRecentColors,
-                        onRecentColorsChanged: onRecentColorsChanged,
-                        child: ColorPickingLayer(
-                          child: KeyboardShortcutDisplayMapper(
-                            child: ToastLayer(
-                              child:
-                                  builder != null
-                                      ? Builder(
-                                        builder: (BuildContext context) {
-                                          return builder!(context, child);
-                                        },
-                                      )
-                                      : child ?? const SizedBox.shrink(),
-                            ),
+        child: Builder(builder: (context) {
+          var theme = Theme.of(context);
+          return DataMessengerRoot(
+            child: ScrollViewInterceptor(
+              enabled: enableScrollInterception,
+              child: VNLookSkeletonizerConfigLayer(
+                theme: theme,
+                child: DefaultTextStyle.merge(
+                  style: theme.typography.base.copyWith(
+                    color: theme.colorScheme.foreground,
+                  ),
+                  child: IconTheme.merge(
+                    data: theme.iconTheme.medium.copyWith(
+                      color: theme.colorScheme.foreground,
+                    ),
+                    child: RecentColorsScope(
+                      initialRecentColors: initialRecentColors,
+                      maxRecentColors: maxRecentColors,
+                      onRecentColorsChanged: onRecentColorsChanged,
+                      child: ColorPickingLayer(
+                        child: KeyboardShortcutDisplayMapper(
+                          child: ToastLayer(
+                            child: builder != null
+                                ? Builder(
+                                    builder: (BuildContext context) {
+                                      return builder!(context, child);
+                                    },
+                                  )
+                                : child ?? const SizedBox.shrink(),
                           ),
                         ),
                       ),
@@ -518,22 +532,22 @@ class ShadcnLayer extends StatelessWidget {
                   ),
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        }),
       ),
     );
   }
 }
 
-class ShadcnAnimatedTheme extends StatelessWidget {
+class VNLookAnimatedTheme extends StatelessWidget {
   final Widget child;
   final ThemeData data;
   final Duration duration;
   final Curve curve;
   final VoidCallback? onEnd;
 
-  const ShadcnAnimatedTheme({
+  const VNLookAnimatedTheme({
     super.key,
     required this.data,
     required this.duration,
@@ -545,14 +559,25 @@ class ShadcnAnimatedTheme extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (duration == Duration.zero) {
-      return Theme(data: data, child: child);
+      return Theme(
+        data: data,
+        child: child,
+      );
     }
-    return AnimatedTheme(data: data, duration: duration, curve: curve, child: child);
+    return AnimatedTheme(
+      data: data,
+      duration: duration,
+      curve: curve,
+      child: child,
+    );
   }
 }
 
-class ShadcnRectArcTween extends RectTween {
-  ShadcnRectArcTween({super.begin, super.end});
+class VNLookRectArcTween extends RectTween {
+  VNLookRectArcTween({
+    super.begin,
+    super.end,
+  });
 
   bool _dirty = true;
 
@@ -560,15 +585,16 @@ class ShadcnRectArcTween extends RectTween {
     assert(begin != null);
     assert(end != null);
     final Offset centersVector = end!.center - begin!.center;
-    final _BorderRadiusCorner diagonal = _findMax<_BorderRadiusCorner>(
-      _allDiagonals,
-      (_BorderRadiusCorner d) => _diagonalSupport(centersVector, d),
-    );
-    _beginArc = ShadcnPointArcTween(
+    final _BorderRadiusCorner diagonal =
+        _findMax<_BorderRadiusCorner>(_allDiagonals, (_BorderRadiusCorner d) => _diagonalSupport(centersVector, d));
+    _beginArc = VNLookPointArcTween(
       begin: _cornerFor(begin!, diagonal.beginId),
       end: _cornerFor(end!, diagonal.beginId),
     );
-    _endArc = ShadcnPointArcTween(begin: _cornerFor(begin!, diagonal.endId), end: _cornerFor(end!, diagonal.endId));
+    _endArc = VNLookPointArcTween(
+      begin: _cornerFor(begin!, diagonal.endId),
+      end: _cornerFor(end!, diagonal.endId),
+    );
     _dirty = false;
   }
 
@@ -587,7 +613,7 @@ class ShadcnRectArcTween extends RectTween {
     };
   }
 
-  ShadcnPointArcTween? get beginArc {
+  VNLookPointArcTween? get beginArc {
     if (begin == null) {
       return null;
     }
@@ -597,8 +623,8 @@ class ShadcnRectArcTween extends RectTween {
     return _beginArc;
   }
 
-  late ShadcnPointArcTween _beginArc;
-  ShadcnPointArcTween? get endArc {
+  late VNLookPointArcTween _beginArc;
+  VNLookPointArcTween? get endArc {
     if (end == null) {
       return null;
     }
@@ -608,7 +634,7 @@ class ShadcnRectArcTween extends RectTween {
     return _endArc;
   }
 
-  late ShadcnPointArcTween _endArc;
+  late VNLookPointArcTween _endArc;
 
   @override
   set begin(Rect? value) {
@@ -673,8 +699,11 @@ class _BorderRadiusCorner {
 
 const double _kOnAxisDelta = 2.0;
 
-class ShadcnPointArcTween extends Tween<Offset> {
-  ShadcnPointArcTween({super.begin, super.end});
+class VNLookPointArcTween extends Tween<Offset> {
+  VNLookPointArcTween({
+    super.begin,
+    super.end,
+  });
 
   bool _dirty = true;
 
@@ -807,19 +836,31 @@ class ShadcnPointArcTween extends Tween<Offset> {
   }
 }
 
-class ShadcnUI extends StatelessWidget {
+class VNLookUI extends StatelessWidget {
   final TextStyle? textStyle;
   final Widget child;
 
-  const ShadcnUI({super.key, this.textStyle, required this.child});
+  const VNLookUI({
+    super.key,
+    this.textStyle,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return AnimatedDefaultTextStyle(
-      style: textStyle ?? theme.typography.sans.copyWith(color: theme.colorScheme.foreground),
+      style: textStyle ??
+          theme.typography.sans.copyWith(
+            color: theme.colorScheme.foreground,
+          ),
       duration: kDefaultDuration,
-      child: IconTheme(data: IconThemeData(color: theme.colorScheme.foreground), child: child),
+      child: IconTheme(
+        data: IconThemeData(
+          color: theme.colorScheme.foreground,
+        ),
+        child: child,
+      ),
     );
   }
 }
@@ -827,7 +868,9 @@ class ShadcnUI extends StatelessWidget {
 class _GlobalPointerListener extends c.StatefulWidget {
   final Widget child;
 
-  const _GlobalPointerListener({required this.child});
+  const _GlobalPointerListener({
+    required this.child,
+  });
 
   @override
   c.State<_GlobalPointerListener> createState() => _GlobalPointerListenerState();
@@ -836,7 +879,9 @@ class _GlobalPointerListener extends c.StatefulWidget {
 class PointerData {
   final Offset position;
 
-  PointerData({required this.position});
+  PointerData({
+    required this.position,
+  });
 
   @override
   bool operator ==(Object other) {
@@ -877,7 +922,10 @@ class _GlobalPointerListenerState extends c.State<_GlobalPointerListener> {
       child: widget.child,
     );
     if (_position != null) {
-      child = Data.inherit(data: PointerData(position: _position!), child: child);
+      child = Data.inherit(
+        data: PointerData(position: _position!),
+        child: child,
+      );
     }
     return child;
   }

@@ -4,12 +4,16 @@ class ChipButton extends StatelessWidget {
   final Widget child;
   final VoidCallback? onPressed;
 
-  const ChipButton({super.key, required this.child, this.onPressed});
+  const ChipButton({
+    super.key,
+    required this.child,
+    this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Button(
+    return VNLButton(
       style: ButtonVariance(
         decoration: (context, states) {
           return const BoxDecoration();
@@ -39,19 +43,26 @@ class ChipButton extends StatelessWidget {
   }
 }
 
-class Chip extends StatelessWidget {
+class VNLChip extends StatelessWidget {
   final Widget child;
   final Widget? leading;
   final Widget? trailing;
   final VoidCallback? onPressed;
   final AbstractButtonStyle? style;
 
-  const Chip({super.key, required this.child, this.leading, this.trailing, this.onPressed, this.style});
+  const VNLChip({
+    super.key,
+    required this.child,
+    this.leading,
+    this.trailing,
+    this.onPressed,
+    this.style,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Button(
+    return VNLButton(
       style: (style ?? ButtonVariance.secondary).copyWith(
         mouseCursor: (context, states, value) {
           return onPressed != null ? SystemMouseCursors.click : SystemMouseCursors.basic;

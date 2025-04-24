@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-// import 'package:vnl_common_ui/vnl_ui.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
 const kDebugStickerVisible = true;
@@ -24,8 +23,16 @@ void debugPostSticker(BuildContext context, Rect rect, Color color, String text)
             opacity: 0.2,
             child: Container(
               padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(color: color),
-              child: Text(text, style: const TextStyle(color: Colors.white, fontSize: 12)),
+              decoration: BoxDecoration(
+                color: color,
+              ),
+              child: Text(
+                text,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+              ),
             ),
           ),
         ),
@@ -43,6 +50,9 @@ extension DebugContainer on Widget {
     if (!kDebugContainerVisible) {
       return this;
     }
-    return Container(color: color, child: this);
+    return Container(
+      color: color,
+      child: this,
+    );
   }
 }

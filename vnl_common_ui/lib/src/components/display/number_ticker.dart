@@ -21,8 +21,8 @@ class NumberTicker extends StatelessWidget {
     this.child,
     this.duration = const Duration(milliseconds: 500),
     this.curve = Curves.easeInOut,
-  }) : formatter = null,
-       style = null;
+  })  : formatter = null,
+        style = null;
 
   const NumberTicker({
     super.key,
@@ -32,8 +32,8 @@ class NumberTicker extends StatelessWidget {
     this.duration = const Duration(milliseconds: 500),
     this.curve = Curves.easeInOut,
     this.style,
-  }) : builder = null,
-       child = null;
+  })  : builder = null,
+        child = null;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,10 @@ class NumberTicker extends StatelessWidget {
         curve: curve,
         initialValue: initialNumber?.toDouble(),
         builder: (context, value, child) {
-          return Text(formatter!(value), style: style);
+          return Text(
+            formatter!(value),
+            style: style,
+          );
         },
       );
     }

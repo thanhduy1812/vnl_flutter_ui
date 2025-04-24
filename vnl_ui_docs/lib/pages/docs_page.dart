@@ -888,7 +888,6 @@ class DocsPageState extends State<DocsPage> {
 
 class _DocsSidebar extends StatefulWidget {
   const _DocsSidebar({
-    super.key,
     required this.sections,
     required this.pageName,
   });
@@ -925,7 +924,6 @@ class _DocsSecondarySidebar extends StatefulWidget {
   final EdgeInsets padding;
 
   const _DocsSecondarySidebar({
-    super.key,
     required this.onThisPage,
     required this.isVisible,
     required this.padding,
@@ -981,7 +979,6 @@ class _DocsSecondarySidebarState extends State<_DocsSecondarySidebar> {
 
 class _DocsSidebarSection extends StatefulWidget {
   const _DocsSidebarSection({
-    super.key,
     required this.section,
     required this.pageName,
   });
@@ -1017,7 +1014,6 @@ class _DocsSidebarSectionState extends State<_DocsSidebarSection> {
 
 class _DocsSidebarButton extends StatefulWidget {
   const _DocsSidebarButton({
-    super.key,
     required this.page,
     required this.pageName,
   });

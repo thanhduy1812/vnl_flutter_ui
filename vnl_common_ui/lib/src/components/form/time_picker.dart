@@ -42,13 +42,13 @@ class ControlledTimePicker extends StatelessWidget with ControlledComponent<Time
 
   @override
   Widget build(BuildContext context) {
-    return ControlledComponentBuilder(
+    return ControlledComponentAdapter(
       controller: controller,
       initialValue: initialValue,
       onChanged: onChanged,
       enabled: enabled,
       builder: (context, data) {
-        return TimePicker(
+        return VNLTimePicker(
           value: data.value,
           onChanged: data.onChanged,
           mode: mode,
@@ -66,7 +66,7 @@ class ControlledTimePicker extends StatelessWidget with ControlledComponent<Time
   }
 }
 
-class TimePicker extends StatelessWidget {
+class VNLTimePicker extends StatelessWidget {
   final TimeOfDay? value;
   final ValueChanged<TimeOfDay?>? onChanged;
   final PromptMode mode;
@@ -79,7 +79,7 @@ class TimePicker extends StatelessWidget {
   final Widget? dialogTitle;
   final bool? enabled;
 
-  const TimePicker({
+  const VNLTimePicker({
     super.key,
     required this.value,
     this.onChanged,
@@ -96,7 +96,7 @@ class TimePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ShadcnLocalizations localizations = ShadcnLocalizations.of(context);
+    VNLookLocalizations localizations = VNLookLocalizations.of(context);
     bool use24HourFormat = this.use24HourFormat ?? MediaQuery.of(context).alwaysUse24HourFormat;
     return ObjectFormField(
       value: value,
@@ -158,14 +158,21 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
         clipBehavior: Clip.none,
         children: [
           Positioned.fill(
-            child: TextField(
+            child: VNLTextField(
               textAlign: TextAlign.center,
+              textAlignVertical: TextAlignVertical.center,
               controller: controller,
               style: theme.typography.x4Large,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly, const _TimeFormatter()],
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                const _TimeFormatter(),
+              ],
             ),
           ),
-          Positioned(bottom: (-24) * theme.scaling, child: Text(label).muted()),
+          Positioned(
+            bottom: (-24) * theme.scaling,
+            child: Text(label).muted(),
+          ),
         ],
       ),
     );
@@ -223,9 +230,15 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
       initialHour -= 12;
       _pm = true;
     }
-    _hourController = TextEditingController(text: _formatDigits(initialHour));
-    _minuteController = TextEditingController(text: _formatDigits(initialMinute));
-    _secondController = TextEditingController(text: _formatDigits(initialSecond));
+    _hourController = TextEditingController(
+      text: _formatDigits(initialHour),
+    );
+    _minuteController = TextEditingController(
+      text: _formatDigits(initialMinute),
+    );
+    _secondController = TextEditingController(
+      text: _formatDigits(initialSecond),
+    );
     _hourController.addListener(_onChanged);
     _minuteController.addListener(_onChanged);
     _secondController.addListener(_onChanged);
@@ -235,7 +248,7 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     return IntrinsicWidth(
       child: IntrinsicHeight(
         child: Padding(
@@ -244,12 +257,30 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Expanded(child: _buildInput(context, _hourController, localizations.timeHour)),
+              Expanded(
+                child: _buildInput(
+                  context,
+                  _hourController,
+                  localizations.timeHour,
+                ),
+              ),
               _buildSeparator(context),
-              Expanded(child: _buildInput(context, _minuteController, localizations.timeMinute)),
+              Expanded(
+                child: _buildInput(
+                  context,
+                  _minuteController,
+                  localizations.timeMinute,
+                ),
+              ),
               if (widget.showSeconds) ...[
                 _buildSeparator(context),
-                Expanded(child: _buildInput(context, _secondController, localizations.timeSecond)),
+                Expanded(
+                  child: _buildInput(
+                    context,
+                    _secondController,
+                    localizations.timeSecond,
+                  ),
+                ),
               ],
               if (!widget.use24HourFormat) ...[
                 Gap(8 * scaling),
@@ -259,7 +290,7 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Expanded(
-                        child: Toggle(
+                        child: VNLToggle(
                           value: !_pm,
                           onChanged: (value) {
                             setState(() {
@@ -271,7 +302,7 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
                         ),
                       ),
                       Expanded(
-                        child: Toggle(
+                        child: VNLToggle(
                           value: _pm,
                           onChanged: (value) {
                             setState(() {
@@ -284,8 +315,8 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
                       ),
                     ],
                   ),
-                ),
-              ],
+                )
+              ]
             ],
           ),
         ),
@@ -315,11 +346,278 @@ class _TimeFormatter extends TextInputFormatter {
     }
     return newValue.copyWith(
       text: newText,
-      composing:
-          newValue.composing.isValid
-              ? TextRange(start: newValue.composing.start.clamp(0, 2), end: newValue.composing.end.clamp(0, 2))
-              : newValue.composing,
-      selection: TextSelection(baseOffset: baseOffset2.clamp(0, 2), extentOffset: extentOffset2.clamp(0, 2)),
+      composing: newValue.composing.isValid
+          ? TextRange(
+              start: newValue.composing.start.clamp(0, 2),
+              end: newValue.composing.end.clamp(0, 2),
+            )
+          : newValue.composing,
+      selection: TextSelection(
+        baseOffset: baseOffset2.clamp(0, 2),
+        extentOffset: extentOffset2.clamp(0, 2),
+      ),
     );
+  }
+}
+
+class DurationPickerController extends ValueNotifier<Duration?> with ComponentController<Duration?> {
+  DurationPickerController(super.value);
+}
+
+enum DurationPart {
+  day,
+  hour,
+  minute,
+  second,
+}
+
+enum TimePart {
+  hour,
+  minute,
+  second,
+}
+
+class DurationPicker extends StatelessWidget {
+  final Duration? value;
+  final ValueChanged<Duration?>? onChanged;
+  final PromptMode mode;
+  final Widget? placeholder;
+  final AlignmentGeometry? popoverAlignment;
+  final AlignmentGeometry? popoverAnchorAlignment;
+  final EdgeInsetsGeometry? popoverPadding;
+  final Widget? dialogTitle;
+  final bool? enabled;
+
+  const DurationPicker({
+    super.key,
+    required this.value,
+    this.onChanged,
+    this.mode = PromptMode.dialog,
+    this.placeholder,
+    this.popoverAlignment,
+    this.popoverAnchorAlignment,
+    this.popoverPadding,
+    this.dialogTitle,
+    this.enabled,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    VNLookLocalizations localizations = VNLookLocalizations.of(context);
+    return ObjectFormField(
+      value: value,
+      placeholder: placeholder ?? Text(localizations.placeholderDurationPicker),
+      onChanged: onChanged,
+      builder: (context, value) {
+        return Text(localizations.formatDuration(value));
+      },
+      enabled: enabled,
+      mode: mode,
+      dialogTitle: dialogTitle,
+      trailing: const Icon(Icons.access_time),
+      editorBuilder: (context, handler) {
+        return DurationPickerDialog(
+          initialValue: handler.value,
+          onChanged: (value) {
+            handler.value = value;
+          },
+        );
+      },
+    );
+  }
+}
+
+class DurationPickerDialog extends StatefulWidget {
+  final Duration? initialValue;
+  final ValueChanged<Duration?>? onChanged;
+
+  const DurationPickerDialog({
+    super.key,
+    this.initialValue,
+    this.onChanged,
+  });
+
+  @override
+  State<DurationPickerDialog> createState() => _DurationPickerDialogState();
+}
+
+class _DurationPickerDialogState extends State<DurationPickerDialog> {
+  late TextEditingController _dayController;
+  late TextEditingController _hourController;
+  late TextEditingController _minuteController;
+  late TextEditingController _secondController;
+
+  String _formatDigits(int value) {
+    return value.toString().padLeft(2, '0');
+  }
+
+  Widget _buildInput(BuildContext context, TextEditingController controller, String label) {
+    final theme = Theme.of(context);
+    return ConstrainedBox(
+      constraints: BoxConstraints(minWidth: 72 * theme.scaling, minHeight: 72 * theme.scaling),
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Positioned.fill(
+            child: VNLTextField(
+              textAlign: TextAlign.center,
+              controller: controller,
+              style: theme.typography.x4Large,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                const _TimeFormatter(),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: (-24) * theme.scaling,
+            child: Text(label).muted(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSeparator(BuildContext context) {
+    final theme = Theme.of(context);
+    final scaling = theme.scaling;
+    return const Text(':').x5Large().withPadding(horizontal: 8 * scaling);
+  }
+
+  void _onChanged() {
+    int day = int.tryParse(_dayController.text) ?? 0;
+    int hour = int.tryParse(_hourController.text) ?? 0;
+    int minute = int.tryParse(_minuteController.text) ?? 0;
+    int second = int.tryParse(_secondController.text) ?? 0;
+    day = day.clamp(0, 999);
+    hour = hour.clamp(0, 23);
+    minute = minute.clamp(0, 59);
+    second = second.clamp(0, 59);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      widget.onChanged?.call(Duration(
+        days: day,
+        hours: hour,
+        minutes: minute,
+        seconds: second,
+      ));
+    });
+  }
+
+  @override
+  void dispose() {
+    _dayController.dispose();
+    _hourController.dispose();
+    _minuteController.dispose();
+    _secondController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    int initialDay = widget.initialValue?.inDays ?? 0;
+    int initialHour = widget.initialValue?.inHours ?? 0;
+    int initialMinute = widget.initialValue?.inMinutes ?? 0;
+    int initialSecond = widget.initialValue?.inSeconds ?? 0;
+    _dayController = TextEditingController(
+      text: _formatDigits(initialDay),
+    );
+    _hourController = TextEditingController(
+      text: _formatDigits(initialHour % Duration.hoursPerDay),
+    );
+    _minuteController = TextEditingController(
+      text: _formatDigits(initialMinute % Duration.minutesPerHour),
+    );
+    _secondController = TextEditingController(
+      text: _formatDigits(initialSecond % Duration.secondsPerMinute),
+    );
+    _dayController.addListener(_onChanged);
+    _hourController.addListener(_onChanged);
+    _minuteController.addListener(_onChanged);
+    _secondController.addListener(_onChanged);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scaling = theme.scaling;
+    final localizations = VNLookLocalizations.of(context);
+    return IntrinsicWidth(
+      child: IntrinsicHeight(
+        child: Padding(
+          padding: EdgeInsets.only(bottom: (16 + 12) * scaling),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: _buildInput(
+                  context,
+                  _dayController,
+                  localizations.durationDay,
+                ),
+              ),
+              _buildSeparator(context),
+              Expanded(
+                child: _buildInput(
+                  context,
+                  _hourController,
+                  localizations.durationHour,
+                ),
+              ),
+              _buildSeparator(context),
+              Expanded(
+                child: _buildInput(
+                  context,
+                  _minuteController,
+                  localizations.durationMinute,
+                ),
+              ),
+              _buildSeparator(context),
+              Expanded(
+                child: _buildInput(
+                  context,
+                  _secondController,
+                  localizations.durationSecond,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TimeRange {
+  final TimeOfDay start;
+  final TimeOfDay end;
+
+  const TimeRange({
+    required this.start,
+    required this.end,
+  });
+
+  TimeRange copyWith({
+    TimeOfDay? start,
+    TimeOfDay? end,
+  }) {
+    return TimeRange(
+      start: start ?? this.start,
+      end: end ?? this.end,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TimeRange && runtimeType == other.runtimeType && start == other.start && end == other.end;
+
+  @override
+  int get hashCode => start.hashCode ^ end.hashCode;
+
+  @override
+  String toString() {
+    return 'TimeRange{start: $start, end: $end}';
   }
 }

@@ -48,12 +48,12 @@ class ControlledSlider extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return ControlledComponentBuilder(
+    return ControlledComponentAdapter(
       controller: controller,
       initialValue: initialValue,
       onChanged: onChanged,
       builder: (context, data) {
-        return Slider(
+        return VNLSlider(
           value: data.value,
           onChanged: data.onChanged,
           onChangeStart: onChangeStart,
@@ -127,7 +127,7 @@ class DecreaseSliderValue extends Intent {
   const DecreaseSliderValue();
 }
 
-class Slider extends StatefulWidget {
+class VNLSlider extends StatefulWidget {
   final SliderValue value;
   final ValueChanged<SliderValue>? onChanged;
   final ValueChanged<SliderValue>? onChangeStart;
@@ -140,7 +140,7 @@ class Slider extends StatefulWidget {
   final double? decreaseStep;
   final bool? enabled;
 
-  const Slider({
+  const VNLSlider({
     super.key,
     required this.value,
     this.onChanged,
@@ -159,8 +159,8 @@ class Slider extends StatefulWidget {
   _SliderState createState() => _SliderState();
 }
 
-class _SliderState extends State<Slider>
-    with FormValueSupplier<SliderValue, Slider> {
+class _SliderState extends State<VNLSlider>
+    with FormValueSupplier<SliderValue, VNLSlider> {
   late SliderValue
       _currentValue; // used for the thumb position (not the trackbar)
   // trackbar position uses the widget.value
@@ -217,7 +217,7 @@ class _SliderState extends State<Slider>
   }
 
   @override
-  void didUpdateWidget(covariant Slider oldWidget) {
+  void didUpdateWidget(covariant VNLSlider oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.value != oldWidget.value && !_dragging) {
       if (widget.value.isRanged) {

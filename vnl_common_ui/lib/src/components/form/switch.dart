@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
-import 'package:vnl_common_ui/src/components/layout/focus_outline.dart';
 
 import '../../../vnl_ui.dart';
+import '../layout/focus_outline.dart';
 
 const kSwitchDuration = Duration(milliseconds: 100);
 
@@ -39,13 +39,13 @@ class ControlledSwitch extends StatelessWidget with ControlledComponent<bool> {
 
   @override
   Widget build(BuildContext context) {
-    return ControlledComponentBuilder(
+    return ControlledComponentAdapter(
       controller: controller,
       initialValue: initialValue,
       onChanged: onChanged,
       enabled: enabled,
       builder: (context, data) {
-        return Switch(
+        return VNLSwitch(
           value: data.value,
           onChanged: data.onChanged,
           enabled: data.enabled,
@@ -57,14 +57,14 @@ class ControlledSwitch extends StatelessWidget with ControlledComponent<bool> {
   }
 }
 
-class Switch extends StatefulWidget {
+class VNLSwitch extends StatefulWidget {
   final bool value;
   final ValueChanged<bool>? onChanged;
   final Widget? leading;
   final Widget? trailing;
   final bool? enabled;
 
-  const Switch({
+  const VNLSwitch({
     super.key,
     required this.value,
     required this.onChanged,
@@ -74,10 +74,10 @@ class Switch extends StatefulWidget {
   });
 
   @override
-  State<Switch> createState() => _SwitchState();
+  State<VNLSwitch> createState() => _SwitchState();
 }
 
-class _SwitchState extends State<Switch> with FormValueSupplier<bool, Switch> {
+class _SwitchState extends State<VNLSwitch> with FormValueSupplier<bool, VNLSwitch> {
   bool _focusing = false;
 
   @override
@@ -89,7 +89,7 @@ class _SwitchState extends State<Switch> with FormValueSupplier<bool, Switch> {
   bool get _enabled => widget.enabled ?? widget.onChanged != null;
 
   @override
-  void didUpdateWidget(covariant Switch oldWidget) {
+  void didUpdateWidget(covariant VNLSwitch oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.value != oldWidget.value) {
       formValue = widget.value;

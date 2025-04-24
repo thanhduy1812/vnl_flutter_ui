@@ -123,12 +123,12 @@ class ImageInput extends StatelessWidget {
   }
 }
 
-class ImageTools extends StatelessWidget {
+class VNLImageTools extends StatelessWidget {
   final Widget image;
   final ImageProperties properties;
   final ValueChanged<ImageProperties> onPropertiesChanged;
 
-  const ImageTools({
+  const VNLImageTools({
     super.key,
     required this.image,
     required this.properties,

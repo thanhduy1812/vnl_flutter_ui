@@ -86,16 +86,15 @@ class _SortableDraggingSession<T> {
   }) : offset = ValueNotifier(offset);
 }
 
-enum _SortableDropLocation { top, left, right, bottom }
+enum _SortableDropLocation {
+  top,
+  left,
+  right,
+  bottom,
+}
 
-_SortableDropLocation? _getPosition(
-  Offset position,
-  Size size, {
-  bool acceptTop = false,
-  bool acceptLeft = false,
-  bool acceptRight = false,
-  bool acceptBottom = false,
-}) {
+_SortableDropLocation? _getPosition(Offset position, Size size,
+    {bool acceptTop = false, bool acceptLeft = false, bool acceptRight = false, bool acceptBottom = false}) {
   double dx = position.dx;
   double dy = position.dy;
   double width = size.width;
@@ -129,7 +128,12 @@ class SortableDropFallback<T> extends StatefulWidget {
   final Predicate<SortableData<T>>? canAccept;
   final Widget child;
 
-  const SortableDropFallback({super.key, required this.child, this.onAccept, this.canAccept});
+  const SortableDropFallback({
+    super.key,
+    required this.child,
+    this.onAccept,
+    this.canAccept,
+  });
 
   @override
   State<SortableDropFallback<T>> createState() => _SortableDropFallbackState<T>();
@@ -140,7 +144,15 @@ class _SortableDropFallbackState<T> extends State<SortableDropFallback<T>> {
   Widget build(BuildContext context) {
     return Stack(
       fit: StackFit.passthrough,
-      children: [Positioned.fill(child: MetaData(behavior: HitTestBehavior.translucent, metaData: this)), widget.child],
+      children: [
+        Positioned.fill(
+          child: MetaData(
+            behavior: HitTestBehavior.translucent,
+            metaData: this,
+          ),
+        ),
+        widget.child,
+      ],
     );
   }
 }
@@ -150,7 +162,11 @@ class _DroppingTarget<T> {
   final ValueNotifier<_SortableDraggingSession<T>?> candidate;
   final _SortableDropLocation location;
 
-  _DroppingTarget({required this.source, required this.candidate, required this.location});
+  _DroppingTarget({
+    required this.source,
+    required this.candidate,
+    required this.location,
+  });
 
   void dispose(_SortableDraggingSession<T> target) {
     if (candidate.value == target) {
@@ -186,7 +202,13 @@ class _DropTransform {
 
   final ValueNotifier<double> progress = ValueNotifier(0);
 
-  _DropTransform({required this.layer, required this.from, required this.to, required this.child, required this.state});
+  _DropTransform({
+    required this.layer,
+    required this.from,
+    required this.to,
+    required this.child,
+    required this.state,
+  });
 }
 
 class _SortableState<T> extends State<Sortable<T>> with AutomaticKeepAliveClientMixin {
@@ -254,7 +276,10 @@ class _SortableState<T> extends State<Sortable<T>> with AutomaticKeepAliveClient
     Matrix4 transform = renderBox.getTransformTo(layerRenderBox);
     Size size = renderBox.size;
     Offset minOffset = MatrixUtils.transformPoint(transform, Offset.zero);
-    Offset maxOffset = MatrixUtils.transformPoint(transform, Offset(size.width, size.height));
+    Offset maxOffset = MatrixUtils.transformPoint(
+      transform,
+      Offset(size.width, size.height),
+    );
     final ghost = widget.ghost ?? widget.child;
     final candidateFallback = widget.candidateFallback;
     _session = _SortableDraggingSession(
@@ -312,14 +337,19 @@ class _SortableState<T> extends State<Sortable<T>> with AutomaticKeepAliveClient
         double minY = -minOffset.dy;
         double maxY = size.height - maxOffset.dy;
         _session!.offset.value = Offset(
-          (_session!.offset.value.dx + delta.dx).clamp(min(minX, maxX), max(minX, maxX)),
-          (_session!.offset.value.dy + delta.dy).clamp(min(minY, maxY), max(minY, maxY)),
+          (_session!.offset.value.dx + delta.dx).clamp(
+            min(minX, maxX),
+            max(minX, maxX),
+          ),
+          (_session!.offset.value.dy + delta.dy).clamp(
+            min(minY, maxY),
+            max(minY, maxY),
+          ),
         );
       } else {
         _session!.offset.value += delta;
       }
-      Offset globalPosition =
-          _session!.offset.value +
+      Offset globalPosition = _session!.offset.value +
           minOffset +
           Offset((maxOffset.dx - minOffset.dx) / 2, (maxOffset.dy - minOffset.dy) / 2);
       (_SortableState<T>, Offset)? target = _findState(_session!.layer, globalPosition);
@@ -504,7 +534,11 @@ class _SortableState<T> extends State<Sortable<T>> with AutomaticKeepAliveClient
     if (!hasCandidate) {
       return child!;
     }
-    return AnimatedSize(duration: duration, alignment: alignment, child: child);
+    return AnimatedSize(
+      duration: duration,
+      alignment: alignment,
+      child: child,
+    );
   }
 
   @override
@@ -586,46 +620,54 @@ class _SortableState<T> extends State<Sortable<T>> with AutomaticKeepAliveClient
                           ),
                         ),
                         Flexible(
-                          child:
-                              _dragging
-                                  ? widget.fallback ??
-                                      ListenableBuilder(
-                                        listenable: _hasDraggedOff,
-                                        builder: (context, child) {
-                                          return (_hasDraggedOff.value
-                                              ? AbsorbPointer(
-                                                child: Visibility(
-                                                  visible: false,
-                                                  maintainState: true,
-                                                  child: KeyedSubtree(key: _key, child: widget.child),
-                                                ),
-                                              )
-                                              : AbsorbPointer(
-                                                child: Visibility(
-                                                  maintainSize: true,
-                                                  maintainAnimation: true,
-                                                  maintainState: true,
-                                                  visible: false,
-                                                  child: KeyedSubtree(key: _key, child: widget.child),
-                                                ),
-                                              ));
-                                        },
-                                      )
-                                  : ListenableBuilder(
-                                    listenable: _hasClaimedDrop,
+                          child: _dragging
+                              ? widget.fallback ??
+                                  ListenableBuilder(
+                                    listenable: _hasDraggedOff,
                                     builder: (context, child) {
-                                      return IgnorePointer(
-                                        ignoring: hasCandidate || _hasClaimedDrop.value,
-                                        child: Visibility(
-                                          maintainSize: true,
-                                          maintainAnimation: true,
-                                          maintainState: true,
-                                          visible: !_hasClaimedDrop.value,
-                                          child: KeyedSubtree(key: _key, child: widget.child),
-                                        ),
-                                      );
+                                      return (_hasDraggedOff.value
+                                          ? AbsorbPointer(
+                                              child: Visibility(
+                                                visible: false,
+                                                maintainState: true,
+                                                child: KeyedSubtree(
+                                                  key: _key,
+                                                  child: widget.child,
+                                                ),
+                                              ),
+                                            )
+                                          : AbsorbPointer(
+                                              child: Visibility(
+                                                maintainSize: true,
+                                                maintainAnimation: true,
+                                                maintainState: true,
+                                                visible: false,
+                                                child: KeyedSubtree(
+                                                  key: _key,
+                                                  child: widget.child,
+                                                ),
+                                              ),
+                                            ));
                                     },
-                                  ),
+                                  )
+                              : ListenableBuilder(
+                                  listenable: _hasClaimedDrop,
+                                  builder: (context, child) {
+                                    return IgnorePointer(
+                                      ignoring: hasCandidate || _hasClaimedDrop.value,
+                                      child: Visibility(
+                                        maintainSize: true,
+                                        maintainAnimation: true,
+                                        maintainState: true,
+                                        visible: !_hasClaimedDrop.value,
+                                        child: KeyedSubtree(
+                                          key: _key,
+                                          child: widget.child,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
                         ),
                         AbsorbPointer(
                           child: _buildAnimatedSize(
@@ -674,7 +716,10 @@ class _SortableState<T> extends State<Sortable<T>> with AutomaticKeepAliveClient
             if (!hasCandidate) {
               return container;
             }
-            return AnimatedSize(duration: kDefaultDuration, child: container);
+            return AnimatedSize(
+              duration: kDefaultDuration,
+              child: container,
+            );
           },
         ),
       ),
@@ -721,28 +766,25 @@ class _SortableDragHandleState extends State<SortableDragHandle> with AutomaticK
       hitTestBehavior: widget.behavior,
       child: GestureDetector(
         behavior: widget.behavior,
-        onPanStart:
-            widget.enabled && _state != null
-                ? (details) {
-                  _dragging = true;
-                  _state!._onDragStart(details);
-                }
-                : null,
+        onPanStart: widget.enabled && _state != null
+            ? (details) {
+                _dragging = true;
+                _state!._onDragStart(details);
+              }
+            : null,
         onPanUpdate: widget.enabled && _state != null ? _state!._onDragUpdate : null,
-        onPanEnd:
-            widget.enabled && _state != null
-                ? (details) {
-                  _state!._onDragEnd(details);
-                  _dragging = false;
-                }
-                : null,
-        onPanCancel:
-            widget.enabled && _state != null
-                ? () {
-                  _state!._onDragCancel();
-                  _dragging = false;
-                }
-                : null,
+        onPanEnd: widget.enabled && _state != null
+            ? (details) {
+                _state!._onDragEnd(details);
+                _dragging = false;
+              }
+            : null,
+        onPanCancel: widget.enabled && _state != null
+            ? () {
+                _state!._onDragCancel();
+                _dragging = false;
+              }
+            : null,
         child: widget.child,
       ),
     );
@@ -801,7 +843,11 @@ class _PendingDropTransform {
   final Widget child;
   final SortableData data;
 
-  _PendingDropTransform({required this.from, required this.child, required this.data});
+  _PendingDropTransform({
+    required this.from,
+    required this.child,
+    required this.data,
+  });
 }
 
 class _SortableLayerState extends State<SortableLayer> with SingleTickerProviderStateMixin {
@@ -860,9 +906,9 @@ class _SortableLayerState extends State<SortableLayer> with SingleTickerProvider
     List<_DropTransform> toRemove = [];
     for (final drop in _activeDrops.value) {
       drop.start ??= elapsed;
-      double progress = ((elapsed - drop.start!).inMilliseconds /
-              (widget.dropDuration ?? kDefaultDuration).inMilliseconds)
-          .clamp(0, 1);
+      double progress =
+          ((elapsed - drop.start!).inMilliseconds / (widget.dropDuration ?? kDefaultDuration).inMilliseconds)
+              .clamp(0, 1);
       progress = (widget.dropCurve ?? Curves.easeInOut).transform(progress);
       if (progress >= 1 || !drop.state.mounted) {
         drop.state._hasClaimedDrop.value = false;
@@ -886,13 +932,18 @@ class _SortableLayerState extends State<SortableLayer> with SingleTickerProvider
   }
 
   Matrix4 _tweenMatrix(Matrix4 from, Matrix4 to, double progress) {
-    return Matrix4Tween(begin: from, end: to).transform(progress);
+    return Matrix4Tween(
+      begin: from,
+      end: to,
+    ).transform(progress);
   }
 
   void pushDraggingSession(_SortableDraggingSession session) {
-    _sessions.mutate((value) {
-      value.add(session);
-    });
+    _sessions.mutate(
+      (value) {
+        value.add(session);
+      },
+    );
   }
 
   void removeDraggingSession(_SortableDraggingSession session) {
@@ -909,7 +960,10 @@ class _SortableLayerState extends State<SortableLayer> with SingleTickerProvider
           RenderBox layerRenderBox = context.findRenderObject() as RenderBox;
           _pendingDrop.value = _PendingDropTransform(
             from: ghostRenderBox.getTransformTo(layerRenderBox),
-            child: SizedBox.fromSize(size: session.size, child: session.ghost),
+            child: SizedBox.fromSize(
+              size: session.size,
+              child: session.ghost,
+            ),
             data: session.data,
           );
         }
@@ -979,7 +1033,11 @@ class _SortableLayerState extends State<SortableLayer> with SingleTickerProvider
                           builder: (context, child) {
                             return IgnorePointer(
                               child: Transform(
-                                transform: _tweenMatrix(drop.from, drop.to, drop.progress.value),
+                                transform: _tweenMatrix(
+                                  drop.from,
+                                  drop.to,
+                                  drop.progress.value,
+                                ),
                                 child: drop.child,
                               ),
                             );
@@ -995,7 +1053,10 @@ class _SortableLayerState extends State<SortableLayer> with SingleTickerProvider
                 builder: (context, child) {
                   if (_pendingDrop.value != null) {
                     return IgnorePointer(
-                      child: Transform(transform: _pendingDrop.value!.from, child: _pendingDrop.value!.child),
+                      child: Transform(
+                        transform: _pendingDrop.value!.from,
+                        child: _pendingDrop.value!.child,
+                      ),
                     );
                   }
                   return const SizedBox();
@@ -1099,6 +1160,9 @@ class _ScrollableSortableLayerState extends State<ScrollableSortableLayer> with 
 
   @override
   Widget build(BuildContext context) {
-    return Data.inherit(data: this, child: widget.child);
+    return Data.inherit(
+      data: this,
+      child: widget.child,
+    );
   }
 }

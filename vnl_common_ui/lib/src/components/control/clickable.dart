@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
-import 'package:vnl_common_ui/src/components/layout/focus_outline.dart';
+
+import '../layout/focus_outline.dart';
+
 
 extension WidgetStateExtension on Set<WidgetState> {
   bool get disabled => contains(WidgetState.disabled);
@@ -34,7 +36,11 @@ abstract class StatedWidget extends StatelessWidget {
     Widget? focused,
     Widget? error,
   }) = _ParamStatedWidget;
-  const factory StatedWidget.map({Key? key, required Map<Object, Widget> states, Widget? child}) = _MapStatedWidget;
+  const factory StatedWidget.map({
+    Key? key,
+    required Map<Object, Widget> states,
+    Widget? child,
+  }) = _MapStatedWidget;
   const factory StatedWidget.builder({
     Key? key,
     required Widget Function(BuildContext context, Set<WidgetState> states) builder,
@@ -113,16 +119,20 @@ class WidgetStatesProvider extends StatelessWidget {
     this.inherit = true,
   }) : boundary = false;
 
-  const WidgetStatesProvider.boundary({super.key, required this.child})
-    : boundary = true,
-      controller = null,
-      states = null,
-      inherit = false;
+  const WidgetStatesProvider.boundary({
+    super.key,
+    required this.child,
+  })  : boundary = true,
+        controller = null,
+        states = null,
+        inherit = false;
 
   @override
   Widget build(BuildContext context) {
     if (boundary) {
-      return Data<WidgetStatesData>.boundary(child: child);
+      return Data<WidgetStatesData>.boundary(
+        child: child,
+      );
     }
     Set<WidgetState>? parentStates;
     if (inherit) {
@@ -130,7 +140,9 @@ class WidgetStatesProvider extends StatelessWidget {
       parentStates = parentData?.states;
     }
     return ListenableBuilder(
-      listenable: Listenable.merge([if (controller != null) controller!]),
+      listenable: Listenable.merge([
+        if (controller != null) controller!,
+      ]),
       builder: (context, child) {
         Set<WidgetState> currentStates = states ?? {};
         if (controller != null) {
@@ -139,7 +151,10 @@ class WidgetStatesProvider extends StatelessWidget {
         if (parentStates != null) {
           currentStates = currentStates.union(parentStates);
         }
-        return Data<WidgetStatesData>.inherit(data: WidgetStatesData(currentStates), child: child!);
+        return Data<WidgetStatesData>.inherit(
+          data: WidgetStatesData(currentStates),
+          child: child!,
+        );
       },
       child: child,
     );
@@ -169,7 +184,11 @@ class _MapStatedWidget extends StatedWidget {
   final Map<Object, Widget> states;
   final Widget? child;
 
-  const _MapStatedWidget({super.key, required this.states, this.child}) : super._();
+  const _MapStatedWidget({
+    super.key,
+    required this.states,
+    this.child,
+  }) : super._();
 
   @override
   Widget build(BuildContext context) {
@@ -191,10 +210,8 @@ class _MapStatedWidget extends StatedWidget {
           return entry.value;
         }
       } else {
-        assert(
-          false,
-          'Invalid key type in states map (${keys.runtimeType}) expected WidgetState, Iterable<WidgetState>, or String',
-        );
+        assert(false,
+            'Invalid key type in states map (${keys.runtimeType}) expected WidgetState, Iterable<WidgetState>, or String');
       }
     }
     return child ?? const SizedBox();
@@ -204,7 +221,10 @@ class _MapStatedWidget extends StatedWidget {
 class _BuilderStatedWidget extends StatedWidget {
   final Widget Function(BuildContext context, Set<WidgetState> states) builder;
 
-  const _BuilderStatedWidget({super.key, required this.builder}) : super._();
+  const _BuilderStatedWidget({
+    super.key,
+    required this.builder,
+  }) : super._();
 
   @override
   Widget build(BuildContext context) {
@@ -378,8 +398,13 @@ class _ClickableState extends State<Clickable> {
       button: widget.isSemanticButton,
       child: WidgetStatesProvider(
         controller: _controller,
-        states: {if (!enabled) WidgetState.disabled},
-        child: ListenableBuilder(listenable: _controller, builder: _builder),
+        states: {
+          if (!enabled) WidgetState.disabled,
+        },
+        child: ListenableBuilder(
+          listenable: _controller,
+          builder: _builder,
+        ),
       ),
     );
   }
@@ -417,36 +442,36 @@ class _ClickableState extends State<Clickable> {
         onLongPressEnd: widget.onLongPressEnd,
         onSecondaryLongPress: widget.onSecondaryLongPress,
         onTertiaryLongPress: widget.onTertiaryLongPress,
-        onTapDown:
-            widget.onPressed != null
-                ? (details) {
-                  if (widget.enableFeedback) {
-                    // also dispatch hover
-                    _controller.update(WidgetState.hovered, true);
-                  }
-                  _controller.update(WidgetState.pressed, true);
+        onTapDown: widget.onPressed != null
+            ? (details) {
+                if (widget.enableFeedback) {
+                  // also dispatch hover
+                  _controller.update(WidgetState.hovered, true);
                 }
-                : null,
-        onTapUp:
-            widget.onPressed != null
-                ? (details) {
-                  if (widget.enableFeedback) {
-                    // also dispatch hover
-                    _controller.update(WidgetState.hovered, false);
-                  }
-                  _controller.update(WidgetState.pressed, false);
+                _controller.update(WidgetState.pressed, true);
+                widget.onTapDown?.call(details);
+              }
+            : widget.onTapDown,
+        onTapUp: widget.onPressed != null
+            ? (details) {
+                if (widget.enableFeedback) {
+                  // also dispatch hover
+                  _controller.update(WidgetState.hovered, false);
                 }
-                : null,
-        onTapCancel:
-            widget.onPressed != null
-                ? () {
-                  if (widget.enableFeedback) {
-                    // also dispatch hover
-                    _controller.update(WidgetState.hovered, false);
-                  }
-                  _controller.update(WidgetState.pressed, false);
+                _controller.update(WidgetState.pressed, false);
+                widget.onTapUp?.call(details);
+              }
+            : widget.onTapUp,
+        onTapCancel: widget.onPressed != null
+            ? () {
+                if (widget.enableFeedback) {
+                  // also dispatch hover
+                  _controller.update(WidgetState.hovered, false);
                 }
-                : null,
+                _controller.update(WidgetState.pressed, false);
+                widget.onTapCancel?.call();
+              }
+            : widget.onTapCancel,
         child: FocusableActionDetector(
           enabled: enabled,
           focusNode: _focusNode,
@@ -532,7 +557,10 @@ class _ClickableState extends State<Clickable> {
     if (a == null && b == null) {
       return null;
     }
-    Matrix4Tween tween = Matrix4Tween(begin: a ?? Matrix4.identity(), end: b ?? Matrix4.identity());
+    Matrix4Tween tween = Matrix4Tween(
+      begin: a ?? Matrix4.identity(),
+      end: b ?? Matrix4.identity(),
+    );
     return tween.transform(t);
   }
 
@@ -548,7 +576,10 @@ class _ClickableState extends State<Clickable> {
         child: widget.child,
       );
       if (widget.marginAlignment != null) {
-        container = Align(alignment: widget.marginAlignment!, child: container);
+        container = Align(
+          alignment: widget.marginAlignment!,
+          child: container,
+        );
       }
       return container;
     }

@@ -77,7 +77,9 @@ class SlidingCarouselTransition extends CarouselTransition {
   final double gap;
 
   /// Creates a sliding carousel transition.
-  const SlidingCarouselTransition({this.gap = 0});
+  const SlidingCarouselTransition({
+    this.gap = 0,
+  });
 
   @override
   List<Widget> layout(
@@ -129,27 +131,29 @@ class SlidingCarouselTransition extends CarouselTransition {
       final item = itemBuilder(context, itemIndex);
       double position = i.toDouble();
       // offset the gap
-      items.add(_PlacedCarouselItem._(relativeIndex: i, child: item, position: position));
+      items.add(_PlacedCarouselItem._(
+        relativeIndex: i,
+        child: item,
+        position: position,
+      ));
     }
     if (direction == Axis.horizontal) {
       return [
         for (var item in items)
           Positioned(
-            left: snapOffsetAlignment + (item.position - currentIndex) * size + (gap * item.relativeIndex),
-            width: size,
-            height: constraints.maxHeight,
-            child: item.child,
-          ),
+              left: snapOffsetAlignment + (item.position - currentIndex) * size + (gap * item.relativeIndex),
+              width: size,
+              height: constraints.maxHeight,
+              child: item.child),
       ];
     } else {
       return [
         for (var item in items)
           Positioned(
-            top: snapOffsetAlignment + (item.position - currentIndex) * size + (gap * item.relativeIndex),
-            width: constraints.maxWidth,
-            height: size,
-            child: item.child,
-          ),
+              top: snapOffsetAlignment + (item.position - currentIndex) * size + (gap * item.relativeIndex),
+              width: constraints.maxWidth,
+              height: size,
+              child: item.child),
       ];
     }
   }
@@ -203,27 +207,35 @@ class FadingCarouselTransition extends CarouselTransition {
       final item = itemBuilder(context, itemIndex);
       double position = i.toDouble();
       // offset the gap
-      items.add(_PlacedCarouselItem._(relativeIndex: i, child: item, position: position));
+      items.add(_PlacedCarouselItem._(
+        relativeIndex: i,
+        child: item,
+        position: position,
+      ));
     }
     if (direction == Axis.horizontal) {
       return [
         for (var item in items)
           Positioned(
-            left: snapOffsetAlignment,
-            width: size,
-            height: constraints.maxHeight,
-            child: Opacity(opacity: (1 - (progress - item.position).abs()).clamp(0.0, 1.0), child: item.child),
-          ),
+              left: snapOffsetAlignment,
+              width: size,
+              height: constraints.maxHeight,
+              child: Opacity(
+                opacity: (1 - (progress - item.position).abs()).clamp(0.0, 1.0),
+                child: item.child,
+              )),
       ];
     } else {
       return [
         for (var item in items)
           Positioned(
-            top: snapOffsetAlignment,
-            width: constraints.maxWidth,
-            height: size,
-            child: Opacity(opacity: (1 - (progress - item.position).abs()).clamp(0.0, 1.0), child: item.child),
-          ),
+              top: snapOffsetAlignment,
+              width: constraints.maxWidth,
+              height: size,
+              child: Opacity(
+                opacity: (1 - (progress - item.position).abs()).clamp(0.0, 1.0),
+                child: item.child,
+              )),
       ];
     }
   }
@@ -332,7 +344,7 @@ enum CarouselAlignment {
 
 /// A carousel widget.
 /// The carousel widget is used to display a list of items in a carousel view.
-class Carousel extends StatefulWidget {
+class VNLCarousel extends StatefulWidget {
   /// The carousel transition.
   final CarouselTransition transition;
 
@@ -397,7 +409,7 @@ class Carousel extends StatefulWidget {
   final bool disableDraggingVelocity;
 
   /// Creates a carousel.
-  const Carousel({
+  const VNLCarousel({
     super.key,
     required this.itemBuilder,
     this.itemCount,
@@ -423,10 +435,10 @@ class Carousel extends StatefulWidget {
   }) : assert(wrap || itemCount != null, 'itemCount must be provided if wrap is false');
 
   @override
-  State<Carousel> createState() => _CarouselState();
+  State<VNLCarousel> createState() => _CarouselState();
 }
 
-class _CarouselState extends State<Carousel> with SingleTickerProviderStateMixin {
+class _CarouselState extends State<VNLCarousel> with SingleTickerProviderStateMixin {
   late CarouselController _controller;
   Duration? _startTime;
   late Ticker _ticker;
@@ -544,7 +556,7 @@ class _CarouselState extends State<Carousel> with SingleTickerProviderStateMixin
   }
 
   @override
-  void didUpdateWidget(covariant Carousel oldWidget) {
+  void didUpdateWidget(covariant VNLCarousel oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.controller != oldWidget.controller) {
       oldWidget.controller?.removeListener(_onControllerChange);
@@ -721,7 +733,11 @@ class _PlacedCarouselItem {
   final Widget child;
   final double position;
 
-  const _PlacedCarouselItem._({required this.relativeIndex, required this.child, required this.position});
+  const _PlacedCarouselItem._({
+    required this.relativeIndex,
+    required this.child,
+    required this.position,
+  });
 }
 
 /// A dot indicator for the carousel.
@@ -756,7 +772,7 @@ class CarouselDotIndicator extends StatelessWidget {
         if (value < 0) {
           value += itemCount;
         }
-        return DotIndicator(
+        return VNLDotIndicator(
           index: value,
           length: itemCount,
           onChanged: (value) {

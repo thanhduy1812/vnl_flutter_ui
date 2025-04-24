@@ -1,641 +1,367 @@
 import 'package:flutter/rendering.dart';
+import 'package:flutter/material.dart' as m show SelectableText, TextButton, Colors, ButtonStyle, MaterialTapTargetSize;
 
 import '../../../vnl_ui.dart';
 
+abstract class VNLTextModifier extends StatelessWidget {
+  const VNLTextModifier({super.key});
+
+  @override
+  Widget build(BuildContext context);
+
+  Widget call() => this;
+}
+
 extension TextExtension on Widget {
-  Widget sans() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.sans,
+  VNLTextModifier get sans => VNLWrappedText(
+        style: (context, theme) => theme.typography.sans,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.sans, child: this);
-  }
 
-  Widget mono() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.mono,
+  VNLTextModifier get mono => VNLWrappedText(
+        style: (context, theme) => theme.typography.mono,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.mono, child: this);
-  }
 
-  Widget xSmall() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.xSmall,
+  VNLTextModifier get xSmall => VNLWrappedText(
+        style: (context, theme) => theme.typography.xSmall,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.xSmall, child: this);
-  }
 
-  Widget small() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.small,
+  VNLTextModifier get small => VNLWrappedText(
+        style: (context, theme) => theme.typography.small,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.small, child: this);
-  }
 
-  Widget base() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.base,
+  VNLTextModifier get base => VNLWrappedText(
+        style: (context, theme) => theme.typography.base,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.base, child: this);
-  }
 
-  Widget large() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.large,
+  VNLTextModifier get large => VNLWrappedText(
+        style: (context, theme) => theme.typography.large,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.large, child: this);
-  }
 
-  Widget xLarge() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.xLarge,
+  VNLTextModifier get xLarge => VNLWrappedText(
+        style: (context, theme) => theme.typography.xLarge,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.xLarge, child: this);
-  }
 
-  Widget x2Large() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.x2Large,
+  VNLTextModifier get x2Large => VNLWrappedText(
+        style: (context, theme) => theme.typography.x2Large,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.x2Large, child: this);
-  }
 
-  Widget x3Large() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.x3Large,
+  VNLTextModifier get x3Large => VNLWrappedText(
+        style: (context, theme) => theme.typography.x3Large,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.x3Large, child: this);
-  }
 
-  Widget x4Large() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.x4Large,
+  VNLTextModifier get x4Large => VNLWrappedText(
+        style: (context, theme) => theme.typography.x4Large,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.x4Large, child: this);
-  }
 
-  Widget x5Large() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.x5Large,
+  VNLTextModifier get x5Large => VNLWrappedText(
+        style: (context, theme) => theme.typography.x5Large,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.x5Large, child: this);
-  }
 
-  Widget x6Large() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.x6Large,
+  VNLTextModifier get x6Large => VNLWrappedText(
+        style: (context, theme) => theme.typography.x6Large,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.x6Large, child: this);
-  }
 
-  Widget x7Large() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.x7Large,
+  VNLTextModifier get x7Large => VNLWrappedText(
+        style: (context, theme) => theme.typography.x7Large,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.x7Large, child: this);
-  }
 
-  Widget x8Large() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.x8Large,
+  VNLTextModifier get x8Large => VNLWrappedText(
+        style: (context, theme) => theme.typography.x8Large,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.x8Large, child: this);
-  }
 
-  Widget x9Large() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.x9Large,
+  VNLTextModifier get x9Large => VNLWrappedText(
+        style: (context, theme) => theme.typography.x9Large,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.x9Large, child: this);
-  }
 
-  Widget thin() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.thin,
+  VNLTextModifier get thin => VNLWrappedText(
+        style: (context, theme) => theme.typography.thin,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.thin, child: this);
-  }
 
-  Widget extraLight() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.extraLight,
+  VNLTextModifier get extraLight => VNLWrappedText(
+        style: (context, theme) => theme.typography.extraLight,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.extraLight, child: this);
-  }
 
-  Widget light() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.light,
+  VNLTextModifier get light => VNLWrappedText(
+        style: (context, theme) => theme.typography.light,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.light, child: this);
-  }
 
-  Widget normal() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.normal,
+  VNLTextModifier get normal => VNLWrappedText(
+        style: (context, theme) => theme.typography.normal,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.normal, child: this);
-  }
 
-  Widget medium() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.medium,
+  VNLTextModifier get medium => VNLWrappedText(
+        style: (context, theme) => theme.typography.medium,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.medium, child: this);
-  }
 
-  Widget semiBold() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.semiBold,
+  VNLTextModifier get semiBold => VNLWrappedText(
+        style: (context, theme) => theme.typography.semiBold,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.semiBold, child: this);
-  }
 
-  Widget bold() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.bold,
+  VNLTextModifier get bold => VNLWrappedText(
+        style: (context, theme) => theme.typography.bold,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.bold, child: this);
-  }
 
-  Widget extraBold() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.extraBold,
+  VNLTextModifier get extraBold => VNLWrappedText(
+        style: (context, theme) => theme.typography.extraBold,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.extraBold, child: this);
-  }
 
-  Widget black() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.black,
+  VNLTextModifier get black => VNLWrappedText(
+        style: (context, theme) => theme.typography.black,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.black, child: this);
-  }
 
-  Widget italic() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.italic,
+  VNLTextModifier get italic => VNLWrappedText(
+        style: (context, theme) => theme.typography.italic,
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.italic, child: this);
-  }
 
-  Widget underline() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => const TextStyle(
+  VNLTextModifier get underline => VNLWrappedText(
+        style: (context, theme) => const TextStyle(
           decoration: TextDecoration.underline,
         ),
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => const TextStyle(
-              decoration: TextDecoration.underline,
-            ),
-        child: this);
-  }
 
-  Widget muted() {
-    return Builder(
-      builder: (context) {
-        final themeData = Theme.of(context);
-        return DefaultTextStyle.merge(
-          child: this,
-          style: TextStyle(
-            color: themeData.colorScheme.mutedForeground,
-          ),
-        );
-      },
-    );
-  }
-
-  Widget primaryForeground() {
-    return Builder(
-      builder: (context) {
-        final themeData = Theme.of(context);
-        return DefaultTextStyle.merge(
-          child: this,
-          style: TextStyle(
-            color: themeData.colorScheme.primaryForeground,
-          ),
-        );
-      },
-    );
-  }
-
-  Widget secondaryForeground() {
-    return Builder(
-      builder: (context) {
-        final themeData = Theme.of(context);
-        return DefaultTextStyle.merge(
-          child: this,
-          style: TextStyle(
-            color: themeData.colorScheme.secondaryForeground,
-          ),
-        );
-      },
-    );
-  }
-
-  Widget h1() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.h1,
-      );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.h1, child: this);
-  }
-
-  Widget h2() {
-    return Builder(builder: (context) {
-      Widget child;
-      if (this is WrappedText) {
-        child = (this as WrappedText).copyWithStyle(
-          (context, theme) => theme.typography.h2,
-        );
-      } else {
-        child = WrappedText(
-            style: (context, theme) => theme.typography.h2, child: this);
-      }
-      return Container(
-        margin: const EdgeInsets.only(top: 40),
-        padding: const EdgeInsets.only(bottom: 8),
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: Theme.of(context).colorScheme.border,
-              width: 1,
-            ),
-          ),
+  VNLTextModifier get muted => VNLWrappedText(
+        style: (context, theme) => TextStyle(
+          color: theme.colorScheme.mutedForeground,
         ),
-        child: child,
+        child: this,
       );
-    });
-  }
 
-  Widget h3() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.h3,
-      );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.h3, child: this);
-  }
-
-  Widget h4() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.h4,
-      );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.h4, child: this);
-  }
-
-  Widget p({bool firstChild = false}) {
-    Widget child;
-    if (this is WrappedText) {
-      child = (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.p,
-      );
-    } else {
-      child = WrappedText(
-          style: (context, theme) => theme.typography.p, child: this);
-    }
-    if (firstChild) {
-      return child;
-    }
-    return Padding(
-      padding: const EdgeInsets.only(top: 24),
-      child: child,
-    );
-  }
-
-  Widget blockQuote() {
-    return Builder(builder: (context) {
-      Widget child;
-      if (this is WrappedText) {
-        child = (this as WrappedText).copyWithStyle(
-          (context, theme) => theme.typography.blockQuote,
-        );
-      } else {
-        child = WrappedText(
-            style: (context, theme) => theme.typography.blockQuote,
-            child: this);
-      }
-      return Container(
-        decoration: BoxDecoration(
-          border: Border(
-            left: BorderSide(
-              color: Theme.of(context).colorScheme.border,
-              width: 2,
-            ),
-          ),
+  VNLTextModifier get primaryForeground => VNLWrappedText(
+        style: (context, theme) => TextStyle(
+          color: theme.colorScheme.primaryForeground,
         ),
-        padding: const EdgeInsets.only(left: 16),
-        // child: base().normal().italic(),
-        child: child,
+        child: this,
       );
-    });
-  }
 
-  Widget li() {
-    return Builder(
-      builder: (context) {
-        UnorderedListData? data = Data.maybeOf(context);
-        int depth = data?.depth ?? 0;
-        TextStyle style = DefaultTextStyle.of(context).style;
-        double size = (style.fontSize ?? 12) / 16 * 6;
-        return IntrinsicWidth(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: ((style.fontSize ?? 12) * (style.height ?? 1)) * 1.2,
-                child: getBullet(context, depth, size),
+  VNLTextModifier get secondaryForeground => VNLWrappedText(
+        style: (context, theme) => TextStyle(
+          color: theme.colorScheme.secondaryForeground,
+        ),
+        child: this,
+      );
+
+  VNLTextModifier get h1 => VNLWrappedText(
+        style: (context, theme) => theme.typography.h1,
+        child: this,
+      );
+
+  VNLTextModifier get h2 => VNLWrappedText(
+        style: (context, theme) => theme.typography.h2,
+        wrapper: (context, child) => Container(
+          margin: const EdgeInsets.only(top: 40),
+          padding: const EdgeInsets.only(bottom: 8),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: Theme.of(context).colorScheme.border,
+                width: 1,
               ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Data.inherit(
-                    data: UnorderedListData(depth: depth + 1), child: this),
-              ),
-            ],
+            ),
           ),
-        );
-      },
-    );
-  }
-
-  Widget inlineCode() {
-    return Builder(builder: (context) {
-      final style = DefaultTextStyle.of(context).style;
-      final double paddingVertical = style.fontSize! * 0.2;
-      final double paddingHorizontal = style.fontSize! * 0.3;
-      final ThemeData themeData = Theme.of(context);
-      Widget child;
-      if (this is WrappedText) {
-        child = (this as WrappedText).copyWithStyle(
-          (context, theme) => theme.typography.inlineCode,
-        );
-      } else {
-        child = WrappedText(
-            style: (context, theme) => theme.typography.inlineCode,
-            child: this);
-      }
-      return Container(
-        padding: EdgeInsets.symmetric(
-          vertical: paddingVertical,
-          horizontal: paddingHorizontal,
+          child: child,
         ),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.muted,
-          borderRadius: BorderRadius.circular(themeData.radiusSm),
+        child: this,
+      );
+
+  VNLTextModifier get h3 => VNLWrappedText(
+        style: (context, theme) => theme.typography.h3,
+        child: this,
+      );
+
+  VNLTextModifier get h4 => VNLWrappedText(
+        style: (context, theme) => theme.typography.h4,
+        child: this,
+      );
+
+  VNLTextModifier get p => VNLWrappedText(
+        style: (context, theme) => theme.typography.p,
+        child: this,
+        wrapper: (context, child) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 24),
+            child: child,
+          );
+        },
+      );
+
+  VNLTextModifier get firstP => VNLWrappedText(
+        style: (context, theme) => theme.typography.p,
+        child: this,
+      );
+
+  VNLTextModifier get blockQuote => VNLWrappedText(
+        style: (context, theme) => theme.typography.blockQuote,
+        wrapper: (context, child) => Container(
+          decoration: BoxDecoration(
+            border: Border(
+              left: BorderSide(
+                color: Theme.of(context).colorScheme.border,
+                width: 2,
+              ),
+            ),
+          ),
+          padding: const EdgeInsets.only(left: 16),
+          child: child,
         ),
-        child: child,
+        child: this,
       );
-    });
-  }
 
-  Widget lead() {
-    if (this is WrappedText) {
-      return (this as WrappedText)
-          .copyWithStyle(
-            (context, theme) => theme.typography.lead,
-          )
-          .muted();
-    }
-    return WrappedText(
-            style: (context, theme) => theme.typography.lead, child: this)
-        .muted();
-  }
-
-  Widget textLarge() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.textLarge,
+  VNLTextModifier get li => VNLWrappedText(
+        wrapper: (context, child) {
+          VNLUnorderedListData? data = Data.maybeOf(context);
+          int depth = data?.depth ?? 0;
+          TextStyle style = DefaultTextStyle.of(context).style;
+          double size = (style.fontSize ?? 12) / 16 * 6;
+          return IntrinsicWidth(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: ((style.fontSize ?? 12) * (style.height ?? 1)) * 1.2,
+                  child: getBullet(context, depth, size),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Data.inherit(
+                      data: VNLUnorderedListData(depth: depth + 1), child: child),
+                ),
+              ],
+            ),
+          );
+        },
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.textLarge, child: this);
-  }
 
-  Widget textSmall() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWithStyle(
-        (context, theme) => theme.typography.textSmall,
+  VNLTextModifier get inlineCode => VNLWrappedText(
+        style: (context, theme) => theme.typography.inlineCode,
+        wrapper: (context, child) {
+          final style = DefaultTextStyle.of(context).style;
+          final double paddingVertical = style.fontSize! * 0.2;
+          final double paddingHorizontal = style.fontSize! * 0.3;
+          final ThemeData themeData = Theme.of(context);
+          return Container(
+            padding: EdgeInsets.symmetric(
+              vertical: paddingVertical,
+              horizontal: paddingHorizontal,
+            ),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.muted,
+              borderRadius: BorderRadius.circular(themeData.radiusSm),
+            ),
+            child: child,
+          );
+        },
+        child: this,
       );
-    }
-    return WrappedText(
-        style: (context, theme) => theme.typography.textSmall, child: this);
-  }
 
-  Widget textMuted() {
-    if (this is WrappedText) {
-      return (this as WrappedText)
-          .copyWithStyle(
-            (context, theme) => theme.typography.textMuted,
-          )
-          .muted();
-    }
-    return WrappedText(
-            style: (context, theme) => theme.typography.textMuted, child: this)
-        .muted();
-  }
+  VNLTextModifier get lead => VNLWrappedText(
+        style: (context, theme) => theme.typography.lead,
+        child: this,
+      ).muted;
 
-  Widget singleLine() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWith(
+  VNLTextModifier get textLarge => VNLWrappedText(
+        style: (context, theme) => theme.typography.textLarge,
+        child: this,
+      );
+
+  VNLTextModifier get textSmall => VNLWrappedText(
+        style: (context, theme) => theme.typography.textSmall,
+        child: this,
+      );
+
+  VNLTextModifier get textMuted => VNLWrappedText(
+        style: (context, theme) => theme.typography.textMuted,
+        child: this,
+      ).muted;
+
+  VNLTextModifier get singleLine => VNLWrappedText(
         softWrap: (context, theme) => false,
         maxLines: (context, theme) => 1,
+        child: this,
       );
-    }
-    return WrappedText(
-      softWrap: (context, theme) => false,
-      maxLines: (context, theme) => 1,
-      child: this,
-    );
-  }
 
-  Widget ellipsis() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWith(
+  VNLTextModifier get ellipsis => VNLWrappedText(
         overflow: (context, theme) => TextOverflow.ellipsis,
+        child: this,
       );
-    }
-    return WrappedText(
-      overflow: (context, theme) => TextOverflow.ellipsis,
-      child: this,
-    );
-  }
 
-  Widget textCenter() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWith(
+  VNLTextModifier get textCenter => VNLWrappedText(
         textAlign: (context, theme) => TextAlign.center,
+        child: this,
       );
-    }
-    return WrappedText(
-      textAlign: (context, theme) => TextAlign.center,
-      child: this,
-    );
-  }
 
-  Widget textRight() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWith(
+  VNLTextModifier get textRight => VNLWrappedText(
         textAlign: (context, theme) => TextAlign.right,
+        child: this,
       );
-    }
-    return WrappedText(
-      textAlign: (context, theme) => TextAlign.right,
-      child: this,
-    );
-  }
 
-  Widget textLeft() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWith(
+  VNLTextModifier get textLeft => VNLWrappedText(
         textAlign: (context, theme) => TextAlign.left,
+        child: this,
       );
-    }
-    return WrappedText(
-      textAlign: (context, theme) => TextAlign.left,
-      child: this,
-    );
-  }
 
-  Widget textJustify() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWith(
+  VNLTextModifier get textJustify => VNLWrappedText(
         textAlign: (context, theme) => TextAlign.justify,
+        child: this,
       );
-    }
-    return WrappedText(
-      textAlign: (context, theme) => TextAlign.justify,
-      child: this,
-    );
-  }
 
-  Widget textStart() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWith(
+  VNLTextModifier get textStart => VNLWrappedText(
         textAlign: (context, theme) => TextAlign.start,
+        child: this,
       );
-    }
-    return WrappedText(
-      textAlign: (context, theme) => TextAlign.start,
-      child: this,
-    );
-  }
 
-  Widget textEnd() {
-    if (this is WrappedText) {
-      return (this as WrappedText).copyWith(
+  VNLTextModifier get textEnd => VNLWrappedText(
         textAlign: (context, theme) => TextAlign.end,
+        child: this,
       );
-    }
-    return WrappedText(
-      textAlign: (context, theme) => TextAlign.end,
-      child: this,
-    );
-  }
 
-  Widget foreground() {
-    return Builder(
-      builder: (context) {
-        final themeData = Theme.of(context);
-        return DefaultTextStyle.merge(
-          child: this,
-          style: TextStyle(
-            color: themeData.colorScheme.foreground,
-          ),
-        );
-      },
-    );
-  }
+  VNLTextModifier get modify => VNLWrappedText(
+        style: (context, theme) => TextStyle(
+          color: theme.colorScheme.primaryForeground,
+        ),
+        child: this,
+      );
+
+  VNLTextModifier get foreground => VNLWrappedText(
+        style: (context, theme) => TextStyle(
+          color: theme.colorScheme.foreground,
+        ),
+        child: this,
+      );
 
   Widget then(InlineSpan span) {
     if (this is RichText) {
       final text = this as RichText;
       return _RichTextThenWidget(text: text, then: [span]);
     }
-    if (this is SelectableText) {
-      final text = this as SelectableText;
+    if (this is VNLSelectableText) {
+      final text = this as VNLSelectableText;
       return _SelectableTextThenWidget(text: text, then: [span]);
     }
     if (this is Text) {
@@ -695,10 +421,7 @@ extension TextExtension on Widget {
         alignment: PlaceholderAlignment.middle,
         child: Builder(builder: (context) {
           final defaultTextStyle = DefaultTextStyle.of(context);
-          return Button(
-            style: const ButtonStyle.link(
-              density: ButtonDensity.compact,
-            ),
+          return LinkButton(
             onPressed: onPressed,
             child: Builder(
               builder: (context) {
@@ -748,10 +471,8 @@ class _TextThenWidget extends StatelessWidget {
     Widget result = RichText(
       textAlign:
           text.textAlign ?? defaultTextStyle.textAlign ?? TextAlign.start,
-      textDirection: text
-          .textDirection, // RichText uses Directionality.of to obtain a default if this is null.
-      locale: text
-          .locale, // RichText uses Localizations.localeOf to obtain a default if this is null
+      textDirection: text.textDirection,
+      locale: text.locale,
       softWrap: text.softWrap ?? defaultTextStyle.softWrap,
       overflow: text.overflow ??
           effectiveTextStyle?.overflow ??
@@ -830,7 +551,7 @@ class _RichTextThenWidget extends StatelessWidget {
 }
 
 class _SelectableTextThenWidget extends StatelessWidget {
-  final SelectableText text;
+  final VNLSelectableText text;
   final List<InlineSpan> then;
 
   const _SelectableTextThenWidget({
@@ -842,7 +563,7 @@ class _SelectableTextThenWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     String? stringData = text.data;
     TextSpan? textData = text.textSpan;
-    return SelectableText.rich(
+    return m.SelectableText.rich(
       TextSpan(
         text: stringData,
         children: [
@@ -851,12 +572,10 @@ class _SelectableTextThenWidget extends StatelessWidget {
         ],
       ),
       style: text.style,
-      useNativeContextMenu: text.useNativeContextMenu,
       contextMenuBuilder: text.contextMenuBuilder,
       minLines: text.minLines,
       semanticsLabel: text.semanticsLabel,
       textScaler: text.textScaler,
-      magnifierConfiguration: text.magnifierConfiguration,
       selectionHeightStyle: text.selectionHeightStyle,
       selectionWidthStyle: text.selectionWidthStyle,
       textAlign: text.textAlign,
@@ -865,7 +584,6 @@ class _SelectableTextThenWidget extends StatelessWidget {
       textHeightBehavior: text.textHeightBehavior,
       maxLines: text.maxLines,
       strutStyle: text.strutStyle,
-      selectionControls: text.selectionControls,
       onTap: text.onTap,
       scrollPhysics: text.scrollPhysics,
       showCursor: text.showCursor,
@@ -877,7 +595,6 @@ class _SelectableTextThenWidget extends StatelessWidget {
       enableInteractiveSelection: text.enableInteractiveSelection,
       autofocus: text.autofocus,
       focusNode: text.focusNode,
-      onSelectionChanged: text.onSelectionChanged,
     );
   }
 }
@@ -922,25 +639,38 @@ Widget getBullet(BuildContext context, int depth, double size) {
   );
 }
 
-class UnorderedListData {
-  final int depth;
+class VNLUnorderedListData {
+  const VNLUnorderedListData({
+    this.depth = 0,
+    this.items = const [],
+    this.marker,
+    this.markerAlignment = PlaceholderAlignment.middle,
+    this.markerPadding = const EdgeInsets.only(right: 4),
+  });
 
-  const UnorderedListData({this.depth = 0});
+  final int depth;
+  final List<InlineSpan> items;
+  final Widget? marker;
+  final PlaceholderAlignment markerAlignment;
+  final EdgeInsets markerPadding;
 }
 
 typedef WrappedTextDataBuilder<T> = T Function(
     BuildContext context, ThemeData theme);
+typedef WidgetTextWrapper = Widget Function(BuildContext context, Widget child);
+typedef TextStyleBuilder = TextStyle Function(BuildContext context, ThemeData theme);
 
-class WrappedText extends StatelessWidget {
+class VNLWrappedText extends StatelessWidget implements VNLTextModifier {
   final Widget child;
-  final WrappedTextDataBuilder<TextStyle>? style;
-  final WrappedTextDataBuilder<TextAlign>? textAlign;
-  final WrappedTextDataBuilder<bool>? softWrap;
-  final WrappedTextDataBuilder<TextOverflow>? overflow;
-  final WrappedTextDataBuilder<int>? maxLines;
-  final WrappedTextDataBuilder<TextWidthBasis>? textWidthBasis;
+  final WrappedTextDataBuilder<TextStyle?>? style;
+  final WrappedTextDataBuilder<TextAlign?>? textAlign;
+  final WrappedTextDataBuilder<bool?>? softWrap;
+  final WrappedTextDataBuilder<TextOverflow?>? overflow;
+  final WrappedTextDataBuilder<int?>? maxLines;
+  final WrappedTextDataBuilder<TextWidthBasis?>? textWidthBasis;
+  final WidgetTextWrapper? wrapper;
 
-  const WrappedText({
+  const VNLWrappedText({
     super.key,
     required this.child,
     this.style,
@@ -949,13 +679,14 @@ class WrappedText extends StatelessWidget {
     this.overflow,
     this.maxLines,
     this.textWidthBasis,
+    this.wrapper,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return DefaultTextStyle.merge(
-      child: child,
+      child: wrapper?.call(context, child) ?? child,
       style: style?.call(context, theme),
       textAlign: textAlign?.call(context, theme),
       softWrap: softWrap?.call(context, theme),
@@ -965,16 +696,21 @@ class WrappedText extends StatelessWidget {
     );
   }
 
-  WrappedText copyWith({
+  @override
+  Widget call() => this;
+
+  VNLWrappedText copyWith({
     WrappedTextDataBuilder<TextStyle>? style,
     WrappedTextDataBuilder<TextAlign>? textAlign,
     WrappedTextDataBuilder<bool>? softWrap,
     WrappedTextDataBuilder<TextOverflow>? overflow,
     WrappedTextDataBuilder<int>? maxLines,
     WrappedTextDataBuilder<TextWidthBasis>? textWidthBasis,
+    WidgetTextWrapper? wrapper,
     Widget? child,
   }) {
-    return WrappedText(
+    return VNLWrappedText(
+      wrapper: wrapper ?? this.wrapper,
       style: style ?? this.style,
       textAlign: textAlign ?? this.textAlign,
       softWrap: softWrap ?? this.softWrap,
@@ -985,8 +721,9 @@ class WrappedText extends StatelessWidget {
     );
   }
 
-  WrappedText copyWithStyle(WrappedTextDataBuilder<TextStyle> style) {
-    return WrappedText(
+  VNLWrappedText copyWithStyle(WrappedTextDataBuilder<TextStyle> style) {
+    return VNLWrappedText(
+      wrapper: wrapper,
       style: (context, theme) =>
           style(context, theme).merge(this.style?.call(context, theme)),
       textAlign: textAlign,
@@ -997,4 +734,36 @@ class WrappedText extends StatelessWidget {
       child: child,
     );
   }
+}
+
+class VNLTextModifierImpl extends StatelessWidget implements VNLTextModifier {
+  const VNLTextModifierImpl({
+    super.key,
+    required this.style,
+    required this.child,
+  });
+
+  final TextStyleBuilder style;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return DefaultTextStyle.merge(
+      style: style(context, theme),
+      child: child,
+    );
+  }
+  
+  @override
+  Widget call() => this;
+}
+
+extension VNLTextModifierLinkExtension on Widget {
+  VNLTextModifier get link => VNLTextModifierImpl(
+        style: (context, theme) => const TextStyle(
+          decoration: TextDecoration.underline,
+        ),
+        child: this,
+      );
 }

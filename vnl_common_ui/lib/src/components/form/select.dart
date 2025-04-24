@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
-import 'package:vnl_common_ui/src/components/control/hover.dart';
+
+import '../control/hover.dart';
 
 class SelectController<T> extends ValueNotifier<T?> with ComponentController<T?> {
   SelectController([super.value]);
@@ -52,6 +53,8 @@ class ControlledSelect<T> extends StatelessWidget with ControlledComponent<T?>, 
   final SelectValueSelectionHandler<T>? valueSelectionHandler;
   @override
   final SelectValueSelectionPredicate<T>? valueSelectionPredicate;
+  @override
+  final Predicate<T>? showValuePredicate;
 
   const ControlledSelect({
     super.key,
@@ -76,13 +79,14 @@ class ControlledSelect<T> extends StatelessWidget with ControlledComponent<T?>, 
     required this.itemBuilder,
     this.valueSelectionHandler,
     this.valueSelectionPredicate,
+    this.showValuePredicate,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ControlledComponentBuilder<T?>(
+    return ControlledComponentAdapter<T?>(
       builder: (context, data) {
-        return Select<T>(
+        return VNLSelect<T>(
           onChanged: data.onChanged,
           placeholder: placeholder,
           filled: filled,
@@ -102,6 +106,7 @@ class ControlledSelect<T> extends StatelessWidget with ControlledComponent<T?>, 
           itemBuilder: itemBuilder,
           valueSelectionHandler: valueSelectionHandler,
           valueSelectionPredicate: valueSelectionPredicate,
+          showValuePredicate: showValuePredicate,
           popup: popup,
         );
       },
@@ -157,12 +162,14 @@ class ControlledMultiSelect<T> extends StatelessWidget with ControlledComponent<
   final SelectPopupBuilder popup;
   @override
   SelectValueBuilder<Iterable<T>> get itemBuilder => (context, value) {
-    return MultiSelect._buildItem(multiItemBuilder, context, value);
-  };
+        return MultiSelect._buildItem(multiItemBuilder, context, value);
+      };
   @override
   final SelectValueSelectionHandler<Iterable<T>>? valueSelectionHandler;
   @override
   final SelectValueSelectionPredicate<Iterable<T>>? valueSelectionPredicate;
+  @override
+  final Predicate<Iterable<T>>? showValuePredicate;
   final SelectValueBuilder<T> multiItemBuilder;
 
   const ControlledMultiSelect({
@@ -184,6 +191,7 @@ class ControlledMultiSelect<T> extends StatelessWidget with ControlledComponent<
     this.disableHoverEffect = false,
     this.canUnselect = true,
     this.autoClosePopover = false,
+    this.showValuePredicate,
     required this.popup,
     required SelectValueBuilder<T> itemBuilder,
     this.valueSelectionHandler,
@@ -212,6 +220,9 @@ class ControlledMultiSelect<T> extends StatelessWidget with ControlledComponent<
       autoClosePopover: autoClosePopover,
       popup: popup,
       itemBuilder: itemBuilder,
+      showValuePredicate: (test) {
+        return test.isNotEmpty && (showValuePredicate?.call(test) ?? true);
+      },
       valueSelectionHandler: valueSelectionHandler ?? _defaultMultiSelectValueSelectionHandler,
       valueSelectionPredicate: valueSelectionPredicate ?? _defaultMultiSelectValueSelectionPredicate,
     );
@@ -221,8 +232,14 @@ class ControlledMultiSelect<T> extends StatelessWidget with ControlledComponent<
 class SelectItemButton<T> extends StatelessWidget {
   final T value;
   final Widget child;
+  final AbstractButtonStyle style;
 
-  const SelectItemButton({super.key, required this.value, required this.child});
+  const SelectItemButton({
+    super.key,
+    required this.value,
+    required this.child,
+    this.style = const ButtonStyle.ghost(),
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -231,23 +248,29 @@ class SelectItemButton<T> extends StatelessWidget {
     final data = Data.maybeOf<SelectPopupHandle>(context);
     bool isSelected = data?.isSelected(value) ?? false;
     bool hasSelection = data?.hasSelection ?? false;
-    return Button(
+    return VNLButton(
       disableTransition: true,
       alignment: AlignmentDirectional.centerStart,
       onPressed: () {
         data?.selectItem(value, !isSelected);
       },
-      style: const ButtonStyle.ghost().copyWith(
-        padding: (context, states, value) => EdgeInsets.symmetric(vertical: 8 * scaling, horizontal: 8 * scaling),
+      style: style.copyWith(
+        padding: (context, states, value) => EdgeInsets.symmetric(
+          vertical: 8 * scaling,
+          horizontal: 8 * scaling,
+        ),
         mouseCursor: (context, states, value) {
           return SystemMouseCursors.basic;
         },
       ),
-      trailing:
-          isSelected
-              ? const Icon(Icons.check).iconSmall()
-              : hasSelection
-              ? SizedBox(width: 16 * scaling)
+      trailing: isSelected
+          ? const Icon(
+              LucideIcons.check,
+            ).iconSmall()
+          : hasSelection
+              ? SizedBox(
+                  width: 16 * scaling,
+                )
               : null,
       child: child.normal(),
     );
@@ -259,13 +282,22 @@ class SelectGroup extends StatelessWidget {
   final List<Widget> children;
   final List<Widget>? footers;
 
-  const SelectGroup({super.key, this.headers, this.footers, required this.children});
+  const SelectGroup({
+    super.key,
+    this.headers,
+    this.footers,
+    required this.children,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [if (headers != null) ...headers!, ...children, if (footers != null) ...footers!],
+      children: [
+        if (headers != null) ...headers!,
+        ...children,
+        if (footers != null) ...footers!,
+      ],
     );
   }
 }
@@ -274,26 +306,41 @@ class SelectItem extends StatelessWidget {
   final WidgetBuilder builder;
   final Object? value;
 
-  const SelectItem({super.key, required this.value, required this.builder});
+  const SelectItem({
+    super.key,
+    required this.value,
+    required this.builder,
+  });
 
   @override
   Widget build(BuildContext context) {
     final data = Data.maybeOf<SelectData>(context);
     final selected = data?.isSelected(value) ?? false;
-    return WidgetStatesProvider(states: {if (selected) WidgetState.selected}, child: Builder(builder: builder));
+    return WidgetStatesProvider(
+      states: {
+        if (selected) WidgetState.selected,
+      },
+      child: Builder(builder: builder),
+    );
   }
 }
 
 class SelectLabel extends StatelessWidget {
   final Widget child;
 
-  const SelectLabel({super.key, required this.child});
+  const SelectLabel({
+    super.key,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    return Padding(padding: const EdgeInsets.all(8) * scaling, child: child.semiBold().small());
+    return Padding(
+      padding: const EdgeInsets.all(8) * scaling,
+      child: child.semiBold().small(),
+    );
   }
 }
 
@@ -358,9 +405,10 @@ mixin SelectBase<T> {
   SelectValueBuilder<T> get itemBuilder;
   SelectValueSelectionHandler<T>? get valueSelectionHandler;
   SelectValueSelectionPredicate<T>? get valueSelectionPredicate;
+  Predicate<T>? get showValuePredicate;
 }
 
-class Select<T> extends StatefulWidget with SelectBase<T> {
+class VNLSelect<T> extends StatefulWidget with SelectBase<T> {
   static const kDefaultSelectMaxHeight = 240.0;
   @override
   final ValueChanged<T?>? onChanged; // if null, then it's a disabled combobox
@@ -400,8 +448,10 @@ class Select<T> extends StatefulWidget with SelectBase<T> {
   final SelectValueSelectionHandler<T>? valueSelectionHandler;
   @override
   final SelectValueSelectionPredicate<T>? valueSelectionPredicate;
+  @override
+  final Predicate<T>? showValuePredicate;
 
-  const Select({
+  const VNLSelect({
     super.key,
     this.onChanged,
     this.placeholder,
@@ -421,6 +471,7 @@ class Select<T> extends StatefulWidget with SelectBase<T> {
     this.enabled,
     this.valueSelectionHandler,
     this.valueSelectionPredicate,
+    this.showValuePredicate,
     required this.popup,
     required this.itemBuilder,
   });
@@ -429,7 +480,7 @@ class Select<T> extends StatefulWidget with SelectBase<T> {
   SelectState<T> createState() => SelectState<T>();
 }
 
-class SelectState<T> extends State<Select<T>> with FormValueSupplier<T, Select<T>> {
+class SelectState<T> extends State<VNLSelect<T>> with FormValueSupplier<T, VNLSelect<T>> {
   late FocusNode _focusNode;
   final PopoverController _popoverController = PopoverController();
   late ValueNotifier<T?> _valueNotifier;
@@ -439,10 +490,11 @@ class SelectState<T> extends State<Select<T>> with FormValueSupplier<T, Select<T
     super.initState();
     _focusNode = widget.focusNode ?? FocusNode();
     _valueNotifier = ValueNotifier(widget.value);
+    formValue = widget.value;
   }
 
   @override
-  void didUpdateWidget(Select<T> oldWidget) {
+  void didUpdateWidget(VNLSelect<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.focusNode != oldWidget.focusNode) {
       _focusNode = widget.focusNode ?? FocusNode();
@@ -485,7 +537,9 @@ class SelectState<T> extends State<Select<T>> with FormValueSupplier<T, Select<T
   }
 
   BoxDecoration _overrideBorderRadius(BuildContext context, Set<WidgetState> states, Decoration value) {
-    return (value as BoxDecoration).copyWith(borderRadius: widget.borderRadius);
+    return (value as BoxDecoration).copyWith(
+      borderRadius: widget.borderRadius,
+    );
   }
 
   EdgeInsetsGeometry _overridePadding(BuildContext context, Set<WidgetState> states, EdgeInsetsGeometry value) {
@@ -497,7 +551,8 @@ class SelectState<T> extends State<Select<T>> with FormValueSupplier<T, Select<T
       return false;
     }
     var selectionHandler = widget.valueSelectionHandler ?? _defaultSingleSelectValueSelectionHandler;
-    widget.onChanged?.call(selectionHandler(widget.value, value, selected));
+    var newValue = selectionHandler(widget.value, value, selected);
+    widget.onChanged?.call(newValue);
     return true;
   }
 
@@ -518,7 +573,7 @@ class SelectState<T> extends State<Select<T>> with FormValueSupplier<T, Select<T
           onTapOutside: (event) {
             _focusNode.unfocus();
           },
-          child: Button(
+          child: VNLButton(
             enabled: enabled,
             disableHoverEffect: widget.disableHoverEffect,
             focusNode: _focusNode,
@@ -526,57 +581,57 @@ class SelectState<T> extends State<Select<T>> with FormValueSupplier<T, Select<T
               decoration: widget.borderRadius != null ? _overrideBorderRadius : null,
               padding: widget.padding != null ? _overridePadding : null,
             ),
-            onPressed:
-                widget.onChanged == null
-                    ? null
-                    : () {
-                      // to prevent entire ListView from rebuilding
-                      // while the Data<SelectData> is being updated
-                      GlobalKey popupKey = GlobalKey();
-                      _popoverController
-                          .show(
-                            context: context,
-                            offset: Offset(0, 8 * scaling),
-                            alignment: widget.popoverAlignment,
-                            anchorAlignment: widget.popoverAnchorAlignment,
-                            widthConstraint: widget.popupWidthConstraint,
-                            overlayBarrier: OverlayBarrier(
-                              padding: const EdgeInsets.symmetric(vertical: 8) * scaling,
-                              borderRadius: BorderRadius.circular(theme.radiusLg),
-                            ),
-                            builder: (context) {
-                              return ConstrainedBox(
-                                constraints:
-                                    widget.popupConstraints ??
-                                    BoxConstraints(maxHeight: Select.kDefaultSelectMaxHeight * scaling),
-                                child: ListenableBuilder(
-                                  listenable: _valueNotifier,
-                                  builder: (context, _) {
-                                    return Data.inherit(
-                                      key: ValueKey(widget.value),
-                                      data: SelectData(
-                                        enabled: enabled,
-                                        autoClose: widget.autoClosePopover,
-                                        isSelected: _isSelected,
-                                        onChanged: _onChanged,
-                                        hasSelection: widget.value != null,
-                                      ),
-                                      child: Builder(
-                                        key: popupKey,
-                                        builder: (context) {
-                                          return widget.popup(context);
-                                        },
-                                      ),
-                                    );
-                                  },
-                                ),
-                              );
-                            },
-                          )
-                          .then((value) {
-                            _focusNode.requestFocus();
-                          });
-                    },
+            onPressed: widget.onChanged == null
+                ? null
+                : () {
+                    // to prevent entire ListView from rebuilding
+                    // while the Data<SelectData> is being updated
+                    GlobalKey popupKey = GlobalKey();
+                    _popoverController
+                        .show(
+                      context: context,
+                      offset: Offset(0, 8 * scaling),
+                      alignment: widget.popoverAlignment,
+                      anchorAlignment: widget.popoverAnchorAlignment,
+                      widthConstraint: widget.popupWidthConstraint,
+                      overlayBarrier: OverlayBarrier(
+                        padding: const EdgeInsets.symmetric(vertical: 8) * scaling,
+                        borderRadius: BorderRadius.circular(theme.radiusLg),
+                      ),
+                      builder: (context) {
+                        return ConstrainedBox(
+                          constraints: widget.popupConstraints ??
+                              BoxConstraints(
+                                maxHeight: VNLSelect.kDefaultSelectMaxHeight * scaling,
+                              ),
+                          child: ListenableBuilder(
+                              listenable: _valueNotifier,
+                              builder: (context, _) {
+                                return Data.inherit(
+                                  key: ValueKey(widget.value),
+                                  data: SelectData(
+                                    enabled: enabled,
+                                    autoClose: widget.autoClosePopover,
+                                    isSelected: _isSelected,
+                                    onChanged: _onChanged,
+                                    hasSelection: widget.value != null,
+                                  ),
+                                  child: Builder(
+                                      key: popupKey,
+                                      builder: (context) {
+                                        return widget.popup(context);
+                                      }),
+                                );
+                              }),
+                        );
+                      },
+                    )
+                        .then(
+                      (value) {
+                        _focusNode.requestFocus();
+                      },
+                    );
+                  },
             child: WidgetStatesProvider.boundary(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -590,20 +645,23 @@ class SelectState<T> extends State<Select<T>> with FormValueSupplier<T, Select<T
                       hasSelection: widget.value != null,
                     ),
                     child: Expanded(
-                      child:
-                          widget.value != null
-                              ? Builder(
-                                builder: (context) {
-                                  return widget.itemBuilder(context, widget.value as T);
-                                },
-                              )
-                              : _placeholder,
+                      child: widget.value != null && (widget.showValuePredicate?.call(widget.value as T) ?? true)
+                          ? Builder(builder: (context) {
+                              return widget.itemBuilder(
+                                context,
+                                widget.value as T,
+                              );
+                            })
+                          : _placeholder,
                     ),
                   ),
                   SizedBox(width: 8 * scaling),
                   IconTheme.merge(
-                    data: IconThemeData(color: theme.colorScheme.foreground, opacity: 0.5),
-                    child: const Icon(Icons.unfold_more).iconSmall(),
+                    data: IconThemeData(
+                      color: theme.colorScheme.foreground,
+                      opacity: 0.5,
+                    ),
+                    child: const Icon(LucideIcons.chevronsUpDown).iconSmall(),
                   ),
                 ],
               ),
@@ -611,6 +669,38 @@ class SelectState<T> extends State<Select<T>> with FormValueSupplier<T, Select<T
           ),
         ),
       ),
+    );
+  }
+}
+
+class MultiSelectChip extends StatelessWidget {
+  final Object? value;
+  final Widget child;
+  final AbstractButtonStyle style;
+
+  const MultiSelectChip({
+    super.key,
+    this.style = const ButtonStyle.primary(),
+    required this.value,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final data = Data.maybeOf<SelectData>(context);
+    return VNLChip(
+      style: style,
+      trailing: data?.enabled == false
+          ? null
+          : ChipButton(
+              onPressed: () {
+                data?.onChanged(value, false);
+              },
+              child: const Icon(
+                LucideIcons.x,
+              ).iconSmall(),
+            ),
+      child: child,
     );
   }
 }
@@ -650,13 +740,15 @@ class MultiSelect<T> extends StatelessWidget with SelectBase<Iterable<T>> {
   final SelectPopupBuilder popup;
   @override
   SelectValueBuilder<Iterable<T>> get itemBuilder => (context, value) {
-    return _buildItem(multiItemBuilder, context, value);
-  };
+        return _buildItem(multiItemBuilder, context, value);
+      };
   @override
   final SelectValueSelectionHandler<Iterable<T>>? valueSelectionHandler;
   @override
   final SelectValueSelectionPredicate<Iterable<T>>? valueSelectionPredicate;
   final SelectValueBuilder<T> multiItemBuilder;
+  @override
+  final Predicate<Iterable<T>>? showValuePredicate;
 
   const MultiSelect({
     super.key,
@@ -678,6 +770,7 @@ class MultiSelect<T> extends StatelessWidget with SelectBase<Iterable<T>> {
     this.enabled,
     this.valueSelectionHandler,
     this.valueSelectionPredicate,
+    this.showValuePredicate,
     required this.popup,
     required SelectValueBuilder<T> itemBuilder,
   }) : multiItemBuilder = itemBuilder;
@@ -685,33 +778,19 @@ class MultiSelect<T> extends StatelessWidget with SelectBase<Iterable<T>> {
   static Widget _buildItem<T>(SelectValueBuilder<T> multiItemBuilder, BuildContext context, Iterable<T> value) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final data = Data.maybeOf<SelectData>(context);
     return Wrap(
       spacing: 4 * scaling,
       runSpacing: 4 * scaling,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        for (var value in value)
-          Chip(
-            style: const ButtonStyle.primary(),
-            trailing: ChipButton(
-              onPressed:
-                  data?.enabled == false
-                      ? null
-                      : () {
-                        data?.onChanged(value, false);
-                      },
-              child: const Icon(Icons.close).iconSmall(),
-            ),
-            child: multiItemBuilder(context, value),
-          ),
+        for (var value in value) multiItemBuilder(context, value),
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Select<Iterable<T>>(
+    return VNLSelect<Iterable<T>>(
       popup: popup,
       itemBuilder: itemBuilder,
       onChanged: onChanged,
@@ -730,6 +809,9 @@ class MultiSelect<T> extends StatelessWidget with SelectBase<Iterable<T>> {
       canUnselect: canUnselect,
       autoClosePopover: autoClosePopover ?? true,
       enabled: enabled,
+      showValuePredicate: (test) {
+        return test.isNotEmpty && (showValuePredicate?.call(test) ?? true);
+      },
       valueSelectionHandler: valueSelectionHandler ?? _defaultMultiSelectValueSelectionHandler,
       valueSelectionPredicate: valueSelectionPredicate ?? _defaultMultiSelectValueSelectionPredicate,
     );
@@ -801,9 +883,9 @@ class SelectPopup<T> extends StatefulWidget {
     this.enableSearch = true,
     this.errorBuilder,
     this.scrollController,
-  }) : items = null,
-       shrinkWrap = false,
-       disableVirtualization = false;
+  })  : items = null,
+        shrinkWrap = false,
+        disableVirtualization = false;
 
   const SelectPopup({
     super.key,
@@ -815,13 +897,13 @@ class SelectPopup<T> extends StatefulWidget {
     this.errorBuilder,
     this.surfaceBlur,
     this.surfaceOpacity,
-    this.autoClose = true,
+    this.autoClose,
     this.canUnselect,
     this.scrollController,
     this.shrinkWrap = true,
-  }) : builder = null,
-       enableSearch = false,
-       disableVirtualization = false;
+  })  : builder = null,
+        enableSearch = false,
+        disableVirtualization = false;
 
   const SelectPopup.noVirtualization({
     super.key,
@@ -833,13 +915,13 @@ class SelectPopup<T> extends StatefulWidget {
     this.errorBuilder,
     this.surfaceBlur,
     this.surfaceOpacity,
-    this.autoClose = true,
+    this.autoClose,
     this.canUnselect,
     this.scrollController,
-  }) : builder = null,
-       enableSearch = false,
-       disableVirtualization = true,
-       shrinkWrap = false;
+  })  : builder = null,
+        enableSearch = false,
+        disableVirtualization = true,
+        shrinkWrap = false;
 
   /// A method used to implement SelectPopupBuilder
   SelectPopup<T> call(BuildContext context) {
@@ -915,7 +997,7 @@ class _SelectPopupState<T> extends State<SelectPopup<T>> with SelectPopupHandle 
     final scaling = theme.scaling;
     return Data<SelectPopupHandle>.inherit(
       data: this,
-      child: SurfaceCard(
+      child: ModalContainer(
         clipBehavior: Clip.hardEdge,
         surfaceBlur: widget.surfaceBlur,
         surfaceOpacity: widget.surfaceOpacity,
@@ -925,176 +1007,204 @@ class _SelectPopupState<T> extends State<SelectPopup<T>> with SelectPopupHandle 
           mainAxisSize: MainAxisSize.min,
           children: [
             if (widget.enableSearch)
-              TextField(
+              VNLTextField(
                 controller: _searchController,
                 border: false,
-                leading: const Icon(Icons.search).iconSmall().iconMutedForeground(),
+                features: [
+                  InputFeature.leading(
+                    const Icon(
+                      LucideIcons.search,
+                    ).iconSmall().iconMutedForeground(),
+                  ),
+                ],
                 placeholder: widget.searchPlaceholder,
                 padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12) * scaling,
               ),
             Flexible(
               child: ListenableBuilder(
-                listenable: _searchController,
-                builder: (context, _) {
-                  return CachedValueWidget(
-                    value: _searchController.text.isEmpty ? null : _searchController.text,
-                    builder: (context, searchQuery) {
-                      return FutureOrBuilder<SelectItemDelegate?>(
-                        future:
-                            widget.builder != null
-                                ? widget.builder!.call(context, searchQuery)
-                                : widget.items != null
-                                ? widget.items!
-                                : SelectItemDelegate.empty,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            Widget? loadingBuilder = widget.loadingBuilder?.call(context);
-                            if (loadingBuilder != null) {
-                              return Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [if (widget.enableSearch) const Divider(), Flexible(child: loadingBuilder)],
-                              );
-                            }
-                            return const SizedBox();
-                          }
-                          if (snapshot.hasError) {
-                            Widget? errorBuilder = widget.errorBuilder?.call(
-                              context,
-                              snapshot.error!,
-                              snapshot.stackTrace,
-                            );
-                            if (errorBuilder != null) {
-                              return Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [if (widget.enableSearch) const Divider(), Flexible(child: errorBuilder)],
-                              );
-                            }
-                            return const SizedBox();
-                          }
-                          if (snapshot.hasData && snapshot.data?.estimatedChildCount != 0) {
-                            var data = snapshot.data!;
-                            return CachedValueWidget(
-                              value: data,
-                              builder: (context, data) {
-                                return Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  children: [
-                                    if (widget.enableSearch) const Divider(),
-                                    Flexible(
-                                      child: Stack(
-                                        fit: StackFit.passthrough,
+                  listenable: _searchController,
+                  builder: (context, _) {
+                    return CachedValueWidget(
+                        value: _searchController.text.isEmpty ? null : _searchController.text,
+                        builder: (context, searchQuery) {
+                          return FutureOrBuilder<SelectItemDelegate?>(
+                              future: widget.builder != null
+                                  ? widget.builder!.call(context, searchQuery)
+                                  : widget.items != null
+                                      ? widget.items!
+                                      : SelectItemDelegate.empty,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  Widget? loadingBuilder = widget.loadingBuilder?.call(context);
+                                  if (loadingBuilder != null) {
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      children: [
+                                        if (widget.enableSearch) const VNLDivider(),
+                                        Flexible(
+                                          child: loadingBuilder,
+                                        ),
+                                      ],
+                                    );
+                                  }
+                                  return const SizedBox();
+                                }
+                                if (snapshot.hasError) {
+                                  Widget? errorBuilder = widget.errorBuilder?.call(
+                                    context,
+                                    snapshot.error!,
+                                    snapshot.stackTrace,
+                                  );
+                                  if (errorBuilder != null) {
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      children: [
+                                        if (widget.enableSearch) const VNLDivider(),
+                                        Flexible(
+                                          child: errorBuilder,
+                                        ),
+                                      ],
+                                    );
+                                  }
+                                  return const SizedBox();
+                                }
+                                if (snapshot.hasData && snapshot.data?.estimatedChildCount != 0) {
+                                  var data = snapshot.data!;
+                                  return CachedValueWidget(
+                                    value: data,
+                                    builder: (context, data) {
+                                      return Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment: CrossAxisAlignment.stretch,
                                         children: [
-                                          if (widget.disableVirtualization)
-                                            SingleChildScrollView(
-                                              controller: _scrollController,
-                                              padding: const EdgeInsets.all(4) * scaling,
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                                children: [
-                                                  for (var i = 0; i < (data as SelectItemList).children.length; i++)
-                                                    data.build(context, i),
-                                                ],
-                                              ),
-                                            )
-                                          else
-                                            ListView.builder(
-                                              controller: _scrollController,
-                                              padding: const EdgeInsets.all(4) * scaling,
-                                              itemBuilder: data.build,
-                                              shrinkWrap: widget.shrinkWrap,
-                                              itemCount: data.estimatedChildCount,
+                                          if (widget.enableSearch) const VNLDivider(),
+                                          Flexible(
+                                            child: Stack(
+                                              fit: StackFit.passthrough,
+                                              children: [
+                                                if (widget.disableVirtualization)
+                                                  SingleChildScrollView(
+                                                    controller: _scrollController,
+                                                    padding: const EdgeInsets.all(4) * scaling,
+                                                    child: Column(
+                                                      mainAxisSize: MainAxisSize.min,
+                                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                                      children: [
+                                                        for (var i = 0;
+                                                            i < (data as SelectItemList).children.length;
+                                                            i++)
+                                                          data.build(context, i),
+                                                      ],
+                                                    ),
+                                                  )
+                                                else
+                                                  ListView.builder(
+                                                    controller: _scrollController,
+                                                    padding: const EdgeInsets.all(4) * scaling,
+                                                    itemBuilder: data.build,
+                                                    shrinkWrap: widget.shrinkWrap,
+                                                    itemCount: data.estimatedChildCount,
+                                                  ),
+                                                ListenableBuilder(
+                                                  listenable: _scrollController,
+                                                  builder: (context, child) {
+                                                    return Visibility(
+                                                      visible: _scrollController.offset > 0,
+                                                      child: Positioned(
+                                                        top: 0,
+                                                        left: 0,
+                                                        right: 0,
+                                                        child: HoverActivity(
+                                                          hitTestBehavior: HitTestBehavior.translucent,
+                                                          debounceDuration: const Duration(milliseconds: 16),
+                                                          onHover: () {
+                                                            // decrease scroll offset
+                                                            var value = _scrollController.offset - 8;
+                                                            value = value.clamp(
+                                                              0.0,
+                                                              _scrollController.position.maxScrollExtent,
+                                                            );
+                                                            _scrollController.jumpTo(
+                                                              value,
+                                                            );
+                                                          },
+                                                          child: Container(
+                                                            padding: const EdgeInsets.symmetric(vertical: 4) * scaling,
+                                                            child: const Icon(
+                                                              RadixIcons.chevronUp,
+                                                            ).iconX3Small(),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                                ListenableBuilder(
+                                                  listenable: _scrollController,
+                                                  builder: (context, child) {
+                                                    return Visibility(
+                                                      visible: _scrollController.hasClients &&
+                                                          _scrollController.position.hasContentDimensions &&
+                                                          _scrollController.offset <
+                                                              _scrollController.position.maxScrollExtent,
+                                                      child: Positioned(
+                                                        bottom: 0,
+                                                        left: 0,
+                                                        right: 0,
+                                                        child: HoverActivity(
+                                                          hitTestBehavior: HitTestBehavior.translucent,
+                                                          debounceDuration: const Duration(milliseconds: 16),
+                                                          onHover: () {
+                                                            // increase scroll offset
+                                                            var value = _scrollController.offset + 8;
+                                                            value = value.clamp(
+                                                              0.0,
+                                                              _scrollController.position.maxScrollExtent,
+                                                            );
+                                                            _scrollController.jumpTo(
+                                                              value,
+                                                            );
+                                                          },
+                                                          child: Container(
+                                                            padding: const EdgeInsets.symmetric(vertical: 4) * scaling,
+                                                            child: const Icon(
+                                                              RadixIcons.chevronDown,
+                                                            ).iconX3Small(),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ],
                                             ),
-                                          ListenableBuilder(
-                                            listenable: _scrollController,
-                                            builder: (context, child) {
-                                              return Visibility(
-                                                visible: _scrollController.offset > 0,
-                                                child: Positioned(
-                                                  top: 0,
-                                                  left: 0,
-                                                  right: 0,
-                                                  child: HoverActivity(
-                                                    hitTestBehavior: HitTestBehavior.translucent,
-                                                    debounceDuration: const Duration(milliseconds: 16),
-                                                    onHover: () {
-                                                      // decrease scroll offset
-                                                      var value = _scrollController.offset - 8;
-                                                      value = value.clamp(
-                                                        0.0,
-                                                        _scrollController.position.maxScrollExtent,
-                                                      );
-                                                      _scrollController.jumpTo(value);
-                                                    },
-                                                    child: Container(
-                                                      padding: const EdgeInsets.symmetric(vertical: 4) * scaling,
-                                                      child: const Icon(RadixIcons.chevronUp).iconX3Small(),
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                          ListenableBuilder(
-                                            listenable: _scrollController,
-                                            builder: (context, child) {
-                                              return Visibility(
-                                                visible:
-                                                    _scrollController.hasClients &&
-                                                    _scrollController.position.hasContentDimensions &&
-                                                    _scrollController.offset <
-                                                        _scrollController.position.maxScrollExtent,
-                                                child: Positioned(
-                                                  bottom: 0,
-                                                  left: 0,
-                                                  right: 0,
-                                                  child: HoverActivity(
-                                                    hitTestBehavior: HitTestBehavior.translucent,
-                                                    debounceDuration: const Duration(milliseconds: 16),
-                                                    onHover: () {
-                                                      // increase scroll offset
-                                                      var value = _scrollController.offset + 8;
-                                                      value = value.clamp(
-                                                        0.0,
-                                                        _scrollController.position.maxScrollExtent,
-                                                      );
-                                                      _scrollController.jumpTo(value);
-                                                    },
-                                                    child: Container(
-                                                      padding: const EdgeInsets.symmetric(vertical: 4) * scaling,
-                                                      child: const Icon(RadixIcons.chevronDown).iconX3Small(),
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            },
                                           ),
                                         ],
-                                      ),
-                                    ),
-                                  ],
+                                      );
+                                    },
+                                  );
+                                }
+                                Widget? emptyBuilder = widget.emptyBuilder?.call(
+                                  context,
                                 );
-                              },
-                            );
-                          }
-                          Widget? emptyBuilder = widget.emptyBuilder?.call(context);
-                          if (emptyBuilder != null) {
-                            return Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [if (widget.enableSearch) const Divider(), Flexible(child: emptyBuilder)],
-                            );
-                          }
-                          return const SizedBox();
-                        },
-                      );
-                    },
-                  );
-                },
-              ),
+                                if (emptyBuilder != null) {
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    children: [
+                                      if (widget.enableSearch) const VNLDivider(),
+                                      Flexible(
+                                        child: emptyBuilder,
+                                      ),
+                                    ],
+                                  );
+                                }
+                                return const SizedBox();
+                              });
+                        });
+                  }),
             ),
           ],
         ),
@@ -1133,7 +1243,10 @@ class SelectItemBuilder extends SelectItemDelegate {
   final SelectItemWidgetBuilder builder;
   final int? childCount;
 
-  const SelectItemBuilder({required this.builder, this.childCount});
+  const SelectItemBuilder({
+    required this.builder,
+    this.childCount,
+  });
 
   @override
   Widget build(BuildContext context, int index) {
@@ -1152,7 +1265,9 @@ class SelectItemBuilder extends SelectItemDelegate {
 class SelectItemList extends SelectItemDelegate {
   final List<Widget> children;
 
-  const SelectItemList({required this.children});
+  const SelectItemList({
+    required this.children,
+  });
 
   @override
   Widget build(BuildContext context, int index) {

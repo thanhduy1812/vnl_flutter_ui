@@ -1,5 +1,5 @@
-import 'package:flutter/widgets.dart';
-import 'package:vnl_common_ui/src/util.dart';
+
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 typedef AnimatedChildBuilder<T> = Widget Function(
     BuildContext context, T value, Widget? child);

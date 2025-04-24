@@ -25,7 +25,7 @@ abstract class OverlayCompleter<T> {
   void dispose();
   bool get isCompleted;
   bool get isAnimationCompleted;
-  Future<T> get future;
+  Future<T?> get future;
   Future<void> get animationFuture;
 }
 
@@ -50,13 +50,14 @@ abstract class OverlayHandler {
     EdgeInsetsGeometry? margin,
     bool follow = true,
     bool consumeOutsideTaps = true,
-    ValueChanged<PopoverAnchorState>? onTickFollow,
+    ValueChanged<PopoverOverlayWidgetState>? onTickFollow,
     bool allowInvertHorizontal = true,
     bool allowInvertVertical = true,
     bool dismissBackdropFocus = true,
     Duration? showDuration,
     Duration? dismissDuration,
     OverlayBarrier? overlayBarrier,
+    LayerLink? layerLink,
   });
 }
 
@@ -65,7 +66,11 @@ class OverlayBarrier {
   final BorderRadiusGeometry borderRadius;
   final Color? barrierColor;
 
-  const OverlayBarrier({this.padding = EdgeInsets.zero, this.borderRadius = BorderRadius.zero, this.barrierColor});
+  const OverlayBarrier({
+    this.padding = EdgeInsets.zero,
+    this.borderRadius = BorderRadius.zero,
+    this.barrierColor,
+  });
 }
 
 abstract class OverlayManager implements OverlayHandler {
@@ -95,13 +100,14 @@ abstract class OverlayManager implements OverlayHandler {
     EdgeInsetsGeometry? margin,
     bool follow = true,
     bool consumeOutsideTaps = true,
-    ValueChanged<PopoverAnchorState>? onTickFollow,
+    ValueChanged<PopoverOverlayWidgetState>? onTickFollow,
     bool allowInvertHorizontal = true,
     bool allowInvertVertical = true,
     bool dismissBackdropFocus = true,
     Duration? showDuration,
     Duration? dismissDuration,
     OverlayBarrier? overlayBarrier,
+    LayerLink? layerLink,
   });
 
   OverlayCompleter<T?> showTooltip<T>({
@@ -123,13 +129,14 @@ abstract class OverlayManager implements OverlayHandler {
     EdgeInsetsGeometry? margin,
     bool follow = true,
     bool consumeOutsideTaps = true,
-    ValueChanged<PopoverAnchorState>? onTickFollow,
+    ValueChanged<PopoverOverlayWidgetState>? onTickFollow,
     bool allowInvertHorizontal = true,
     bool allowInvertVertical = true,
     bool dismissBackdropFocus = true,
     Duration? showDuration,
     Duration? dismissDuration,
     OverlayBarrier? overlayBarrier,
+    LayerLink? layerLink,
   });
 
   OverlayCompleter<T?> showMenu<T>({
@@ -151,13 +158,14 @@ abstract class OverlayManager implements OverlayHandler {
     EdgeInsetsGeometry? margin,
     bool follow = true,
     bool consumeOutsideTaps = true,
-    ValueChanged<PopoverAnchorState>? onTickFollow,
+    ValueChanged<PopoverOverlayWidgetState>? onTickFollow,
     bool allowInvertHorizontal = true,
     bool allowInvertVertical = true,
     bool dismissBackdropFocus = true,
     Duration? showDuration,
     Duration? dismissDuration,
     OverlayBarrier? overlayBarrier,
+    LayerLink? layerLink,
   });
 }
 
@@ -182,7 +190,10 @@ class OverlayManagerLayer extends StatefulWidget {
 class _OverlayManagerLayerState extends State<OverlayManagerLayer> implements OverlayManager {
   @override
   Widget build(BuildContext context) {
-    return Data<OverlayManager>.inherit(data: this, child: widget.child);
+    return Data<OverlayManager>.inherit(
+      data: this,
+      child: widget.child,
+    );
   }
 
   @override
@@ -205,13 +216,14 @@ class _OverlayManagerLayerState extends State<OverlayManagerLayer> implements Ov
     EdgeInsetsGeometry? margin,
     bool follow = true,
     bool consumeOutsideTaps = true,
-    ValueChanged<PopoverAnchorState>? onTickFollow,
+    ValueChanged<PopoverOverlayWidgetState>? onTickFollow,
     bool allowInvertHorizontal = true,
     bool allowInvertVertical = true,
     bool dismissBackdropFocus = true,
     Duration? showDuration,
     Duration? dismissDuration,
     OverlayBarrier? overlayBarrier,
+    LayerLink? layerLink,
   }) {
     return widget.popoverHandler.show(
       context: context,
@@ -239,6 +251,7 @@ class _OverlayManagerLayerState extends State<OverlayManagerLayer> implements Ov
       showDuration: showDuration,
       dismissDuration: dismissDuration,
       overlayBarrier: overlayBarrier,
+      layerLink: layerLink,
     );
   }
 
@@ -262,13 +275,14 @@ class _OverlayManagerLayerState extends State<OverlayManagerLayer> implements Ov
     EdgeInsetsGeometry? margin,
     bool follow = true,
     bool consumeOutsideTaps = true,
-    ValueChanged<PopoverAnchorState>? onTickFollow,
+    ValueChanged<PopoverOverlayWidgetState>? onTickFollow,
     bool allowInvertHorizontal = true,
     bool allowInvertVertical = true,
     bool dismissBackdropFocus = true,
     Duration? showDuration,
     Duration? dismissDuration,
     OverlayBarrier? overlayBarrier,
+    LayerLink? layerLink,
   }) {
     return widget.tooltipHandler.show(
       context: context,
@@ -296,6 +310,7 @@ class _OverlayManagerLayerState extends State<OverlayManagerLayer> implements Ov
       showDuration: showDuration,
       dismissDuration: dismissDuration,
       overlayBarrier: overlayBarrier,
+      layerLink: layerLink,
     );
   }
 
@@ -319,13 +334,14 @@ class _OverlayManagerLayerState extends State<OverlayManagerLayer> implements Ov
     EdgeInsetsGeometry? margin,
     bool follow = true,
     bool consumeOutsideTaps = true,
-    ValueChanged<PopoverAnchorState>? onTickFollow,
+    ValueChanged<PopoverOverlayWidgetState>? onTickFollow,
     bool allowInvertHorizontal = true,
     bool allowInvertVertical = true,
     bool dismissBackdropFocus = true,
     Duration? showDuration,
     Duration? dismissDuration,
     OverlayBarrier? overlayBarrier,
+    LayerLink? layerLink,
   }) {
     return widget.menuHandler.show(
       context: context,
@@ -353,6 +369,7 @@ class _OverlayManagerLayerState extends State<OverlayManagerLayer> implements Ov
       showDuration: showDuration,
       dismissDuration: dismissDuration,
       overlayBarrier: overlayBarrier,
+      layerLink: layerLink,
     );
   }
 }

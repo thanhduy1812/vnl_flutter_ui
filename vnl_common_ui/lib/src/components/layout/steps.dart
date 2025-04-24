@@ -1,9 +1,12 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-class Steps extends StatelessWidget {
+class VNLSteps extends StatelessWidget {
   final List<Widget> children;
 
-  const Steps({super.key, required this.children});
+  const VNLSteps({
+    super.key,
+    required this.children,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -11,32 +14,37 @@ class Steps extends StatelessWidget {
     final scaling = theme.scaling;
     List<Widget> mapped = [];
     for (var i = 0; i < children.length; i++) {
-      mapped.add(
-        IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(color: theme.colorScheme.muted, shape: BoxShape.circle),
-                    width: 28 * scaling,
-                    height: 28 * scaling,
-                    child: Center(child: Text((i + 1).toString()).mono().bold()),
+      mapped.add(IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.muted,
+                    shape: BoxShape.circle,
                   ),
-                  Gap(4 * scaling),
-                  const Expanded(child: VerticalDivider()),
-                  Gap(4 * scaling),
-                ],
-              ),
-              Gap(18 * scaling),
-              Expanded(child: children[i].withPadding(bottom: 32 * scaling)),
-            ],
-          ),
+                  width: 28 * scaling,
+                  height: 28 * scaling,
+                  child: Center(
+                    child: Text(
+                      (i + 1).toString(),
+                    ).mono().bold(),
+                  ),
+                ),
+                Gap(4 * scaling),
+                const Expanded(child: VerticalDivider()),
+                Gap(4 * scaling),
+              ],
+            ),
+            Gap(18 * scaling),
+            Expanded(child: children[i].withPadding(bottom: 32 * scaling)),
+          ],
         ),
-      );
+      ));
     }
     return IntrinsicWidth(
       child: Column(
@@ -53,10 +61,20 @@ class StepItem extends StatelessWidget {
   final Widget title;
   final List<Widget> content;
 
-  const StepItem({super.key, required this.title, required this.content});
+  const StepItem({
+    super.key,
+    required this.title,
+    required this.content,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [title.h4(), ...content]);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        title.h4(),
+        ...content,
+      ],
+    );
   }
 }

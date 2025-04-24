@@ -2,7 +2,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-class OverflowMarquee extends StatefulWidget {
+class VNLOverflowMarquee extends StatefulWidget {
   final Widget child;
   final Axis direction;
   final Duration duration;
@@ -11,7 +11,7 @@ class OverflowMarquee extends StatefulWidget {
   final double fadePortion;
   final Curve curve;
 
-  const OverflowMarquee({
+  const VNLOverflowMarquee({
     super.key,
     required this.child,
     this.direction = Axis.horizontal,
@@ -24,10 +24,10 @@ class OverflowMarquee extends StatefulWidget {
   });
 
   @override
-  State<OverflowMarquee> createState() => _OverflowMarqueeState();
+  State<VNLOverflowMarquee> createState() => _OverflowMarqueeState();
 }
 
-class _OverflowMarqueeState extends State<OverflowMarquee> with SingleTickerProviderStateMixin {
+class _OverflowMarqueeState extends State<VNLOverflowMarquee> with SingleTickerProviderStateMixin {
   late Ticker _ticker;
   Duration elapsed = Duration.zero;
 
@@ -94,7 +94,6 @@ class _OverflowMarqueeLayout extends SingleChildRenderObjectWidget {
   @override
   RenderObject createRenderObject(BuildContext context) {
     return _RenderOverflowMarqueeLayout(
-      null,
       direction: direction,
       fadePortion: fadePortion,
       duration: duration,
@@ -163,8 +162,7 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
   double step;
   TextDirection textDirection;
 
-  _RenderOverflowMarqueeLayout(
-    super.child, {
+  _RenderOverflowMarqueeLayout({
     required this.direction,
     required this.fadePortion,
     required this.duration,
@@ -173,7 +171,7 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
     required this.elapsed,
     required this.step,
     required this.textDirection,
-  });
+  }) : super(null);
 
   @override
   void setupParentData(RenderBox child) {
@@ -217,9 +215,13 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
   @override
   Size computeDryLayout(covariant BoxConstraints constraints) {
     if (direction == Axis.horizontal) {
-      constraints = constraints.copyWith(maxWidth: double.infinity);
+      constraints = constraints.copyWith(
+        maxWidth: double.infinity,
+      );
     } else {
-      constraints = constraints.copyWith(maxHeight: double.infinity);
+      constraints = constraints.copyWith(
+        maxHeight: double.infinity,
+      );
     }
     final child = this.child;
     if (child != null) {
@@ -278,7 +280,7 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
     return 0;
   }
 
-  Shader? _createAlphaShader(bool fadeStart, bool fadeEnd, Rect bounds, double fadePortion) {
+  Shader _createAlphaShader(bool fadeStart, bool fadeEnd, Rect bounds, double fadePortion) {
     double portionSize;
     if (direction == Axis.horizontal) {
       portionSize = fadePortion / bounds.width;
@@ -314,7 +316,12 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
       begin = Alignment.topCenter;
       end = Alignment.bottomCenter;
     }
-    return LinearGradient(begin: begin, end: end, colors: colors, stops: stops).createShader(bounds);
+    return LinearGradient(
+      begin: begin,
+      end: end,
+      colors: colors,
+      stops: stops,
+    ).createShader(bounds);
   }
 
   @override
@@ -325,30 +332,32 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
       final parentData = child.parentData as _OverflowMarqueeParentData;
       final sizeDiff = parentData.sizeDiff ?? 0;
       var progress = offsetProgress;
-      Shader? shader = _createAlphaShader(
+      Shader shader = _createAlphaShader(
         progress > 0 && sizeDiff != 0,
         progress < 1 && sizeDiff != 0,
         (Offset.zero & size),
         25,
       );
-      if (shader != null) {
-        assert(needsCompositing);
-        layer!
-          ..shader = shader
-          ..maskRect = (offset & size).inflate(1)
-          ..blendMode = BlendMode.modulate;
-        context.pushLayer(layer!, super.paint, offset);
-        assert(() {
-          layer!.debugCreator = debugCreator;
-          return true;
-        }());
-      } else {
-        layer = null;
-        super.paint(context, offset + parentData.offset);
-      }
+      assert(needsCompositing);
+      layer!
+        ..shader = shader
+        ..maskRect = (offset & size).inflate(1)
+        ..blendMode = BlendMode.modulate;
+      context.pushLayer(layer!, _paintChild, offset);
+      assert(() {
+        layer!.debugCreator = debugCreator;
+        return true;
+      }());
     } else {
       layer = null;
-      super.paint(context, offset);
+    }
+  }
+
+  void _paintChild(PaintingContext context, Offset offset) {
+    final child = this.child;
+    if (child != null) {
+      final parentData = child.parentData as _OverflowMarqueeParentData;
+      context.paintChild(child, offset + parentData.offset);
     }
   }
 
@@ -358,14 +367,18 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
     if (child != null) {
       var constraints = this.constraints;
       if (direction == Axis.horizontal) {
-        constraints = constraints.copyWith(maxWidth: double.infinity);
+        constraints = constraints.copyWith(
+          maxWidth: double.infinity,
+        );
       } else {
-        constraints = constraints.copyWith(maxHeight: double.infinity);
+        constraints = constraints.copyWith(
+          maxHeight: double.infinity,
+        );
       }
       child.layout(constraints, parentUsesSize: true);
       size = this.constraints.constrain(child.size);
       final sizeDiff = child.size.width - size.width;
-      if (sizeDiff > 0) {
+      if (sizeDiff > 0 && size.width > 0 && size.height > 0) {
         if (!ticker.isActive) {
           ticker.start();
         }
@@ -381,6 +394,9 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
       parentData.offset = offset;
     } else {
       size = constraints.biggest;
+      if (ticker.isActive) {
+        ticker.stop();
+      }
     }
   }
 }

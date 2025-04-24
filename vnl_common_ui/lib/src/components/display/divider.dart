@@ -26,7 +26,7 @@ class DividerProperties {
   }
 }
 
-class Divider extends StatelessWidget implements PreferredSizeWidget {
+class VNLDivider extends StatelessWidget implements PreferredSizeWidget {
   final Color? color;
   final double? height;
   final double? thickness;
@@ -35,7 +35,7 @@ class Divider extends StatelessWidget implements PreferredSizeWidget {
   final Widget? child;
   final EdgeInsetsGeometry? padding;
 
-  const Divider({
+  const VNLDivider({
     super.key,
     this.color,
     this.height,

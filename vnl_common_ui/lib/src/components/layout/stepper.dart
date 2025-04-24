@@ -1,13 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-enum StepState { failed }
+enum StepState {
+  failed,
+}
 
 class StepperValue {
   final Map<int, StepState> stepStates;
   final int currentStep;
 
-  StepperValue({required this.stepStates, required this.currentStep});
+  StepperValue({
+    required this.stepStates,
+    required this.currentStep,
+  });
 
   @override
   bool operator ==(Object other) {
@@ -29,7 +34,11 @@ class Step {
   final WidgetBuilder? contentBuilder;
   final Widget? icon;
 
-  const Step({required this.title, this.contentBuilder, this.icon});
+  const Step({
+    required this.title,
+    this.contentBuilder,
+    this.icon,
+  });
 }
 
 typedef StepSizeBuilder = Widget Function(BuildContext context, Widget child);
@@ -86,53 +95,57 @@ class _StepVariantCircle extends StepVariant {
                 Gap(8 * scaling),
                 Expanded(
                   child: AnimatedBuilder(
-                    animation: properties.state,
-                    builder: (context, child) {
-                      return Divider(
-                        thickness: 2 * scaling,
-                        color:
-                            properties.hasFailure && properties.state.value.currentStep <= i
-                                ? theme.colorScheme.destructive
-                                : properties.state.value.currentStep >= i
-                                ? theme.colorScheme.primary
-                                : theme.colorScheme.border,
-                      );
-                    },
-                  ),
+                      animation: properties.state,
+                      builder: (context, child) {
+                        return VNLDivider(
+                          thickness: 2 * scaling,
+                          color: properties.hasFailure && properties.state.value.currentStep <= i
+                              ? theme.colorScheme.destructive
+                              : properties.state.value.currentStep >= i
+                                  ? theme.colorScheme.primary
+                                  : theme.colorScheme.border,
+                        );
+                      }),
                 ),
                 Gap(8 * scaling),
               ],
             ],
           ),
         );
-        children.add(i == properties.steps.length - 1 ? childWidget : Expanded(child: childWidget));
+        children.add(
+          i == properties.steps.length - 1
+              ? childWidget
+              : Expanded(
+                  child: childWidget,
+                ),
+        );
       }
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          IntrinsicHeight(child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: children)),
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: children,
+            ),
+          ),
           AnimatedBuilder(
-            animation: properties.state,
-            builder: (context, child) {
-              var current = properties.state.value.currentStep;
-              return Flexible(
-                child: IndexedStack(
-                  index:
-                      current < 0 || current >= properties.steps.length
-                          ? properties
-                              .steps
-                              .length // will show the placeholder
-                          : current,
+              animation: properties.state,
+              builder: (context, child) {
+                var current = properties.state.value.currentStep;
+                return Flexible(
+                    child: IndexedStack(
+                  index: current < 0 || current >= properties.steps.length
+                      ? properties.steps.length // will show the placeholder
+                      : current,
                   children: [
                     for (int i = 0; i < properties.steps.length; i++)
                       properties[i]?.contentBuilder?.call(context) ?? const SizedBox(),
                     const SizedBox(), // for placeholder
                   ],
-                ),
-              );
-            },
-          ),
+                ));
+              }),
         ],
       );
     } else {
@@ -155,7 +168,9 @@ class _StepVariantCircle extends StepVariant {
                 ),
                 Gap(8 * scaling),
                 ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: 16 * scaling),
+                  constraints: BoxConstraints(
+                    minHeight: 16 * scaling,
+                  ),
                   child: Stack(
                     children: [
                       PositionedDirectional(
@@ -164,61 +179,68 @@ class _StepVariantCircle extends StepVariant {
                         bottom: 0,
                         child: SizedBox(
                           width: properties.size.size,
-                          child:
-                              i == properties.steps.length - 1
-                                  ? null
-                                  : AnimatedBuilder(
-                                    animation: properties.state,
-                                    builder: (context, child) {
-                                      return VerticalDivider(
-                                        thickness: 2 * scaling,
-                                        color:
-                                            properties.hasFailure && properties.state.value.currentStep <= i
-                                                ? theme.colorScheme.destructive
-                                                : properties.state.value.currentStep >= i
-                                                ? theme.colorScheme.primary
-                                                : theme.colorScheme.border,
-                                      );
-                                    },
-                                  ),
+                          child: i == properties.steps.length - 1
+                              ? null
+                              : AnimatedBuilder(
+                                  animation: properties.state,
+                                  builder: (context, child) {
+                                    return VerticalDivider(
+                                      thickness: 2 * scaling,
+                                      color: properties.hasFailure && properties.state.value.currentStep <= i
+                                          ? theme.colorScheme.destructive
+                                          : properties.state.value.currentStep >= i
+                                              ? theme.colorScheme.primary
+                                              : theme.colorScheme.border,
+                                    );
+                                  }),
                         ),
                       ),
                       AnimatedBuilder(
-                        animation: properties.state,
-                        child: properties.steps[i].contentBuilder?.call(context),
-                        builder: (context, child) {
-                          return AnimatedCrossFade(
-                            firstChild: Container(height: 0),
-                            secondChild: Container(margin: EdgeInsets.only(left: properties.size.size), child: child!),
-                            firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
-                            secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
-                            sizeCurve: Curves.fastOutSlowIn,
-                            crossFadeState:
-                                properties.state.value.currentStep == i
-                                    ? CrossFadeState.showSecond
-                                    : CrossFadeState.showFirst,
-                            duration: kDefaultDuration,
-                          );
-                        },
-                      ),
+                          animation: properties.state,
+                          child: properties.steps[i].contentBuilder?.call(context),
+                          builder: (context, child) {
+                            return AnimatedCrossFade(
+                              firstChild: Container(
+                                height: 0,
+                              ),
+                              secondChild: Container(
+                                margin: EdgeInsets.only(
+                                  left: properties.size.size,
+                                ),
+                                child: child!,
+                              ),
+                              firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
+                              secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
+                              sizeCurve: Curves.fastOutSlowIn,
+                              crossFadeState: properties.state.value.currentStep == i
+                                  ? CrossFadeState.showSecond
+                                  : CrossFadeState.showFirst,
+                              duration: kDefaultDuration,
+                            );
+                          }),
                     ],
                   ),
                 ),
                 AnimatedBuilder(
-                  animation: properties.state,
-                  builder: (context, child) {
-                    if (i == properties.steps.length - 1) {
-                      return const SizedBox();
-                    }
-                    return SizedBox(height: 8 * scaling);
-                  },
-                ),
+                    animation: properties.state,
+                    builder: (context, child) {
+                      if (i == properties.steps.length - 1) {
+                        return const SizedBox();
+                      }
+                      return SizedBox(
+                        height: 8 * scaling,
+                      );
+                    }),
               ],
             ),
           ),
         );
       }
-      return Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: children);
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: children,
+      );
     }
   }
 }
@@ -235,94 +257,92 @@ class _StepVariantCircleAlternative extends StepVariant {
       for (int i = 0; i < steps.length; i++) {
         children.add(
           Data.inherit(
-            data: StepNumberData(stepIndex: i),
-            child: Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    children: [
-                      i == 0
-                          ? const Spacer()
-                          : Expanded(
-                            child: AnimatedBuilder(
-                              animation: properties.state,
-                              builder: (context, child) {
-                                return Divider(
-                                  thickness: 2 * scaling,
-                                  color:
-                                      properties.hasFailure && properties.state.value.currentStep <= i - 1
-                                          ? theme.colorScheme.destructive
-                                          : properties.state.value.currentStep >= i - 1
-                                          ? theme.colorScheme.primary
-                                          : theme.colorScheme.border,
-                                );
-                              },
-                            ),
-                          ),
-                      Gap(4 * scaling),
-                      steps[i].icon ?? const StepNumber(),
-                      Gap(4 * scaling),
-                      i == steps.length - 1
-                          ? const Spacer()
-                          : Expanded(
-                            child: AnimatedBuilder(
-                              animation: properties.state,
-                              builder: (context, child) {
-                                return Divider(
-                                  thickness: 2 * scaling,
-                                  color:
-                                      properties.hasFailure && properties.state.value.currentStep <= i
-                                          ? theme.colorScheme.destructive
-                                          : properties.state.value.currentStep >= i
-                                          ? theme.colorScheme.primary
-                                          : theme.colorScheme.border,
-                                );
-                              },
-                            ),
-                          ),
-                    ],
-                  ),
-                  Gap(4 * scaling),
-                  Center(
-                    child: DefaultTextStyle.merge(
-                      textAlign: TextAlign.center,
-                      child: properties.size.wrapper(context, steps[i].title),
+              data: StepNumberData(stepIndex: i),
+              child: Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      children: [
+                        i == 0
+                            ? const Spacer()
+                            : Expanded(
+                                child: AnimatedBuilder(
+                                    animation: properties.state,
+                                    builder: (context, child) {
+                                      return VNLDivider(
+                                        thickness: 2 * scaling,
+                                        color: properties.hasFailure && properties.state.value.currentStep <= i - 1
+                                            ? theme.colorScheme.destructive
+                                            : properties.state.value.currentStep >= i - 1
+                                                ? theme.colorScheme.primary
+                                                : theme.colorScheme.border,
+                                      );
+                                    }),
+                              ),
+                        Gap(4 * scaling),
+                        steps[i].icon ?? const StepNumber(),
+                        Gap(4 * scaling),
+                        i == steps.length - 1
+                            ? const Spacer()
+                            : Expanded(
+                                child: AnimatedBuilder(
+                                    animation: properties.state,
+                                    builder: (context, child) {
+                                      return VNLDivider(
+                                        thickness: 2 * scaling,
+                                        color: properties.hasFailure && properties.state.value.currentStep <= i
+                                            ? theme.colorScheme.destructive
+                                            : properties.state.value.currentStep >= i
+                                                ? theme.colorScheme.primary
+                                                : theme.colorScheme.border,
+                                      );
+                                    }),
+                              ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+                    Gap(4 * scaling),
+                    Center(
+                      child: DefaultTextStyle.merge(
+                        textAlign: TextAlign.center,
+                        child: properties.size.wrapper(
+                          context,
+                          steps[i].title,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )),
         );
       }
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          IntrinsicHeight(child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: children)),
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: children,
+            ),
+          ),
           AnimatedBuilder(
-            animation: properties.state,
-            builder: (context, child) {
-              var current = properties.state.value.currentStep;
-              return Flexible(
-                child: IndexedStack(
-                  index:
-                      current < 0 || current >= properties.steps.length
-                          ? properties
-                              .steps
-                              .length // will show the placeholder
-                          : current,
+              animation: properties.state,
+              builder: (context, child) {
+                var current = properties.state.value.currentStep;
+                return Flexible(
+                    child: IndexedStack(
+                  index: current < 0 || current >= properties.steps.length
+                      ? properties.steps.length // will show the placeholder
+                      : current,
                   children: [
                     for (int i = 0; i < properties.steps.length; i++)
                       properties[i]?.contentBuilder?.call(context) ?? const SizedBox(),
                     const SizedBox(), // for placeholder
                   ],
-                ),
-              );
-            },
-          ),
+                ));
+              }),
         ],
       );
     } else {
@@ -346,7 +366,9 @@ class _StepVariantCircleAlternative extends StepVariant {
                 ),
                 Gap(8 * scaling),
                 ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: 16 * scaling),
+                  constraints: BoxConstraints(
+                    minHeight: 16 * scaling,
+                  ),
                   child: Stack(
                     children: [
                       PositionedDirectional(
@@ -355,61 +377,68 @@ class _StepVariantCircleAlternative extends StepVariant {
                         bottom: 0,
                         child: SizedBox(
                           width: properties.size.size,
-                          child:
-                              i == properties.steps.length - 1
-                                  ? null
-                                  : AnimatedBuilder(
-                                    animation: properties.state,
-                                    builder: (context, child) {
-                                      return VerticalDivider(
-                                        thickness: 2 * scaling,
-                                        color:
-                                            properties.hasFailure && properties.state.value.currentStep <= i
-                                                ? theme.colorScheme.destructive
-                                                : properties.state.value.currentStep >= i
-                                                ? theme.colorScheme.primary
-                                                : theme.colorScheme.border,
-                                      );
-                                    },
-                                  ),
+                          child: i == properties.steps.length - 1
+                              ? null
+                              : AnimatedBuilder(
+                                  animation: properties.state,
+                                  builder: (context, child) {
+                                    return VerticalDivider(
+                                      thickness: 2 * scaling,
+                                      color: properties.hasFailure && properties.state.value.currentStep <= i
+                                          ? theme.colorScheme.destructive
+                                          : properties.state.value.currentStep >= i
+                                              ? theme.colorScheme.primary
+                                              : theme.colorScheme.border,
+                                    );
+                                  }),
                         ),
                       ),
                       AnimatedBuilder(
-                        animation: properties.state,
-                        child: properties.steps[i].contentBuilder?.call(context),
-                        builder: (context, child) {
-                          return AnimatedCrossFade(
-                            firstChild: Container(height: 0),
-                            secondChild: Container(margin: EdgeInsets.only(left: properties.size.size), child: child!),
-                            firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
-                            secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
-                            sizeCurve: Curves.fastOutSlowIn,
-                            crossFadeState:
-                                properties.state.value.currentStep == i
-                                    ? CrossFadeState.showSecond
-                                    : CrossFadeState.showFirst,
-                            duration: kDefaultDuration,
-                          );
-                        },
-                      ),
+                          animation: properties.state,
+                          child: properties.steps[i].contentBuilder?.call(context),
+                          builder: (context, child) {
+                            return AnimatedCrossFade(
+                              firstChild: Container(
+                                height: 0,
+                              ),
+                              secondChild: Container(
+                                margin: EdgeInsets.only(
+                                  left: properties.size.size,
+                                ),
+                                child: child!,
+                              ),
+                              firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
+                              secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
+                              sizeCurve: Curves.fastOutSlowIn,
+                              crossFadeState: properties.state.value.currentStep == i
+                                  ? CrossFadeState.showSecond
+                                  : CrossFadeState.showFirst,
+                              duration: kDefaultDuration,
+                            );
+                          }),
                     ],
                   ),
                 ),
                 AnimatedBuilder(
-                  animation: properties.state,
-                  builder: (context, child) {
-                    if (i == properties.steps.length - 1) {
-                      return const SizedBox();
-                    }
-                    return SizedBox(height: 8 * scaling);
-                  },
-                ),
+                    animation: properties.state,
+                    builder: (context, child) {
+                      if (i == properties.steps.length - 1) {
+                        return const SizedBox();
+                      }
+                      return SizedBox(
+                        height: 8 * scaling,
+                      );
+                    }),
               ],
             ),
           ),
         );
       }
-      return Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: children);
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: children,
+      );
     }
   }
 }
@@ -434,21 +463,22 @@ class _StepVariantLine extends StepVariant {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   AnimatedBuilder(
-                    animation: properties.state,
-                    builder: (context, child) {
-                      return Divider(
-                        thickness: 3 * scaling,
-                        color:
-                            properties.hasFailure && properties.state.value.currentStep <= i
-                                ? theme.colorScheme.destructive
-                                : properties.state.value.currentStep >= i
-                                ? theme.colorScheme.primary
-                                : theme.colorScheme.border,
-                      );
-                    },
-                  ),
+                      animation: properties.state,
+                      builder: (context, child) {
+                        return VNLDivider(
+                          thickness: 3 * scaling,
+                          color: properties.hasFailure && properties.state.value.currentStep <= i
+                              ? theme.colorScheme.destructive
+                              : properties.state.value.currentStep >= i
+                                  ? theme.colorScheme.primary
+                                  : theme.colorScheme.border,
+                        );
+                      }),
                   Gap(8 * scaling),
-                  properties.size.wrapper(context, steps[i].title),
+                  properties.size.wrapper(
+                    context,
+                    steps[i].title,
+                  ),
                 ],
               ),
             ),
@@ -460,29 +490,27 @@ class _StepVariantLine extends StepVariant {
         mainAxisSize: MainAxisSize.min,
         children: [
           IntrinsicHeight(
-            child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: children).gap(16 * scaling),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: children,
+            ).gap(16 * scaling),
           ),
           AnimatedBuilder(
-            animation: properties.state,
-            builder: (context, child) {
-              var current = properties.state.value.currentStep;
-              return Flexible(
-                child: IndexedStack(
-                  index:
-                      current < 0 || current >= properties.steps.length
-                          ? properties
-                              .steps
-                              .length // will show the placeholder
-                          : current,
+              animation: properties.state,
+              builder: (context, child) {
+                var current = properties.state.value.currentStep;
+                return Flexible(
+                    child: IndexedStack(
+                  index: current < 0 || current >= properties.steps.length
+                      ? properties.steps.length // will show the placeholder
+                      : current,
                   children: [
                     for (int i = 0; i < properties.steps.length; i++)
                       properties[i]?.contentBuilder?.call(context) ?? const SizedBox(),
                     const SizedBox(), // for placeholder
                   ],
-                ),
-              );
-            },
-          ),
+                ));
+              }),
         ],
       );
     } else {
@@ -500,60 +528,67 @@ class _StepVariantLine extends StepVariant {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       AnimatedBuilder(
-                        animation: properties.state,
-                        builder: (context, child) {
-                          return VerticalDivider(
-                            thickness: 3 * scaling,
-                            color:
-                                properties.hasFailure && properties.state.value.currentStep <= i
-                                    ? theme.colorScheme.destructive
-                                    : properties.state.value.currentStep >= i
-                                    ? theme.colorScheme.primary
-                                    : theme.colorScheme.border,
-                          );
-                        },
-                      ),
+                          animation: properties.state,
+                          builder: (context, child) {
+                            return VerticalDivider(
+                              thickness: 3 * scaling,
+                              color: properties.hasFailure && properties.state.value.currentStep <= i
+                                  ? theme.colorScheme.destructive
+                                  : properties.state.value.currentStep >= i
+                                      ? theme.colorScheme.primary
+                                      : theme.colorScheme.border,
+                            );
+                          }),
                       Gap(16 * scaling),
                       properties.size.wrapper(context, properties.steps[i].title).withPadding(vertical: 8 * scaling),
                     ],
                   ),
                 ),
                 ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: 16 * scaling),
-                  child: AnimatedBuilder(
-                    animation: properties.state,
-                    child: properties.steps[i].contentBuilder?.call(context),
-                    builder: (context, child) {
-                      return AnimatedCrossFade(
-                        firstChild: Container(height: 0),
-                        secondChild: Container(child: child!),
-                        firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
-                        secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
-                        sizeCurve: Curves.fastOutSlowIn,
-                        crossFadeState:
-                            properties.state.value.currentStep == i
-                                ? CrossFadeState.showSecond
-                                : CrossFadeState.showFirst,
-                        duration: kDefaultDuration,
-                      );
-                    },
+                  constraints: BoxConstraints(
+                    minHeight: 16 * scaling,
                   ),
+                  child: AnimatedBuilder(
+                      animation: properties.state,
+                      child: properties.steps[i].contentBuilder?.call(context),
+                      builder: (context, child) {
+                        return AnimatedCrossFade(
+                          firstChild: Container(
+                            height: 0,
+                          ),
+                          secondChild: Container(
+                            child: child!,
+                          ),
+                          firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
+                          secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
+                          sizeCurve: Curves.fastOutSlowIn,
+                          crossFadeState: properties.state.value.currentStep == i
+                              ? CrossFadeState.showSecond
+                              : CrossFadeState.showFirst,
+                          duration: kDefaultDuration,
+                        );
+                      }),
                 ),
                 AnimatedBuilder(
-                  animation: properties.state,
-                  builder: (context, child) {
-                    if (i == properties.steps.length - 1) {
-                      return const SizedBox();
-                    }
-                    return SizedBox(height: 8 * scaling);
-                  },
-                ),
+                    animation: properties.state,
+                    builder: (context, child) {
+                      if (i == properties.steps.length - 1) {
+                        return const SizedBox();
+                      }
+                      return SizedBox(
+                        height: 8 * scaling,
+                      );
+                    }),
               ],
             ),
           ),
         );
       }
-      return Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: children);
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: children,
+      );
     }
   }
 }
@@ -568,7 +603,12 @@ class StepProperties {
   final ValueListenable<StepperValue> state;
   final Axis direction;
 
-  const StepProperties({required this.size, required this.steps, required this.state, required this.direction});
+  const StepProperties({
+    required this.size,
+    required this.steps,
+    required this.state,
+    required this.direction,
+  });
 
   Step? operator [](int index) {
     if (index < 0 || index >= steps.length) {
@@ -594,15 +634,26 @@ class StepProperties {
 }
 
 class StepperController extends ValueNotifier<StepperValue> {
-  StepperController({Map<int, StepState>? stepStates, int? currentStep})
-    : super(StepperValue(stepStates: stepStates ?? {}, currentStep: currentStep ?? 0));
+  StepperController({
+    Map<int, StepState>? stepStates,
+    int? currentStep,
+  }) : super(StepperValue(
+          stepStates: stepStates ?? {},
+          currentStep: currentStep ?? 0,
+        ));
 
   void nextStep() {
-    value = StepperValue(stepStates: value.stepStates, currentStep: value.currentStep + 1);
+    value = StepperValue(
+      stepStates: value.stepStates,
+      currentStep: value.currentStep + 1,
+    );
   }
 
   void previousStep() {
-    value = StepperValue(stepStates: value.stepStates, currentStep: value.currentStep - 1);
+    value = StepperValue(
+      stepStates: value.stepStates,
+      currentStep: value.currentStep - 1,
+    );
   }
 
   void setStatus(int step, StepState? state) {
@@ -612,22 +663,28 @@ class StepperController extends ValueNotifier<StepperValue> {
     } else {
       newStates[step] = state;
     }
-    value = StepperValue(stepStates: newStates, currentStep: value.currentStep);
+    value = StepperValue(
+      stepStates: newStates,
+      currentStep: value.currentStep,
+    );
   }
 
   void jumpToStep(int step) {
-    value = StepperValue(stepStates: value.stepStates, currentStep: step);
+    value = StepperValue(
+      stepStates: value.stepStates,
+      currentStep: step,
+    );
   }
 }
 
-class Stepper extends StatelessWidget {
+class VNLStepper extends StatelessWidget {
   final StepperController controller;
   final List<Step> steps;
   final Axis direction;
   final StepSize size;
   final StepVariant variant;
 
-  const Stepper({
+  const VNLStepper({
     super.key,
     required this.controller,
     required this.steps,
@@ -639,14 +696,19 @@ class Stepper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var stepProperties = StepProperties(size: size, steps: steps, state: controller, direction: direction);
-    return Data.inherit(data: stepProperties, child: variant.build(context, stepProperties));
+    return Data.inherit(
+      data: stepProperties,
+      child: variant.build(context, stepProperties),
+    );
   }
 }
 
 class StepNumberData {
   final int stepIndex;
 
-  const StepNumberData({required this.stepIndex});
+  const StepNumberData({
+    required this.stepIndex,
+  });
 
   @override
   bool operator ==(Object other) {
@@ -667,7 +729,11 @@ class StepNumber extends StatelessWidget {
   final Widget? icon;
   final VoidCallback? onPressed;
 
-  const StepNumber({super.key, this.icon, this.onPressed});
+  const StepNumber({
+    super.key,
+    this.icon,
+    this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -678,75 +744,77 @@ class StepNumber extends StatelessWidget {
     final int stepIndex = stepNumberData!.stepIndex;
     final theme = Theme.of(context);
     return AnimatedBuilder(
-      animation: properties!.state,
-      builder: (context, child) {
-        return properties.size.wrapper(
-          context,
-          DefaultTextStyle.merge(
-            style: TextStyle(
-              color:
-                  properties.state.value.stepStates[stepIndex] == StepState.failed
+        animation: properties!.state,
+        builder: (context, child) {
+          return properties.size.wrapper(
+            context,
+            DefaultTextStyle.merge(
+              style: TextStyle(
+                color: properties.state.value.stepStates[stepIndex] == StepState.failed
+                    ? theme.colorScheme.destructive
+                    : theme.colorScheme.primary,
+              ).merge(theme.typography.medium),
+              child: IconTheme.merge(
+                data: IconThemeData(
+                  color: properties.state.value.stepStates[stepIndex] == StepState.failed
                       ? theme.colorScheme.destructive
-                      : theme.colorScheme.primary,
-            ).merge(theme.typography.medium),
-            child: IconTheme.merge(
-              data: IconThemeData(
-                color:
-                    properties.state.value.stepStates[stepIndex] == StepState.failed
-                        ? theme.colorScheme.destructive
-                        : properties.state.value.currentStep > stepIndex
-                        ? theme.colorScheme.background
-                        : theme.colorScheme.primary,
-              ),
-              child: SizedBox(
-                // these sizes are not constant, but the source value is from constant enum value
-                width: properties.size.size * theme.scaling,
-                height: properties.size.size * theme.scaling,
-                child: Clickable(
-                  enabled: onPressed != null,
-                  onPressed: onPressed,
-                  mouseCursor: WidgetStatePropertyAll(
-                    onPressed != null ? SystemMouseCursors.click : SystemMouseCursors.basic,
-                  ),
-                  decoration: WidgetStateProperty.resolveWith((states) {
-                    return BoxDecoration(
-                      shape: theme.radius == 0 ? BoxShape.rectangle : BoxShape.circle,
-                      color:
-                          properties.state.value.stepStates[stepIndex] == StepState.failed
+                      : properties.state.value.currentStep > stepIndex
+                          ? theme.colorScheme.background
+                          : theme.colorScheme.primary,
+                ),
+                child: SizedBox(
+                  // these sizes are not constant, but the source value is from constant enum value
+                  width: properties.size.size * theme.scaling,
+                  height: properties.size.size * theme.scaling,
+                  child: Clickable(
+                    enabled: onPressed != null,
+                    onPressed: onPressed,
+                    mouseCursor: WidgetStatePropertyAll(
+                      onPressed != null ? SystemMouseCursors.click : SystemMouseCursors.basic,
+                    ),
+                    decoration: WidgetStateProperty.resolveWith(
+                      (states) {
+                        return BoxDecoration(
+                          shape: theme.radius == 0 ? BoxShape.rectangle : BoxShape.circle,
+                          color: properties.state.value.stepStates[stepIndex] == StepState.failed
                               ? theme.colorScheme.destructive
                               : properties.state.value.currentStep > stepIndex
-                              ? theme.colorScheme.primary
-                              : properties.state.value.currentStep == stepIndex ||
-                                  states.contains(WidgetState.hovered) ||
-                                  states.contains(WidgetState.focused)
-                              ? theme.colorScheme.secondary
-                              : theme.colorScheme.background,
-                      border: Border.all(
-                        color:
-                            properties.state.value.stepStates[stepIndex] == StepState.failed
+                                  ? theme.colorScheme.primary
+                                  : properties.state.value.currentStep == stepIndex ||
+                                          states.contains(WidgetState.hovered) ||
+                                          states.contains(WidgetState.focused)
+                                      ? theme.colorScheme.secondary
+                                      : theme.colorScheme.background,
+                          border: Border.all(
+                            color: properties.state.value.stepStates[stepIndex] == StepState.failed
                                 ? theme.colorScheme.destructive
                                 : properties.state.value.currentStep >= stepIndex
-                                ? theme.colorScheme.primary
-                                : theme.colorScheme.border,
-                        width: 2 * theme.scaling,
-                      ),
-                    );
-                  }),
-                  child: Center(
-                    child:
-                        properties.state.value.stepStates[stepIndex] == StepState.failed
-                            ? Icon(Icons.close, color: theme.colorScheme.destructiveForeground)
-                            : properties.state.value.currentStep > stepIndex
-                            ? Icon(Icons.check, color: theme.colorScheme.background)
-                            : icon ?? Text((stepIndex + 1).toString()),
+                                    ? theme.colorScheme.primary
+                                    : theme.colorScheme.border,
+                            width: 2 * theme.scaling,
+                          ),
+                        );
+                      },
+                    ),
+                    child: Center(
+                      child: properties.state.value.stepStates[stepIndex] == StepState.failed
+                          ? Icon(
+                              Icons.close,
+                              color: theme.colorScheme.destructiveForeground,
+                            )
+                          : properties.state.value.currentStep > stepIndex
+                              ? Icon(
+                                  Icons.check,
+                                  color: theme.colorScheme.background,
+                                )
+                              : icon ?? Text((stepIndex + 1).toString()),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        );
-      },
-    );
+          );
+        });
   }
 }
 
@@ -776,7 +844,10 @@ class StepTitle extends StatelessWidget {
           crossAxisAlignment: crossAxisAlignment,
           children: [
             title,
-            if (subtitle != null) ...[Gap(2 * scaling), subtitle!.muted().xSmall()],
+            if (subtitle != null) ...[
+              Gap(2 * scaling),
+              subtitle!.muted().xSmall(),
+            ],
           ],
         ),
       ),
@@ -788,7 +859,11 @@ class StepContainer extends StatefulWidget {
   final Widget child;
   final List<Widget> actions;
 
-  const StepContainer({super.key, required this.child, required this.actions});
+  const StepContainer({
+    super.key,
+    required this.child,
+    required this.actions,
+  });
 
   @override
   State<StepContainer> createState() => _StepContainerState();
@@ -800,11 +875,21 @@ class _StepContainerState extends State<StepContainer> {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
     if (widget.actions.isEmpty) {
-      return widget.child.withPadding(vertical: 16 * scaling);
+      return widget.child.withPadding(
+        vertical: 16 * scaling,
+      );
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [widget.child, Gap(16 * scaling), Row(children: widget.actions).gap(8 * scaling)],
-    ).withPadding(vertical: 16 * scaling);
+      children: [
+        widget.child,
+        Gap(16 * scaling),
+        Row(
+          children: widget.actions,
+        ).gap(8 * scaling),
+      ],
+    ).withPadding(
+      vertical: 16 * scaling,
+    );
   }
 }

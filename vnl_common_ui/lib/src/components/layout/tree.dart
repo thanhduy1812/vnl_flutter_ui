@@ -9,7 +9,10 @@ abstract class TreeNode<T> {
 
   bool get leaf => children.isEmpty;
 
-  TreeNode<T> updateState({bool? expanded, bool? selected});
+  TreeNode<T> updateState({
+    bool? expanded,
+    bool? selected,
+  });
 
   TreeNode<T> updateChildren(List<TreeNode<T>> children);
 }
@@ -23,10 +26,18 @@ class TreeItem<T> extends TreeNode<T> {
   @override
   final bool selected;
 
-  TreeItem({required this.data, this.children = const [], this.expanded = false, this.selected = false});
+  TreeItem({
+    required this.data,
+    this.children = const [],
+    this.expanded = false,
+    this.selected = false,
+  });
 
   @override
-  TreeItem<T> updateState({bool? expanded, bool? selected}) {
+  TreeItem<T> updateState({
+    bool? expanded,
+    bool? selected,
+  }) {
     return TreeItem(
       data: data,
       children: children,
@@ -37,7 +48,12 @@ class TreeItem<T> extends TreeNode<T> {
 
   @override
   TreeItem<T> updateChildren(List<TreeNode<T>> children) {
-    return TreeItem(data: data, children: children, expanded: expanded, selected: selected);
+    return TreeItem(
+      data: data,
+      children: children,
+      expanded: expanded,
+      selected: selected,
+    );
   }
 
   @override
@@ -70,16 +86,23 @@ class TreeRoot<T> extends TreeNode<T> {
   @override
   bool get selected => false;
 
-  TreeRoot({required this.children});
+  TreeRoot({
+    required this.children,
+  });
 
   @override
-  TreeRoot<T> updateState({bool? expanded, bool? selected}) {
+  TreeRoot<T> updateState({
+    bool? expanded,
+    bool? selected,
+  }) {
     return this;
   }
 
   @override
   TreeRoot<T> updateChildren(List<TreeNode<T>> children) {
-    return TreeRoot(children: children);
+    return TreeRoot(
+      children: children,
+    );
   }
 
   @override
@@ -98,9 +121,17 @@ class TreeRoot<T> extends TreeNode<T> {
   String toString() => 'TreeRoot(children: $children)';
 }
 
-enum SelectionPosition { start, middle, end, single }
+enum SelectionPosition {
+  start,
+  middle,
+  end,
+  single,
+}
 
-enum FocusChangeReason { focusScope, userInteraction }
+enum FocusChangeReason {
+  focusScope,
+  userInteraction,
+}
 
 BorderRadius _borderRadiusFromPosition(SelectionPosition? position, double value) {
   if (position == SelectionPosition.start) {
@@ -295,17 +326,12 @@ class TreeItemExpandDefaultHandler<T> {
 
 class TreeView<T> extends StatefulWidget {
   static TreeNodeSelectionChanged<K> defaultSelectionHandler<K>(
-    List<TreeNode<K>> nodes,
-    ValueChanged<List<TreeNode<K>>> onChanged,
-  ) {
+      List<TreeNode<K>> nodes, ValueChanged<List<TreeNode<K>>> onChanged) {
     return TreeSelectionDefaultHandler(nodes, onChanged).call;
   }
 
   static ValueChanged<bool> defaultItemExpandHandler<K>(
-    List<TreeNode<K>> nodes,
-    TreeNode<K> target,
-    ValueChanged<List<TreeNode<K>>> onChanged,
-  ) {
+      List<TreeNode<K>> nodes, TreeNode<K> target, ValueChanged<List<TreeNode<K>>> onChanged) {
     return TreeItemExpandDefaultHandler(nodes, target, onChanged).call;
   }
 
@@ -328,10 +354,7 @@ class TreeView<T> extends StatefulWidget {
   }
 
   static List<TreeNode<K>>? _replaceNodesWithParent<K>(
-    TreeNode<K>? parent,
-    List<TreeNode<K>> nodes,
-    TreeNodeUnaryOperatorWithParent<K> operator,
-  ) {
+      TreeNode<K>? parent, List<TreeNode<K>> nodes, TreeNodeUnaryOperatorWithParent<K> operator) {
     List<TreeNode<K>> newNodes = List.from(nodes);
     bool changed = false;
     for (int i = 0; i < newNodes.length; i++) {
@@ -354,9 +377,7 @@ class TreeView<T> extends StatefulWidget {
   }
 
   static List<TreeNode<K>> replaceNodesWithParent<K>(
-    List<TreeNode<K>> nodes,
-    TreeNodeUnaryOperatorWithParent<K> operator,
-  ) {
+      List<TreeNode<K>> nodes, TreeNodeUnaryOperatorWithParent<K> operator) {
     return _replaceNodesWithParent(null, nodes, operator) ?? nodes;
   }
 
@@ -599,7 +620,12 @@ class _TreeViewState<T> extends State<TreeView<T>> {
   int? _currentFocusedIndex;
   int? _startFocusedIndex;
 
-  void _walkFlattened(_TreeWalker<T> walker, List<TreeNode<T>> nodes, bool parentExpanded, List<TreeNodeDepth> depth) {
+  void _walkFlattened(
+    _TreeWalker<T> walker,
+    List<TreeNode<T>> nodes,
+    bool parentExpanded,
+    List<TreeNodeDepth> depth,
+  ) {
     for (int i = 0; i < nodes.length; i++) {
       final node = nodes[i];
       if (node is TreeItem<T>) {
@@ -648,41 +674,41 @@ class _TreeViewState<T> extends State<TreeView<T>> {
   Widget build(BuildContext context) {
     List<TreeNodeData<T>> children = [];
     int index = 0;
-    _walkFlattened(
-      (expanded, node, depth) {
-        if (node is! TreeItem<T>) return;
-        final int currentIndex = index++;
-        children.add(
-          TreeNodeData(depth, node, widget.branchLine, expanded, widget.expandIcon, (reason) {
-            if (reason == FocusChangeReason.focusScope) {
-              _startFocusedIndex = currentIndex;
-              _currentFocusedIndex = currentIndex;
-              return;
-            }
+    _walkFlattened((expanded, node, depth) {
+      if (node is! TreeItem<T>) return;
+      final int currentIndex = index++;
+      children.add(TreeNodeData(
+        depth,
+        node,
+        widget.branchLine,
+        expanded,
+        widget.expandIcon,
+        (reason) {
+          if (reason == FocusChangeReason.focusScope) {
+            _startFocusedIndex = currentIndex;
             _currentFocusedIndex = currentIndex;
-            if (_rangeMultiSelect && _startFocusedIndex != null) {
-              var start = _startFocusedIndex!;
-              var end = _currentFocusedIndex!;
-              _onChangeSelectionRange(children, start, end);
+            return;
+          }
+          _currentFocusedIndex = currentIndex;
+          if (_rangeMultiSelect && _startFocusedIndex != null) {
+            var start = _startFocusedIndex!;
+            var end = _currentFocusedIndex!;
+            _onChangeSelectionRange(children, start, end);
+          } else {
+            _startFocusedIndex = currentIndex;
+            if (widget.recursiveSelection) {
+              final selectedItems = <TreeNode<T>>[];
+              _walkNodes((node) {
+                selectedItems.add(node);
+              }, [node]);
+              widget.onSelectionChanged?.call(selectedItems, _multiSelect, !node.selected);
             } else {
-              _startFocusedIndex = currentIndex;
-              if (widget.recursiveSelection) {
-                final selectedItems = <TreeNode<T>>[];
-                _walkNodes((node) {
-                  selectedItems.add(node);
-                }, [node]);
-                widget.onSelectionChanged?.call(selectedItems, _multiSelect, !node.selected);
-              } else {
-                widget.onSelectionChanged?.call([node], _multiSelect, !node.selected);
-              }
+              widget.onSelectionChanged?.call([node], _multiSelect, !node.selected);
             }
-          }),
-        );
-      },
-      widget.nodes,
-      true,
-      [],
-    );
+          }
+        },
+      ));
+    }, widget.nodes, true, []);
     int selectedCount = 0;
     for (int i = 0; i < children.length; i++) {
       final child = children[i];
@@ -725,34 +751,24 @@ class _TreeViewState<T> extends State<TreeView<T>> {
       shortcuts: {
         if (widget.allowMultiSelect) ...{
           // range select
-          LogicalKeySet(LogicalKeyboardKey.shift, LogicalKeyboardKey.arrowUp): const DirectionalSelectTreeNodeIntent(
-            false,
-          ),
-          LogicalKeySet(LogicalKeyboardKey.shift, LogicalKeyboardKey.arrowDown): const DirectionalSelectTreeNodeIntent(
-            true,
-          ),
-          LogicalKeySet(
-            LogicalKeyboardKey.shiftLeft,
-            LogicalKeyboardKey.arrowUp,
-          ): const DirectionalSelectTreeNodeIntent(false),
-          LogicalKeySet(
-            LogicalKeyboardKey.shiftLeft,
-            LogicalKeyboardKey.arrowDown,
-          ): const DirectionalSelectTreeNodeIntent(true),
-          LogicalKeySet(
-            LogicalKeyboardKey.shiftRight,
-            LogicalKeyboardKey.arrowUp,
-          ): const DirectionalSelectTreeNodeIntent(false),
-          LogicalKeySet(
-            LogicalKeyboardKey.shiftRight,
-            LogicalKeyboardKey.arrowDown,
-          ): const DirectionalSelectTreeNodeIntent(true),
+          LogicalKeySet(LogicalKeyboardKey.shift, LogicalKeyboardKey.arrowUp):
+              const DirectionalSelectTreeNodeIntent(false),
+          LogicalKeySet(LogicalKeyboardKey.shift, LogicalKeyboardKey.arrowDown):
+              const DirectionalSelectTreeNodeIntent(true),
+          LogicalKeySet(LogicalKeyboardKey.shiftLeft, LogicalKeyboardKey.arrowUp):
+              const DirectionalSelectTreeNodeIntent(false),
+          LogicalKeySet(LogicalKeyboardKey.shiftLeft, LogicalKeyboardKey.arrowDown):
+              const DirectionalSelectTreeNodeIntent(true),
+          LogicalKeySet(LogicalKeyboardKey.shiftRight, LogicalKeyboardKey.arrowUp):
+              const DirectionalSelectTreeNodeIntent(false),
+          LogicalKeySet(LogicalKeyboardKey.shiftRight, LogicalKeyboardKey.arrowDown):
+              const DirectionalSelectTreeNodeIntent(true),
 
           // multi select
           LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.space): const SelectTreeNodeIntent(),
           LogicalKeySet(LogicalKeyboardKey.controlLeft, LogicalKeyboardKey.space): const SelectTreeNodeIntent(),
           LogicalKeySet(LogicalKeyboardKey.controlRight, LogicalKeyboardKey.space): const SelectTreeNodeIntent(),
-        },
+        }
       },
       child: Actions(
         actions: {
@@ -839,19 +855,14 @@ class _TreeViewState<T> extends State<TreeView<T>> {
             padding: widget.padding ?? const EdgeInsets.all(8),
             shrinkWrap: widget.shrinkWrap,
             controller: widget.controller,
-            children:
-                children
-                    .map(
-                      (data) => Data<TreeNodeData>.inherit(
-                        data: data,
-                        child: Builder(
-                          builder: (context) {
-                            return widget.builder(context, data.node as TreeItem<T>);
-                          },
-                        ),
-                      ),
-                    )
-                    .toList(),
+            children: children
+                .map((data) => Data<TreeNodeData>.inherit(
+                      data: data,
+                      child: Builder(builder: (context) {
+                        return widget.builder(context, data.node as TreeItem<T>);
+                      }),
+                    ))
+                .toList(),
           ),
         ),
       ),
@@ -886,7 +897,11 @@ class IndentGuideLine implements BranchLine {
       return const SizedBox();
     }
     return CustomPaint(
-      painter: _PathPainter(color: color ?? Theme.of(context).colorScheme.border, top: true, bottom: true),
+      painter: _PathPainter(
+        color: color ?? Theme.of(context).colorScheme.border,
+        top: true,
+        bottom: true,
+      ),
     );
   }
 }
@@ -940,16 +955,21 @@ class _PathPainter extends CustomPainter {
   final bool bottom;
   final bool left;
 
-  _PathPainter({required this.color, this.top = false, this.right = false, this.bottom = false, this.left = false});
+  _PathPainter({
+    required this.color,
+    this.top = false,
+    this.right = false,
+    this.bottom = false,
+    this.left = false,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint =
-        Paint()
-          ..color = color
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 1
-          ..strokeCap = StrokeCap.round;
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1
+      ..strokeCap = StrokeCap.round;
     final path = Path();
     final halfWidth = size.width / 2;
     final halfHeight = size.height / 2;
@@ -1067,7 +1087,14 @@ class _TreeItemViewState extends State<TreeItemView> {
         continue; // skip the first depth
       }
       if (!data.expandIcon) rowChildren.add(SizedBox(width: 8 * scaling));
-      rowChildren.add(SizedBox(width: 16 * scaling, child: data.indentGuide.build(context, data.depth, i)));
+      rowChildren.add(SizedBox(
+        width: 16 * scaling,
+        child: data.indentGuide.build(
+          context,
+          data.depth,
+          i,
+        ),
+      ));
     }
     List<Widget> subRowChildren = [];
     if (data.expandIcon) {
@@ -1088,9 +1115,18 @@ class _TreeItemViewState extends State<TreeItemView> {
         );
       } else {
         if (data.depth.length > 1) {
-          rowChildren.add(SizedBox(width: 16 * scaling, child: data.indentGuide.build(context, data.depth, -1)));
+          rowChildren.add(SizedBox(
+            width: 16 * scaling,
+            child: data.indentGuide.build(
+              context,
+              data.depth,
+              -1,
+            ),
+          ));
         } else {
-          rowChildren.add(SizedBox(width: 16 * scaling));
+          rowChildren.add(SizedBox(
+            width: 16 * scaling,
+          ));
         }
       }
     }
@@ -1107,7 +1143,10 @@ class _TreeItemViewState extends State<TreeItemView> {
       Expanded(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4) * scaling,
-          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: subRowChildren),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: subRowChildren,
+          ),
         ),
       ),
     );
@@ -1116,98 +1155,106 @@ class _TreeItemViewState extends State<TreeItemView> {
       child: DefaultTextStyle.merge(
         overflow: TextOverflow.ellipsis,
         maxLines: 1,
-        child:
-            AnimatedCrossFade(
-              duration: kDefaultDuration,
-              firstCurve: Curves.easeInOut,
-              secondCurve: Curves.easeInOut,
-              crossFadeState: data.expanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-              secondChild: const SizedBox(),
-              firstChild: IntrinsicHeight(
-                child: Clickable(
-                  focusNode: _focusNode,
-                  focusOutline: !(_data?.node.selected ?? false),
-                  disableTransition: true,
-                  statesController: _statesController,
-                  shortcuts: {
-                    if (widget.onExpand != null && (widget.expandable ?? data.node.children.isNotEmpty))
-                      LogicalKeySet(LogicalKeyboardKey.arrowRight): const ExpandTreeNodeIntent(),
-                    if (widget.onExpand != null && (widget.expandable ?? data.node.children.isNotEmpty))
-                      LogicalKeySet(LogicalKeyboardKey.arrowLeft): const CollapseTreeNodeIntent(),
-                  },
-                  actions: {
-                    ActivateIntent: CallbackAction(
-                      onInvoke: (e) {
-                        if (widget.onExpand != null && (widget.expandable ?? data.node.children.isNotEmpty)) {
-                          widget.onExpand!(!data.node.expanded);
-                        }
-                        widget.onPressed?.call();
-                        return null;
-                      },
-                    ),
-                    CollapseTreeNodeIntent: CallbackAction(
-                      onInvoke: (e) {
-                        if (widget.onExpand != null && (widget.expandable ?? data.node.children.isNotEmpty)) {
-                          widget.onExpand!(false);
-                        }
-                        return null;
-                      },
-                    ),
-                    ExpandTreeNodeIntent: CallbackAction(
-                      onInvoke: (e) {
-                        if (widget.onExpand != null && (widget.expandable ?? data.node.children.isNotEmpty)) {
-                          widget.onExpand!(true);
-                        }
-                        return null;
-                      },
-                    ),
-                  },
-                  decoration: WidgetStateProperty.resolveWith((states) {
-                    if (states.contains(WidgetState.selected)) {
-                      if (states.contains(WidgetState.focused)) {
-                        return BoxDecoration(
-                          color: theme.colorScheme.primary.scaleAlpha(0.1),
-                          borderRadius: _borderRadiusFromPosition(data.selectionPosition, theme.radiusMd),
-                        );
-                      }
-                      return BoxDecoration(
-                        color: theme.colorScheme.primary.scaleAlpha(0.05),
-                        borderRadius: _borderRadiusFromPosition(data.selectionPosition, theme.radiusMd),
-                      );
-                    }
-                    return const BoxDecoration();
-                  }),
-                  behavior: HitTestBehavior.translucent,
-                  mouseCursor:
-                      widget.onDoublePressed != null ||
-                              widget.onPressed != null ||
-                              (widget.onExpand != null && (widget.expandable ?? data.node.children.isNotEmpty))
-                          ? const WidgetStatePropertyAll(SystemMouseCursors.click)
-                          : const WidgetStatePropertyAll(SystemMouseCursors.basic),
-                  onDoubleTap: () {
-                    if (widget.onDoublePressed != null) {
-                      widget.onDoublePressed!();
-                    }
+        child: AnimatedCrossFade(
+          duration: kDefaultDuration,
+          firstCurve: Curves.easeInOut,
+          secondCurve: Curves.easeInOut,
+          crossFadeState: data.expanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+          secondChild: const SizedBox(),
+          firstChild: IntrinsicHeight(
+            child: Clickable(
+              focusNode: _focusNode,
+              focusOutline: !(_data?.node.selected ?? false),
+              disableTransition: true,
+              statesController: _statesController,
+              shortcuts: {
+                if (widget.onExpand != null && (widget.expandable ?? data.node.children.isNotEmpty))
+                  LogicalKeySet(LogicalKeyboardKey.arrowRight): const ExpandTreeNodeIntent(),
+                if (widget.onExpand != null && (widget.expandable ?? data.node.children.isNotEmpty))
+                  LogicalKeySet(LogicalKeyboardKey.arrowLeft): const CollapseTreeNodeIntent(),
+              },
+              actions: {
+                ActivateIntent: CallbackAction(
+                  onInvoke: (e) {
                     if (widget.onExpand != null && (widget.expandable ?? data.node.children.isNotEmpty)) {
                       widget.onExpand!(!data.node.expanded);
                     }
-                    _focusNode.requestFocus();
+                    widget.onPressed?.call();
+                    return null;
                   },
-                  onPressed: () {
-                    if (widget.onPressed != null) {
-                      widget.onPressed!();
-                    }
-                    _focusNode.requestFocus();
-                    _data!.onFocusChanged?.call(FocusChangeReason.userInteraction);
-                  },
-                  enabled:
-                      widget.onPressed != null ||
-                      widget.onDoublePressed != null ||
-                      (widget.onExpand != null && (widget.expandable ?? data.node.children.isNotEmpty)),
-                  child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: rowChildren),
                 ),
+                CollapseTreeNodeIntent: CallbackAction(
+                  onInvoke: (e) {
+                    if (widget.onExpand != null && (widget.expandable ?? data.node.children.isNotEmpty)) {
+                      widget.onExpand!(false);
+                    }
+                    return null;
+                  },
+                ),
+                ExpandTreeNodeIntent: CallbackAction(
+                  onInvoke: (e) {
+                    if (widget.onExpand != null && (widget.expandable ?? data.node.children.isNotEmpty)) {
+                      widget.onExpand!(true);
+                    }
+                    return null;
+                  },
+                ),
+              },
+              decoration: WidgetStateProperty.resolveWith(
+                (states) {
+                  if (states.contains(WidgetState.selected)) {
+                    if (states.contains(WidgetState.focused)) {
+                      return BoxDecoration(
+                        color: theme.colorScheme.primary.scaleAlpha(0.1),
+                        borderRadius: _borderRadiusFromPosition(
+                          data.selectionPosition,
+                          theme.radiusMd,
+                        ),
+                      );
+                    }
+                    return BoxDecoration(
+                      color: theme.colorScheme.primary.scaleAlpha(0.05),
+                      borderRadius: _borderRadiusFromPosition(
+                        data.selectionPosition,
+                        theme.radiusMd,
+                      ),
+                    );
+                  }
+                  return const BoxDecoration();
+                },
               ),
-            ).iconSmall(),
+              behavior: HitTestBehavior.translucent,
+              mouseCursor: widget.onDoublePressed != null ||
+                      widget.onPressed != null ||
+                      (widget.onExpand != null && (widget.expandable ?? data.node.children.isNotEmpty))
+                  ? const WidgetStatePropertyAll(SystemMouseCursors.click)
+                  : const WidgetStatePropertyAll(SystemMouseCursors.basic),
+              onDoubleTap: () {
+                if (widget.onDoublePressed != null) {
+                  widget.onDoublePressed!();
+                }
+                if (widget.onExpand != null && (widget.expandable ?? data.node.children.isNotEmpty)) {
+                  widget.onExpand!(!data.node.expanded);
+                }
+                _focusNode.requestFocus();
+              },
+              onPressed: () {
+                if (widget.onPressed != null) {
+                  widget.onPressed!();
+                }
+                _focusNode.requestFocus();
+                _data!.onFocusChanged?.call(FocusChangeReason.userInteraction);
+              },
+              enabled: widget.onPressed != null ||
+                  widget.onDoublePressed != null ||
+                  (widget.onExpand != null && (widget.expandable ?? data.node.children.isNotEmpty)),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: rowChildren,
+              ),
+            ),
+          ),
+        ).iconSmall(),
       ),
     );
   }

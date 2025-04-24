@@ -76,14 +76,12 @@ class _ScrollViewInterceptorState extends State<ScrollViewInterceptor> with Sing
       try {
         path.target.handleEvent(pointerScrollEvent, path);
       } catch (e, s) {
-        FlutterError.reportError(
-          FlutterErrorDetails(
-            exception: e,
-            stack: s,
-            library: 'shadcn_flutter',
-            context: ErrorDescription('while dispatching a pointer scroll event'),
-          ),
-        );
+        FlutterError.reportError(FlutterErrorDetails(
+          exception: e,
+          stack: s,
+          library: 'vnl_ui',
+          context: ErrorDescription('while dispatching a pointer scroll event'),
+        ));
       }
     }
   }
@@ -126,7 +124,12 @@ class _ScrollViewInterceptorState extends State<ScrollViewInterceptor> with Sing
           child: widget.child,
         ),
         if (_cursor != null)
-          Positioned.fill(child: MouseRegion(cursor: _cursor!, hitTestBehavior: HitTestBehavior.translucent)),
+          Positioned.fill(
+            child: MouseRegion(
+              cursor: _cursor!,
+              hitTestBehavior: HitTestBehavior.translucent,
+            ),
+          ),
       ],
     );
   }

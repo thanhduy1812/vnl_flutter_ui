@@ -3,7 +3,7 @@ import 'package:vnl_common_ui/vnl_ui.dart';
 Widget _buildFileIcon(String extension) {
   switch (extension) {
     case 'pdf':
-      return const Icon(BootstrapIcons.filePdf);
+      return const Icon(BootstrapIcons.filetypePdf);
     case 'doc':
     case 'docx':
       return const Icon(BootstrapIcons.fileWord);
@@ -40,14 +40,27 @@ class FileIconProvider extends StatelessWidget {
   final Map<String, Widget>? icons;
   final Widget child;
 
-  const FileIconProvider.builder({super.key, FileIconBuilder this.builder = _buildFileIcon, required this.child})
-    : icons = null;
+  const FileIconProvider.builder({
+    super.key,
+    FileIconBuilder this.builder = _buildFileIcon,
+    required this.child,
+  }) : icons = null;
 
-  const FileIconProvider({super.key, required this.icons, required this.child}) : builder = null;
+  const FileIconProvider({
+    super.key,
+    required this.icons,
+    required this.child,
+  }) : builder = null;
 
   @override
   Widget build(BuildContext context) {
-    return Data.inherit(data: FileIconProviderData._(builder: builder, icons: icons), child: child);
+    return Data.inherit(
+      data: FileIconProviderData._(
+        builder: builder,
+        icons: icons,
+      ),
+      child: child,
+    );
   }
 
   static Widget buildIcon(BuildContext context, String extension) {
@@ -60,7 +73,10 @@ class FileIconProviderData {
   final FileIconBuilder? builder;
   final Map<String, Widget>? icons;
 
-  const FileIconProviderData._({this.builder, this.icons});
+  const FileIconProviderData._({
+    this.builder,
+    this.icons,
+  });
 
   Widget buildIcon(String extension) {
     if (builder != null) return builder!(extension);

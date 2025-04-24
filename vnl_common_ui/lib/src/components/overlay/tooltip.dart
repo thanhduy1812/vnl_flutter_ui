@@ -1,6 +1,6 @@
-import 'package:vnl_common_ui/src/components/control/hover.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
-import '../../../vnl_ui.dart';
+import '../control/hover.dart';
 
 class TooltipContainer extends StatelessWidget {
   final Widget child;
@@ -13,6 +13,10 @@ class TooltipContainer extends StatelessWidget {
     this.surfaceBlur,
     required this.child,
   });
+
+  Widget call(BuildContext context) {
+    return this;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,16 +58,16 @@ class TooltipContainer extends StatelessWidget {
   }
 }
 
-class Tooltip extends StatefulWidget {
+class VNLTooltip extends StatefulWidget {
   final Widget child;
-  final Widget tooltip;
+  final WidgetBuilder tooltip;
   final AlignmentGeometry alignment;
   final AlignmentGeometry anchorAlignment;
   final Duration waitDuration;
   final Duration showDuration;
   final Duration minDuration;
 
-  const Tooltip({
+  const VNLTooltip({
     super.key,
     required this.child,
     required this.tooltip,
@@ -75,10 +79,10 @@ class Tooltip extends StatefulWidget {
   });
 
   @override
-  State<Tooltip> createState() => _TooltipState();
+  State<VNLTooltip> createState() => _TooltipState();
 }
 
-class _TooltipState extends State<Tooltip> {
+class _TooltipState extends State<VNLTooltip> {
   final PopoverController _controller = PopoverController();
   @override
   Widget build(BuildContext context) {
@@ -92,7 +96,7 @@ class _TooltipState extends State<Tooltip> {
             context: context,
             modal: false,
             builder: (context) {
-              return widget.tooltip;
+              return widget.tooltip(context);
             },
             alignment: widget.alignment,
             anchorAlignment: widget.anchorAlignment,
@@ -199,13 +203,14 @@ class OverlayManagerAsTooltipOverlayHandler extends OverlayHandler {
     EdgeInsetsGeometry? margin,
     bool follow = true,
     bool consumeOutsideTaps = true,
-    ValueChanged<PopoverAnchorState>? onTickFollow,
+    ValueChanged<PopoverOverlayWidgetState>? onTickFollow,
     bool allowInvertHorizontal = true,
     bool allowInvertVertical = true,
     bool dismissBackdropFocus = true,
     Duration? showDuration,
     Duration? dismissDuration,
     OverlayBarrier? overlayBarrier,
+    LayerLink? layerLink,
   }) {
     return overlayManager.showTooltip(
       context: context,
@@ -232,6 +237,7 @@ class OverlayManagerAsTooltipOverlayHandler extends OverlayHandler {
       showDuration: showDuration,
       dismissDuration: dismissDuration,
       overlayBarrier: overlayBarrier,
+      layerLink: layerLink,
     );
   }
 }
@@ -259,13 +265,14 @@ class FixedTooltipOverlayHandler extends OverlayHandler {
     EdgeInsetsGeometry? margin,
     bool follow = true,
     bool consumeOutsideTaps = true,
-    ValueChanged<PopoverAnchorState>? onTickFollow,
+    ValueChanged<PopoverOverlayWidgetState>? onTickFollow,
     bool allowInvertHorizontal = true,
     bool allowInvertVertical = true,
     bool dismissBackdropFocus = true,
     Duration? showDuration,
     Duration? dismissDuration,
     OverlayBarrier? overlayBarrier,
+    LayerLink? layerLink,
   }) {
     TextDirection textDirection = Directionality.of(context);
     Alignment resolvedAlignment = alignment.resolve(textDirection);
@@ -307,7 +314,7 @@ class FixedTooltipOverlayHandler extends OverlayHandler {
                       },
                       builder: (innerContext, animation) {
                         final theme = Theme.of(innerContext);
-                        var popoverAnchor = PopoverAnchor(
+                        var popoverAnchor = PopoverOverlayWidget(
                           animation: animation,
                           onTapOutside: () {
                             if (isClosed.value) return;

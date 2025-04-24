@@ -22,9 +22,12 @@ class NavigationMenuItemState extends State<NavigationMenuItem> {
     if (_menuState != newMenuState) {
       _menuState = newMenuState;
       if (widget.content != null) {
-        _menuState!._attachContentBuilder(this, (context) {
-          return widget.content!;
-        });
+        _menuState!._attachContentBuilder(
+          this,
+          (context) {
+            return widget.content!;
+          },
+        );
       }
     }
   }
@@ -34,9 +37,12 @@ class NavigationMenuItemState extends State<NavigationMenuItem> {
     super.didUpdateWidget(oldWidget);
     if (widget.content != oldWidget.content) {
       if (widget.content != null) {
-        _menuState!._attachContentBuilder(this, (context) {
-          return widget.content!;
-        });
+        _menuState!._attachContentBuilder(
+          this,
+          (context) {
+            return widget.content!;
+          },
+        );
       } else {
         _menuState!._contentBuilders.remove(this);
       }
@@ -55,36 +61,36 @@ class NavigationMenuItemState extends State<NavigationMenuItem> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return AnimatedBuilder(
-      animation: Listenable.merge([_menuState!._activeIndex, _menuState!._popoverController]),
-      builder: (context, child) {
-        return Button(
-          style: const ButtonStyle.ghost().copyWith(
-            decoration: (context, states, value) {
-              if (_menuState!.isActive(this)) {
-                return (value as BoxDecoration).copyWith(
-                  borderRadius: BorderRadius.circular(theme.radiusMd),
-                  color: theme.colorScheme.muted.scaleAlpha(0.8),
-                );
-              }
-              return value;
-            },
-          ),
-          trailing:
-              widget.content != null
-                  ? AnimatedRotation(
+        animation: Listenable.merge([_menuState!._activeIndex, _menuState!._popoverController]),
+        builder: (context, child) {
+          return VNLButton(
+            style: const ButtonStyle.ghost().copyWith(
+              decoration: (context, states, value) {
+                if (_menuState!.isActive(this)) {
+                  return (value as BoxDecoration).copyWith(
+                    borderRadius: BorderRadius.circular(theme.radiusMd),
+                    color: theme.colorScheme.muted.scaleAlpha(0.8),
+                  );
+                }
+                return value;
+              },
+            ),
+            trailing: widget.content != null
+                ? AnimatedRotation(
                     duration: kDefaultDuration,
                     turns: _menuState!.isActive(this) ? 0.5 : 0,
-                    child: const Icon(RadixIcons.chevronDown).iconXSmall(),
+                    child: const Icon(
+                      RadixIcons.chevronDown,
+                    ).iconXSmall(),
                   )
-                  : null,
-          onHover: (hovered) {
-            if (hovered) {
-              _menuState!._activate(this);
-            }
-          },
-          onPressed:
-              widget.onPressed != null || widget.content != null
-                  ? () {
+                : null,
+            onHover: (hovered) {
+              if (hovered) {
+                _menuState!._activate(this);
+              }
+            },
+            onPressed: widget.onPressed != null || widget.content != null
+                ? () {
                     if (widget.onPressed != null) {
                       widget.onPressed!();
                     }
@@ -92,11 +98,10 @@ class NavigationMenuItemState extends State<NavigationMenuItem> {
                       _menuState!._activate(this);
                     }
                   }
-                  : null,
-          child: widget.child,
-        );
-      },
-    );
+                : null,
+            child: widget.child,
+          );
+        });
   }
 }
 
@@ -120,7 +125,7 @@ class NavigationMenuContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    return Button(
+    return VNLButton(
       style: ButtonVariance.ghost.copyWith(
         padding: (context, states, value) {
           return const EdgeInsets.all(12) * scaling;
@@ -166,28 +171,24 @@ class NavigationMenuContentList extends StatelessWidget {
     for (final child in children) {
       columns.add(Expanded(child: child));
       if (columns.length == crossAxisCount) {
-        rows.add(
-          IntrinsicWidth(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.min,
-              children: columns.joinSeparator(SizedBox(height: spacing)),
-            ),
+        rows.add(IntrinsicWidth(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: columns.joinSeparator(SizedBox(height: spacing)),
           ),
-        );
+        ));
         columns = [];
       }
     }
     if (columns.isNotEmpty) {
-      rows.add(
-        IntrinsicWidth(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: columns.joinSeparator(SizedBox(height: runSpacing)),
-          ),
+      rows.add(IntrinsicWidth(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: columns.joinSeparator(SizedBox(height: runSpacing)),
         ),
-      );
+      ));
     }
     return IntrinsicWidth(
       child: IntrinsicHeight(
@@ -201,18 +202,23 @@ class NavigationMenuContentList extends StatelessWidget {
   }
 }
 
-class NavigationMenu extends StatefulWidget {
+class VNLNavigationMenu extends StatefulWidget {
   final double? surfaceOpacity;
   final double? surfaceBlur;
   final List<Widget> children;
 
-  const NavigationMenu({super.key, this.surfaceOpacity, this.surfaceBlur, required this.children});
+  const VNLNavigationMenu({
+    super.key,
+    this.surfaceOpacity,
+    this.surfaceBlur,
+    required this.children,
+  });
 
   @override
-  State<NavigationMenu> createState() => NavigationMenuState();
+  State<VNLNavigationMenu> createState() => NavigationMenuState();
 }
 
-class NavigationMenuState extends State<NavigationMenu> {
+class NavigationMenuState extends State<VNLNavigationMenu> {
   static const Duration kDebounceDuration = Duration(milliseconds: 200);
   // final GlobalKey<PopoverAnchorState> _popoverKey = GlobalKey();
   // final ValueNotifier<bool> _visible = ValueNotifier(false);
@@ -280,7 +286,10 @@ class NavigationMenuState extends State<NavigationMenu> {
     final scaling = theme.scaling;
     if (item != null) {
       return Data<NavigationMenuState>.boundary(
-        child: Padding(padding: const EdgeInsets.all(12.0) * scaling, child: _contentBuilders[item]!(context)),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0) * scaling,
+          child: _contentBuilders[item]!(context),
+        ),
       );
     }
     return Container();
@@ -308,64 +317,63 @@ class NavigationMenuState extends State<NavigationMenu> {
         });
       },
       child: AnimatedBuilder(
-        animation: _activeIndex,
-        builder: (context, child) {
-          return AnimatedValueBuilder<double>(
-            value: _activeIndex.value.toDouble(),
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeOutCubic,
-            builder: (context, value, child) {
-              int currentIndex = _activeIndex.value;
-              List<Widget> children = [];
-              if (currentIndex - 1 >= 0) {
-                children.add(
-                  Positioned(
-                    top: 0,
-                    left: 0,
-                    child: Opacity(
-                      opacity: (1 + value - currentIndex).clamp(0.0, 1.0),
-                      child: FractionalTranslation(
-                        translation: Offset(-value + currentIndex - 1, 0),
-                        child: buildContent(currentIndex - 1),
+          animation: _activeIndex,
+          builder: (context, child) {
+            return AnimatedValueBuilder<double>(
+              value: _activeIndex.value.toDouble(),
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOutCubic,
+              builder: (context, value, child) {
+                int currentIndex = _activeIndex.value;
+                List<Widget> children = [];
+                if (currentIndex - 1 >= 0) {
+                  children.add(
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      child: Opacity(
+                        opacity: (1 + value - currentIndex).clamp(0.0, 1.0),
+                        child: FractionalTranslation(
+                          translation: Offset(-value + currentIndex - 1, 0),
+                          child: buildContent(currentIndex - 1),
+                        ),
                       ),
                     ),
-                  ),
-                );
-              }
-              if (currentIndex + 1 < widget.children.length) {
-                children.add(
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    child: Opacity(
-                      opacity: (1 - value + currentIndex).clamp(0.0, 1.0),
-                      child: FractionalTranslation(
-                        translation: Offset(-value + currentIndex + 1, 0),
-                        child: buildContent(currentIndex + 1),
+                  );
+                }
+                if (currentIndex + 1 < widget.children.length) {
+                  children.add(
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: Opacity(
+                        opacity: (1 - value + currentIndex).clamp(0.0, 1.0),
+                        child: FractionalTranslation(
+                          translation: Offset(-value + currentIndex + 1, 0),
+                          child: buildContent(currentIndex + 1),
+                        ),
                       ),
                     ),
+                  );
+                }
+                return OutlinedContainer(
+                  clipBehavior: Clip.antiAlias,
+                  borderRadius: theme.borderRadiusMd,
+                  surfaceOpacity: surfaceOpacity,
+                  surfaceBlur: surfaceBlur,
+                  child: Stack(
+                    children: [
+                      ...children,
+                      FractionalTranslation(
+                        translation: Offset(-value + currentIndex, 0),
+                        child: buildContent(currentIndex),
+                      ),
+                    ],
                   ),
                 );
-              }
-              return OutlinedContainer(
-                clipBehavior: Clip.antiAlias,
-                borderRadius: theme.borderRadiusMd,
-                surfaceOpacity: surfaceOpacity,
-                surfaceBlur: surfaceBlur,
-                child: Stack(
-                  children: [
-                    ...children,
-                    FractionalTranslation(
-                      translation: Offset(-value + currentIndex, 0),
-                      child: buildContent(currentIndex),
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
-        },
-      ),
+              },
+            );
+          }),
     );
   }
 

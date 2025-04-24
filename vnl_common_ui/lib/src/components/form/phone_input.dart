@@ -1,5 +1,6 @@
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/services.dart';
+
 import 'package:vnl_common_ui/vnl_ui.dart';
 
 class PhoneNumber {
@@ -30,7 +31,109 @@ class PhoneNumber {
   }
 }
 
-class PhoneInput extends StatefulWidget {
+/// Theme data for [PhoneInput].
+class VNLPhoneInputTheme {
+  /// The padding of the [PhoneInput].
+  final EdgeInsetsGeometry? padding;
+
+  /// The border radius of the [PhoneInput].
+  final BorderRadiusGeometry? borderRadius;
+
+  /// The constraints of the country selector popup.
+  final BoxConstraints? popupConstraints;
+
+  /// The maximum width of the [PhoneInput].
+  final double? maxWidth;
+
+  /// The height of the flag.
+  final double? flagHeight;
+
+  /// The width of the flag.
+  final double? flagWidth;
+
+  /// The gap between the flag and the country code.
+  final double? flagGap;
+
+  /// The gap between the country code and the text field.
+  final double? countryGap;
+
+  /// The shape of the flag.
+  final Shape? flagShape;
+
+  /// Theme data for [PhoneInput].
+  const VNLPhoneInputTheme({
+    this.padding,
+    this.borderRadius,
+    this.popupConstraints,
+    this.maxWidth,
+    this.flagHeight,
+    this.flagWidth,
+    this.flagGap,
+    this.countryGap,
+    this.flagShape,
+  });
+
+  /// Creates a copy of this [PhoneInputTheme] with the given values overridden.
+  VNLPhoneInputTheme copyWith({
+    ValueGetter<EdgeInsetsGeometry?>? padding,
+    ValueGetter<BorderRadiusGeometry?>? borderRadius,
+    ValueGetter<BoxConstraints?>? popupConstraints,
+    ValueGetter<double?>? maxWidth,
+    ValueGetter<double?>? flagHeight,
+    ValueGetter<double?>? flagWidth,
+    ValueGetter<double?>? flagGap,
+    ValueGetter<double?>? countryGap,
+    ValueGetter<Shape?>? flagShape,
+  }) {
+    return VNLPhoneInputTheme(
+      padding: padding != null ? padding() : this.padding,
+      borderRadius: borderRadius != null ? borderRadius() : this.borderRadius,
+      popupConstraints: popupConstraints != null ? popupConstraints() : this.popupConstraints,
+      maxWidth: maxWidth != null ? maxWidth() : this.maxWidth,
+      flagHeight: flagHeight != null ? flagHeight() : this.flagHeight,
+      flagWidth: flagWidth != null ? flagWidth() : this.flagWidth,
+      flagGap: flagGap != null ? flagGap() : this.flagGap,
+      countryGap: countryGap != null ? countryGap() : this.countryGap,
+      flagShape: flagShape != null ? flagShape() : this.flagShape,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is VNLPhoneInputTheme &&
+        other.padding == padding &&
+        other.borderRadius == borderRadius &&
+        other.popupConstraints == popupConstraints &&
+        other.maxWidth == maxWidth &&
+        other.flagHeight == flagHeight &&
+        other.flagWidth == flagWidth &&
+        other.flagGap == flagGap &&
+        other.countryGap == countryGap &&
+        other.flagShape == flagShape;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+        padding,
+        borderRadius,
+        popupConstraints,
+        maxWidth,
+        flagHeight,
+        flagWidth,
+        flagGap,
+        countryGap,
+        flagShape,
+      );
+
+  @override
+  String toString() {
+    return 'VNLPhoneInputTheme(padding: $padding, borderRadius: $borderRadius, popupConstraints: $popupConstraints, maxWidth: $maxWidth, flagHeight: $flagHeight, flagWidth: $flagWidth, flagGap: $flagGap, countryGap: $countryGap, flagShape: $flagShape)';
+  }
+}
+
+class VNLPhoneInput extends StatefulWidget {
   final Country? initialCountry;
   final PhoneNumber? initialValue;
   final ValueChanged<PhoneNumber>? onChanged;
@@ -42,7 +145,7 @@ class PhoneInput extends StatefulWidget {
   final List<Country>? countries;
   final Widget? searchPlaceholder;
 
-  const PhoneInput({
+  const VNLPhoneInput({
     super.key,
     this.initialCountry,
     this.initialValue,
@@ -57,10 +160,10 @@ class PhoneInput extends StatefulWidget {
   });
 
   @override
-  State<PhoneInput> createState() => _PhoneInputState();
+  State<VNLPhoneInput> createState() => _PhoneInputState();
 }
 
-class _PhoneInputState extends State<PhoneInput> with FormValueSupplier<PhoneNumber, PhoneInput> {
+class _PhoneInputState extends State<VNLPhoneInput> with FormValueSupplier<PhoneNumber, VNLPhoneInput> {
   late Country _country;
   late TextEditingController _controller;
 
@@ -74,7 +177,7 @@ class _PhoneInputState extends State<PhoneInput> with FormValueSupplier<PhoneNum
   }
 
   @override
-  void didUpdateWidget(covariant PhoneInput oldWidget) {
+  void didUpdateWidget(covariant VNLPhoneInput oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.controller != oldWidget.controller) {
       _controller.removeListener(_dispatchChanged);
@@ -112,18 +215,17 @@ class _PhoneInputState extends State<PhoneInput> with FormValueSupplier<PhoneNum
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final localization = ShadcnLocalizations.of(context);
+    final componentTheme = ComponentTheme.maybeOf<VNLPhoneInputTheme>(context);
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Select<Country>(
-            padding: EdgeInsets.only(
-              top: theme.scaling * 8,
-              left: theme.scaling * 8,
-              bottom: theme.scaling * 8,
-              right: theme.scaling * 4,
+          VNLSelect<Country>(
+            padding: styleValue(
+              defaultValue: EdgeInsets.only(
+                  top: theme.scaling * 8, left: theme.scaling * 8, bottom: theme.scaling * 8, right: theme.scaling * 4),
+              themeValue: componentTheme?.padding,
             ),
             // searchPlaceholder: widget.searchPlaceholder ??
             //     Text(localization.searchPlaceholderCountry),
@@ -146,7 +248,13 @@ class _PhoneInputState extends State<PhoneInput> with FormValueSupplier<PhoneNum
             //   );
             // },
             value: _country,
-            borderRadius: BorderRadius.only(topLeft: theme.radiusMdRadius, bottomLeft: theme.radiusMdRadius),
+            borderRadius: styleValue(
+              defaultValue: BorderRadius.only(
+                topLeft: theme.radiusMdRadius,
+                bottomLeft: theme.radiusMdRadius,
+              ),
+              themeValue: componentTheme?.borderRadius,
+            ),
             popoverAlignment: Alignment.topLeft,
             popoverAnchorAlignment: Alignment.bottomLeft,
             popupWidthConstraint: PopoverConstraint.flexible,
@@ -163,56 +271,107 @@ class _PhoneInputState extends State<PhoneInput> with FormValueSupplier<PhoneNum
                 children: [
                   CountryFlag.fromCountryCode(
                     item.code,
-                    shape: RoundedRectangle(theme.radiusSm),
-                    height: theme.scaling * 18,
-                    width: theme.scaling * 24,
+                    shape: styleValue(
+                      defaultValue: RoundedRectangle(
+                        theme.radiusSm,
+                      ),
+                      themeValue: componentTheme?.flagShape,
+                    ),
+                    height: styleValue(
+                      defaultValue: theme.scaling * 18,
+                      themeValue: componentTheme?.flagHeight,
+                    ),
+                    width: styleValue(
+                      defaultValue: theme.scaling * 24,
+                      themeValue: componentTheme?.flagWidth,
+                    ),
                   ),
-                  Gap(theme.scaling * 8),
+                  Gap(
+                    styleValue(
+                      defaultValue: theme.scaling * 8,
+                      themeValue: componentTheme?.flagGap,
+                    ),
+                  ),
                   Text(item.dialCode),
                 ],
               );
             },
-            popupConstraints: BoxConstraints(maxWidth: 250 * theme.scaling, maxHeight: 300 * theme.scaling),
-            popup:
-                SelectPopup.builder(
-                  builder: (context, searchQuery) {
-                    return SelectItemList(
-                      children: [
-                        for (final country in widget.countries ?? Country.values)
-                          if (searchQuery == null || _filterCountryCode(country, searchQuery))
-                            SelectItemButton(
-                              value: country,
-                              child: Row(
-                                children: [
-                                  CountryFlag.fromCountryCode(
-                                    country.code,
-                                    height: theme.scaling * 18,
-                                    width: theme.scaling * 24,
-                                    shape: RoundedRectangle(theme.radiusSm),
-                                  ),
-                                  Gap(8 * theme.scaling),
-                                  Expanded(child: Text(country.name)),
-                                  Gap(16 * theme.scaling),
-                                  Text(country.dialCode).muted(),
-                                ],
+            popupConstraints: styleValue(
+              defaultValue: BoxConstraints(
+                maxWidth: 250 * theme.scaling,
+                maxHeight: 300 * theme.scaling,
+              ),
+              themeValue: componentTheme?.popupConstraints,
+            ),
+            popup: SelectPopup.builder(
+              builder: (context, searchQuery) {
+                return SelectItemList(children: [
+                  for (final country in widget.countries ?? Country.values)
+                    if (searchQuery == null || _filterCountryCode(country, searchQuery))
+                      SelectItemButton(
+                        value: country,
+                        child: Row(
+                          children: [
+                            CountryFlag.fromCountryCode(
+                              country.code,
+                              shape: styleValue(
+                                defaultValue: RoundedRectangle(
+                                  theme.radiusSm,
+                                ),
+                                themeValue: componentTheme?.flagShape,
+                              ),
+                              height: styleValue(
+                                defaultValue: theme.scaling * 18,
+                                themeValue: componentTheme?.flagHeight,
+                              ),
+                              width: styleValue(
+                                defaultValue: theme.scaling * 24,
+                                themeValue: componentTheme?.flagWidth,
                               ),
                             ),
-                      ],
-                    );
-                  },
-                ).asBuilder,
+                            Gap(
+                              styleValue(
+                                defaultValue: theme.scaling * 8,
+                                themeValue: componentTheme?.flagGap,
+                              ),
+                            ),
+                            Expanded(child: Text(country.name)),
+                            Gap(
+                              styleValue(
+                                defaultValue: 16 * theme.scaling,
+                                themeValue: componentTheme?.countryGap,
+                              ),
+                            ),
+                            Text(country.dialCode).muted(),
+                          ],
+                        ),
+                      ),
+                ]);
+              },
+            ).asBuilder,
           ),
           LimitedBox(
-            maxWidth: 200 * theme.scaling,
-            child: TextField(
+            maxWidth: styleValue(
+              defaultValue: 200 * theme.scaling,
+              themeValue: componentTheme?.maxWidth,
+            ),
+            child: VNLTextField(
               controller: _controller,
               autofillHints: const [AutofillHints.telephoneNumber],
               keyboardType: widget.onlyNumber ? TextInputType.phone : null,
-              inputFormatters: [if (widget.onlyNumber) FilteringTextInputFormatter.digitsOnly],
-              borderRadius: BorderRadius.only(topRight: theme.radiusMdRadius, bottomRight: theme.radiusMdRadius),
+              inputFormatters: [
+                if (widget.onlyNumber) FilteringTextInputFormatter.digitsOnly,
+              ],
+              borderRadius: styleValue(
+                defaultValue: BorderRadius.only(
+                  topRight: theme.radiusMdRadius,
+                  bottomRight: theme.radiusMdRadius,
+                ),
+                themeValue: componentTheme?.borderRadius,
+              ),
               initialValue: widget.initialValue?.number,
             ),
-          ),
+          )
         ],
       ),
     );

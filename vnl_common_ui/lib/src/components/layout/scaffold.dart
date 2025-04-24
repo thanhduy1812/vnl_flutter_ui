@@ -3,21 +3,22 @@ import 'dart:ui';
 import 'package:flutter/rendering.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-class Scaffold extends StatefulWidget {
+class VNLScaffold extends StatefulWidget {
   final List<Widget> headers;
   final List<Widget> footers;
   final Widget child;
   final double? loadingProgress;
   final bool loadingProgressIndeterminate;
   final bool
-  floatingHeader; // when header floats, it takes no space in the layout, and positioned on top of the content
+      floatingHeader; // when header floats, it takes no space in the layout, and positioned on top of the content
   final bool floatingFooter;
   final Color? headerBackgroundColor;
   final Color? footerBackgroundColor;
   final Color? backgroundColor;
   final bool showLoadingSparks;
+  final bool? resizeToAvoidBottomInset;
 
-  const Scaffold({
+  const VNLScaffold({
     super.key,
     required this.child,
     this.headers = const [],
@@ -30,10 +31,11 @@ class Scaffold extends StatefulWidget {
     this.headerBackgroundColor,
     this.footerBackgroundColor,
     this.showLoadingSparks = false,
+    this.resizeToAvoidBottomInset,
   });
 
   @override
-  State<Scaffold> createState() => ScaffoldState();
+  State<VNLScaffold> createState() => ScaffoldState();
 }
 
 class ScaffoldBarData {
@@ -41,73 +43,79 @@ class ScaffoldBarData {
   final int childIndex;
   final int childrenCount;
 
-  const ScaffoldBarData({this.isHeader = true, required this.childIndex, required this.childrenCount});
+  const ScaffoldBarData({
+    this.isHeader = true,
+    required this.childIndex,
+    required this.childrenCount,
+  });
 }
 
-class ScaffoldState extends State<Scaffold> {
+class ScaffoldState extends State<VNLScaffold> {
   Widget buildHeader(BuildContext context) {
-    return Container(
-      color: widget.headerBackgroundColor,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Column(
-            verticalDirection: VerticalDirection.up,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (widget.loadingProgress != null || widget.loadingProgressIndeterminate)
-                SizedBox(
-                  // to make it float
-                  height: 0,
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    fit: StackFit.passthrough,
-                    children: [
-                      Positioned(
-                        left: 0,
-                        right: 0,
-                        child: LinearProgressIndicator(
-                          backgroundColor: Colors.transparent,
-                          value: widget.loadingProgressIndeterminate ? null : widget.loadingProgress,
-                          showSparks: false,
+    return RepaintBoundary(
+      child: Container(
+        color: widget.headerBackgroundColor,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Column(
+              verticalDirection: VerticalDirection.up,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (widget.loadingProgress != null || widget.loadingProgressIndeterminate)
+                  SizedBox(
+                    // to make it float
+                    height: 0,
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      fit: StackFit.passthrough,
+                      children: [
+                        Positioned(
+                          left: 0,
+                          right: 0,
+                          child: LinearProgressIndicator(
+                            backgroundColor: Colors.transparent,
+                            value: widget.loadingProgressIndeterminate ? null : widget.loadingProgress,
+                            showSparks: false,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                   for (var i = 0; i < widget.headers.length; i++)
                     Data.inherit(
-                      data: ScaffoldBarData(childIndex: i, childrenCount: widget.headers.length),
+                      data: ScaffoldBarData(
+                        childIndex: i,
+                        childrenCount: widget.headers.length,
+                      ),
                       child: widget.headers[i],
                     ),
-                ],
-              ),
-            ],
-          ),
-          if (widget.loadingProgress != null && widget.showLoadingSparks)
-            SizedBox(
-              // to make it float
-              height: 0,
-              child: Stack(
-                clipBehavior: Clip.none,
-                fit: StackFit.passthrough,
-                children: [
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    child: LinearProgressIndicator(
-                      backgroundColor: Colors.transparent,
-                      value: widget.loadingProgressIndeterminate ? null : widget.loadingProgress,
-                      showSparks: true,
-                    ),
-                  ),
-                ],
-              ),
+                ]),
+              ],
             ),
-        ],
+            if (widget.loadingProgress != null && widget.showLoadingSparks)
+              SizedBox(
+                // to make it float
+                height: 0,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  fit: StackFit.passthrough,
+                  children: [
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      child: LinearProgressIndicator(
+                        backgroundColor: Colors.transparent,
+                        value: widget.loadingProgressIndeterminate ? null : widget.loadingProgress,
+                        showSparks: true,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -115,17 +123,23 @@ class ScaffoldState extends State<Scaffold> {
   Widget buildFooter(BuildContext context, EdgeInsets viewInsets) {
     return Offstage(
       offstage: viewInsets.bottom > 0,
-      child: Container(
-        color: widget.footerBackgroundColor,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            for (var i = 0; i < widget.footers.length; i++)
-              Data.inherit(
-                data: ScaffoldBarData(isHeader: false, childIndex: i, childrenCount: widget.footers.length),
-                child: widget.footers[i],
-              ),
-          ],
+      child: RepaintBoundary(
+        child: Container(
+          color: widget.footerBackgroundColor,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (var i = 0; i < widget.footers.length; i++)
+                Data.inherit(
+                  data: ScaffoldBarData(
+                    isHeader: false,
+                    childIndex: i,
+                    childrenCount: widget.footers.length,
+                  ),
+                  child: widget.footers[i],
+                ),
+            ],
+          ),
         ),
       ),
     );
@@ -143,29 +157,62 @@ class ScaffoldState extends State<Scaffold> {
           floatingFooter: widget.floatingFooter,
           children: [
             buildHeader(context),
-            LayoutBuilder(
-              builder: (context, constraints) {
-                Widget child = Container(padding: viewInsets, child: ToastLayer(child: widget.child));
-                if (constraints is ScaffoldBoxConstraints && (widget.floatingHeader || widget.floatingFooter)) {
-                  final currentMediaQuery = MediaQuery.of(context);
-                  EdgeInsets padding = currentMediaQuery.padding;
-                  if (widget.floatingHeader) {
-                    padding += EdgeInsets.only(top: constraints.headerHeight);
-                  }
-                  if (widget.floatingFooter) {
-                    padding += EdgeInsets.only(bottom: constraints.footerHeight);
-                  }
-                  child = MediaQuery(data: currentMediaQuery.copyWith(padding: padding), child: child);
+            LayoutBuilder(builder: (context, constraints) {
+              Widget child = (widget.resizeToAvoidBottomInset ?? true)
+                  ? Container(
+                      padding: EdgeInsets.only(
+                        bottom: viewInsets.bottom,
+                      ),
+                      child: MediaQuery(
+                        data: MediaQuery.of(context).copyWith(
+                          viewInsets: viewInsets.copyWith(
+                            bottom: 0,
+                          ),
+                        ),
+                        child: ToastLayer(child: widget.child),
+                      ),
+                    )
+                  : ToastLayer(child: widget.child);
+              if (constraints is ScaffoldBoxConstraints && (widget.floatingHeader || widget.floatingFooter)) {
+                final currentMediaQuery = MediaQuery.of(context);
+                EdgeInsets padding = currentMediaQuery.padding;
+                if (widget.floatingHeader) {
+                  padding += EdgeInsets.only(top: constraints.headerHeight);
                 }
-                return child;
-              },
-            ),
+                if (widget.floatingFooter) {
+                  padding += EdgeInsets.only(bottom: constraints.footerHeight);
+                }
+                child = MediaQuery(
+                  data: currentMediaQuery.copyWith(
+                    padding: padding,
+                  ),
+                  child: RepaintBoundary(
+                    child: child,
+                  ),
+                );
+              }
+              return child;
+            }),
             buildFooter(context, viewInsets),
           ],
         ),
       ),
     );
   }
+}
+
+class ScaffoldPaddingStorage {
+  double top;
+  double left;
+  double right;
+  double bottom;
+
+  ScaffoldPaddingStorage({
+    required this.top,
+    required this.left,
+    required this.right,
+    required this.bottom,
+  });
 }
 
 class ScaffoldBoxConstraints extends BoxConstraints {
@@ -229,7 +276,14 @@ class ScaffoldBoxConstraints extends BoxConstraints {
 
   @override
   int get hashCode {
-    return Object.hash(headerHeight, footerHeight, minWidth, maxWidth, minHeight, maxHeight);
+    return Object.hash(
+      headerHeight,
+      footerHeight,
+      minWidth,
+      maxWidth,
+      minHeight,
+      maxHeight,
+    );
   }
 
   @override
@@ -238,7 +292,7 @@ class ScaffoldBoxConstraints extends BoxConstraints {
   }
 }
 
-class AppBar extends StatefulWidget {
+class VNLAppBar extends StatefulWidget {
   final List<Widget> trailing;
   final List<Widget> leading;
   final Widget? child;
@@ -256,7 +310,7 @@ class AppBar extends StatefulWidget {
   final double? surfaceBlur;
   final double? surfaceOpacity;
 
-  const AppBar({
+  const VNLAppBar({
     super.key,
     this.trailing = const [],
     this.leading = const [],
@@ -274,13 +328,16 @@ class AppBar extends StatefulWidget {
     this.surfaceBlur,
     this.surfaceOpacity,
     this.useSafeArea = true,
-  }) : assert(child == null || title == null, 'Cannot provide both child and title');
+  }) : assert(
+          child == null || title == null,
+          'Cannot provide both child and title',
+        );
 
   @override
-  State<AppBar> createState() => _AppBarState();
+  State<VNLAppBar> createState() => _AppBarState();
 }
 
-class _AppBarState extends State<AppBar> {
+class _AppBarState extends State<VNLAppBar> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -291,17 +348,24 @@ class _AppBarState extends State<AppBar> {
     return FocusTraversalGroup(
       child: ClipRect(
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: surfaceBlur ?? 0, sigmaY: surfaceBlur ?? 0),
+          filter: ImageFilter.blur(
+            sigmaX: surfaceBlur ?? 0,
+            sigmaY: surfaceBlur ?? 0,
+          ),
           child: Container(
             color: widget.backgroundColor ?? theme.colorScheme.background.scaleAlpha(surfaceOpacity ?? 1),
             alignment: widget.alignment,
-            padding: widget.padding ?? (const EdgeInsets.symmetric(horizontal: 18, vertical: 12) * scaling),
+            padding: widget.padding ??
+                (const EdgeInsets.symmetric(
+                      horizontal: 18,
+                      vertical: 12,
+                    ) *
+                    scaling),
             child: SafeArea(
               top: widget.useSafeArea && barData?.isHeader == true && barData?.childIndex == 0,
               right: widget.useSafeArea,
               left: widget.useSafeArea,
-              bottom:
-                  widget.useSafeArea &&
+              bottom: widget.useSafeArea &&
                   barData?.isHeader == false &&
                   barData?.childIndex == (barData?.childrenCount ?? 0) - 1,
               child: SizedBox(
@@ -317,16 +381,21 @@ class _AppBarState extends State<AppBar> {
                         ).gap(widget.leadingGap ?? (4 * scaling)),
                       Flexible(
                         fit: widget.trailingExpanded ? FlexFit.loose : FlexFit.tight,
-                        child:
-                            widget.child ??
+                        child: widget.child ??
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 if (widget.header != null)
-                                  KeyedSubtree(key: const ValueKey('header'), child: widget.header!.muted().small()),
+                                  KeyedSubtree(
+                                    key: const ValueKey('header'),
+                                    child: widget.header!.muted().small(),
+                                  ),
                                 if (widget.title != null)
-                                  KeyedSubtree(key: const ValueKey('title'), child: widget.title!.large().medium()),
+                                  KeyedSubtree(
+                                    key: const ValueKey('title'),
+                                    child: widget.title!.large().medium(),
+                                  ),
                                 if (widget.subtitle != null)
                                   KeyedSubtree(
                                     key: const ValueKey('subtitle'),
@@ -363,11 +432,18 @@ class _AppBarState extends State<AppBar> {
 class _ScaffoldFlex extends MultiChildRenderObjectWidget {
   final bool floatingHeader;
   final bool floatingFooter;
-  const _ScaffoldFlex({super.children, required this.floatingHeader, required this.floatingFooter});
+  const _ScaffoldFlex({
+    super.children,
+    required this.floatingHeader,
+    required this.floatingFooter,
+  });
 
   @override
   RenderObject createRenderObject(BuildContext context) {
-    return _ScaffoldRenderFlex(floatingHeader: floatingHeader, floatingFooter: floatingFooter);
+    return _ScaffoldRenderFlex(
+      floatingHeader: floatingHeader,
+      floatingFooter: floatingFooter,
+    );
   }
 
   @override
@@ -390,9 +466,11 @@ class _ScaffoldFlex extends MultiChildRenderObjectWidget {
 class _ScaffoldParentData extends ContainerBoxParentData<RenderBox> {}
 
 class _ScaffoldRenderFlex extends RenderBox with ContainerRenderObjectMixin<RenderBox, _ScaffoldParentData> {
-  _ScaffoldRenderFlex({required bool floatingHeader, required bool floatingFooter})
-    : _floatingHeader = floatingHeader,
-      _floatingFooter = floatingFooter;
+  _ScaffoldRenderFlex({
+    required bool floatingHeader,
+    required bool floatingFooter,
+  })  : _floatingHeader = floatingHeader,
+        _floatingFooter = floatingFooter;
 
   bool _floatingHeader = false;
   bool _floatingFooter = false;
@@ -473,28 +551,38 @@ class _ScaffoldRenderFlex extends RenderBox with ContainerRenderObjectMixin<Rend
         contentOffset = Offset.zero;
         break;
       case (true, false): // floating header
-        contentConstraints = constraints.deflate(EdgeInsets.only(bottom: footerSize));
+        contentConstraints = constraints.deflate(
+          EdgeInsets.only(bottom: footerSize),
+        );
         contentOffset = Offset.zero;
         break;
       case (false, true): // floating footer
-        contentConstraints = constraints.deflate(EdgeInsets.only(top: headerSize));
+        contentConstraints = constraints.deflate(
+          EdgeInsets.only(top: headerSize),
+        );
         contentOffset = Offset(0, headerSize);
         break;
       case (false, false):
-        contentConstraints = constraints.deflate(EdgeInsets.only(top: headerSize, bottom: footerSize));
+        contentConstraints = constraints.deflate(
+          EdgeInsets.only(
+            top: headerSize,
+            bottom: footerSize,
+          ),
+        );
         contentOffset = Offset(0, headerSize);
         break;
     }
-    content.layout(
-      ScaffoldBoxConstraints.fromBoxConstraints(
-        constraints: contentConstraints,
-        headerHeight: headerSize,
-        footerHeight: footerSize,
-      ),
-    );
+    content.layout(ScaffoldBoxConstraints.fromBoxConstraints(
+      constraints: contentConstraints,
+      headerHeight: headerSize,
+      footerHeight: footerSize,
+    ));
     size = constraints.biggest;
     (content.parentData as BoxParentData).offset = contentOffset;
-    (footer.parentData as BoxParentData).offset = Offset(0, constraints.biggest.height - footerSize);
+    (footer.parentData as BoxParentData).offset = Offset(
+      0,
+      constraints.biggest.height - footerSize,
+    );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _headerSize.value = headerSize;
       _footerSize.value = footerSize;
@@ -507,7 +595,9 @@ class ScaffoldHeaderPadding extends SingleChildRenderObjectWidget {
 
   @override
   RenderObject createRenderObject(BuildContext context) {
-    return _RenderScaffoldPadding(paddingType: _ScaffoldPaddingType.header);
+    return _RenderScaffoldPadding(
+      paddingType: _ScaffoldPaddingType.header,
+    );
   }
 }
 
@@ -516,11 +606,16 @@ class ScaffoldFooterPadding extends SingleChildRenderObjectWidget {
 
   @override
   RenderObject createRenderObject(BuildContext context) {
-    return _RenderScaffoldPadding(paddingType: _ScaffoldPaddingType.footer);
+    return _RenderScaffoldPadding(
+      paddingType: _ScaffoldPaddingType.footer,
+    );
   }
 }
 
-enum _ScaffoldPaddingType { header, footer }
+enum _ScaffoldPaddingType {
+  header,
+  footer,
+}
 
 class _RenderScaffoldPadding extends RenderBox
     with
@@ -528,7 +623,9 @@ class _RenderScaffoldPadding extends RenderBox
         RenderBoxContainerDefaultsMixin<RenderBox, _ScaffoldParentData> {
   final _ScaffoldPaddingType _paddingType;
 
-  _RenderScaffoldPadding({_ScaffoldPaddingType paddingType = _ScaffoldPaddingType.header}) : _paddingType = paddingType;
+  _RenderScaffoldPadding({
+    _ScaffoldPaddingType paddingType = _ScaffoldPaddingType.header,
+  }) : _paddingType = paddingType;
 
   _ScaffoldRenderFlex? findParent() {
     RenderObject? parent = this;
@@ -568,15 +665,15 @@ class _RenderScaffoldPadding extends RenderBox
     switch (_paddingType) {
       case _ScaffoldPaddingType.header:
         constraints = this.constraints.copyWith(
-          minHeight: parentData!._headerSize.value,
-          maxHeight: parentData._headerSize.value,
-        );
+              minHeight: parentData!._headerSize.value,
+              maxHeight: parentData._headerSize.value,
+            );
         break;
       case _ScaffoldPaddingType.footer:
         constraints = this.constraints.copyWith(
-          minHeight: parentData!._footerSize.value,
-          maxHeight: parentData._footerSize.value,
-        );
+              minHeight: parentData!._footerSize.value,
+              maxHeight: parentData._footerSize.value,
+            );
         break;
     }
     final child = firstChild;

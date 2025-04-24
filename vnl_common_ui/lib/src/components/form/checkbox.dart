@@ -2,7 +2,7 @@ import '../../../vnl_ui.dart';
 
 class CheckboxController extends ValueNotifier<CheckboxState>
     with ComponentController<CheckboxState> {
-  CheckboxController(CheckboxState value) : super(value);
+  CheckboxController(super.value);
 
   void check() {
     value = CheckboxState.checked;
@@ -62,13 +62,13 @@ class ControlledCheckbox extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return ControlledComponentBuilder<CheckboxState>(
+    return ControlledComponentAdapter<CheckboxState>(
       controller: controller,
       initialValue: initialValue,
       onChanged: onChanged,
       enabled: enabled,
       builder: (context, data) {
-        return Checkbox(
+        return VNLCheckbox(
           state: data.value,
           onChanged: data.onChanged,
           leading: leading,
@@ -92,7 +92,7 @@ enum CheckboxState implements Comparable<CheckboxState> {
   }
 }
 
-class Checkbox extends StatefulWidget {
+class VNLCheckbox extends StatefulWidget {
   final CheckboxState state;
   final ValueChanged<CheckboxState>? onChanged;
   final Widget? leading;
@@ -100,7 +100,7 @@ class Checkbox extends StatefulWidget {
   final bool tristate;
   final bool? enabled;
 
-  const Checkbox({
+  const VNLCheckbox({
     super.key,
     required this.state,
     required this.onChanged,
@@ -114,8 +114,8 @@ class Checkbox extends StatefulWidget {
   _CheckboxState createState() => _CheckboxState();
 }
 
-class _CheckboxState extends State<Checkbox>
-    with FormValueSupplier<CheckboxState, Checkbox> {
+class _CheckboxState extends State<VNLCheckbox>
+    with FormValueSupplier<CheckboxState, VNLCheckbox> {
   final bool _focusing = false;
   bool _shouldAnimate = false;
 
@@ -159,7 +159,7 @@ class _CheckboxState extends State<Checkbox>
   }
 
   @override
-  void didUpdateWidget(covariant Checkbox oldWidget) {
+  void didUpdateWidget(covariant VNLCheckbox oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.state != oldWidget.state) {
       formValue = widget.state;

@@ -11,9 +11,17 @@ class AdaptiveScaling {
   final double textScaling;
 
   const AdaptiveScaling([double scaling = 1])
-    : this.only(radiusScaling: scaling, sizeScaling: scaling, textScaling: scaling);
+      : this.only(
+          radiusScaling: scaling,
+          sizeScaling: scaling,
+          textScaling: scaling,
+        );
 
-  const AdaptiveScaling.only({this.radiusScaling = 1, this.sizeScaling = 1, this.textScaling = 1});
+  const AdaptiveScaling.only({
+    this.radiusScaling = 1,
+    this.sizeScaling = 1,
+    this.textScaling = 1,
+  });
 
   ThemeData scale(ThemeData theme) {
     return theme.copyWith(
@@ -24,7 +32,11 @@ class AdaptiveScaling {
     );
   }
 
-  static AdaptiveScaling lerp(AdaptiveScaling a, AdaptiveScaling b, double t) {
+  static AdaptiveScaling lerp(
+    AdaptiveScaling a,
+    AdaptiveScaling b,
+    double t,
+  ) {
     return AdaptiveScaling.only(
       radiusScaling: lerpDouble(a.radiusScaling, b.radiusScaling, t)!,
       sizeScaling: lerpDouble(a.sizeScaling, b.sizeScaling, t)!,
@@ -52,12 +64,19 @@ class AdaptiveScaler extends StatelessWidget {
   final AdaptiveScaling scaling;
   final Widget child;
 
-  const AdaptiveScaler({super.key, required this.scaling, required this.child});
+  const AdaptiveScaler({
+    super.key,
+    required this.scaling,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Theme(data: scaling.scale(theme), child: child);
+    return Theme(
+      data: scaling.scale(theme),
+      child: child,
+    );
   }
 }
 
@@ -141,7 +160,11 @@ class ThemeData {
     );
   }
 
-  static ThemeData lerp(ThemeData a, ThemeData b, double t) {
+  static ThemeData lerp(
+    ThemeData a,
+    ThemeData b,
+    double t,
+  ) {
     return ThemeData(
       colorScheme: ColorScheme.lerp(a.colorScheme, b.colorScheme, t),
       radius: lerpDouble(a.radius, b.radius, t)!,
@@ -170,7 +193,15 @@ class ThemeData {
 
   @override
   int get hashCode {
-    return Object.hash(colorScheme, typography, radius, scaling, iconTheme, surfaceOpacity, surfaceBlur);
+    return Object.hash(
+      colorScheme,
+      typography,
+      radius,
+      scaling,
+      iconTheme,
+      surfaceOpacity,
+      surfaceBlur,
+    );
   }
 
   @override
@@ -182,7 +213,11 @@ class ThemeData {
 class Theme extends InheritedTheme {
   final ThemeData data;
 
-  const Theme({super.key, required this.data, required super.child});
+  const Theme({
+    super.key,
+    required this.data,
+    required super.child,
+  });
 
   static ThemeData of(BuildContext context) {
     final theme = context.dependOnInheritedWidgetOfExactType<Theme>();
@@ -224,7 +259,13 @@ class AnimatedTheme extends ImplicitlyAnimatedWidget {
   final ThemeData data;
   final Widget child;
 
-  const AnimatedTheme({super.key, required this.data, required super.duration, super.curve, required this.child});
+  const AnimatedTheme({
+    super.key,
+    required this.data,
+    required super.duration,
+    super.curve,
+    required this.child,
+  });
 
   @override
   _AnimatedThemeState createState() => _AnimatedThemeState();
@@ -235,9 +276,11 @@ class _AnimatedThemeState extends AnimatedWidgetBaseState<AnimatedTheme> {
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    _data =
-        visitor(_data, widget.data, (dynamic value) => ThemeDataTween(begin: value as ThemeData, end: null))
-            as ThemeDataTween?;
+    _data = visitor(
+      _data,
+      widget.data,
+      (dynamic value) => ThemeDataTween(begin: value as ThemeData, end: null),
+    ) as ThemeDataTween?;
   }
 
   @override
@@ -318,7 +361,11 @@ class IconThemeProperties {
     );
   }
 
-  static IconThemeProperties lerp(IconThemeProperties a, IconThemeProperties b, double t) {
+  static IconThemeProperties lerp(
+    IconThemeProperties a,
+    IconThemeProperties b,
+    double t,
+  ) {
     return IconThemeProperties(
       x4Small: IconThemeData.lerp(a.x4Small, b.x4Small, t),
       x3Small: IconThemeData.lerp(a.x3Small, b.x3Small, t),
@@ -354,7 +401,19 @@ class IconThemeProperties {
 
   @override
   int get hashCode {
-    return Object.hash(x4Small, x3Small, x2Small, xSmall, small, medium, large, xLarge, x2Large, x3Large, x4Large);
+    return Object.hash(
+      x4Small,
+      x3Small,
+      x2Small,
+      xSmall,
+      small,
+      medium,
+      large,
+      xLarge,
+      x2Large,
+      x3Large,
+      x4Large,
+    );
   }
 
   @override
@@ -366,7 +425,11 @@ class IconThemeProperties {
 class ComponentTheme<T> extends InheritedTheme {
   final T data;
 
-  const ComponentTheme({super.key, required this.data, required super.child});
+  const ComponentTheme({
+    super.key,
+    required this.data,
+    required super.child,
+  });
 
   @override
   Widget wrap(BuildContext context, Widget child) {
@@ -375,7 +438,10 @@ class ComponentTheme<T> extends InheritedTheme {
     if (identical(this, ancestorTheme)) {
       return child;
     }
-    return ComponentTheme<T>(data: data, child: child);
+    return ComponentTheme<T>(
+      data: data,
+      child: child,
+    );
   }
 
   static T of<T>(BuildContext context) {
@@ -398,4 +464,8 @@ class ComponentTheme<T> extends InheritedTheme {
   }
 }
 
-enum ThemeMode { system, light, dark }
+enum ThemeMode {
+  system,
+  light,
+  dark,
+}

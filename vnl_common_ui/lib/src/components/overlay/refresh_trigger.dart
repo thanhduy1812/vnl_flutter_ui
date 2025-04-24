@@ -8,7 +8,7 @@ typedef RefreshIndicatorBuilder = Widget Function(BuildContext context, RefreshT
 
 typedef FutureVoidCallback = Future<void> Function();
 
-class RefreshTrigger extends StatefulWidget {
+class VNLRefreshTrigger extends StatefulWidget {
   static Widget defaultIndicatorBuilder(BuildContext context, RefreshTriggerStage stage) {
     return DefaultRefreshIndicator(stage: stage);
   }
@@ -23,7 +23,7 @@ class RefreshTrigger extends StatefulWidget {
   final Curve curve;
   final Duration completeDuration;
 
-  const RefreshTrigger({
+  const VNLRefreshTrigger({
     super.key,
     this.minExtent = 75.0,
     this.maxExtent = 150.0,
@@ -37,7 +37,7 @@ class RefreshTrigger extends StatefulWidget {
   });
 
   @override
-  State<RefreshTrigger> createState() => RefreshTriggerState();
+  State<VNLRefreshTrigger> createState() => RefreshTriggerState();
 }
 
 class DefaultRefreshIndicator extends StatefulWidget {
@@ -51,16 +51,19 @@ class DefaultRefreshIndicator extends StatefulWidget {
 
 class _DefaultRefreshIndicatorState extends State<DefaultRefreshIndicator> {
   Widget buildRefreshingContent(BuildContext context) {
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: [Flexible(child: Text(localizations.refreshTriggerRefreshing)), const CircularProgressIndicator()],
+      children: [
+        Flexible(child: Text(localizations.refreshTriggerRefreshing)),
+        const CircularProgressIndicator(),
+      ],
     ).gap(8);
   }
 
   Widget buildCompletedContent(BuildContext context) {
     final theme = Theme.of(context);
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -69,59 +72,64 @@ class _DefaultRefreshIndicatorState extends State<DefaultRefreshIndicator> {
           width: 12.0 * theme.scaling,
           height: 8.0 * theme.scaling,
           child: AnimatedValueBuilder(
-            initialValue: 0.0,
-            value: 1.0,
-            duration: const Duration(milliseconds: 300),
-            curve: const Interval(0.5, 1.0),
-            builder: (context, value, _) {
-              return CustomPaint(
-                painter: AnimatedCheckPainter(
-                  progress: value,
-                  color: theme.colorScheme.foreground,
-                  strokeWidth: 1.5 * theme.scaling,
-                ),
-              );
-            },
-          ),
+              initialValue: 0.0,
+              value: 1.0,
+              duration: const Duration(milliseconds: 300),
+              curve: const Interval(0.5, 1.0),
+              builder: (context, value, _) {
+                return CustomPaint(
+                  painter: AnimatedCheckPainter(
+                    progress: value,
+                    color: theme.colorScheme.foreground,
+                    strokeWidth: 1.5 * theme.scaling,
+                  ),
+                );
+              }),
         ),
       ],
     ).gap(8);
   }
 
   Widget buildPullingContent(BuildContext context) {
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     return AnimatedBuilder(
-      animation: widget.stage.extent,
-      builder: (context, child) {
-        double angle;
-        if (widget.stage.direction == Axis.vertical) {
-          // 0 -> 1 (0 -> 180)
-          angle = -pi * widget.stage.extent.value.clamp(0, 1);
-        } else {
-          // 0 -> 1 (90 -> 270)
-          angle = -pi / 2 + -pi * widget.stage.extent.value.clamp(0, 1);
-        }
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Transform.rotate(angle: angle, child: const Icon(Icons.arrow_downward)),
-            Flexible(
-              child: Text(
-                widget.stage.extent.value < 1 ? localizations.refreshTriggerPull : localizations.refreshTriggerRelease,
+        animation: widget.stage.extent,
+        builder: (context, child) {
+          double angle;
+          if (widget.stage.direction == Axis.vertical) {
+            // 0 -> 1 (0 -> 180)
+            angle = -pi * widget.stage.extent.value.clamp(0, 1);
+          } else {
+            // 0 -> 1 (90 -> 270)
+            angle = -pi / 2 + -pi * widget.stage.extent.value.clamp(0, 1);
+          }
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Transform.rotate(
+                angle: angle,
+                child: const Icon(Icons.arrow_downward),
               ),
-            ),
-            Transform.rotate(angle: angle, child: const Icon(Icons.arrow_downward)),
-          ],
-        ).gap(8);
-      },
-    );
+              Flexible(
+                  child: Text(widget.stage.extent.value < 1
+                      ? localizations.refreshTriggerPull
+                      : localizations.refreshTriggerRelease)),
+              Transform.rotate(
+                angle: angle,
+                child: const Icon(Icons.arrow_downward),
+              ),
+            ],
+          ).gap(8);
+        });
   }
 
   Widget buildIdleContent(BuildContext context) {
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: [Flexible(child: Text(localizations.refreshTriggerPull))],
+      children: [
+        Flexible(child: Text(localizations.refreshTriggerPull)),
+      ],
     ).gap(8);
   }
 
@@ -145,12 +153,16 @@ class _DefaultRefreshIndicatorState extends State<DefaultRefreshIndicator> {
     final theme = Theme.of(context);
     return Center(
       child: SurfaceCard(
-        padding:
-            widget.stage.stage == TriggerStage.pulling
-                ? const EdgeInsets.all(4) * theme.scaling
-                : const EdgeInsets.symmetric(horizontal: 12, vertical: 4) * theme.scaling,
+        padding: widget.stage.stage == TriggerStage.pulling
+            ? const EdgeInsets.all(4) * theme.scaling
+            : const EdgeInsets.symmetric(horizontal: 12, vertical: 4) * theme.scaling,
         borderRadius: theme.borderRadiusXl,
-        child: CrossFadedTransition(child: KeyedSubtree(key: ValueKey(widget.stage.stage), child: child)),
+        child: CrossFadedTransition(
+          child: KeyedSubtree(
+            key: ValueKey(widget.stage.stage),
+            child: child,
+          ),
+        ),
       ),
     );
   }
@@ -167,7 +179,7 @@ class _RefreshTriggerTween extends Animatable<double> {
   }
 }
 
-class RefreshTriggerState extends State<RefreshTrigger> with SingleTickerProviderStateMixin {
+class RefreshTriggerState extends State<VNLRefreshTrigger> with SingleTickerProviderStateMixin {
   double _currentExtent = 0;
   bool _scrolling = false;
   ScrollDirection _userScrollDirection = ScrollDirection.idle;
@@ -340,29 +352,31 @@ class RefreshTriggerState extends State<RefreshTrigger> with SingleTickerProvide
                 animation: animation,
                 child: widget.indicatorBuilder(
                   context,
-                  RefreshTriggerStage(_stage, tween.animate(animation), widget.direction),
+                  RefreshTriggerStage(
+                    _stage,
+                    tween.animate(animation),
+                    widget.direction,
+                  ),
                 ),
                 builder: (context, child) {
                   return Positioned.fill(
-                    child: ClipRect(
-                      child: Stack(
-                        children: [
-                          _wrapPositioned(
-                            FractionalTranslation(
-                              translation: _offset,
-                              child: Transform.translate(
-                                offset:
-                                    widget.direction == Axis.vertical
-                                        ? Offset(0, _calculateSafeExtent(animation.value))
-                                        : Offset(_calculateSafeExtent(animation.value), 0),
-                                child: child,
-                              ),
+                      child: ClipRect(
+                    child: Stack(
+                      children: [
+                        _wrapPositioned(
+                          FractionalTranslation(
+                            translation: _offset,
+                            child: Transform.translate(
+                              offset: widget.direction == Axis.vertical
+                                  ? Offset(0, _calculateSafeExtent(animation.value))
+                                  : Offset(_calculateSafeExtent(animation.value), 0),
+                              child: child,
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  );
+                  ));
                 },
               ),
             ],
@@ -373,7 +387,12 @@ class RefreshTriggerState extends State<RefreshTrigger> with SingleTickerProvide
   }
 }
 
-enum TriggerStage { idle, pulling, refreshing, completed }
+enum TriggerStage {
+  idle,
+  pulling,
+  refreshing,
+  completed,
+}
 
 class RefreshTriggerStage {
   final TriggerStage stage;

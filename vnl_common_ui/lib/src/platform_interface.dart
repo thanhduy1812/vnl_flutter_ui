@@ -1,6 +1,6 @@
 import '../vnl_ui.dart';
 
-class ShadcnFlutterPlatformImplementations {
+class VNLookPlatformImplementations {
   void onAppInitialized() {
   }
 

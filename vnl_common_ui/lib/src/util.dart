@@ -4,6 +4,10 @@ import 'dart:math';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
 typedef Predicate<T> = bool Function(T value);
+typedef Supplier<T> = T Function();
+typedef Consumer<T> = void Function(T value);
+typedef UnaryOperator<T> = T Function(T value);
+typedef BinaryOperator<T> = T Function(T a, T b);
 
 const kDefaultDuration = Duration(milliseconds: 150);
 
@@ -12,7 +16,14 @@ typedef ContextedValueChanged<T> = void Function(BuildContext context, T value);
 
 typedef SearchPredicate<T> = double Function(T value, String query);
 
-enum SortDirection { none, ascending, descending }
+double degToRad(double deg) => deg * (pi / 180);
+double radToDeg(double rad) => rad * (180 / pi);
+
+enum SortDirection {
+  none,
+  ascending,
+  descending,
+}
 
 class SafeLerp<T> {
   final T? Function(T? a, T? b, double t) nullableLerp;
@@ -99,7 +110,8 @@ double unlerpDouble(double value, double min, double max) {
   return (value - min) / (max - min);
 }
 
-void swapItemInLists<T>(List<List<T>> lists, T element, List<T> targetList, int targetIndex) {
+void swapItemInLists<T>(
+    List<List<T>> lists, T element, List<T> targetList, int targetIndex) {
   for (var list in lists) {
     if (list != targetList) {
       list.remove(element);
@@ -108,7 +120,8 @@ void swapItemInLists<T>(List<List<T>> lists, T element, List<T> targetList, int 
   targetList.swapItem(element, targetIndex);
 }
 
-BorderRadius? optionallyResolveBorderRadius(BuildContext context, BorderRadiusGeometry? radius) {
+BorderRadius? optionallyResolveBorderRadius(
+    BuildContext context, BorderRadiusGeometry? radius) {
   if (radius == null) {
     return null;
   }
@@ -183,12 +196,16 @@ BorderRadius subtractByBorder(BorderRadius radius, double borderWidth) {
     topLeft: _subtractSafe(radius.topLeft, Radius.circular(borderWidth)),
     topRight: _subtractSafe(radius.topRight, Radius.circular(borderWidth)),
     bottomLeft: _subtractSafe(radius.bottomLeft, Radius.circular(borderWidth)),
-    bottomRight: _subtractSafe(radius.bottomRight, Radius.circular(borderWidth)),
+    bottomRight:
+        _subtractSafe(radius.bottomRight, Radius.circular(borderWidth)),
   );
 }
 
 Radius _subtractSafe(Radius a, Radius b) {
-  return Radius.elliptical(max(0, a.x - b.x), max(0, a.y - b.y));
+  return Radius.elliptical(
+    max(0, a.x - b.x),
+    max(0, a.y - b.y),
+  );
 }
 
 bool isMobile(TargetPlatform platform) {
@@ -209,7 +226,12 @@ class CapturedWrapper extends StatefulWidget {
   final CapturedData? data;
   final Widget child;
 
-  const CapturedWrapper({super.key, this.themes, this.data, required this.child});
+  const CapturedWrapper({
+    super.key,
+    this.themes,
+    this.data,
+    required this.child,
+  });
 
   @override
   State<CapturedWrapper> createState() => _CapturedWrapperState();
@@ -219,7 +241,10 @@ class _CapturedWrapperState extends State<CapturedWrapper> {
   final GlobalKey _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    Widget child = KeyedSubtree(key: _key, child: widget.child);
+    Widget child = KeyedSubtree(
+      key: _key,
+      child: widget.child,
+    );
     if (widget.themes != null) {
       child = widget.themes!.wrap(child);
     }
@@ -248,10 +273,15 @@ class WidgetTreeChangeDetector extends StatefulWidget {
   final Widget child;
   final void Function() onWidgetTreeChange;
 
-  const WidgetTreeChangeDetector({super.key, required this.child, required this.onWidgetTreeChange});
+  const WidgetTreeChangeDetector({
+    super.key,
+    required this.child,
+    required this.onWidgetTreeChange,
+  });
 
   @override
-  _WidgetTreeChangeDetectorState createState() => _WidgetTreeChangeDetectorState();
+  _WidgetTreeChangeDetectorState createState() =>
+      _WidgetTreeChangeDetectorState();
 }
 
 class _WidgetTreeChangeDetectorState extends State<WidgetTreeChangeDetector> {
@@ -268,7 +298,10 @@ class _WidgetTreeChangeDetectorState extends State<WidgetTreeChangeDetector> {
 }
 
 Widget gap(double gap, {double? crossGap}) {
-  return Gap(gap, crossAxisExtent: crossGap);
+  return Gap(
+    gap,
+    crossAxisExtent: crossGap,
+  );
 }
 
 extension Joinable<T extends Widget> on List<T> {
@@ -288,10 +321,23 @@ extension IterableExtension<T> on Iterable<T> {
   Iterable<T> joinSeparator(T separator) {
     return map((e) => [separator, e]).expand((element) => element).skip(1);
   }
+
+  Iterable<T> buildSeparator(Supplier<T> separator) {
+    return map((e) => [separator(), e]).expand((element) => element).skip(1);
+  }
 }
 
-typedef NeverWidgetBuilder =
-    Widget Function([dynamic, dynamic, dynamic, dynamic, dynamic, dynamic, dynamic, dynamic, dynamic, dynamic]);
+typedef NeverWidgetBuilder = Widget Function(
+    [dynamic,
+    dynamic,
+    dynamic,
+    dynamic,
+    dynamic,
+    dynamic,
+    dynamic,
+    dynamic,
+    dynamic,
+    dynamic]);
 
 extension WidgetExtension on Widget {
   NeverWidgetBuilder get asBuilder => ([a, b, c, d, e, f, g, h, i, j]) => this;
@@ -303,24 +349,35 @@ extension WidgetExtension on Widget {
         child: (this as SizedBox).child,
       );
     }
-    return SizedBox(width: width, height: height, child: this);
+    return SizedBox(
+      width: width,
+      height: height,
+      child: this,
+    );
   }
 
-  Widget constrained({
-    double? minWidth,
-    double? maxWidth,
-    double? minHeight,
-    double? maxHeight,
-    double? width,
-    double? height,
-  }) {
+  Widget constrained(
+      {double? minWidth,
+      double? maxWidth,
+      double? minHeight,
+      double? maxHeight,
+      double? width,
+      double? height}) {
     if (this is ConstrainedBox) {
       return ConstrainedBox(
         constraints: BoxConstraints(
-          minWidth: width ?? minWidth ?? (this as ConstrainedBox).constraints.minWidth,
-          maxWidth: width ?? maxWidth ?? (this as ConstrainedBox).constraints.maxWidth,
-          minHeight: height ?? minHeight ?? (this as ConstrainedBox).constraints.minHeight,
-          maxHeight: height ?? maxHeight ?? (this as ConstrainedBox).constraints.maxHeight,
+          minWidth: width ??
+              minWidth ??
+              (this as ConstrainedBox).constraints.minWidth,
+          maxWidth: width ??
+              maxWidth ??
+              (this as ConstrainedBox).constraints.maxWidth,
+          minHeight: height ??
+              minHeight ??
+              (this as ConstrainedBox).constraints.minHeight,
+          maxHeight: height ??
+              maxHeight ??
+              (this as ConstrainedBox).constraints.maxHeight,
         ),
         child: (this as ConstrainedBox).child,
       );
@@ -343,28 +400,35 @@ extension WidgetExtension on Widget {
   //   );
   // }
 
-  Widget withPadding({
-    double? top,
-    double? bottom,
-    double? left,
-    double? right,
-    double? horizontal,
-    double? vertical,
-    double? all,
-    EdgeInsetsGeometry? padding,
-  }) {
+  Widget withPadding(
+      {double? top,
+      double? bottom,
+      double? left,
+      double? right,
+      double? horizontal,
+      double? vertical,
+      double? all,
+      EdgeInsetsGeometry? padding}) {
     assert(() {
       if (all != null) {
-        if (top != null || bottom != null || left != null || right != null || horizontal != null || vertical != null) {
-          throw FlutterError('All padding properties cannot be used with other padding properties.');
+        if (top != null ||
+            bottom != null ||
+            left != null ||
+            right != null ||
+            horizontal != null ||
+            vertical != null) {
+          throw FlutterError(
+              'All padding properties cannot be used with other padding properties.');
         }
       } else if (horizontal != null) {
         if (left != null || right != null) {
-          throw FlutterError('Horizontal padding cannot be used with left or right padding.');
+          throw FlutterError(
+              'Horizontal padding cannot be used with left or right padding.');
         }
       } else if (vertical != null) {
         if (top != null || bottom != null) {
-          throw FlutterError('Vertical padding cannot be used with top or bottom padding.');
+          throw FlutterError(
+              'Vertical padding cannot be used with top or bottom padding.');
         }
       }
       return true;
@@ -375,30 +439,40 @@ extension WidgetExtension on Widget {
       left: left ?? horizontal ?? all ?? 0,
       right: right ?? horizontal ?? all ?? 0,
     );
-    return Padding(padding: padding ?? edgeInsets, child: this);
+    return Padding(
+      padding: padding ?? edgeInsets,
+      child: this,
+    );
   }
 
-  Widget withMargin({
-    double? top,
-    double? bottom,
-    double? left,
-    double? right,
-    double? horizontal,
-    double? vertical,
-    double? all,
-  }) {
+  Widget withMargin(
+      {double? top,
+      double? bottom,
+      double? left,
+      double? right,
+      double? horizontal,
+      double? vertical,
+      double? all}) {
     assert(() {
       if (all != null) {
-        if (top != null || bottom != null || left != null || right != null || horizontal != null || vertical != null) {
-          throw FlutterError('All margin properties cannot be used with other margin properties.');
+        if (top != null ||
+            bottom != null ||
+            left != null ||
+            right != null ||
+            horizontal != null ||
+            vertical != null) {
+          throw FlutterError(
+              'All margin properties cannot be used with other margin properties.');
         }
       } else if (horizontal != null) {
         if (left != null || right != null) {
-          throw FlutterError('Horizontal margin cannot be used with left or right margin.');
+          throw FlutterError(
+              'Horizontal margin cannot be used with left or right margin.');
         }
       } else if (vertical != null) {
         if (top != null || bottom != null) {
-          throw FlutterError('Vertical margin cannot be used with top or bottom margin.');
+          throw FlutterError(
+              'Vertical margin cannot be used with top or bottom margin.');
         }
       }
       return true;
@@ -415,55 +489,109 @@ extension WidgetExtension on Widget {
   }
 
   Widget center({Key? key}) {
-    return Center(key: key, child: this);
+    return Center(
+      key: key,
+      child: this,
+    );
   }
 
   Widget withAlign(AlignmentGeometry alignment) {
-    return Align(alignment: alignment, child: this);
+    return Align(
+      alignment: alignment,
+      child: this,
+    );
   }
 
-  Widget positioned({Key? key, double? left, double? top, double? right, double? bottom}) {
-    return Positioned(key: key, left: left, top: top, right: right, bottom: bottom, child: this);
+  Widget positioned(
+      {Key? key, double? left, double? top, double? right, double? bottom}) {
+    return Positioned(
+      key: key,
+      left: left,
+      top: top,
+      right: right,
+      bottom: bottom,
+      child: this,
+    );
   }
 
   Widget expanded({int flex = 1}) {
-    return Expanded(flex: flex, child: this);
+    return Expanded(
+      flex: flex,
+      child: this,
+    );
   }
 
   Widget withOpacity(double opacity) {
-    return Opacity(opacity: opacity, child: this);
+    return Opacity(
+      opacity: opacity,
+      child: this,
+    );
   }
 
   Widget clip({Clip clipBehavior = Clip.hardEdge}) {
-    return ClipRect(clipBehavior: clipBehavior, child: this);
+    return ClipRect(
+      clipBehavior: clipBehavior,
+      child: this,
+    );
   }
 
-  Widget clipRRect({BorderRadiusGeometry borderRadius = BorderRadius.zero, Clip clipBehavior = Clip.antiAlias}) {
-    return ClipRRect(borderRadius: borderRadius, clipBehavior: clipBehavior, child: this);
+  Widget clipRRect(
+      {BorderRadiusGeometry borderRadius = BorderRadius.zero,
+      Clip clipBehavior = Clip.antiAlias}) {
+    return ClipRRect(
+      borderRadius: borderRadius,
+      clipBehavior: clipBehavior,
+      child: this,
+    );
   }
 
   Widget clipOval({Clip clipBehavior = Clip.antiAlias}) {
-    return ClipOval(clipBehavior: clipBehavior, child: this);
+    return ClipOval(
+      clipBehavior: clipBehavior,
+      child: this,
+    );
   }
 
-  Widget clipPath({Clip clipBehavior = Clip.antiAlias, required CustomClipper<Path> clipper}) {
-    return ClipPath(clipBehavior: clipBehavior, clipper: clipper, child: this);
+  Widget clipPath(
+      {Clip clipBehavior = Clip.antiAlias,
+      required CustomClipper<Path> clipper}) {
+    return ClipPath(
+      clipBehavior: clipBehavior,
+      clipper: clipper,
+      child: this,
+    );
   }
 
   Widget transform({Key? key, required Matrix4 transform}) {
-    return Transform(key: key, transform: transform, child: this);
+    return Transform(
+      key: key,
+      transform: transform,
+      child: this,
+    );
   }
 
   Widget intrinsicWidth({double? stepWidth, double? stepHeight}) {
-    return IntrinsicWidth(stepWidth: stepWidth, stepHeight: stepHeight, child: this);
+    return IntrinsicWidth(
+      stepWidth: stepWidth,
+      stepHeight: stepHeight,
+      child: this,
+    );
   }
 
   Widget intrinsicHeight() {
-    return IntrinsicHeight(child: this);
+    return IntrinsicHeight(
+      child: this,
+    );
   }
 
   Widget intrinsic({double? stepWidth, double? stepHeight}) {
-    return IntrinsicWidth(stepWidth: stepWidth, stepHeight: stepHeight, child: IntrinsicHeight(child: this));
+    return IntrinsicWidth(
+      stepWidth: stepWidth,
+      stepHeight: stepHeight,
+      child: IntrinsicHeight(
+        child: this,
+      ),
+    );
   }
 }
 
@@ -575,7 +703,9 @@ class _SeparatedFlexState extends State<SeparatedFlex> {
 
 extension FlexExtension on Flex {
   Widget gap(double gap) {
-    return separator(direction == Axis.vertical ? SizedBox(height: gap) : SizedBox(width: gap));
+    return separator(direction == Axis.vertical
+        ? SizedBox(height: gap)
+        : SizedBox(width: gap));
   }
 
   Widget separator(Widget separator) {
@@ -618,19 +748,24 @@ class IconThemeDataTween extends Tween<IconThemeData> {
 
 extension ColorExtension on Color {
   Color scaleAlpha(double factor) {
-    return withValues(alpha: a * factor);
+    return withValues(
+      alpha: a * factor,
+    );
   }
 
   Color getContrastColor([double luminanceContrast = 1]) {
     // luminance contrast is between 0..1
-    assert(luminanceContrast >= 0 && luminanceContrast <= 1, 'luminanceContrast should be between 0 and 1');
+    assert(luminanceContrast >= 0 && luminanceContrast <= 1,
+        'luminanceContrast should be between 0 and 1');
     final hsl = HSLColor.fromColor(this);
     double currentLuminance = hsl.lightness;
     double targetLuminance;
     if (currentLuminance >= 0.5) {
-      targetLuminance = currentLuminance - (currentLuminance * luminanceContrast);
+      targetLuminance =
+          currentLuminance - (currentLuminance * luminanceContrast);
     } else {
-      targetLuminance = currentLuminance + ((1 - currentLuminance) * luminanceContrast);
+      targetLuminance =
+          currentLuminance + ((1 - currentLuminance) * luminanceContrast);
     }
     return hsl.withLightness(targetLuminance).toColor();
   }
@@ -705,33 +840,67 @@ class TimeOfDay {
   final int minute;
   final int second;
 
-  const TimeOfDay({required this.hour, required this.minute, this.second = 0});
+  const TimeOfDay({
+    required this.hour,
+    required this.minute,
+    this.second = 0,
+  });
 
-  const TimeOfDay.pm({required int hour, required this.minute, this.second = 0}) : hour = hour + 12;
+  const TimeOfDay.pm({
+    required int hour,
+    required this.minute,
+    this.second = 0,
+  }) : hour = hour + 12;
 
-  const TimeOfDay.am({required this.hour, required this.minute, this.second = 0});
+  const TimeOfDay.am({
+    required this.hour,
+    required this.minute,
+    this.second = 0,
+  });
 
-  TimeOfDay.fromDateTime(DateTime dateTime) : hour = dateTime.hour, minute = dateTime.minute, second = dateTime.second;
+  TimeOfDay.fromDateTime(DateTime dateTime)
+      : hour = dateTime.hour,
+        minute = dateTime.minute,
+        second = dateTime.second;
 
   TimeOfDay.fromDuration(Duration duration)
-    : hour = duration.inHours,
-      minute = duration.inMinutes % 60,
-      second = duration.inSeconds % 60;
+      : hour = duration.inHours,
+        minute = duration.inMinutes % 60,
+        second = duration.inSeconds % 60;
 
   TimeOfDay.now() : this.fromDateTime(DateTime.now());
 
-  TimeOfDay copyWith({int? hour, int? minute, int? second}) {
-    return TimeOfDay(hour: hour ?? this.hour, minute: minute ?? this.minute, second: second ?? this.second);
+  TimeOfDay copyWith({
+    int? hour,
+    int? minute,
+    int? second,
+  }) {
+    return TimeOfDay(
+      hour: hour ?? this.hour,
+      minute: minute ?? this.minute,
+      second: second ?? this.second,
+    );
   }
 
   /// For backward compatibility
-  TimeOfDay replacing({int? hour, int? minute, int? second}) {
-    return TimeOfDay(hour: hour ?? this.hour, minute: minute ?? this.minute, second: second ?? this.second);
+  TimeOfDay replacing({
+    int? hour,
+    int? minute,
+    int? second,
+  }) {
+    return TimeOfDay(
+      hour: hour ?? this.hour,
+      minute: minute ?? this.minute,
+      second: second ?? this.second,
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    return other is TimeOfDay && other.hour == hour && other.minute == minute && other.second == second;
+    return other is TimeOfDay &&
+        other.hour == hour &&
+        other.minute == minute &&
+        other.second == second;
   }
 
   @override
@@ -743,12 +912,14 @@ class TimeOfDay {
   }
 }
 
-(bool enabled, Object? invokeResult) invokeActionOnFocusedWidget(Intent intent) {
+(bool enabled, Object? invokeResult) invokeActionOnFocusedWidget(
+    Intent intent) {
   final context = primaryFocus?.context;
   if (context != null) {
     Action<Intent>? action = Actions.maybeFind<Intent>(context, intent: intent);
     if (action != null) {
-      final (bool enabled, Object? invokeResult) = Actions.of(context).invokeActionIfEnabled(action, intent);
+      final (bool enabled, Object? invokeResult) =
+          Actions.of(context).invokeActionIfEnabled(action, intent);
       return (enabled, invokeResult);
     }
   }
@@ -795,7 +966,8 @@ WordInfo getWordAtCaret(String text, int caret, [String separator = ' ']) {
   return (start, word);
 }
 
-ReplacementInfo replaceWordAtCaret(String text, int caret, String replacement, [String separator = ' ']) {
+ReplacementInfo replaceWordAtCaret(String text, int caret, String replacement,
+    [String separator = ' ']) {
   if (caret < 0 || caret > text.length) {
     throw RangeError('Caret position is out of bounds.');
   }
@@ -829,7 +1001,11 @@ class CachedValueWidget<T> extends StatefulWidget {
   final T value;
   final Widget Function(BuildContext context, T value) builder;
 
-  const CachedValueWidget({super.key, required this.value, required this.builder});
+  const CachedValueWidget({
+    super.key,
+    required this.value,
+    required this.builder,
+  });
 
   @override
   State<StatefulWidget> createState() => _CachedValueWidgetState<T>();
@@ -842,7 +1018,8 @@ class _CachedValueWidgetState<T> extends State<CachedValueWidget<T>> {
   void didUpdateWidget(covariant CachedValueWidget<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (T is CachedValue) {
-      if ((widget.value as CachedValue).shouldRebuild(oldWidget.value as CachedValue)) {
+      if ((widget.value as CachedValue)
+          .shouldRebuild(oldWidget.value as CachedValue)) {
         _cachedWidget = null;
       }
     } else {
@@ -856,5 +1033,106 @@ class _CachedValueWidgetState<T> extends State<CachedValueWidget<T>> {
   Widget build(BuildContext context) {
     _cachedWidget ??= widget.builder(context, widget.value);
     return _cachedWidget!;
+  }
+}
+
+typedef Convert<F, T> = T Function(F value);
+
+class BiDirectionalConvert<A, B> {
+  final Convert<A, B> aToB;
+  final Convert<B, A> bToA;
+
+  const BiDirectionalConvert(this.aToB, this.bToA);
+
+  B convertA(A value) => aToB(value);
+
+  A convertB(B value) => bToA(value);
+
+  @override
+  String toString() {
+    return 'BiDirectionalConvert($aToB, $bToA)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is BiDirectionalConvert<A, B> &&
+        other.aToB == aToB &&
+        other.bToA == bToA;
+  }
+}
+
+class ConvertedController<F, T> extends ChangeNotifier
+    implements ComponentController<T> {
+  final ValueNotifier<F> _other;
+  final BiDirectionalConvert<F, T> _convert;
+
+  T _value;
+  bool _isUpdating = false;
+
+  ConvertedController(
+      ValueNotifier<F> other, BiDirectionalConvert<F, T> convert)
+      : _other = other,
+        _convert = convert,
+        _value = convert.convertA(other.value) {
+    _other.addListener(_onOtherValueChanged);
+  }
+
+  void _onOtherValueChanged() {
+    if (_isUpdating) {
+      return;
+    }
+    _isUpdating = true;
+    try {
+      _value = _convert.convertA(_other.value);
+      notifyListeners();
+    } finally {
+      _isUpdating = false;
+    }
+  }
+
+  void _onValueChanged() {
+    if (_isUpdating) {
+      return;
+    }
+    _isUpdating = true;
+    try {
+      _other.value = _convert.convertB(_value);
+    } finally {
+      _isUpdating = false;
+    }
+  }
+
+  @override
+  T get value => _value;
+
+  @override
+  set value(T newValue) {
+    if (newValue == _value) {
+      return;
+    }
+    _value = newValue;
+    notifyListeners();
+    _onValueChanged();
+  }
+
+  @override
+  void dispose() {
+    _other.removeListener(_onOtherValueChanged);
+    super.dispose();
+  }
+}
+
+extension TextEditingValueExtension on TextEditingValue {
+  TextEditingValue replaceText(String newText) {
+    var selection = this.selection;
+    selection = selection.copyWith(
+      baseOffset: selection.baseOffset.clamp(0, newText.length),
+      extentOffset: selection.extentOffset.clamp(0, newText.length),
+    );
+    return TextEditingValue(
+      text: newText,
+      selection: selection,
+    );
   }
 }

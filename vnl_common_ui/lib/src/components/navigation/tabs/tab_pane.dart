@@ -1,5 +1,5 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
-import 'package:vnl_common_ui/src/components/display/fade_scroll.dart';
+import '../../display/fade_scroll.dart';
 
 class TabPaneData<T> extends SortableData<T> {
   const TabPaneData(super.data);
@@ -62,27 +62,23 @@ class TabPaneState<T> extends State<TabPane<T>> {
     final borderColor = widget.border?.color ?? theme.colorScheme.border;
     final borderWidth = widget.border?.width ?? 1;
     final borderRadius = (widget.borderRadius ?? theme.borderRadiusLg).optionallyResolve(context);
-    return Builder(
-      builder: (context) {
-        var tabGhost = Data.maybeOf<_TabGhostData>(context);
-        return SizedBox(
+    return Builder(builder: (context) {
+      var tabGhost = Data.maybeOf<_TabGhostData>(context);
+      return SizedBox(
           height: double.infinity,
           child: CustomPaint(
-            painter: _TabItemPainter(
-              borderRadius: borderRadius,
-              backgroundColor: backgroundColor,
-              isFocused: isFocused || tabGhost != null,
-              borderColor: borderColor,
-              borderWidth: borderWidth,
-            ),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8) * theme.scaling,
-              child: IntrinsicWidth(child: child),
-            ),
-          ),
-        );
-      },
-    );
+              painter: _TabItemPainter(
+                  borderRadius: borderRadius,
+                  backgroundColor: backgroundColor,
+                  isFocused: isFocused || tabGhost != null,
+                  borderColor: borderColor,
+                  borderWidth: borderWidth),
+              child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8) * theme.scaling,
+                  child: IntrinsicWidth(
+                    child: child,
+                  ))));
+    });
   }
 
   List<TabChild> _buildTabItems() {
@@ -123,13 +119,18 @@ class TabPaneState<T> extends State<TabPane<T>> {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 2) * theme.scaling,
-                  child: Row(spacing: 2 * theme.scaling, children: widget.leading),
+                  child: Row(
+                    spacing: 2 * theme.scaling,
+                    children: widget.leading,
+                  ),
                 ),
                 Flexible(
                   child: FadeScroll(
                     startOffset: resolvedBorderRadius.bottomLeft.x,
                     endOffset: resolvedBorderRadius.bottomRight.x,
-                    gradient: [Colors.white.withAlpha(0)],
+                    gradient: [
+                      Colors.white.withAlpha(0),
+                    ],
                     endCrossOffset: widget.border?.width ?? 1,
                     controller: _scrollController,
                     child: ClipRect(
@@ -194,7 +195,10 @@ class TabPaneState<T> extends State<TabPane<T>> {
                                           widget.onSort?.call(tabs);
                                           widget.onFocused(index);
                                         },
-                                        ghost: Data.inherit(data: _TabGhostData(), child: children[index]),
+                                        ghost: Data.inherit(
+                                          data: _TabGhostData(),
+                                          child: children[index],
+                                        ),
                                         child: children[index],
                                       ),
                                     );
@@ -225,7 +229,10 @@ class TabPaneState<T> extends State<TabPane<T>> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 2) * theme.scaling,
-                  child: Row(spacing: 2 * theme.scaling, children: widget.trailing),
+                  child: Row(
+                    spacing: 2 * theme.scaling,
+                    children: widget.trailing,
+                  ),
                 ),
               ],
             ),
@@ -309,7 +316,12 @@ class _ClipRectWithAdjustment extends CustomClipper<Rect> {
 
   @override
   Rect getClip(Size size) {
-    return Rect.fromLTWH(0, -borderWidth, size.width, size.height + borderWidth * 2);
+    return Rect.fromLTWH(
+      0,
+      -borderWidth,
+      size.width,
+      size.height + borderWidth * 2,
+    );
   }
 
   @override

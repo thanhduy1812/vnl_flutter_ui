@@ -7,7 +7,7 @@ import 'package:vnl_common_ui/vnl_ui.dart';
 //   final
 // }
 
-class FilePicker extends StatelessWidget {
+class VNLFilePicker extends StatelessWidget {
   final Widget? title;
   final Widget? subtitle;
   final bool hotDropEnabled;
@@ -15,7 +15,7 @@ class FilePicker extends StatelessWidget {
   final List<Widget> children;
   final VoidCallback? onAdd;
 
-  const FilePicker({
+  const VNLFilePicker({
     super.key,
     this.title,
     this.subtitle,

@@ -74,7 +74,7 @@ class CollapsibleTheme {
       iconGap.hashCode;
 }
 
-/// https://sunarya-thito.github.io/shadcn_flutter/#/components/collapsible
+/// https://sunarya-thito.github.io/vnl_ui/#/components/collapsible
 class Collapsible extends StatefulWidget {
   final List<Widget> children;
 
@@ -84,8 +84,13 @@ class Collapsible extends StatefulWidget {
   /// If overridden, the parent widget is responsible for managing the expansion state.
   final ValueChanged<bool>? onExpansionChanged;
 
-  /// https://sunarya-thito.github.io/shadcn_flutter/#/components/collapsible
-  const Collapsible({super.key, required this.children, this.isExpanded, this.onExpansionChanged});
+  /// https://sunarya-thito.github.io/vnl_ui/#/components/collapsible
+  const Collapsible({
+    super.key,
+    required this.children,
+    this.isExpanded,
+    this.onExpansionChanged,
+  });
 
   @override
   State<Collapsible> createState() => CollapsibleState();
@@ -139,7 +144,10 @@ class CollapsibleStateData {
   final VoidCallback handleTap;
   final bool isExpanded;
 
-  const CollapsibleStateData({required this.isExpanded, required this.handleTap});
+  const CollapsibleStateData({
+    required this.isExpanded,
+    required this.handleTap,
+  });
 }
 
 class CollapsibleTrigger extends StatelessWidget {
@@ -155,22 +163,18 @@ class CollapsibleTrigger extends StatelessWidget {
 
     final compTheme = ComponentTheme.maybeOf<CollapsibleTheme>(context);
 
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Expanded(child: child.small().semiBold()),
-        Gap(compTheme?.iconGap ?? 16 * scaling),
-        GhostButton(
-          onPressed: state.handleTap,
-          child:
-              Icon(
-                state.isExpanded
-                    ? compTheme?.iconExpanded ?? Icons.unfold_less
-                    : compTheme?.iconCollapsed ?? Icons.unfold_more,
-              ).iconXSmall(),
-        ),
-      ],
-    ).withPadding(horizontal: compTheme?.padding ?? 16 * scaling);
+    return Row(mainAxisSize: MainAxisSize.min, children: [
+      Expanded(child: child.small().semiBold()),
+      Gap(compTheme?.iconGap ?? 16 * scaling),
+      GhostButton(
+        onPressed: state.handleTap,
+        child: Icon(
+          state.isExpanded
+              ? compTheme?.iconExpanded ?? Icons.unfold_less
+              : compTheme?.iconCollapsed ?? Icons.unfold_more,
+        ).iconXSmall(),
+      ),
+    ]).withPadding(horizontal: compTheme?.padding ?? 16 * scaling);
   }
 }
 
@@ -178,11 +182,18 @@ class CollapsibleContent extends StatelessWidget {
   final bool collapsible;
   final Widget child;
 
-  const CollapsibleContent({super.key, this.collapsible = true, required this.child});
+  const CollapsibleContent({
+    super.key,
+    this.collapsible = true,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
     final state = Data.of<CollapsibleStateData>(context);
-    return Offstage(offstage: !state.isExpanded && collapsible, child: child);
+    return Offstage(
+      offstage: !state.isExpanded && collapsible,
+      child: child,
+    );
   }
 }

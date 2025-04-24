@@ -34,7 +34,7 @@ class _AccordionState extends State<Accordion> {
                       color: theme.colorScheme.muted,
                       height: accTheme?.dividerHeight ?? 1 * scaling,
                     )),
-                const Divider(),
+                const VNLDivider(),
               ]),
         ));
   }

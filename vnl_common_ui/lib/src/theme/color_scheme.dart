@@ -66,36 +66,30 @@ class ColorShades implements Color, ColorSwatch {
     return slate;
   }
 
-  factory ColorShades.fromAccent(
-    Color accent, {
-    int base = 500,
-    int hueShift = 0,
-    int saturationStepDown = 0,
-    int saturationStepUp = 0,
-    int lightnessStepDown = 8,
-    int lightnessStepUp = 9,
-  }) {
+  factory ColorShades.fromAccent(Color accent,
+      {int base = 500,
+      int hueShift = 0,
+      int saturationStepDown = 0,
+      int saturationStepUp = 0,
+      int lightnessStepDown = 8,
+      int lightnessStepUp = 9}) {
     assert(shadeValues.contains(base), 'ColorShades.fromAccent: Invalid base value');
     final hsl = HSLColor.fromColor(accent);
-    return ColorShades.fromAccentHSL(
-      hsl,
-      base: base,
-      hueShift: hueShift,
-      saturationStepDown: saturationStepDown,
-      saturationStepUp: saturationStepUp,
-      lightnessStepDown: lightnessStepDown,
-      lightnessStepUp: lightnessStepUp,
-    );
+    return ColorShades.fromAccentHSL(hsl,
+        base: base,
+        hueShift: hueShift,
+        saturationStepDown: saturationStepDown,
+        saturationStepUp: saturationStepUp,
+        lightnessStepDown: lightnessStepDown,
+        lightnessStepUp: lightnessStepUp);
   }
-  factory ColorShades.fromAccentHSL(
-    HSLColor accent, {
-    int base = 500,
-    int hueShift = 0,
-    int saturationStepDown = 0,
-    int saturationStepUp = 0,
-    int lightnessStepDown = 8,
-    int lightnessStepUp = 9,
-  }) {
+  factory ColorShades.fromAccentHSL(HSLColor accent,
+      {int base = 500,
+      int hueShift = 0,
+      int saturationStepDown = 0,
+      int saturationStepUp = 0,
+      int lightnessStepDown = 8,
+      int lightnessStepUp = 9}) {
     assert(shadeValues.contains(base), 'ColorShades.fromAccent: Invalid base value');
     final slate = ColorShades._();
     for (final key in shadeValues) {
@@ -270,7 +264,13 @@ class ColorShades implements Color, ColorSwatch {
   Color withValues({double? alpha, double? red, double? green, double? blue, ColorSpace? colorSpace}) {
     Map<int, Color> colors = {};
     for (final key in shadeValues) {
-      colors[key] = _colors[key]!.withValues(alpha: alpha, red: red, green: green, blue: blue, colorSpace: colorSpace);
+      colors[key] = _colors[key]!.withValues(
+        alpha: alpha,
+        red: red,
+        green: green,
+        blue: blue,
+        colorSpace: colorSpace,
+      );
     }
     return ColorShades._direct(colors);
   }
@@ -372,32 +372,32 @@ class ColorScheme implements ChartColorScheme {
   });
 
   ColorScheme.fromMap(Map<String, dynamic> map)
-    : background = map._col('background'),
-      foreground = map._col('foreground'),
-      card = map._col('card'),
-      cardForeground = map._col('cardForeground'),
-      popover = map._col('popover'),
-      popoverForeground = map._col('popoverForeground'),
-      primary = map._col('primary'),
-      primaryForeground = map._col('primaryForeground'),
-      secondary = map._col('secondary'),
-      secondaryForeground = map._col('secondaryForeground'),
-      muted = map._col('muted'),
-      mutedForeground = map._col('mutedForeground'),
-      accent = map._col('accent'),
-      accentForeground = map._col('accentForeground'),
-      destructive = map._col('destructive'),
-      destructiveForeground = map._col('destructiveForeground'),
-      border = map._col('border'),
-      input = map._col('input'),
-      ring = map._col('ring'),
-      chart1 = map._col('chart1'),
-      chart2 = map._col('chart2'),
-      chart3 = map._col('chart3'),
-      chart4 = map._col('chart4'),
-      chart5 = map._col('chart5'),
-      brightness =
-          Brightness.values.where((element) => element.name == map['brightness']).firstOrNull ?? Brightness.light;
+      : background = map._col('background'),
+        foreground = map._col('foreground'),
+        card = map._col('card'),
+        cardForeground = map._col('cardForeground'),
+        popover = map._col('popover'),
+        popoverForeground = map._col('popoverForeground'),
+        primary = map._col('primary'),
+        primaryForeground = map._col('primaryForeground'),
+        secondary = map._col('secondary'),
+        secondaryForeground = map._col('secondaryForeground'),
+        muted = map._col('muted'),
+        mutedForeground = map._col('mutedForeground'),
+        accent = map._col('accent'),
+        accentForeground = map._col('accentForeground'),
+        destructive = map._col('destructive'),
+        destructiveForeground = map._col('destructiveForeground'),
+        border = map._col('border'),
+        input = map._col('input'),
+        ring = map._col('ring'),
+        chart1 = map._col('chart1'),
+        chart2 = map._col('chart2'),
+        chart3 = map._col('chart3'),
+        chart4 = map._col('chart4'),
+        chart5 = map._col('chart5'),
+        brightness =
+            Brightness.values.where((element) => element.name == map['brightness']).firstOrNull ?? Brightness.light;
 
   Map<String, String> toMap() {
     return {
@@ -458,34 +458,36 @@ class ColorScheme implements ChartColorScheme {
     };
   }
 
-  ColorScheme.fromColors({required Map<String, Color> colors, required Brightness brightness})
-    : this(
-        brightness: brightness,
-        background: colors._col('background'),
-        foreground: colors._col('foreground'),
-        card: colors._col('card'),
-        cardForeground: colors._col('cardForeground'),
-        popover: colors._col('popover'),
-        popoverForeground: colors._col('popoverForeground'),
-        primary: colors._col('primary'),
-        primaryForeground: colors._col('primaryForeground'),
-        secondary: colors._col('secondary'),
-        secondaryForeground: colors._col('secondaryForeground'),
-        muted: colors._col('muted'),
-        mutedForeground: colors._col('mutedForeground'),
-        accent: colors._col('accent'),
-        accentForeground: colors._col('accentForeground'),
-        destructive: colors._col('destructive'),
-        destructiveForeground: colors._col('destructiveForeground'),
-        border: colors._col('border'),
-        input: colors._col('input'),
-        ring: colors._col('ring'),
-        chart1: colors._col('chart1'),
-        chart2: colors._col('chart2'),
-        chart3: colors._col('chart3'),
-        chart4: colors._col('chart4'),
-        chart5: colors._col('chart5'),
-      );
+  ColorScheme.fromColors({
+    required Map<String, Color> colors,
+    required Brightness brightness,
+  }) : this(
+          brightness: brightness,
+          background: colors._col('background'),
+          foreground: colors._col('foreground'),
+          card: colors._col('card'),
+          cardForeground: colors._col('cardForeground'),
+          popover: colors._col('popover'),
+          popoverForeground: colors._col('popoverForeground'),
+          primary: colors._col('primary'),
+          primaryForeground: colors._col('primaryForeground'),
+          secondary: colors._col('secondary'),
+          secondaryForeground: colors._col('secondaryForeground'),
+          muted: colors._col('muted'),
+          mutedForeground: colors._col('mutedForeground'),
+          accent: colors._col('accent'),
+          accentForeground: colors._col('accentForeground'),
+          destructive: colors._col('destructive'),
+          destructiveForeground: colors._col('destructiveForeground'),
+          border: colors._col('border'),
+          input: colors._col('input'),
+          ring: colors._col('ring'),
+          chart1: colors._col('chart1'),
+          chart2: colors._col('chart2'),
+          chart3: colors._col('chart3'),
+          chart4: colors._col('chart4'),
+          chart5: colors._col('chart5'),
+        );
 
   ColorScheme copyWith({
     Brightness? brightness,

@@ -43,7 +43,9 @@ class ControlledChipInput<T> extends StatelessWidget with ControlledComponent<Li
     this.onChanged,
     this.enabled = true,
     this.textEditingController,
-    this.popoverConstraints = const BoxConstraints(maxHeight: 300),
+    this.popoverConstraints = const BoxConstraints(
+      maxHeight: 300,
+    ),
     this.undoHistoryController,
     this.onSubmitted,
     this.initialText,
@@ -64,7 +66,7 @@ class ControlledChipInput<T> extends StatelessWidget with ControlledComponent<Li
 
   @override
   Widget build(BuildContext context) {
-    return ControlledComponentBuilder(
+    return ControlledComponentAdapter(
       controller: controller,
       initialValue: initialValue,
       onChanged: onChanged,
@@ -122,7 +124,9 @@ class ChipInput<T> extends StatefulWidget {
   const ChipInput({
     super.key,
     this.controller,
-    this.popoverConstraints = const BoxConstraints(maxHeight: 300),
+    this.popoverConstraints = const BoxConstraints(
+      maxHeight: 300,
+    ),
     this.undoHistoryController,
     this.initialText,
     this.onSubmitted,
@@ -207,14 +211,14 @@ class ChipInputState<T> extends State<ChipInput<T>> with FormValueSupplier<List<
     if (!widget.useChips) {
       return widget.chipBuilder(context, widget.chips[index]);
     }
-    return Chip(
+    return VNLChip(
       trailing: ChipButton(
         onPressed: () {
           List<T> chips = List.of(widget.chips);
           chips.removeAt(index);
           widget.onChanged?.call(chips);
         },
-        child: const Icon(Icons.close),
+        child: const Icon(LucideIcons.x),
       ),
       child: widget.chipBuilder(context, widget.chips[index]),
     );
@@ -274,8 +278,7 @@ class ChipInputState<T> extends State<ChipInput<T>> with FormValueSupplier<List<
                               SizedBox(width: theme.scaling * 10), // Add spacing here
                             ],
                             Expanded(
-                              child:
-                                  widget.suggestionBuilder?.call(context, _suggestions.value[i]) ??
+                              child: widget.suggestionBuilder?.call(context, _suggestions.value[i]) ??
                                   Text(_suggestions.value[i].toString()).normal().small(),
                             ),
                             if (widget.suggestionTrailingBuilder != null) ...[
@@ -379,8 +382,14 @@ class ChipInputState<T> extends State<ChipInput<T>> with FormValueSupplier<List<
                     Wrap(
                       runSpacing: theme.scaling * 4,
                       spacing: theme.scaling * 4,
-                      children: [for (int i = 0; i < widget.chips.length; i++) _chipBuilder(i)],
-                    ).withPadding(left: theme.scaling * 6, right: theme.scaling * 6, bottom: theme.scaling * 4),
+                      children: [
+                        for (int i = 0; i < widget.chips.length; i++) _chipBuilder(i),
+                      ],
+                    ).withPadding(
+                      left: theme.scaling * 6,
+                      right: theme.scaling * 6,
+                      bottom: theme.scaling * 4,
+                    ),
                   ],
                 );
               } else {
@@ -403,7 +412,10 @@ class ChipInputState<T> extends State<ChipInput<T>> with FormValueSupplier<List<
                       children: [
                         for (int i = 0; i < widget.chips.length; i++) _chipBuilder(i),
                         if (_controller.text.isNotEmpty) const Gap(4),
-                        if (_controller.text.isNotEmpty) Text(_controller.text).base(),
+                        if (_controller.text.isNotEmpty)
+                          Text(
+                            _controller.text,
+                          ).base(),
                       ],
                     ).withPadding(horizontal: theme.scaling * 6, vertical: theme.scaling * 4),
                   ],
@@ -419,15 +431,18 @@ class ChipInputState<T> extends State<ChipInput<T>> with FormValueSupplier<List<
                   children: [
                     Expanded(child: child!),
                     if (widget.inputTrailingWidget != null) ...[
-                      const VerticalDivider(indent: 10, endIndent: 10),
+                      const VerticalDivider(
+                        indent: 10,
+                        endIndent: 10,
+                      ),
                       widget.inputTrailingWidget!,
-                    ],
+                    ]
                   ],
                 ),
               ),
             );
           },
-          child: TextField(
+          child: VNLTextField(
             key: _textFieldKey,
             focusNode: _focusNode,
             initialValue: widget.initialText,

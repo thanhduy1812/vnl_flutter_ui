@@ -2,7 +2,7 @@ import 'package:vnl_common_ui/vnl_ui.dart';
 
 typedef DotBuilder = Widget Function(BuildContext context, int index, bool active);
 
-class DotIndicator extends StatelessWidget {
+class VNLDotIndicator extends StatelessWidget {
   static Widget _defaultDotBuilder(BuildContext context, int index, bool active) {
     return active ? const ActiveDotItem() : const InactiveDotItem();
   }
@@ -15,7 +15,7 @@ class DotIndicator extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final DotBuilder? dotBuilder;
 
-  const DotIndicator({
+  const VNLDotIndicator({
     super.key,
     required this.index,
     required this.length,
@@ -46,16 +46,17 @@ class DotIndicator extends StatelessWidget {
         left: leftPadding,
         right: rightPadding,
       );
-      children.add(
-        Flexible(
-          child: Clickable(
-            behavior: HitTestBehavior.translucent,
-            onPressed: onChanged != null ? () => onChanged!(i) : null,
-            mouseCursor: const WidgetStatePropertyAll(SystemMouseCursors.click),
-            child: Padding(padding: itemPadding, child: dotBuilder(context, i, i == index)),
+      children.add(Flexible(
+        child: Clickable(
+          behavior: HitTestBehavior.translucent,
+          onPressed: onChanged != null ? () => onChanged!(i) : null,
+          mouseCursor: const WidgetStatePropertyAll(SystemMouseCursors.click),
+          child: Padding(
+            padding: itemPadding,
+            child: dotBuilder(context, i, i == index),
           ),
         ),
-      );
+      ));
     }
     return IntrinsicHeight(
       child: Flex(
@@ -75,7 +76,14 @@ class DotItem extends StatelessWidget {
   final Color? borderColor;
   final double? borderWidth;
 
-  const DotItem({super.key, this.size, this.color, this.borderRadius, this.borderColor, this.borderWidth});
+  const DotItem({
+    super.key,
+    this.size,
+    this.color,
+    this.borderRadius,
+    this.borderColor,
+    this.borderWidth,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +108,14 @@ class ActiveDotItem extends StatelessWidget {
   final Color? borderColor;
   final double? borderWidth;
 
-  const ActiveDotItem({super.key, this.size, this.color, this.borderRadius, this.borderColor, this.borderWidth});
+  const ActiveDotItem({
+    super.key,
+    this.size,
+    this.color,
+    this.borderRadius,
+    this.borderColor,
+    this.borderWidth,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +144,14 @@ class InactiveDotItem extends StatelessWidget {
   final Color? borderColor;
   final double? borderWidth;
 
-  const InactiveDotItem({super.key, this.size, this.color, this.borderRadius, this.borderColor, this.borderWidth});
+  const InactiveDotItem({
+    super.key,
+    this.size,
+    this.color,
+    this.borderRadius,
+    this.borderColor,
+    this.borderWidth,
+  });
 
   @override
   Widget build(BuildContext context) {

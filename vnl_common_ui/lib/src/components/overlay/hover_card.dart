@@ -1,6 +1,6 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-class HoverCard extends StatefulWidget {
+class VNLHoverCard extends StatefulWidget {
   final Widget child;
   final Duration debounce;
   final Duration wait;
@@ -11,7 +11,7 @@ class HoverCard extends StatefulWidget {
   final HitTestBehavior behavior;
   final PopoverController? controller;
   final OverlayHandler? handler;
-  const HoverCard({
+  const VNLHoverCard({
     super.key,
     required this.child,
     required this.hoverBuilder,
@@ -26,10 +26,10 @@ class HoverCard extends StatefulWidget {
   });
 
   @override
-  State<HoverCard> createState() => _HoverCardState();
+  State<VNLHoverCard> createState() => _HoverCardState();
 }
 
-class _HoverCardState extends State<HoverCard> {
+class _HoverCardState extends State<VNLHoverCard> {
   late PopoverController _controller;
 
   int _hoverCount = 0;
@@ -41,7 +41,7 @@ class _HoverCardState extends State<HoverCard> {
   }
 
   @override
-  void didUpdateWidget(covariant HoverCard oldWidget) {
+  void didUpdateWidget(covariant VNLHoverCard oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.controller != oldWidget.controller) {
       _controller = widget.controller ?? PopoverController();

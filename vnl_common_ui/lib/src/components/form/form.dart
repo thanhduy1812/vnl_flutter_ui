@@ -83,7 +83,7 @@ class IgnoreForm<T> extends StatelessWidget {
   final bool ignoring;
   final Widget child;
 
-  const IgnoreForm({this.ignoring = true, required this.child});
+  const IgnoreForm({super.key, this.ignoring = true, required this.child});
 
   @override
   widgets.Widget build(widgets.BuildContext context) {
@@ -173,14 +173,14 @@ class ValidatorBuilder<T> extends Validator<T> {
 class NotValidator<T> extends Validator<T> {
   final Validator<T> validator;
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const NotValidator(this.validator, {this.message});
 
   @override
   FutureOr<ValidationResult?> validate(
       BuildContext context, T? value, FormValidationMode state) {
-    var localizations = Localizations.of(context, ShadcnLocalizations);
+    var localizations = Localizations.of(context, VNLookLocalizations);
     var result = validator.validate(context, value, state);
     if (result is Future<ValidationResult?>) {
       return result.then((value) {
@@ -269,7 +269,7 @@ class OrValidator<T> extends Validator<T> {
 
 class NonNullValidator<T> extends Validator<T> {
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const NonNullValidator({this.message});
 
@@ -277,7 +277,7 @@ class NonNullValidator<T> extends Validator<T> {
   FutureOr<ValidationResult?> validate(
       BuildContext context, T? value, FormValidationMode state) {
     if (value == null) {
-      var localizations = Localizations.of(context, ShadcnLocalizations);
+      var localizations = Localizations.of(context, VNLookLocalizations);
       return InvalidResult(message ?? localizations.formNotEmpty, state: state);
     }
     return null;
@@ -299,7 +299,7 @@ class NotEmptyValidator extends NonNullValidator<String> {
   FutureOr<ValidationResult?> validate(
       BuildContext context, String? value, FormValidationMode state) {
     if (value == null || value.isEmpty) {
-      var localizations = Localizations.of(context, ShadcnLocalizations);
+      var localizations = Localizations.of(context, VNLookLocalizations);
       return InvalidResult(message ?? localizations.formNotEmpty, state: state);
     }
     return null;
@@ -318,7 +318,7 @@ class LengthValidator extends Validator<String> {
   final int? min;
   final int? max;
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const LengthValidator({this.min, this.max, this.message});
 
@@ -328,8 +328,8 @@ class LengthValidator extends Validator<String> {
     if (value == null) {
       return null;
     }
-    ShadcnLocalizations localizations =
-        Localizations.of(context, ShadcnLocalizations);
+    VNLookLocalizations localizations =
+        Localizations.of(context, VNLookLocalizations);
     if (min != null && value.length < min!) {
       return InvalidResult(message ?? localizations.formLengthLessThan(min!),
           state: state);
@@ -359,7 +359,7 @@ class CompareWith<T extends Comparable<T>> extends Validator<T> {
   final FormKey<T> key;
   final CompareType type;
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const CompareWith(this.key, this.type, {this.message});
   const CompareWith.equal(this.key, {this.message}) : type = CompareType.equal;
@@ -387,7 +387,7 @@ class CompareWith<T extends Comparable<T>> extends Validator<T> {
   @override
   FutureOr<ValidationResult?> validate(
       BuildContext context, T? value, FormValidationMode state) {
-    var localizations = Localizations.of(context, ShadcnLocalizations);
+    var localizations = Localizations.of(context, VNLookLocalizations);
     var otherValue = context.getFormValue(key);
     if (otherValue == null) {
       return InvalidResult(message ?? localizations.invalidValue, state: state);
@@ -451,7 +451,7 @@ class CompareWith<T extends Comparable<T>> extends Validator<T> {
 
 class SafePasswordValidator extends Validator<String> {
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
   final bool requireDigit;
   final bool requireLowercase;
   final bool requireUppercase;
@@ -473,27 +473,27 @@ class SafePasswordValidator extends Validator<String> {
     if (requireDigit && !RegExp(r'\d').hasMatch(value)) {
       return InvalidResult(
           message ??
-              Localizations.of(context, ShadcnLocalizations).formPasswordDigits,
+              Localizations.of(context, VNLookLocalizations).formPasswordDigits,
           state: state);
     }
     if (requireLowercase && !RegExp(r'[a-z]').hasMatch(value)) {
       return InvalidResult(
           message ??
-              Localizations.of(context, ShadcnLocalizations)
+              Localizations.of(context, VNLookLocalizations)
                   .formPasswordLowercase,
           state: state);
     }
     if (requireUppercase && !RegExp(r'[A-Z]').hasMatch(value)) {
       return InvalidResult(
           message ??
-              Localizations.of(context, ShadcnLocalizations)
+              Localizations.of(context, VNLookLocalizations)
                   .formPasswordUppercase,
           state: state);
     }
     if (requireSpecialChar && !RegExp(r'[\W_]').hasMatch(value)) {
       return InvalidResult(
           message ??
-              Localizations.of(context, ShadcnLocalizations)
+              Localizations.of(context, VNLookLocalizations)
                   .formPasswordSpecial,
           state: state);
     }
@@ -519,7 +519,7 @@ class MinValidator<T extends num> extends Validator<T> {
   final T min;
   final bool inclusive;
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const MinValidator(this.min, {this.inclusive = true, this.message});
 
@@ -533,7 +533,7 @@ class MinValidator<T extends num> extends Validator<T> {
       if (value < min) {
         return InvalidResult(
             message ??
-                Localizations.of(context, ShadcnLocalizations)
+                Localizations.of(context, VNLookLocalizations)
                     .formGreaterThanOrEqualTo(min),
             state: state);
       }
@@ -541,7 +541,7 @@ class MinValidator<T extends num> extends Validator<T> {
       if (value <= min) {
         return InvalidResult(
             message ??
-                Localizations.of(context, ShadcnLocalizations)
+                Localizations.of(context, VNLookLocalizations)
                     .formGreaterThan(min),
             state: state);
       }
@@ -565,7 +565,7 @@ class MaxValidator<T extends num> extends Validator<T> {
   final T max;
   final bool inclusive;
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const MaxValidator(this.max, {this.inclusive = true, this.message});
 
@@ -579,7 +579,7 @@ class MaxValidator<T extends num> extends Validator<T> {
       if (value > max) {
         return InvalidResult(
             message ??
-                Localizations.of(context, ShadcnLocalizations)
+                Localizations.of(context, VNLookLocalizations)
                     .formLessThanOrEqualTo(max),
             state: state);
       }
@@ -587,7 +587,7 @@ class MaxValidator<T extends num> extends Validator<T> {
       if (value >= max) {
         return InvalidResult(
             message ??
-                Localizations.of(context, ShadcnLocalizations)
+                Localizations.of(context, VNLookLocalizations)
                     .formLessThan(max),
             state: state);
       }
@@ -612,7 +612,7 @@ class RangeValidator<T extends num> extends Validator<T> {
   final T max;
   final bool inclusive;
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const RangeValidator(this.min, this.max,
       {this.inclusive = true, this.message});
@@ -627,7 +627,7 @@ class RangeValidator<T extends num> extends Validator<T> {
       if (value < min || value > max) {
         return InvalidResult(
             message ??
-                Localizations.of(context, ShadcnLocalizations)
+                Localizations.of(context, VNLookLocalizations)
                     .formBetweenInclusively(min, max),
             state: state);
       }
@@ -635,7 +635,7 @@ class RangeValidator<T extends num> extends Validator<T> {
       if (value <= min || value >= max) {
         return InvalidResult(
             message ??
-                Localizations.of(context, ShadcnLocalizations)
+                Localizations.of(context, VNLookLocalizations)
                     .formBetweenExclusively(min, max),
             state: state);
       }
@@ -656,7 +656,7 @@ class RangeValidator<T extends num> extends Validator<T> {
 class RegexValidator extends Validator<String> {
   final RegExp pattern;
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const RegexValidator(this.pattern, {this.message});
 
@@ -669,7 +669,7 @@ class RegexValidator extends Validator<String> {
     if (!pattern.hasMatch(value)) {
       return InvalidResult(
           message ??
-              Localizations.of(context, ShadcnLocalizations).invalidValue,
+              Localizations.of(context, VNLookLocalizations).invalidValue,
           state: state);
     }
     return null;
@@ -689,7 +689,7 @@ class RegexValidator extends Validator<String> {
 // email validator using email_validator package
 class EmailValidator extends Validator<String> {
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const EmailValidator({this.message});
 
@@ -702,7 +702,7 @@ class EmailValidator extends Validator<String> {
     if (!email_validator.EmailValidator.validate(value)) {
       return InvalidResult(
           message ??
-              Localizations.of(context, ShadcnLocalizations).invalidEmail,
+              Localizations.of(context, VNLookLocalizations).invalidEmail,
           state: state);
     }
     return null;
@@ -719,7 +719,7 @@ class EmailValidator extends Validator<String> {
 
 class URLValidator extends Validator<String> {
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const URLValidator({this.message});
 
@@ -733,7 +733,7 @@ class URLValidator extends Validator<String> {
       Uri.parse(value);
     } on FormatException {
       return InvalidResult(
-          message ?? Localizations.of(context, ShadcnLocalizations).invalidURL,
+          message ?? Localizations.of(context, VNLookLocalizations).invalidURL,
           state: state);
     }
     return null;
@@ -752,7 +752,7 @@ class CompareTo<T extends Comparable<T>> extends Validator<T> {
   final T? value;
   final CompareType type;
   final String?
-      message; // if null, use default message from ShadcnLocalizations
+      message; // if null, use default message from VNLookLocalizations
 
   const CompareTo(this.value, this.type, {this.message});
   const CompareTo.equal(this.value, {this.message}) : type = CompareType.equal;
@@ -780,7 +780,7 @@ class CompareTo<T extends Comparable<T>> extends Validator<T> {
   @override
   FutureOr<ValidationResult?> validate(
       BuildContext context, T? value, FormValidationMode state) {
-    var localizations = Localizations.of(context, ShadcnLocalizations);
+    var localizations = Localizations.of(context, VNLookLocalizations);
     var compare = _compare(value, this.value);
     switch (type) {
       case CompareType.greater:
@@ -947,8 +947,12 @@ typedef CheckboxKey = FormKey<CheckboxState>;
 typedef ChipInputKey<T> = FormKey<List<T>>;
 typedef ColorPickerKey = FormKey<Color>;
 typedef DatePickerKey = FormKey<DateTime>;
+typedef DateInputKey = FormKey<DateTime>;
+typedef DurationPickerKey = FormKey<Duration>;
+typedef DurationInputKey = FormKey<Duration>;
+typedef InputKey = FormKey<String>;
 typedef InputOTPKey = FormKey<List<int?>>;
-typedef MultiSelectKey<T> = FormKey<List<T>>;
+typedef MultiSelectKey<T> = FormKey<Iterable<T>>;
 typedef NumberInputKey = FormKey<num>;
 typedef PhoneInputKey = FormKey<PhoneNumber>;
 typedef RadioCardKey = FormKey<int>;
@@ -960,6 +964,7 @@ typedef SwitchKey = FormKey<bool>;
 typedef TextAreaKey = FormKey<String>;
 typedef TextFieldKey = FormKey<String>;
 typedef TimePickerKey = FormKey<TimeOfDay>;
+typedef TimeInputKey = FormKey<TimeOfDay>;
 typedef ToggleKey = FormKey<bool>;
 
 class FormEntry<T> extends StatefulWidget {
@@ -978,6 +983,7 @@ class FormEntry<T> extends StatefulWidget {
 
 mixin FormFieldHandle {
   FutureOr<ValidationResult?> reportNewFormValue(Object? value);
+  FutureOr<ValidationResult?> revalidate();
   ValueListenable<ValidationResult?>? get validity;
 }
 
@@ -1045,7 +1051,17 @@ class FormEntryState extends State<FormEntry> with FormFieldHandle {
 
   @override
   FutureOr<ValidationResult?> reportNewFormValue(Object? value) {
-    if (!widget.key.isInstanceOf(value)) {
+    bool isSameType = widget.key.isInstanceOf(value);
+    assert(isSameType, () {
+      throw FlutterError.fromParts([
+        ErrorSummary('Invalid value type'),
+        ErrorDescription(
+            'Expecting ${widget.key.type} but received ${value.runtimeType}'),
+        ErrorHint('Make sure the value type matches the key type'),
+        ErrorHint('Key: FormKey<${widget.key.type}>'),
+      ]);
+    });
+    if (!isSameType) {
       return null;
     }
     if (_cachedValue == value) {
@@ -1053,6 +1069,12 @@ class FormEntryState extends State<FormEntry> with FormFieldHandle {
     }
     _cachedValue = value;
     return _controller?.attach(context, widget.key, value, widget.validator);
+  }
+
+  @override
+  FutureOr<ValidationResult?> revalidate() {
+    return _controller?.attach(
+        context, widget.key, _cachedValue, widget.validator, true);
   }
 }
 
@@ -1105,6 +1127,11 @@ class _FormEntryHandleInterceptor with FormFieldHandle {
   }
 
   @override
+  FutureOr<ValidationResult?> revalidate() {
+    return handle?.revalidate();
+  }
+
+  @override
   ValueListenable<ValidationResult?>? get validity => handle?.validity;
 
   @override
@@ -1148,14 +1175,14 @@ class FormValueState<T> {
 typedef FormSubmitCallback = void Function(
     BuildContext context, Map<FormKey, dynamic> values);
 
-class Form extends StatefulWidget {
+class VNLForm extends StatefulWidget {
   final FormController? controller;
   final Widget child;
   final FormSubmitCallback? onSubmit;
-  const Form({super.key, required this.child, this.onSubmit, this.controller});
+  const VNLForm({super.key, required this.child, this.onSubmit, this.controller});
 
   @override
-  State<Form> createState() => FormState();
+  State<VNLForm> createState() => FormState();
 }
 
 class FormController extends ChangeNotifier {
@@ -1225,10 +1252,11 @@ class FormController extends ChangeNotifier {
   }
 
   FutureOr<ValidationResult?> attach(
-      BuildContext context, FormKey key, Object? value, Validator? validator) {
+      BuildContext context, FormKey key, Object? value, Validator? validator,
+      [bool forceRevalidate = false]) {
     final oldState = _attachedInputs[key];
     var state = FormValueState(value: value, validator: validator);
-    if (oldState == state) {
+    if (oldState == state && !forceRevalidate) {
       return null;
     }
     var lifecycle = oldState == null
@@ -1311,7 +1339,7 @@ class FormController extends ChangeNotifier {
   }
 }
 
-class FormState extends State<Form> {
+class FormState extends State<VNLForm> {
   late FormController _controller;
 
   @override
@@ -1321,7 +1349,7 @@ class FormState extends State<Form> {
   }
 
   @override
-  void didUpdateWidget(covariant Form oldWidget) {
+  void didUpdateWidget(covariant VNLForm oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.controller != oldWidget.controller) {
       _controller = widget.controller ?? FormController();
@@ -1426,6 +1454,40 @@ class FormErrorBuilder extends StatelessWidget {
               return builder(context, {}, child);
             },
           );
+        },
+      );
+    }
+    return builder(context, {}, child);
+  }
+}
+
+typedef FormPendingWidgetBuilder = Widget Function(BuildContext context,
+    Map<FormKey, Future<ValidationResult?>> errors, Widget? child);
+
+class FormPendingBuilder extends StatelessWidget {
+  final Widget? child;
+  final FormPendingWidgetBuilder builder;
+
+  const FormPendingBuilder({super.key, required this.builder, this.child});
+
+  @override
+  Widget build(widgets.BuildContext context) {
+    final controller = Data.maybeOf<FormController>(context);
+    if (controller != null) {
+      return AnimatedBuilder(
+        animation: controller,
+        child: child,
+        builder: (context, child) {
+          final errors = controller.validities;
+          final pending = <FormKey, Future<ValidationResult?>>{};
+          for (var entry in errors.entries) {
+            var key = entry.key;
+            var value = entry.value;
+            if (value is Future<ValidationResult?>) {
+              pending[key] = value;
+            }
+          }
+          return builder(context, pending, child);
         },
       );
     }
@@ -1907,7 +1969,7 @@ class _SubmitButtonState extends widgets.State<SubmitButton> {
     var hasError = _future;
     if (hasError is Future) {
       // loading
-      return Button(
+      return VNLButton(
         leading: widget.loadingLeading ?? widget.leading,
         trailing: widget.loadingTrailing ?? widget.trailing,
         alignment: widget.alignment,
@@ -1921,7 +1983,7 @@ class _SubmitButtonState extends widgets.State<SubmitButton> {
       );
     }
     if (hasError == true) {
-      return Button(
+      return VNLButton(
         leading: widget.errorLeading ?? widget.leading,
         trailing: widget.errorTrailing ?? widget.trailing,
         alignment: widget.alignment,
@@ -1934,7 +1996,7 @@ class _SubmitButtonState extends widgets.State<SubmitButton> {
         child: widget.error ?? widget.child,
       );
     }
-    return Button(
+    return VNLButton(
       trailing: widget.trailing,
       leading: widget.leading,
       alignment: widget.alignment,

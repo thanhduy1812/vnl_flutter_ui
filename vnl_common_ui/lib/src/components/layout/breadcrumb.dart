@@ -32,13 +32,13 @@ class _SlashSeparator extends StatelessWidget {
   }
 }
 
-class Breadcrumb extends StatelessWidget {
+class VNLBreadcrumb extends StatelessWidget {
   static const Widget arrowSeparator = _ArrowSeparator();
   static const Widget slashSeparator = _SlashSeparator();
   final List<Widget> children;
   final Widget separator;
 
-  const Breadcrumb({
+  const VNLBreadcrumb({
     super.key,
     required this.children,
     required this.separator,

@@ -2,7 +2,10 @@ import 'package:flutter/rendering.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
 class GroupWidget extends MultiChildRenderObjectWidget {
-  const GroupWidget({super.key, super.children});
+  const GroupWidget({
+    super.key,
+    super.children,
+  });
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -26,7 +29,9 @@ class RenderGroup extends RenderBox
     with
         ContainerRenderObjectMixin<RenderBox, GroupParentData>,
         RenderBoxContainerDefaultsMixin<RenderBox, GroupParentData> {
-  RenderGroup({List<RenderBox>? children}) {
+  RenderGroup({
+    List<RenderBox>? children,
+  }) {
     addAll(children);
   }
 
@@ -160,13 +165,16 @@ class GroupPositioned extends ParentDataWidget<GroupParentData> {
     this.height,
     required super.child,
   });
-  GroupPositioned.fromRect({super.key, required Rect rect, required super.child})
-    : left = rect.left,
-      top = rect.top,
-      width = rect.width,
-      height = rect.height,
-      right = null,
-      bottom = null;
+  GroupPositioned.fromRect({
+    super.key,
+    required Rect rect,
+    required super.child,
+  })  : left = rect.left,
+        top = rect.top,
+        width = rect.width,
+        height = rect.height,
+        right = null,
+        bottom = null;
   final double? top;
   final double? left;
   final double? right;

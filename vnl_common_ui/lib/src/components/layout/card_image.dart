@@ -1,6 +1,6 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-class CardImage extends StatefulWidget {
+class VNLCardImage extends StatefulWidget {
   final Widget image;
   final Widget? title;
   final Widget? subtitle;
@@ -15,7 +15,7 @@ class CardImage extends StatefulWidget {
   final Color? backgroundColor;
   final Color? borderColor;
 
-  const CardImage({
+  const VNLCardImage({
     super.key,
     required this.image,
     this.title,
@@ -33,10 +33,10 @@ class CardImage extends StatefulWidget {
   });
 
   @override
-  State<CardImage> createState() => _CardImageState();
+  State<VNLCardImage> createState() => _CardImageState();
 }
 
-class _CardImageState extends State<CardImage> {
+class _CardImageState extends State<VNLCardImage> {
   final WidgetStatesController _statesController = WidgetStatesController();
 
   Widget _wrapIntrinsic(Widget child) {
@@ -47,9 +47,12 @@ class _CardImageState extends State<CardImage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    return Button(
+    return VNLButton(
       statesController: _statesController,
-      style: widget.style ?? const ButtonStyle.fixed(density: ButtonDensity.compact),
+      style: widget.style ??
+          const ButtonStyle.fixed(
+            density: ButtonDensity.compact,
+          ),
       onPressed: widget.onPressed,
       enabled: widget.enabled,
       child: _wrapIntrinsic(
@@ -62,22 +65,25 @@ class _CardImageState extends State<CardImage> {
                 backgroundColor: widget.backgroundColor ?? theme.colorScheme.card,
                 borderColor: widget.borderColor ?? theme.colorScheme.border,
                 child: AnimatedBuilder(
-                  animation: _statesController,
-                  builder: (context, child) {
-                    return AnimatedScale(
-                      duration: kDefaultDuration,
-                      scale:
-                          _statesController.value.contains(WidgetState.hovered)
-                              ? widget.hoverScale
-                              : widget.normalScale,
-                      child: widget.image,
-                    );
-                  },
-                ),
+                    animation: _statesController,
+                    builder: (context, child) {
+                      return AnimatedScale(
+                        duration: kDefaultDuration,
+                        scale: _statesController.value.contains(WidgetState.hovered)
+                            ? widget.hoverScale
+                            : widget.normalScale,
+                        child: widget.image,
+                      );
+                    }),
               ),
             ),
             Gap(12 * scaling),
-            Basic(title: widget.title, subtitle: widget.subtitle, trailing: widget.trailing, leading: widget.leading),
+            Basic(
+              title: widget.title,
+              subtitle: widget.subtitle,
+              trailing: widget.trailing,
+              leading: widget.leading,
+            ),
           ],
         ),
       ),

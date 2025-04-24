@@ -1,7 +1,7 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
 /// A theme for [Progress].
-class ProgressTheme {
+class VNLProgressTheme {
   /// The color of the progress.
   final Color? color;
 
@@ -15,16 +15,21 @@ class ProgressTheme {
   final double? minHeight;
 
   /// Creates a [ProgressTheme].
-  const ProgressTheme({this.color, this.backgroundColor, this.borderRadius, this.minHeight});
+  const VNLProgressTheme({
+    this.color,
+    this.backgroundColor,
+    this.borderRadius,
+    this.minHeight,
+  });
 
   /// Creates a copy of this theme but with the given fields replaced with the new values.
-  ProgressTheme copyWith({
+  VNLProgressTheme copyWith({
     Color? color,
     Color? backgroundColor,
     BorderRadiusGeometry? borderRadius,
     double? minHeight,
   }) {
-    return ProgressTheme(
+    return VNLProgressTheme(
       color: color ?? this.color,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       borderRadius: borderRadius ?? this.borderRadius,
@@ -35,7 +40,7 @@ class ProgressTheme {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    if (other is! ProgressTheme) return false;
+    if (other is! VNLProgressTheme) return false;
     return other.color == color &&
         other.backgroundColor == backgroundColor &&
         other.borderRadius == borderRadius &&
@@ -43,11 +48,16 @@ class ProgressTheme {
   }
 
   @override
-  int get hashCode => Object.hash(color, backgroundColor, borderRadius, minHeight);
+  int get hashCode => Object.hash(
+        color,
+        backgroundColor,
+        borderRadius,
+        minHeight,
+      );
 }
 
 /// A progress indicator that shows the progress of a task.
-class Progress extends StatelessWidget {
+class VNLProgress extends StatelessWidget {
   /// The progress value.
   final double? progress;
 
@@ -67,7 +77,7 @@ class Progress extends StatelessWidget {
   final Color? backgroundColor;
 
   /// Creates a new [Progress] instance.
-  const Progress({
+  const VNLProgress({
     super.key,
     this.progress,
     this.min = 0.0,
@@ -88,7 +98,7 @@ class Progress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<ProgressTheme>(context);
+    final compTheme = ComponentTheme.maybeOf<VNLProgressTheme>(context);
     return LinearProgressIndicator(
       value: normalizedValue,
       backgroundColor: styleValue(defaultValue: backgroundColor, themeValue: compTheme?.backgroundColor),

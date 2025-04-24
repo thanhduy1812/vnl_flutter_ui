@@ -10,7 +10,7 @@ class CommandEmpty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = ShadcnLocalizations.of(context);
+    final localizations = VNLookLocalizations.of(context);
     return Center(child: Text(localizations.commandEmpty).withPadding(vertical: 24).small());
   }
 }
@@ -36,10 +36,10 @@ Future<T?> showCommandDialog<T>({
       surfaceBlur ??= theme.surfaceBlur;
       return ConstrainedBox(
         constraints: constraints ?? const BoxConstraints.tightFor(width: 510, height: 349) * scaling,
-        child: ModalContainer(
+        child: ModalBackdrop(
           borderRadius: subtractByBorder(theme.borderRadiusXxl, 1 * scaling),
-          surfaceClip: ModalContainer.shouldClipSurface(surfaceOpacity),
-          child: Command(
+          surfaceClip: ModalBackdrop.shouldClipSurface(surfaceOpacity),
+          child: VNLCommand(
             autofocus: autofocus,
             builder: builder,
             debounceDuration: debounceDuration,
@@ -55,7 +55,7 @@ Future<T?> showCommandDialog<T>({
   );
 }
 
-class Command extends StatefulWidget {
+class VNLCommand extends StatefulWidget {
   final bool autofocus;
   final CommandBuilder builder;
   final Duration debounceDuration; // debounce is used to prevent too many requests
@@ -66,7 +66,7 @@ class Command extends StatefulWidget {
   final double? surfaceBlur;
   final Widget? searchPlaceholder;
 
-  const Command({
+  const VNLCommand({
     super.key,
     required this.builder,
     this.autofocus = true,
@@ -80,10 +80,10 @@ class Command extends StatefulWidget {
   });
 
   @override
-  State<Command> createState() => _CommandState();
+  State<VNLCommand> createState() => _CommandState();
 }
 
-class _CommandState extends State<Command> {
+class _CommandState extends State<VNLCommand> {
   final TextEditingController _controller = TextEditingController();
   final ValueNotifier<String?> query = ValueNotifier<String?>(null);
 
@@ -131,14 +131,16 @@ class _CommandState extends State<Command> {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.search).iconSmall().iconMutedForeground(),
+                  const Icon(
+                    LucideIcons.search,
+                  ).iconSmall().iconMutedForeground(),
                   Expanded(
-                    child: TextField(
+                    child: VNLTextField(
                       autofocus: true,
                       controller: _controller,
                       border: false,
                       // focusNode: _textFieldFocus,
-                      placeholder: widget.searchPlaceholder ?? Text(ShadcnLocalizations.of(context).commandSearch),
+                      placeholder: widget.searchPlaceholder ?? Text(VNLookLocalizations.of(context).commandSearch),
                     ),
                   ),
                   if (canPop)
@@ -147,45 +149,46 @@ class _CommandState extends State<Command> {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: const Icon(Icons.close).iconSmall(),
+                      child: const Icon(
+                        LucideIcons.x,
+                      ).iconSmall(),
                     ),
                 ],
               ).withPadding(horizontal: theme.scaling * 12),
-              const Divider(),
+              const VNLDivider(),
               Expanded(
                 child: ValueListenableBuilder(
-                  valueListenable: query,
-                  builder: (context, value, child) {
-                    return StreamBuilder(
-                      stream: _request(context, value),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          List<Widget> items = List.of(snapshot.data!);
-                          if (snapshot.connectionState == ConnectionState.active) {
-                            items.add(
-                              IconTheme.merge(
-                                data: IconThemeData(color: theme.colorScheme.mutedForeground),
-                                child: const Center(
-                                  child: CircularProgressIndicator(),
-                                ).withPadding(vertical: theme.scaling * 24),
-                              ),
+                    valueListenable: query,
+                    builder: (context, value, child) {
+                      return StreamBuilder(
+                        stream: _request(context, value),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            List<Widget> items = List.of(snapshot.data!);
+                            if (snapshot.connectionState == ConnectionState.active) {
+                              items.add(IconTheme.merge(
+                                data: IconThemeData(
+                                  color: theme.colorScheme.mutedForeground,
+                                ),
+                                child: const Center(child: CircularProgressIndicator())
+                                    .withPadding(vertical: theme.scaling * 24),
+                              ));
+                            } else if (items.isEmpty) {
+                              return widget.emptyBuilder?.call(context) ?? const CommandEmpty();
+                            }
+                            return ListView.separated(
+                              separatorBuilder: (context, index) => const VNLDivider(),
+                              shrinkWrap: true,
+                              itemCount: items.length,
+                              itemBuilder: (context, index) => items[index],
                             );
-                          } else if (items.isEmpty) {
-                            return widget.emptyBuilder?.call(context) ?? const CommandEmpty();
                           }
-                          return ListView.separated(
-                            separatorBuilder: (context, index) => const Divider(),
-                            shrinkWrap: true,
-                            itemCount: items.length,
-                            itemBuilder: (context, index) => items[index],
-                          );
-                        }
-                        return widget.loadingBuilder?.call(context) ??
-                            const Center(child: CircularProgressIndicator()).withPadding(vertical: theme.scaling * 24);
-                      },
-                    );
-                  },
-                ),
+                          return widget.loadingBuilder?.call(context) ??
+                              const Center(child: CircularProgressIndicator())
+                                  .withPadding(vertical: theme.scaling * 24);
+                        },
+                      );
+                    }),
               ),
             ],
           ),
@@ -199,7 +202,11 @@ class CommandCategory extends StatelessWidget {
   final List<Widget> children;
   final Widget? title;
 
-  const CommandCategory({super.key, required this.children, this.title});
+  const CommandCategory({
+    super.key,
+    required this.children,
+    this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -222,7 +229,13 @@ class CommandItem extends StatefulWidget {
   final Widget? trailing;
   final VoidCallback? onTap;
 
-  const CommandItem({super.key, this.leading, required this.title, this.trailing, this.onTap});
+  const CommandItem({
+    super.key,
+    this.leading,
+    required this.title,
+    this.trailing,
+    this.onTap,
+  });
 
   @override
   State<CommandItem> createState() => _CommandItemState();
@@ -283,28 +296,25 @@ class _CommandItemState extends State<CommandItem> {
           padding: EdgeInsets.symmetric(horizontal: themeData.scaling * 8, vertical: themeData.scaling * 6),
           child: IconTheme(
             data: themeData.iconTheme.small.copyWith(
-              color:
-                  widget.onTap != null
-                      ? themeData.colorScheme.accentForeground
-                      : themeData.colorScheme.accentForeground.scaleAlpha(0.5),
+              color: widget.onTap != null
+                  ? themeData.colorScheme.accentForeground
+                  : themeData.colorScheme.accentForeground.scaleAlpha(0.5),
             ),
             child: DefaultTextStyle(
               style: TextStyle(
-                color:
-                    widget.onTap != null
-                        ? themeData.colorScheme.accentForeground
-                        : themeData.colorScheme.accentForeground.scaleAlpha(0.5),
+                color: widget.onTap != null
+                    ? themeData.colorScheme.accentForeground
+                    : themeData.colorScheme.accentForeground.scaleAlpha(0.5),
               ),
-              child:
-                  Row(
-                    children: [
-                      if (widget.leading != null) widget.leading!,
-                      if (widget.leading != null) Gap(themeData.scaling * 8),
-                      Expanded(child: widget.title),
-                      if (widget.trailing != null) Gap(themeData.scaling * 8),
-                      if (widget.trailing != null) widget.trailing!.muted().xSmall(),
-                    ],
-                  ).small(),
+              child: Row(
+                children: [
+                  if (widget.leading != null) widget.leading!,
+                  if (widget.leading != null) Gap(themeData.scaling * 8),
+                  Expanded(child: widget.title),
+                  if (widget.trailing != null) Gap(themeData.scaling * 8),
+                  if (widget.trailing != null) widget.trailing!.muted().xSmall(),
+                ],
+              ).small(),
             ),
           ),
         ),

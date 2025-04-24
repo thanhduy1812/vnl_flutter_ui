@@ -4,8 +4,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' as m;
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-class SelectableText extends StatelessWidget {
-  const SelectableText(
+class VNLSelectableText extends StatelessWidget {
+  const VNLSelectableText(
     String this.data, {
     super.key,
     this.focusNode,
@@ -36,15 +36,15 @@ class SelectableText extends StatelessWidget {
     this.useNativeContextMenu = false,
     this.contextMenuBuilder = _defaultContextMenuBuilder,
     this.magnifierConfiguration,
-  }) : assert(maxLines == null || maxLines > 0),
-       assert(minLines == null || minLines > 0),
-       assert(
-         (maxLines == null) || (minLines == null) || (maxLines >= minLines),
-         "minLines can't be greater than maxLines",
-       ),
-       textSpan = null;
+  })  : assert(maxLines == null || maxLines > 0),
+        assert(minLines == null || minLines > 0),
+        assert(
+          (maxLines == null) || (minLines == null) || (maxLines >= minLines),
+          "minLines can't be greater than maxLines",
+        ),
+        textSpan = null;
 
-  const SelectableText.rich(
+  const VNLSelectableText.rich(
     TextSpan this.textSpan, {
     super.key,
     this.focusNode,
@@ -75,13 +75,13 @@ class SelectableText extends StatelessWidget {
     this.useNativeContextMenu = false,
     this.contextMenuBuilder = _defaultContextMenuBuilder,
     this.magnifierConfiguration,
-  }) : assert(maxLines == null || maxLines > 0),
-       assert(minLines == null || minLines > 0),
-       assert(
-         (maxLines == null) || (minLines == null) || (maxLines >= minLines),
-         "minLines can't be greater than maxLines",
-       ),
-       data = null;
+  })  : assert(maxLines == null || maxLines > 0),
+        assert(minLines == null || minLines > 0),
+        assert(
+          (maxLines == null) || (minLines == null) || (maxLines >= minLines),
+          "minLines can't be greater than maxLines",
+        ),
+        data = null;
 
   final String? data;
 
@@ -217,12 +217,13 @@ class SelectableText extends StatelessWidget {
         scrollPhysics: scrollPhysics,
         semanticsLabel: semanticsLabel,
         onSelectionChanged: onSelectionChanged,
-        contextMenuBuilder:
-            useNativeContextMenu
-                ? (context, editableTextState) {
-                  return m.AdaptiveTextSelectionToolbar.editableText(editableTextState: editableTextState);
-                }
-                : contextMenuBuilder,
+        contextMenuBuilder: useNativeContextMenu
+            ? (context, editableTextState) {
+                return m.AdaptiveTextSelectionToolbar.editableText(
+                  editableTextState: editableTextState,
+                );
+              }
+            : contextMenuBuilder,
         magnifierConfiguration: magnifierConfiguration,
       );
     } else {
@@ -251,12 +252,13 @@ class SelectableText extends StatelessWidget {
         scrollPhysics: scrollPhysics,
         semanticsLabel: semanticsLabel,
         onSelectionChanged: onSelectionChanged,
-        contextMenuBuilder:
-            useNativeContextMenu
-                ? (context, editableTextState) {
-                  return m.AdaptiveTextSelectionToolbar.editableText(editableTextState: editableTextState);
-                }
-                : contextMenuBuilder,
+        contextMenuBuilder: useNativeContextMenu
+            ? (context, editableTextState) {
+                return m.AdaptiveTextSelectionToolbar.editableText(
+                  editableTextState: editableTextState,
+                );
+              }
+            : contextMenuBuilder,
         magnifierConfiguration: magnifierConfiguration,
       );
     }

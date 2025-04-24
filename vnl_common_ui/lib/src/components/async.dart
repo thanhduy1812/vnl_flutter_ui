@@ -9,12 +9,21 @@ class FutureOrBuilder<T> extends StatelessWidget {
   final FutureOrWidgetBuilder<T> builder;
   final T? initialValue;
 
-  const FutureOrBuilder({super.key, required this.future, required this.builder, this.initialValue});
+  const FutureOrBuilder({
+    super.key,
+    required this.future,
+    required this.builder,
+    this.initialValue,
+  });
 
   @override
   Widget build(BuildContext context) {
     if (future is Future<T>) {
-      return FutureBuilder<T>(future: future as Future<T>, initialData: initialValue, builder: builder);
+      return FutureBuilder<T>(
+        future: future as Future<T>,
+        initialData: initialValue,
+        builder: builder,
+      );
     }
     return builder(context, AsyncSnapshot.withData(ConnectionState.done, future as T));
   }

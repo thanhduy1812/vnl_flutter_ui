@@ -1,13 +1,13 @@
 import '../../../vnl_ui.dart';
 
-class Alert extends StatelessWidget {
+class VNLAlert extends StatelessWidget {
   final Widget? leading;
   final Widget? title;
   final Widget? content;
   final Widget? trailing;
   final bool destructive;
 
-  const Alert(
+  const VNLAlert(
       {super.key,
       this.leading,
       this.title,
@@ -15,7 +15,7 @@ class Alert extends StatelessWidget {
       this.trailing,
       this.destructive = false});
 
-  const Alert.destructive({
+  const VNLAlert.destructive({
     super.key,
     this.leading,
     this.title,

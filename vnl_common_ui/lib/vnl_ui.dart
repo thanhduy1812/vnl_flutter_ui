@@ -23,76 +23,11 @@ export 'package:flutter/widgets.dart'
         Table,
         TableRow,
         TableCell,
-        FormField,
-        TextEditingController,
-        RestorableTextEditingController;
+        FormField;
 // bundle from gap
 export 'package:gap/gap.dart';
-// hide pixel_snap overriden widgets
-// Column,
-// Row,
-// Text,
-// RichText,
-// Center,
-// FractionallySizedBox,
-// Align,
-// Baseline,
-// ConstrainedBox,
-// DecoratedBox,
-// Container,
-// FittedBox,
-// IntrinsicWidth,
-// LimitedBox,
-// OverflowBox,
-// Padding,
-// SizedBox,
-// SizedOverflowBox,
-// Positioned,
-// PhysicalModel,
-// CustomPaint,
-// Icon,
-// Image,
-// ImageIcon,
-// AnimatedAlign,
-// AnimatedContainer,
-// AnimatedCrossFade,
-// AnimatedPositioned,
-// AnimatedPhysicalModel,
-// AnimatedSize;
 // bundle from https://pub.dev/packages/phonecodes
 export 'package:phonecodes/phonecodes.dart' show Countries, Country;
-// export 'package:pixel_snap/widgets.dart'
-//     show
-//         Column,
-//         Row,
-//         Text,
-//         RichText,
-//         Center,
-//         FractionallySizedBox,
-//         Align,
-//         Baseline,
-//         ConstrainedBox,
-//         DecoratedBox,
-//         Container,
-//         FittedBox,
-//         IntrinsicWidth,
-//         LimitedBox,
-//         OverflowBox,
-//         Padding,
-//         SizedBox,
-//         SizedOverflowBox,
-//         Positioned,
-//         PhysicalModel,
-//         CustomPaint,
-//         Icon,
-//         Image,
-//         ImageIcon,
-//         AnimatedAlign,
-//         AnimatedContainer,
-//         AnimatedCrossFade,
-//         AnimatedPositioned,
-//         AnimatedPhysicalModel,
-//         AnimatedSize;
 // bundle from skeletonizer https://pub.dev/packages/skeletonizer
 export 'package:skeletonizer/skeletonizer.dart' show Bone, BoneMock;
 
@@ -187,11 +122,13 @@ export 'src/components/overlay/hover_card.dart';
 export 'src/components/overlay/overlay.dart';
 export 'src/components/overlay/popover.dart';
 export 'src/components/overlay/refresh_trigger.dart';
+export 'src/components/overlay/swiper.dart';
 export 'src/components/overlay/toast.dart';
 export 'src/components/overlay/tooltip.dart';
 export 'src/components/text/selectable.dart';
 export 'src/components/text/text.dart';
 export 'src/icons/bootstrap_icons.dart';
+export 'src/icons/lucide_icons.dart';
 export 'src/icons/radix_icons.dart';
 export 'src/shadcn_app.dart';
 export 'src/theme/color_scheme.dart';
@@ -200,3 +137,6 @@ export 'src/theme/generated_themes.dart';
 export 'src/theme/theme.dart';
 export 'src/theme/typography.dart';
 export 'src/util.dart';
+export 'src/components/form/input.dart';
+export 'src/components/form/object_input.dart';
+export 'src/components/form/item_picker.dart'; 

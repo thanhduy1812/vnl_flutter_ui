@@ -180,12 +180,11 @@ class _RenderHiddenLayout extends RenderBox with RenderObjectWithChildMixin<Rend
     if (child != null) {
       var parentData = child.parentData as BoxParentData;
       return result.addWithPaintOffset(
-        offset: parentData.offset,
-        position: position,
-        hitTest: (result, position) {
-          return child.hitTest(result, position: position);
-        },
-      );
+          offset: parentData.offset,
+          position: position,
+          hitTest: (result, position) {
+            return child.hitTest(result, position: position);
+          });
     }
     return false;
   }

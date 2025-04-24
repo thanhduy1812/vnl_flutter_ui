@@ -33,19 +33,18 @@ class _ClickDetectorState extends State<ClickDetector> {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: widget.behavior,
-      onTap:
-          widget.onClick == null
-              ? null
-              : () {
-                var now = DateTime.now();
-                if (lastClick == null || (now.difference(lastClick!) > widget.threshold)) {
-                  count = 1;
-                } else {
-                  count++;
-                }
-                widget.onClick?.call(ClickDetails(clickCount: count));
-                lastClick = now;
-              },
+      onTap: widget.onClick == null
+          ? null
+          : () {
+              var now = DateTime.now();
+              if (lastClick == null || (now.difference(lastClick!) > widget.threshold)) {
+                count = 1;
+              } else {
+                count++;
+              }
+              widget.onClick?.call(ClickDetails(clickCount: count));
+              lastClick = now;
+            },
       child: widget.child,
     );
   }
