@@ -10,7 +10,7 @@ class ThemePage extends StatefulWidget {
   State<ThemePage> createState() => _ThemePageState();
 }
 
-final Map<String, ColorScheme> colorSchemes = {
+final Map<String, VNLColorScheme> colorSchemes = {
   'lightBlue': ColorSchemes.lightBlue(),
   'darkBlue': ColorSchemes.darkBlue(),
   'lightGray': ColorSchemes.lightGray(),
@@ -37,7 +37,7 @@ final Map<String, ColorScheme> colorSchemes = {
   'darkZinc': ColorSchemes.darkZinc(),
 };
 
-String? nameFromColorScheme(ColorScheme scheme) {
+String? nameFromColorScheme(VNLColorScheme scheme) {
   return colorSchemes.keys.where((key) => colorSchemes[key] == scheme).firstOrNull;
 }
 
@@ -47,7 +47,7 @@ class _ThemePageState extends State<ThemePage> {
   late double scaling;
   late double surfaceOpacity;
   late double surfaceBlur;
-  late ColorScheme colorScheme;
+  late VNLColorScheme colorScheme;
   bool customColorScheme = false;
   bool applyDirectly = true;
 
@@ -371,7 +371,7 @@ class _ThemePageState extends State<ThemePage> {
                   customColorScheme = true;
                   if (applyDirectly) {
                     MyAppState state = Data.of(context);
-                    state.changeColorScheme(ColorScheme.fromColors(colors: colors, brightness: colorScheme.brightness));
+                    state.changeColorScheme(VNLColorScheme.fromColors(colors: colors, brightness: colorScheme.brightness));
                   }
                 });
               },

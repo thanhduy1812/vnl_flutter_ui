@@ -81,8 +81,8 @@ class AdaptiveScaler extends StatelessWidget {
 }
 
 class ThemeData {
-  final ColorScheme colorScheme;
-  final Typography typography;
+  final VNLColorScheme colorScheme;
+  final VNLTypography typography;
   final double radius;
   final double scaling;
   final TargetPlatform? _platform;
@@ -94,7 +94,7 @@ class ThemeData {
     required this.colorScheme,
     required this.radius,
     this.scaling = 1,
-    this.typography = const Typography.geist(),
+    this.typography = const VNLTypography.geist(),
     this.iconTheme = const IconThemeProperties(),
     TargetPlatform? platform,
     this.surfaceOpacity,
@@ -139,9 +139,9 @@ class ThemeData {
   Brightness get brightness => colorScheme.brightness;
 
   ThemeData copyWith({
-    ColorScheme? colorScheme,
+    VNLColorScheme? colorScheme,
     double? radius,
-    Typography? typography,
+    VNLTypography? typography,
     TargetPlatform? platform,
     double? scaling,
     IconThemeProperties? iconTheme,
@@ -166,9 +166,9 @@ class ThemeData {
     double t,
   ) {
     return ThemeData(
-      colorScheme: ColorScheme.lerp(a.colorScheme, b.colorScheme, t),
+      colorScheme: VNLColorScheme.lerp(a.colorScheme, b.colorScheme, t),
       radius: lerpDouble(a.radius, b.radius, t)!,
-      typography: Typography.lerp(a.typography, b.typography, t),
+      typography: VNLTypography.lerp(a.typography, b.typography, t),
       platform: t < 0.5 ? a.platform : b.platform,
       scaling: lerpDouble(a.scaling, b.scaling, t)!,
       iconTheme: IconThemeProperties.lerp(a.iconTheme, b.iconTheme, t),

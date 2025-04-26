@@ -134,10 +134,10 @@ void main() async {
   var colorScheme = prefs.getString('colorScheme');
   // ColorScheme? initialColorScheme =
   //     colorSchemes[colorScheme ?? 'darkZync'];
-  ColorScheme? initialColorScheme;
+  VNLColorScheme? initialColorScheme;
   if (colorScheme != null) {
     if (colorScheme.startsWith('{')) {
-      initialColorScheme = ColorScheme.fromMap(jsonDecode(colorScheme));
+      initialColorScheme = VNLColorScheme.fromMap(jsonDecode(colorScheme));
     } else {
       initialColorScheme = colorSchemes[colorScheme];
     }
@@ -158,7 +158,7 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-  final ColorScheme initialColorScheme;
+  final VNLColorScheme initialColorScheme;
   final double initialRadius;
   final double initialScaling;
   final double initialSurfaceOpacity;
@@ -744,7 +744,7 @@ class MyAppState extends State<MyApp> {
           )
         ]),
   ];
-  late ColorScheme colorScheme;
+  late VNLColorScheme colorScheme;
   late double radius;
   late double scaling;
   late double surfaceOpacity;
@@ -772,7 +772,7 @@ class MyAppState extends State<MyApp> {
   }
   // This widget is the root of your application.
 
-  void changeColorScheme(ColorScheme colorScheme) {
+  void changeColorScheme(VNLColorScheme colorScheme) {
     setState(() {
       this.colorScheme = colorScheme;
       SharedPreferences.getInstance().then((prefs) {

@@ -24,8 +24,8 @@ void _assertNotThemeModeSystem(ThemeMode mode, String label) {
   }
 }
 class ColorSchemes {
-	static ColorScheme lightZinc() {
-		return ColorScheme(
+	static VNLColorScheme lightZinc() {
+		return VNLColorScheme(
 			brightness: Brightness.light,
 			background: const HSLColor.fromAHSL(1, 0.0, 0.0, 1.0).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 240.0, 0.1, 0.04).toColor(),
@@ -54,8 +54,8 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme darkZinc() {
-		return ColorScheme(
+	static VNLColorScheme darkZinc() {
+		return VNLColorScheme(
 			brightness: Brightness.dark,
 			background: const HSLColor.fromAHSL(1, 240.0, 0.1, 0.04).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 0.0, 0.0, 0.98).toColor(),
@@ -84,7 +84,7 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme zinc(ThemeMode mode) {
+	static VNLColorScheme zinc(ThemeMode mode) {
 		assert(() {
 			_assertNotThemeModeSystem(mode, 'Zinc');
 			return true;
@@ -92,8 +92,8 @@ class ColorSchemes {
 		return mode == ThemeMode.light ? lightZinc() : darkZinc();
 	}
 
-	static ColorScheme lightSlate() {
-		return ColorScheme(
+	static VNLColorScheme lightSlate() {
+		return VNLColorScheme(
 			brightness: Brightness.light,
 			background: const HSLColor.fromAHSL(1, 0.0, 0.0, 1.0).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 222.2, 0.84, 0.05).toColor(),
@@ -122,8 +122,8 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme darkSlate() {
-		return ColorScheme(
+	static VNLColorScheme darkSlate() {
+		return VNLColorScheme(
 			brightness: Brightness.dark,
 			background: const HSLColor.fromAHSL(1, 222.2, 0.84, 0.05).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 210.0, 0.4, 0.98).toColor(),
@@ -152,7 +152,7 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme slate(ThemeMode mode) {
+	static VNLColorScheme slate(ThemeMode mode) {
 		assert(() {
 			_assertNotThemeModeSystem(mode, 'Slate');
 			return true;
@@ -160,8 +160,8 @@ class ColorSchemes {
 		return mode == ThemeMode.light ? lightSlate() : darkSlate();
 	}
 
-	static ColorScheme lightStone() {
-		return ColorScheme(
+	static VNLColorScheme lightStone() {
+		return VNLColorScheme(
 			brightness: Brightness.light,
 			background: const HSLColor.fromAHSL(1, 0.0, 0.0, 1.0).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 20.0, 0.14, 0.04).toColor(),
@@ -190,8 +190,8 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme darkStone() {
-		return ColorScheme(
+	static VNLColorScheme darkStone() {
+		return VNLColorScheme(
 			brightness: Brightness.dark,
 			background: const HSLColor.fromAHSL(1, 20.0, 0.14, 0.04).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 60.0, 0.09, 0.98).toColor(),
@@ -220,7 +220,7 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme stone(ThemeMode mode) {
+	static VNLColorScheme stone(ThemeMode mode) {
 		assert(() {
 			_assertNotThemeModeSystem(mode, 'Stone');
 			return true;
@@ -228,8 +228,8 @@ class ColorSchemes {
 		return mode == ThemeMode.light ? lightStone() : darkStone();
 	}
 
-	static ColorScheme lightGray() {
-		return ColorScheme(
+	static VNLColorScheme lightGray() {
+		return VNLColorScheme(
 			brightness: Brightness.light,
 			background: const HSLColor.fromAHSL(1, 0.0, 0.0, 1.0).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 224.0, 0.71, 0.04).toColor(),
@@ -258,8 +258,8 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme darkGray() {
-		return ColorScheme(
+	static VNLColorScheme darkGray() {
+		return VNLColorScheme(
 			brightness: Brightness.dark,
 			background: const HSLColor.fromAHSL(1, 224.0, 0.71, 0.04).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 210.0, 0.2, 0.98).toColor(),
@@ -288,7 +288,7 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme gray(ThemeMode mode) {
+	static VNLColorScheme gray(ThemeMode mode) {
 		assert(() {
 			_assertNotThemeModeSystem(mode, 'Gray');
 			return true;
@@ -296,8 +296,8 @@ class ColorSchemes {
 		return mode == ThemeMode.light ? lightGray() : darkGray();
 	}
 
-	static ColorScheme lightNeutral() {
-		return ColorScheme(
+	static VNLColorScheme lightNeutral() {
+		return VNLColorScheme(
 			brightness: Brightness.light,
 			background: const HSLColor.fromAHSL(1, 0.0, 0.0, 1.0).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 0.0, 0.0, 0.04).toColor(),
@@ -326,8 +326,8 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme darkNeutral() {
-		return ColorScheme(
+	static VNLColorScheme darkNeutral() {
+		return VNLColorScheme(
 			brightness: Brightness.dark,
 			background: const HSLColor.fromAHSL(1, 0.0, 0.0, 0.04).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 0.0, 0.0, 0.98).toColor(),
@@ -356,7 +356,7 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme neutral(ThemeMode mode) {
+	static VNLColorScheme neutral(ThemeMode mode) {
 		assert(() {
 			_assertNotThemeModeSystem(mode, 'Neutral');
 			return true;
@@ -364,8 +364,8 @@ class ColorSchemes {
 		return mode == ThemeMode.light ? lightNeutral() : darkNeutral();
 	}
 
-	static ColorScheme lightRed() {
-		return ColorScheme(
+	static VNLColorScheme lightRed() {
+		return VNLColorScheme(
 			brightness: Brightness.light,
 			background: const HSLColor.fromAHSL(1, 0.0, 0.0, 1.0).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 0.0, 0.0, 0.04).toColor(),
@@ -394,8 +394,8 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme darkRed() {
-		return ColorScheme(
+	static VNLColorScheme darkRed() {
+		return VNLColorScheme(
 			brightness: Brightness.dark,
 			background: const HSLColor.fromAHSL(1, 0.0, 0.0, 0.04).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 0.0, 0.0, 0.98).toColor(),
@@ -424,7 +424,7 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme red(ThemeMode mode) {
+	static VNLColorScheme red(ThemeMode mode) {
 		assert(() {
 			_assertNotThemeModeSystem(mode, 'Red');
 			return true;
@@ -432,8 +432,8 @@ class ColorSchemes {
 		return mode == ThemeMode.light ? lightRed() : darkRed();
 	}
 
-	static ColorScheme lightRose() {
-		return ColorScheme(
+	static VNLColorScheme lightRose() {
+		return VNLColorScheme(
 			brightness: Brightness.light,
 			background: const HSLColor.fromAHSL(1, 0.0, 0.0, 1.0).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 240.0, 0.1, 0.04).toColor(),
@@ -462,8 +462,8 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme darkRose() {
-		return ColorScheme(
+	static VNLColorScheme darkRose() {
+		return VNLColorScheme(
 			brightness: Brightness.dark,
 			background: const HSLColor.fromAHSL(1, 20.0, 0.14, 0.04).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 0.0, 0.0, 0.95).toColor(),
@@ -492,7 +492,7 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme rose(ThemeMode mode) {
+	static VNLColorScheme rose(ThemeMode mode) {
 		assert(() {
 			_assertNotThemeModeSystem(mode, 'Rose');
 			return true;
@@ -500,8 +500,8 @@ class ColorSchemes {
 		return mode == ThemeMode.light ? lightRose() : darkRose();
 	}
 
-	static ColorScheme lightOrange() {
-		return ColorScheme(
+	static VNLColorScheme lightOrange() {
+		return VNLColorScheme(
 			brightness: Brightness.light,
 			background: const HSLColor.fromAHSL(1, 0.0, 0.0, 1.0).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 20.0, 0.14, 0.04).toColor(),
@@ -530,8 +530,8 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme darkOrange() {
-		return ColorScheme(
+	static VNLColorScheme darkOrange() {
+		return VNLColorScheme(
 			brightness: Brightness.dark,
 			background: const HSLColor.fromAHSL(1, 20.0, 0.14, 0.04).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 60.0, 0.09, 0.98).toColor(),
@@ -560,7 +560,7 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme orange(ThemeMode mode) {
+	static VNLColorScheme orange(ThemeMode mode) {
 		assert(() {
 			_assertNotThemeModeSystem(mode, 'Orange');
 			return true;
@@ -568,8 +568,8 @@ class ColorSchemes {
 		return mode == ThemeMode.light ? lightOrange() : darkOrange();
 	}
 
-	static ColorScheme lightGreen() {
-		return ColorScheme(
+	static VNLColorScheme lightGreen() {
+		return VNLColorScheme(
 			brightness: Brightness.light,
 			background: const HSLColor.fromAHSL(1, 0.0, 0.0, 1.0).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 240.0, 0.1, 0.04).toColor(),
@@ -598,8 +598,8 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme darkGreen() {
-		return ColorScheme(
+	static VNLColorScheme darkGreen() {
+		return VNLColorScheme(
 			brightness: Brightness.dark,
 			background: const HSLColor.fromAHSL(1, 20.0, 0.14, 0.04).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 0.0, 0.0, 0.95).toColor(),
@@ -628,7 +628,7 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme green(ThemeMode mode) {
+	static VNLColorScheme green(ThemeMode mode) {
 		assert(() {
 			_assertNotThemeModeSystem(mode, 'Green');
 			return true;
@@ -636,8 +636,8 @@ class ColorSchemes {
 		return mode == ThemeMode.light ? lightGreen() : darkGreen();
 	}
 
-	static ColorScheme lightBlue() {
-		return ColorScheme(
+	static VNLColorScheme lightBlue() {
+		return VNLColorScheme(
 			brightness: Brightness.light,
 			background: const HSLColor.fromAHSL(1, 0.0, 0.0, 1.0).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 222.2, 0.84, 0.05).toColor(),
@@ -666,8 +666,8 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme darkBlue() {
-		return ColorScheme(
+	static VNLColorScheme darkBlue() {
+		return VNLColorScheme(
 			brightness: Brightness.dark,
 			background: const HSLColor.fromAHSL(1, 222.2, 0.84, 0.05).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 210.0, 0.4, 0.98).toColor(),
@@ -696,7 +696,7 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme blue(ThemeMode mode) {
+	static VNLColorScheme blue(ThemeMode mode) {
 		assert(() {
 			_assertNotThemeModeSystem(mode, 'Blue');
 			return true;
@@ -704,8 +704,8 @@ class ColorSchemes {
 		return mode == ThemeMode.light ? lightBlue() : darkBlue();
 	}
 
-	static ColorScheme lightYellow() {
-		return ColorScheme(
+	static VNLColorScheme lightYellow() {
+		return VNLColorScheme(
 			brightness: Brightness.light,
 			background: const HSLColor.fromAHSL(1, 0.0, 0.0, 1.0).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 20.0, 0.14, 0.04).toColor(),
@@ -734,8 +734,8 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme darkYellow() {
-		return ColorScheme(
+	static VNLColorScheme darkYellow() {
+		return VNLColorScheme(
 			brightness: Brightness.dark,
 			background: const HSLColor.fromAHSL(1, 20.0, 0.14, 0.04).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 60.0, 0.09, 0.98).toColor(),
@@ -764,7 +764,7 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme yellow(ThemeMode mode) {
+	static VNLColorScheme yellow(ThemeMode mode) {
 		assert(() {
 			_assertNotThemeModeSystem(mode, 'Yellow');
 			return true;
@@ -772,8 +772,8 @@ class ColorSchemes {
 		return mode == ThemeMode.light ? lightYellow() : darkYellow();
 	}
 
-	static ColorScheme lightViolet() {
-		return ColorScheme(
+	static VNLColorScheme lightViolet() {
+		return VNLColorScheme(
 			brightness: Brightness.light,
 			background: const HSLColor.fromAHSL(1, 0.0, 0.0, 1.0).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 224.0, 0.71, 0.04).toColor(),
@@ -802,8 +802,8 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme darkViolet() {
-		return ColorScheme(
+	static VNLColorScheme darkViolet() {
+		return VNLColorScheme(
 			brightness: Brightness.dark,
 			background: const HSLColor.fromAHSL(1, 224.0, 0.71, 0.04).toColor(),
 			foreground: const HSLColor.fromAHSL(1, 210.0, 0.2, 0.98).toColor(),
@@ -832,7 +832,7 @@ class ColorSchemes {
 		);
 	}
 
-	static ColorScheme violet(ThemeMode mode) {
+	static VNLColorScheme violet(ThemeMode mode) {
 		assert(() {
 			_assertNotThemeModeSystem(mode, 'Violet');
 			return true;

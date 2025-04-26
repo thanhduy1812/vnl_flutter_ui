@@ -285,7 +285,7 @@ String hexFromColor(Color color) {
   return '#${color.value.toRadixString(16).toUpperCase()}';
 }
 
-class ColorScheme implements ChartColorScheme {
+class VNLColorScheme implements ChartColorScheme {
   static const Set<String> colorKeys = {
     'background',
     'foreground',
@@ -343,7 +343,7 @@ class ColorScheme implements ChartColorScheme {
   @override
   final Color chart5;
 
-  const ColorScheme({
+  const VNLColorScheme({
     required this.brightness,
     required this.background,
     required this.foreground,
@@ -371,7 +371,7 @@ class ColorScheme implements ChartColorScheme {
     required this.chart5,
   });
 
-  ColorScheme.fromMap(Map<String, dynamic> map)
+  VNLColorScheme.fromMap(Map<String, dynamic> map)
       : background = map._col('background'),
         foreground = map._col('foreground'),
         card = map._col('card'),
@@ -458,7 +458,7 @@ class ColorScheme implements ChartColorScheme {
     };
   }
 
-  ColorScheme.fromColors({
+  VNLColorScheme.fromColors({
     required Map<String, Color> colors,
     required Brightness brightness,
   }) : this(
@@ -489,7 +489,7 @@ class ColorScheme implements ChartColorScheme {
           chart5: colors._col('chart5'),
         );
 
-  ColorScheme copyWith({
+  VNLColorScheme copyWith({
     Brightness? brightness,
     Color? background,
     Color? foreground,
@@ -511,7 +511,7 @@ class ColorScheme implements ChartColorScheme {
     Color? input,
     Color? ring,
   }) {
-    return ColorScheme(
+    return VNLColorScheme(
       brightness: brightness ?? this.brightness,
       background: background ?? this.background,
       foreground: foreground ?? this.foreground,
@@ -543,8 +543,8 @@ class ColorScheme implements ChartColorScheme {
   @override
   List<Color> get chartColors => [chart1, chart2, chart3, chart4, chart5];
 
-  static ColorScheme lerp(ColorScheme a, ColorScheme b, double t) {
-    return ColorScheme(
+  static VNLColorScheme lerp(VNLColorScheme a, VNLColorScheme b, double t) {
+    return VNLColorScheme(
       brightness: t < 0.5 ? a.brightness : b.brightness,
       background: Color.lerp(a.background, b.background, t)!,
       foreground: Color.lerp(a.foreground, b.foreground, t)!,
@@ -576,7 +576,7 @@ class ColorScheme implements ChartColorScheme {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ColorScheme &&
+      other is VNLColorScheme &&
           runtimeType == other.runtimeType &&
           brightness == other.brightness &&
           background == other.background &&

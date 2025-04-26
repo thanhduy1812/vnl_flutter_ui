@@ -1,6 +1,6 @@
 import '../../vnl_ui.dart';
 
-class Typography {
+class VNLTypography {
   final TextStyle sans;
   final TextStyle mono;
   final TextStyle xSmall;
@@ -38,11 +38,11 @@ class Typography {
   final TextStyle textSmall;
   final TextStyle textMuted;
 
-  const Typography.geist({
+  const VNLTypography.geist({
     this.sans =
-        const TextStyle(fontFamily: 'GeistSans', package: 'vnl_common_ui'),
+        const TextStyle(fontFamily: 'GeistSans', package: 'vnl_ui'),
     this.mono =
-        const TextStyle(fontFamily: 'GeistMono', package: 'vnl_common_ui'),
+        const TextStyle(fontFamily: 'GeistMono', package: 'vnl_ui'),
     this.xSmall = const TextStyle(fontSize: 12),
     this.small = const TextStyle(fontSize: 14),
     this.base = const TextStyle(fontSize: 16),
@@ -81,7 +81,7 @@ class Typography {
     this.textMuted = const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
   });
 
-  const Typography({
+  const VNLTypography({
     required this.sans,
     required this.mono,
     required this.xSmall,
@@ -120,7 +120,7 @@ class Typography {
     required this.textMuted,
   });
 
-  Typography copyWith({
+  VNLTypography copyWith({
     TextStyle? sans,
     TextStyle? mono,
     TextStyle? xSmall,
@@ -158,7 +158,7 @@ class Typography {
     TextStyle? textSmall,
     TextStyle? textMuted,
   }) {
-    return Typography(
+    return VNLTypography(
       sans: sans ?? this.sans,
       mono: mono ?? this.mono,
       xSmall: xSmall ?? this.xSmall,
@@ -198,8 +198,8 @@ class Typography {
     );
   }
 
-  Typography scale(double factor) {
-    return Typography(
+  VNLTypography scale(double factor) {
+    return VNLTypography(
       sans: sans.fontSize == null
           ? sans
           : sans.copyWith(fontSize: sans.fontSize! * factor),
@@ -309,8 +309,8 @@ class Typography {
     );
   }
 
-  static Typography lerp(Typography a, Typography b, double t) {
-    return Typography(
+  static VNLTypography lerp(VNLTypography a, VNLTypography b, double t) {
+    return VNLTypography(
       sans: TextStyle.lerp(a.sans, b.sans, t)!,
       mono: TextStyle.lerp(a.mono, b.mono, t)!,
       xSmall: TextStyle.lerp(a.xSmall, b.xSmall, t)!,
@@ -353,7 +353,7 @@ class Typography {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Typography &&
+      other is VNLTypography &&
           sans == other.sans &&
           mono == other.mono &&
           xSmall == other.xSmall &&
