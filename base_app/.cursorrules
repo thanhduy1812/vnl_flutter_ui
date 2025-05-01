@@ -1,467 +1,120 @@
-# VNLook Flutter App Architecture Rules
+# Flutter MVVM Page Creation Rules
 
-## Directory Structure Rules
-
-### Pages Structure
+## Directory Structure
 ```
-lib/
-└── pages/
-    ├── base/          # Base components and shared functionality
-    ├── home/          # Home module
-    └── feature_name/  # Feature-specific modules
-        ├── view/
-        │   └── feature_name_view.dart
-        └── view_model/
-            └── feature_name_view_model.dart
-```
-
-### API Client Structure
-```
-lib/
-└── data/
-    └── api_client/
-        └── resource_name/
-            ├── api/
-            │   └── resource_name_api.dart
-            ├── models/
-            │   ├── request/
-            │   │   └── model_request.dart
-            │   └── response/
-            │       └── model_response.dart
-            ├── resource_name_endpoint.dart
-            └── resource_name.dart
+lib/pages/feature_name/
+├── model/              # Feature-specific models
+├── view/
+│   └── feature_name_view.dart
+├── view_controller/
+│   └── feature_name_page.dart
+└── view_model/
+    ├── feature_name_view_model.dart
+    └── feature_name_page_view_model.dart
 ```
 
 ## Naming Conventions
+- Folders must use snake_case: `feature_name`
+- Files must use snake_case: `feature_name_view.dart`
+- Classes must use PascalCase: `FeatureNameView`
+- View files must end with `_view.dart`
+- Page files must end with `_page.dart`
+- ViewModel files must end with `_view_model.dart` or `_page_view_model.dart`
 
-### Pages and Views
-- All view files MUST use "View" suffix (e.g., `HomeView.dart`)
-- All view model files MUST use "ViewModel" suffix (e.g., `HomeViewModel.dart`)
-- Feature folders MUST use snake_case
-- Class names MUST use PascalCase
-- View classes MUST be named as `FeatureNameView`
-- ViewModel classes MUST be named as `FeatureNameViewModel`
-- Base classes MUST use "Base" prefix (e.g., `BaseView`, `BaseViewModel`)
+## File Templates
 
-### API and Network
-- Endpoints: `GtdResourceNameEndpoint`
-- API Classes: `ResourceNameApi`
-- Request Models: `GtdModelNameRq`
-- Response Models: `GtdModelNameRs`
-- API Path Constants: `kResourceName` format
-- API Methods: MUST use descriptive names (e.g., `getUserProfile`, not `getProfile`)
-- API Variables: MUST use clear, descriptive names indicating purpose and type
-
-## Architectural Rules
-
-### MVVM Pattern Rules
-1. Each page MUST follow MVVM pattern
-2. Each view MUST have its own ViewModel extending BaseViewModel
-3. Views MUST be placed directly in the view folder (no components subdirectory)
-4. ViewModels MUST handle all business logic and state management
-5. Views MUST only contain UI logic and delegate actions to ViewModel
-6. ViewModels MUST NOT have direct UI dependencies
-7. Views MUST observe ViewModel state changes using proper state management
-8. ViewModels MUST expose state via streams or other observable patterns
-9. Business logic MUST be contained within ViewModels or dedicated services
-10. Views MUST NOT make direct API calls or handle data manipulation
-
-### View Implementation Rules
-1. Views MUST implement proper lifecycle management
-2. Views MUST handle UI state properly (loading, error, success)
-3. Views MUST implement proper error handling and user feedback
-4. Views MUST follow material design guidelines
-5. Views MUST handle different screen sizes and orientations
-6. Views MUST implement proper navigation handling
-7. Views MUST handle keyboard interactions properly
-8. Views MUST implement proper form validation if applicable
-
-### ViewModel Implementation Rules
-1. ViewModels MUST handle all data operations
-2. ViewModels MUST implement proper error handling
-3. ViewModels MUST handle loading states
-4. ViewModels MUST clean up resources in dispose method
-5. ViewModels MUST NOT hold references to View
-6. ViewModels MUST handle configuration changes
-7. ViewModels MUST validate input data
-8. ViewModels MUST handle pagination if applicable
-
-### API and Network Rules
-1. All API clients MUST be created under `lib/data/api_client/`
-2. Each API resource MUST have its own directory
-3. API modules MUST be independent
-4. All API-related files MUST be in their respective resource directory
-5. Network requests MUST use GtdNetworkService
-6. Error handling MUST use GtdError
-7. API calls MUST handle timeouts properly
-8. API calls MUST implement retry logic where appropriate
-9. API calls MUST handle authentication properly
-10. API responses MUST be properly typed
-
-## Code Organization
-
-### View Files
+### 1. `feature_name_view.dart`
 ```dart
-class FeatureNameView extends StatelessWidget {
-  final FeatureNameViewModel viewModel;
+import 'package:base_app/pages/base/view/base_view.dart';
+import 'package:base_app/pages/feature_name/view_model/feature_name_view_model.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
-  const FeatureNameView({
-    required this.viewModel,
-    Key? key,
-  }) : super(key: key);
+class FeatureNameView extends BaseView<FeatureNameViewModel> {
+  const FeatureNameView({super.key, required super.viewModel});
 
   @override
-  Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: viewModel,
-      builder: (context, child) {
-        if (viewModel.isLoading) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (viewModel.error != null) {
-          return _buildErrorWidget(viewModel.error!);
-        }
-        return _buildContent();
-      },
-    );
-  }
-
-  Widget _buildContent() {
-    // Build UI components
+  Widget buildWidget(BuildContext context) {
+    return SizedBox();
   }
 }
 ```
 
-### ViewModel Files
+### 2. `feature_name_page.dart`
 ```dart
+import 'package:base_app/pages/feature_name/view/feature_name_view.dart';
+import 'package:base_app/pages/feature_name/view_model/feature_name_page_view_model.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
+import '../../base/view_controller/page_view_controller.dart';
+
+class FeatureNamePage extends PageViewController<FeatureNamePageViewModel> {
+  const FeatureNamePage({super.key, required super.viewModel});
+  
+  @override
+  FeatureNamePageState createState() => FeatureNamePageState();
+}
+
+class FeatureNamePageState extends PageViewControllerState<FeatureNamePage> {
+  @override
+  Widget buildBody(BuildContext pageContext) {
+    return FeatureNameView(viewModel: widget.viewModel.featureNameViewModel);
+  }
+}
+```
+
+### 3. `feature_name_view_model.dart`
+```dart
+import 'package:base_app/pages/base/view_model/base_view_model.dart';
+
 class FeatureNameViewModel extends BaseViewModel {
-  bool _isLoading = false;
-  String? _error;
-  DataType? _data;
-
-  bool get isLoading => _isLoading;
-  String? get error => _error;
-  DataType? get data => _data;
-
-  Future<void> loadData() async {
-    try {
-      _isLoading = true;
-      _error = null;
-      reloadView();
-
-      // Perform operations
-      _data = await repository.getData();
-      
-      _isLoading = false;
-      reloadView();
-    } catch (e) {
-      _isLoading = false;
-      _error = e.toString();
-      reloadView();
-    }
-  }
-
-  @override
-  void dispose() {
-    // Clean up resources
-    super.dispose();
-  }
+  FeatureNameViewModel();
 }
 ```
 
-### API Implementation
+### 4. `feature_name_page_view_model.dart`
 ```dart
-class ResourceNameApi {
-  final GtdNetworkService networkService = GtdNetworkService.shared;
-  final GTDEnvType envType = AppConst.shared.envType;
+import 'package:base_app/pages/base/view_model/page_view_model.dart';
+import 'package:base_app/pages/feature_name/view_model/feature_name_view_model.dart';
 
-  ResourceNameApi._();
-  static final shared = ResourceNameApi._();
-
-  Future<ResponseType> getData() async {
-    try {
-      final networkRequest = GTDNetworkRequest(
-        type: GtdMethod.get,
-        endpoint: GtdResourceNameEndpoint.getEndpoint(envType),
-      );
-      networkService.request = networkRequest;
-      final response = await networkService.execute();
-      return ResponseType.fromJson(response.data);
-    } catch (e) {
-      throw GtdError.fromException(e);
-    }
-  }
-}
-```
-
-## Error Handling
-
-### Network Error Handling
-```dart
-try {
-  final response = await networkService.execute();
-  return ResponseType.fromJson(response.data);
-} catch (e) {
-  final gtdError = e as GtdError;
-  switch (gtdError.statusCode) {
-    case 401:
-      await handleUnauthorized();
-      break;
-    case 404:
-      handleNotFound();
-      break;
-    default:
-      handleGeneralError(gtdError);
-  }
-  throw gtdError;
-}
-```
-
-### ViewModel Error Handling
-```dart
-Future<void> handleOperation() async {
-  try {
-    _isLoading = true;
-    _error = null;
-    reloadView();
-
-    final result = await repository.getData();
-    _data = result;
-    
-    _isLoading = false;
-    reloadView();
-  } on GtdError catch (e) {
-    _isLoading = false;
-    _error = e.message;
-    logError(e);
-    reloadView();
-  } catch (e) {
-    _isLoading = false;
-    _error = 'Unexpected error occurred';
-    logError(e);
-    reloadView();
-  }
-}
-```
-
-### View Error Handling
-```dart
-Widget _buildErrorWidget(String message) {
-  return Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(message),
-        ElevatedButton(
-          onPressed: viewModel.retry,
-          child: Text('Retry'),
-        ),
-      ],
-    ),
-  );
-}
-```
-
-## Testing Requirements
-
-### View Testing
-```dart
-testWidgets('should show loading indicator when loading', (tester) async {
-  final viewModel = MockFeatureNameViewModel();
-  when(viewModel.stateStream).thenAnswer(
-    (_) => Stream.value(LoadingState()),
-  );
-
-  await tester.pumpWidget(
-    MaterialApp(
-      home: FeatureNameView(viewModel: viewModel),
-    ),
-  );
-
-  expect(find.byType(CircularProgressIndicator), findsOneWidget);
-});
-```
-
-### ViewModel Testing
-```dart
-test('should update state when operation fails', () async {
-  final repository = MockRepository();
-  when(repository.getData()).thenThrow(Exception('Error'));
-
-  final viewModel = FeatureNameViewModel(repository: repository);
+class FeatureNamePageViewModel extends PageViewModel {
+  final FeatureNameViewModel featureNameViewModel = FeatureNameViewModel();
   
-  await viewModel.loadData();
-
-  expect(viewModel.isLoading, false);
-  expect(viewModel.error, isNotNull);
-  expect(viewModel.data, isNull);
-});
+  FeatureNamePageViewModel() {
+    title = "FeatureName";
+  }
+}
 ```
 
-### API Testing
-```dart
-test('should handle network error properly', () async {
-  final mockNetworkService = MockNetworkService();
-  when(mockNetworkService.execute()).thenThrow(
-    GtdError(
-      message: 'Network error',
-      statusCode: 500,
-    ),
-  );
+## Implementation Rules
 
-  final api = ResourceNameApi(networkService: mockNetworkService);
-  
-  expect(
-    () => api.getData(),
-    throwsA(isA<GtdError>()),
-  );
-});
-```
+1. **UI Package**
+   - Always use `package:vnl_common_ui/vnl_ui.dart` instead of material.dart
 
-## Security Rules
+2. **MVVM Architecture**
+   - Follow MVVM pattern strictly
+   - Views handle UI only
+   - ViewModels handle business logic
+   - Pages connect Views and ViewModels
 
-1. NO hardcoded sensitive data
-   ```dart
-   // WRONG
-   final apiKey = 'abc123';
-   
-   // RIGHT
-   final apiKey = ConfigService.getApiKey();
-   ```
+3. **View Implementation**
+   - Extend `BaseView<T>` where T is the corresponding ViewModel
+   - Implement `buildWidget()` method for UI
 
-2. NO logging of sensitive information
-   ```dart
-   // WRONG
-   print('User password: $password');
-   
-   // RIGHT
-   logger.info('User login attempt');
-   ```
+4. **ViewController Implementation**
+   - Extend `PageViewController<T>` where T is the corresponding PageViewModel
+   - Implement `createState()` method
+   - The state class extends `PageViewControllerState<T>`
+   - Implement `buildBody()` in the state class
 
-3. ALL network calls MUST use HTTPS
-   ```dart
-   // WRONG
-   final endpoint = 'http://api.example.com';
-   
-   // RIGHT
-   final endpoint = 'https://api.example.com';
-   ```
+5. **ViewModel Implementation**
+   - ViewModels extend `BaseViewModel`
+   - PageViewModels extend `PageViewModel`
+   - PageViewModel contains an instance of the corresponding ViewModel
 
-4. ALL API calls MUST handle authentication properly
-   ```dart
-   Future<void> authenticatedRequest() async {
-     final token = await AuthService.getToken();
-     if (token == null) {
-       throw GtdError(message: 'Not authenticated');
-     }
-     // Proceed with request
-   }
-   ```
+6. **Connection Pattern**
+   - PageViewControllerState connects the View to the ViewModel
+   - Access the ViewModel through `widget.viewModel.featureNameViewModel`
 
-## Memory Management
-
-1. MUST dispose of controllers and animations
-   ```dart
-   @override
-   void dispose() {
-     _controller.dispose();
-     _animationController.dispose();
-     super.dispose();
-   }
-   ```
-
-2. MUST cancel network requests when views are disposed
-   ```dart
-   late final StreamSubscription _subscription;
-   
-   @override
-   void initState() {
-     super.initState();
-     _subscription = stream.listen((_) {});
-   }
-   
-   @override
-   void dispose() {
-     _subscription.cancel();
-     super.dispose();
-   }
-   ```
-
-3. MUST handle memory leaks in ViewModels
-   ```dart
-   class FeatureNameViewModel extends BaseViewModel {
-     StreamController? _controller;
-     
-     void initialize() {
-       _controller = StreamController();
-     }
-     
-     @override
-     void dispose() {
-       _controller?.close();
-       _controller = null;
-       super.dispose();
-     }
-   }
-   ```
-
-4. MUST use weak references where appropriate
-   ```dart
-   final WeakReference<BuildContext> _contextRef;
-   
-   void showDialog() {
-     final context = _contextRef.target;
-     if (context != null) {
-       // Show dialog
-     }
-   }
-   ```
-
-## Documentation Requirements
-
-1. All public APIs MUST be documented
-   ```dart
-   /// Fetches user profile information from the server.
-   /// 
-   /// Parameters:
-   /// - [userId]: The unique identifier of the user
-   /// 
-   /// Throws:
-   /// - [GtdError] if the network request fails
-   /// - [AuthenticationError] if the user is not authenticated
-   Future<UserProfile> getUserProfile(String userId) async {
-     // Implementation
-   }
-   ```
-
-2. All complex logic MUST be documented
-   ```dart
-   /// Calculates the total price including discounts and taxes.
-   /// 
-   /// The calculation follows these steps:
-   /// 1. Apply item-specific discounts
-   /// 2. Apply cart-level discounts
-   /// 3. Calculate taxes based on the discounted amount
-   /// 4. Add shipping costs if applicable
-   double calculateTotalPrice() {
-     // Implementation
-   }
-   ```
-
-3. All custom widgets MUST be documented
-   ```dart
-   /// A custom button that shows a loading indicator when pressed.
-   /// 
-   /// Usage:
-   /// ```dart
-   /// LoadingButton(
-   ///   onPressed: () async {
-   ///     await someAsyncOperation();
-   ///   },
-   ///   child: Text('Submit'),
-   /// )
-   /// ```
-   class LoadingButton extends StatefulWidget {
-     // Implementation
-   }
-   ``` 
+7. **Creating New Pages**
+   - Create all four folders (model, view, view_controller, view_model)
+   - Create files with exact naming pattern, changing only the feature name
+   - Follow the implementation details as shown in templates 
