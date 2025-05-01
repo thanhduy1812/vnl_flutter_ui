@@ -1,43 +1,43 @@
 import 'package:docs/pages/docs_page.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-class ColorsPage extends StatefulWidget {
-  const ColorsPage({super.key});
+class VNLColorsPage extends StatefulWidget {
+  const VNLColorsPage({super.key});
 
   @override
-  _ColorsPageState createState() => _ColorsPageState();
+  _VNLColorsPageState createState() => _VNLColorsPageState();
 }
 
-class _ColorsPageState extends State<ColorsPage> {
+class _VNLColorsPageState extends State<VNLColorsPage> {
   Map<String, ColorShades> shadeMap = {
-    'Slate': Colors.slate,
-    'Gray': Colors.gray,
-    'Zinc': Colors.zinc,
-    'Neutral': Colors.neutral,
-    'Stone': Colors.stone,
-    'Red': Colors.red,
-    'Orange': Colors.orange,
-    'Amber': Colors.amber,
-    'Yellow': Colors.yellow,
-    'Lime': Colors.lime,
-    'Green': Colors.green,
-    'Emerald': Colors.emerald,
-    'Teal': Colors.teal,
-    'Cyan': Colors.cyan,
-    'Sky': Colors.sky,
-    'Blue': Colors.blue,
-    'Indigo': Colors.indigo,
-    'Violet': Colors.violet,
-    'Purple': Colors.purple,
-    'Fuchsia': Colors.fuchsia,
-    'Pink': Colors.pink,
-    'Rose': Colors.rose,
+    'Slate': VNLColors.slate,
+    'Gray': VNLColors.gray,
+    'Zinc': VNLColors.zinc,
+    'Neutral': VNLColors.neutral,
+    'Stone': VNLColors.stone,
+    'Red': VNLColors.red,
+    'Orange': VNLColors.orange,
+    'Amber': VNLColors.amber,
+    'Yellow': VNLColors.yellow,
+    'Lime': VNLColors.lime,
+    'Green': VNLColors.green,
+    'Emerald': VNLColors.emerald,
+    'Teal': VNLColors.teal,
+    'Cyan': VNLColors.cyan,
+    'Sky': VNLColors.sky,
+    'Blue': VNLColors.blue,
+    'Indigo': VNLColors.indigo,
+    'Violet': VNLColors.violet,
+    'Purple': VNLColors.purple,
+    'Fuchsia': VNLColors.fuchsia,
+    'Pink': VNLColors.pink,
+    'Rose': VNLColors.rose,
   };
 
-  final OnThisPage _predefinedColorsKey = OnThisPage();
+  final OnThisPage _predefinedVNLColorsKey = OnThisPage();
   final OnThisPage _customColorKey = OnThisPage();
 
-  HSLColor _customColor = Colors.red.toHSL();
+  HSLColor _customColor = VNLColors.red.toHSL();
   static const _defaultHueShift = 0;
   static const _defaultSaturationStepUp = 0;
   static const _defaultSaturationStepDown = 0;
@@ -57,7 +57,7 @@ class _ColorsPageState extends State<ColorsPage> {
     showDialog(
       context: context,
       builder: (context) {
-        final theme = Theme.of(context);
+        final theme = VNLTheme.of(context);
         return VNLAlertDialog(
           title: Text(name),
           leading: Container(
@@ -75,7 +75,7 @@ class _ColorsPageState extends State<ColorsPage> {
                 const Text('Use this code to display this color:'),
                 const Gap(8),
                 CodeSnippet(
-                  code: shade == 500 ? 'Colors.${name.toLowerCase()}' : 'Colors.${name.toLowerCase()}[$shade]',
+                  code: shade == 500 ? 'VNLColors.${name.toLowerCase()}' : 'VNLColors.${name.toLowerCase()}[$shade]',
                   mode: 'dart',
                 ),
               ],
@@ -95,7 +95,7 @@ class _ColorsPageState extends State<ColorsPage> {
   }
 
   Widget buildColorRow(BuildContext context, String name, ColorShades swatch, [bool clickable = true]) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     List<Widget> children = [];
     for (int shade in ColorShades.shadeValues) {
       children.add(
@@ -140,7 +140,7 @@ class _ColorsPageState extends State<ColorsPage> {
   }
 
   Widget buildEditableColorRow(BuildContext context, String name, ColorShades swatch) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     List<Widget> children = [];
     var shadeValues = ColorShades.shadeValues;
     for (int i = 0; i < shadeValues.length; i++) {
@@ -269,15 +269,15 @@ class _ColorsPageState extends State<ColorsPage> {
     return DocsPage(
       name: 'colors',
       onThisPage: {
-        'Predefined Colors': _predefinedColorsKey,
+        'Predefined VNLColors': _predefinedVNLColorsKey,
         'Generate Color': _customColorKey,
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text('Colors').h1(),
+          const Text('VNLColors').h1(),
           const Text('Color and ColorShades/ColorSwatch constants').lead(),
-          const Text('Predefined Colors').h2().anchored(_predefinedColorsKey),
+          const Text('Predefined VNLColors').h2().anchored(_predefinedVNLColorsKey),
           for (final color in shadeMap.entries)
             VNLCard(
               padding: const EdgeInsets.all(8),

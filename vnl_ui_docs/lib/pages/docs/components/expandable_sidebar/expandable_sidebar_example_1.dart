@@ -30,7 +30,7 @@ class _ExpandableSidebarExample1State extends State<ExpandableSidebarExample1> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return OutlinedContainer(
       height: 600,
       width: 800,

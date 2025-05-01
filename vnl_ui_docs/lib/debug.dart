@@ -12,7 +12,7 @@ class _RebuildCounterState extends State<RebuildCounter> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.primaries[hashCode % Colors.primaries.length],
+      color: VNLColors.primaries[hashCode % VNLColors.primaries.length],
       child: Center(
         child: Text('Rebuild count: ${counter++}'),
       ),

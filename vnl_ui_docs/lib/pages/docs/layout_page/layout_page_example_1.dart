@@ -6,11 +6,11 @@ class LayoutPageExample1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.red,
+      color: VNLColors.red,
       child: Container(
-        color: Colors.green,
+        color: VNLColors.green,
         child: Container(
-          color: Colors.blue,
+          color: VNLColors.blue,
           height: 20,
         ).withPadding(all: 16),
       ).withPadding(top: 24, bottom: 12, horizontal: 16),

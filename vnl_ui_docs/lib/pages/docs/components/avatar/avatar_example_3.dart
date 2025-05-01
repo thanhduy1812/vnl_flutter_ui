@@ -10,7 +10,7 @@ class AvatarExample3 extends StatelessWidget {
       size: 64,
       badge: const AvatarBadge(
         size: 20,
-        color: Colors.green,
+        color: VNLColors.green,
       ),
     );
   }

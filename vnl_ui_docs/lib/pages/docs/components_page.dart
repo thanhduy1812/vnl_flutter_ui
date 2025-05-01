@@ -61,7 +61,7 @@ class _ComponentsPageState extends State<ComponentsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return Data.inherit(
       data: kComponentsMode,
       child: DocsPage(
@@ -104,8 +104,8 @@ class _ComponentsPageState extends State<ComponentsPage> {
                     children: [
                       Positioned.fill(
                         child: RepeatedAnimationBuilder(
-                          start: Colors.red,
-                          end: Colors.blue,
+                          start: VNLColors.red,
+                          end: VNLColors.blue,
                           lerp: Color.lerp,
                           duration: const Duration(seconds: 1),
                           mode: RepeatMode.pingPong,
@@ -195,7 +195,7 @@ class _ComponentsPageState extends State<ComponentsPage> {
                       child: Container(
                         width: 100,
                         height: 100,
-                        color: Colors.red,
+                        color: VNLColors.red,
                       ),
                     );
                   },
@@ -526,7 +526,7 @@ class _ComponentsPageState extends State<ComponentsPage> {
                 reverse: true,
                 reverseVertical: true,
                 example: VNLCard(
-                  child: ColorPickerSet(color: ColorDerivative.fromColor(Colors.blue)),
+                  child: ColorPickerSet(color: ColorDerivative.fromColor(VNLColors.blue)),
                 ),
               ),
               const ComponentCard(
@@ -1074,7 +1074,7 @@ class _ComponentsPageState extends State<ComponentsPage> {
                   title: 'Dialog',
                   name: 'dialog',
                   example: VNLAlertDialog(
-                    barrierColor: Colors.transparent,
+                    barrierColor: VNLColors.transparent,
                     title: const Text('Edit profile'),
                     content: IntrinsicWidth(
                       child: Column(
@@ -1265,19 +1265,19 @@ class _ComponentsPageState extends State<ComponentsPage> {
                 example: AvatarGroup.toLeft(children: [
                   Avatar(
                     initials: Avatar.getInitials('sunarya-thito'),
-                    backgroundColor: Colors.red,
+                    backgroundColor: VNLColors.red,
                   ),
                   Avatar(
                     initials: Avatar.getInitials('sunarya-thito'),
-                    backgroundColor: Colors.green,
+                    backgroundColor: VNLColors.green,
                   ),
                   Avatar(
                     initials: Avatar.getInitials('sunarya-thito'),
-                    backgroundColor: Colors.blue,
+                    backgroundColor: VNLColors.blue,
                   ),
                   Avatar(
                     initials: Avatar.getInitials('sunarya-thito'),
-                    backgroundColor: Colors.yellow,
+                    backgroundColor: VNLColors.yellow,
                   ),
                 ]),
               ),
@@ -1541,7 +1541,7 @@ class _ComponentCardState extends State<ComponentCard> {
   final GlobalKey repaintKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final componentsMode = Data.of<ComponentsMode>(context);
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
@@ -1672,7 +1672,7 @@ class CursorPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white
+      ..color = VNLColors.white
       ..style = PaintingStyle.fill;
     final path = Path()
       ..moveTo(4, 0)
@@ -1685,7 +1685,7 @@ class CursorPainter extends CustomPainter {
       ..close();
     canvas.drawPath(path, paint);
     paint
-      ..color = Colors.black
+      ..color = VNLColors.black
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
     canvas.drawPath(path, paint);

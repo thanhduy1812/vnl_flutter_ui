@@ -13,7 +13,7 @@ class ColorPickerExample3 extends StatelessWidget {
             showColorPicker(
               context: context,
               offset: const Offset(0, 8),
-              color: ColorDerivative.fromColor(Colors.blue),
+              color: ColorDerivative.fromColor(VNLColors.blue),
               onColorChanged: (value) {
                 // Handle color change
               },
@@ -30,7 +30,7 @@ class ColorPickerExample3 extends StatelessWidget {
               onColorChanged: (value) {
                 // Handle color change
               },
-              color: ColorDerivative.fromColor(Colors.blue),
+              color: ColorDerivative.fromColor(VNLColors.blue),
             );
           },
           child: const Text('Open Color Picker Dialog'),

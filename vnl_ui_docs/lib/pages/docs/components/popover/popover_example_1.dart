@@ -5,7 +5,7 @@ class PopoverExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return PrimaryButton(
       onPressed: () {
         showPopover(

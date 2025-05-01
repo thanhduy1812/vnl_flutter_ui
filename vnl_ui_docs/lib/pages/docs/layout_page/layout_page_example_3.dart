@@ -6,7 +6,7 @@ class LayoutPageExample3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.red,
+      color: VNLColors.red,
       height: 30,
       width: 30,
     ).center();

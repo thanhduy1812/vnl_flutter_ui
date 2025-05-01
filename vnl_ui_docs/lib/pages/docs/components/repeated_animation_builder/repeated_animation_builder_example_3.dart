@@ -29,7 +29,7 @@ class _RepeatedAnimationBuilderExample3State extends State<RepeatedAnimationBuil
               child: Container(
                 width: 100,
                 height: 100,
-                color: Colors.red,
+                color: VNLColors.red,
               ),
             );
           },

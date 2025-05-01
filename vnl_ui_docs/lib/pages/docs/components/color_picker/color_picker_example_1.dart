@@ -8,7 +8,7 @@ class ColorPickerExample1 extends StatefulWidget {
 }
 
 class _ColorPickerExample1State extends State<ColorPickerExample1> {
-  ColorDerivative color = ColorDerivative.fromColor(Colors.blue);
+  ColorDerivative color = ColorDerivative.fromColor(VNLColors.blue);
   @override
   Widget build(BuildContext context) {
     return SizedBox(

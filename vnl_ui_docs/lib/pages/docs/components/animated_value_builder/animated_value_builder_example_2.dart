@@ -9,9 +9,9 @@ class AnimatedValueBuilderExample2 extends StatefulWidget {
 
 class _AnimatedValueBuilderExample2State extends State<AnimatedValueBuilderExample2> {
   List<Color> colors = [
-    Colors.red,
-    Colors.green,
-    Colors.blue,
+    VNLColors.red,
+    VNLColors.green,
+    VNLColors.blue,
   ];
   int index = 0;
   int rebuildCount = 0;

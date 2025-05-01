@@ -14,7 +14,7 @@ class _ContextMenuExample1State extends State<ContextMenuExample1> {
   bool showFullUrls = true;
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return VNLContextMenu(
         items: [
           const MenuButton(

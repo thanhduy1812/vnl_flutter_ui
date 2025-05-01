@@ -15,7 +15,7 @@ class RepeatedAnimationBuilderExample1 extends StatelessWidget {
           child: Container(
             width: 100,
             height: 100,
-            color: Colors.red,
+            color: VNLColors.red,
           ),
         );
       },

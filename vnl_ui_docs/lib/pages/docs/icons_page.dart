@@ -75,7 +75,7 @@ class _IconsPageState extends State<IconsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return DocsPage(
       name: 'icons',
       scrollable: false,
@@ -357,7 +357,7 @@ class _Header extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return Container(
       color: theme.colorScheme.background,
       child: Column(

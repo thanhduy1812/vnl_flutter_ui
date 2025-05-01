@@ -37,14 +37,14 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
         constraints: const BoxConstraints(minWidth: 150),
         child: Label(
           leading: OutlinedContainer(
-            backgroundColor: Colors.white,
+            backgroundColor: VNLColors.white,
             width: 18,
             height: 18,
-            borderRadius: Theme.of(context).borderRadiusMd,
+            borderRadius: VNLTheme.of(context).borderRadiusMd,
             child: Center(
               child: Text(
                 data.count.toString(),
-                style: const TextStyle(color: Colors.black),
+                style: const TextStyle(color: VNLColors.black),
               ).xSmall().bold(),
             ),
           ),

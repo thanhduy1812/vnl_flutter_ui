@@ -39,7 +39,7 @@ class SidebarButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var data = Theme.of(context);
+    var data = VNLTheme.of(context);
     if (selected) {
       data = data.copyWith(
         colorScheme: data.colorScheme.copyWith(
@@ -47,7 +47,7 @@ class SidebarButton extends StatelessWidget {
         ),
       );
     }
-    return Theme(
+    return VNLTheme(
       data: data,
       child: VNLButton(
         onPressed: onPressed,
@@ -99,7 +99,7 @@ class _DocsNavigationButtonState extends State<DocsNavigationButton> {
 
   @override
   Widget build(BuildContext context) {
-    var data = Theme.of(context);
+    var data = VNLTheme.of(context);
     if (!widget.selected) {
       data = data.copyWith(
         colorScheme: data.colorScheme.copyWith(
@@ -107,7 +107,7 @@ class _DocsNavigationButtonState extends State<DocsNavigationButton> {
         ),
       );
     }
-    return Theme(
+    return VNLTheme(
       data: data,
       child: VNLButton(
         onPressed: widget.onPressed,

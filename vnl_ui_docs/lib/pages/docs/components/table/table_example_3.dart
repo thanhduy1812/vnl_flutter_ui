@@ -11,7 +11,7 @@ class TableExample3 extends StatefulWidget {
 
 class _TableExample3State extends State<TableExample3> {
   TableCell buildCell(String text, [bool alignRight = false]) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return TableCell(
       theme: TableCellTheme(
         border: WidgetStatePropertyAll(

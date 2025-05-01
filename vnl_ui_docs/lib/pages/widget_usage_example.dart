@@ -126,7 +126,7 @@ class _CodeSnippetFutureBuilderState extends State<CodeSnippetFutureBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return FutureBuilder<String>(
       future: futureCode,
       builder: (context, snapshot) {

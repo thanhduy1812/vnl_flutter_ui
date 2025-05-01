@@ -16,16 +16,16 @@ class ItemPickerExample3 extends StatefulWidget {
 
 class _ItemPickerExample3State extends State<ItemPickerExample3> {
   final List<NamedColor> colors = const [
-    NamedColor('Red', Colors.red),
-    NamedColor('Green', Colors.green),
-    NamedColor('Blue', Colors.blue),
-    NamedColor('Yellow', Colors.yellow),
-    NamedColor('Purple', Colors.purple),
-    NamedColor('Cyan', Colors.cyan),
-    NamedColor('Orange', Colors.orange),
-    NamedColor('Pink', Colors.pink),
-    NamedColor('Teal', Colors.teal),
-    NamedColor('Amber', Colors.amber),
+    NamedColor('Red', VNLColors.red),
+    NamedColor('Green', VNLColors.green),
+    NamedColor('Blue', VNLColors.blue),
+    NamedColor('Yellow', VNLColors.yellow),
+    NamedColor('Purple', VNLColors.purple),
+    NamedColor('Cyan', VNLColors.cyan),
+    NamedColor('Orange', VNLColors.orange),
+    NamedColor('Pink', VNLColors.pink),
+    NamedColor('Teal', VNLColors.teal),
+    NamedColor('Amber', VNLColors.amber),
   ];
   int selectedColor = 0;
   @override

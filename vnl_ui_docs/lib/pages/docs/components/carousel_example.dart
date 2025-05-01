@@ -57,19 +57,19 @@ class NumberedContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return Container(
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: fill ? Colors.primaries[(Colors.primaries.length - 1 - index) % Colors.primaries.length] : null,
+        color: fill ? VNLColors.primaries[(VNLColors.primaries.length - 1 - index) % VNLColors.primaries.length] : null,
         borderRadius: theme.borderRadiusMd,
       ),
       child: Center(
         child: Text(
           index.toString(),
           style: const TextStyle(
-            color: Colors.white,
+            color: VNLColors.white,
             fontSize: 24,
           ),
         ),

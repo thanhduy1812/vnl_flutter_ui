@@ -60,7 +60,7 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
           const VerticalDivider(),
           Expanded(
             child: Container(
-              color: Colors.primaries[Colors.primaries.length - selected - 1],
+              color: VNLColors.primaries[VNLColors.primaries.length - selected - 1],
               padding: const EdgeInsets.all(24),
               child: VNLCard(
                 child: Wrap(

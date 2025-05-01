@@ -277,7 +277,7 @@ class _ThemePageState extends State<ThemePage> {
   }
 
   Color getInvertedColor(Color color) {
-    return color.computeLuminance() > 0.5 ? Colors.black : Colors.white;
+    return color.computeLuminance() > 0.5 ? VNLColors.black : VNLColors.white;
   }
 
   Widget buildPremadeColorSchemeButton(String name) {
@@ -371,7 +371,8 @@ class _ThemePageState extends State<ThemePage> {
                   customColorScheme = true;
                   if (applyDirectly) {
                     MyAppState state = Data.of(context);
-                    state.changeColorScheme(VNLColorScheme.fromColors(colors: colors, brightness: colorScheme.brightness));
+                    state.changeColorScheme(
+                        VNLColorScheme.fromColors(colors: colors, brightness: colorScheme.brightness));
                   }
                 });
               },

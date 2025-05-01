@@ -228,7 +228,7 @@ class MyAppState extends State<MyApp> {
     GoRoute(
       path: '/colors',
       name: 'colors',
-      builder: (context, state) => const ColorsPage(),
+      builder: (context, state) => const VNLColorsPage(),
     ),
     GoRoute(
       path: '/state',
@@ -841,7 +841,7 @@ class MyAppState extends State<MyApp> {
         scaling: AdaptiveScaling(scaling),
         enableScrollInterception: true,
         // popoverHandler: DialogOverlayHandler(),
-        theme: ThemeData(
+        theme: VNLThemeData(
           colorScheme: colorScheme,
           radius: radius,
           surfaceBlur: surfaceBlur,

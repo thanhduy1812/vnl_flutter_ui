@@ -6,7 +6,7 @@ class AvatarExample1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Avatar(
-      backgroundColor: Colors.red,
+      backgroundColor: VNLColors.red,
       initials: Avatar.getInitials('sunarya-thito'),
       provider: const NetworkImage('https://avatars.githubusercontent.com/u/64018564?v=4'),
     );

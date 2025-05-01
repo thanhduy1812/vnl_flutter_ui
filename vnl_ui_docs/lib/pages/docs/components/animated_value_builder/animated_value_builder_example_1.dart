@@ -9,9 +9,9 @@ class AnimatedValueBuilderExample1 extends StatefulWidget {
 
 class _AnimatedValueBuilderExample1State extends State<AnimatedValueBuilderExample1> {
   List<Color> colors = [
-    Colors.red,
-    Colors.green,
-    Colors.blue,
+    VNLColors.red,
+    VNLColors.green,
+    VNLColors.blue,
   ];
   int index = 0;
   @override

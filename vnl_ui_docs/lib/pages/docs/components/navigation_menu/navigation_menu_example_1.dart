@@ -5,7 +5,7 @@ class NavigationMenuExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return VNLNavigationMenu(
       children: [
         NavigationMenuItem(

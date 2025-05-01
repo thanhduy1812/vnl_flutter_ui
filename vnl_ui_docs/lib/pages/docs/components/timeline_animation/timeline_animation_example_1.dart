@@ -85,7 +85,7 @@ class _TimelineAnimationExample1State extends State<TimelineAnimationExample1> w
             child: Container(
               width: 50,
               height: 50,
-              color: Colors.blue,
+              color: VNLColors.blue,
             ),
           ),
         );
