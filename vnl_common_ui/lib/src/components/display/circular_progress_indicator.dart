@@ -21,24 +21,18 @@ class CircularProgressIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final iconThemeData = IconTheme.of(context);
-    final theme = Theme.of(context);
-    var color =
-        onSurface ? theme.colorScheme.background : theme.colorScheme.primary;
+    final theme = VNLTheme.of(context);
+    var color = onSurface ? theme.colorScheme.background : theme.colorScheme.primary;
     if (value == null || !animated) {
       return RepaintBoundary(
         child: SizedBox(
-          width: size ??
-              (iconThemeData.size ?? 24 * theme.scaling) - 8 * theme.scaling,
-          height: size ??
-              (iconThemeData.size ?? 24 * theme.scaling) - 8 * theme.scaling,
+          width: size ?? (iconThemeData.size ?? 24 * theme.scaling) - 8 * theme.scaling,
+          height: size ?? (iconThemeData.size ?? 24 * theme.scaling) - 8 * theme.scaling,
           child: mat.CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(
-              color,
-            ),
+            valueColor: AlwaysStoppedAnimation<Color>(color),
             color: color,
             backgroundColor: color.scaleAlpha(0.2),
-            strokeWidth:
-                (size ?? (iconThemeData.size ?? (theme.scaling * 24))) / 12,
+            strokeWidth: (size ?? (iconThemeData.size ?? (theme.scaling * 24))) / 12,
             value: value,
           ),
         ),
@@ -50,20 +44,13 @@ class CircularProgressIndicator extends StatelessWidget {
         builder: (context, value, child) {
           return RepaintBoundary(
             child: SizedBox(
-              width: size ??
-                  (iconThemeData.size ?? (theme.scaling * 24)) -
-                      (theme.scaling * 8),
-              height: size ??
-                  (iconThemeData.size ?? (theme.scaling * 24)) -
-                      (theme.scaling * 8),
+              width: size ?? (iconThemeData.size ?? (theme.scaling * 24)) - (theme.scaling * 8),
+              height: size ?? (iconThemeData.size ?? (theme.scaling * 24)) - (theme.scaling * 8),
               child: mat.CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  color,
-                ),
+                valueColor: AlwaysStoppedAnimation<Color>(color),
                 color: color,
                 backgroundColor: color.scaleAlpha(0.2),
-                strokeWidth:
-                    (size ?? (iconThemeData.size ?? (theme.scaling * 24))) / 12,
+                strokeWidth: (size ?? (iconThemeData.size ?? (theme.scaling * 24))) / 12,
                 value: value,
               ),
             ),

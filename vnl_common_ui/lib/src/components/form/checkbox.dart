@@ -1,7 +1,6 @@
 import '../../../vnl_ui.dart';
 
-class CheckboxController extends ValueNotifier<CheckboxState>
-    with ComponentController<CheckboxState> {
+class CheckboxController extends ValueNotifier<CheckboxState> with ComponentController<CheckboxState> {
   CheckboxController(super.value);
 
   void check() {
@@ -17,15 +16,14 @@ class CheckboxController extends ValueNotifier<CheckboxState>
   }
 
   void toggle() {
-    value = value == CheckboxState.checked
-        ? CheckboxState.unchecked
-        : CheckboxState.checked;
+    value = value == CheckboxState.checked ? CheckboxState.unchecked : CheckboxState.checked;
   }
 
   void toggleTristate() {
-    value = value == CheckboxState.checked
-        ? CheckboxState.unchecked
-        : value == CheckboxState.unchecked
+    value =
+        value == CheckboxState.checked
+            ? CheckboxState.unchecked
+            : value == CheckboxState.unchecked
             ? CheckboxState.indeterminate
             : CheckboxState.checked;
   }
@@ -35,8 +33,7 @@ class CheckboxController extends ValueNotifier<CheckboxState>
   bool get isIndeterminate => value == CheckboxState.indeterminate;
 }
 
-class ControlledCheckbox extends StatelessWidget
-    with ControlledComponent<CheckboxState> {
+class ControlledCheckbox extends StatelessWidget with ControlledComponent<CheckboxState> {
   @override
   final CheckboxController? controller;
   @override
@@ -114,8 +111,7 @@ class VNLCheckbox extends StatefulWidget {
   _CheckboxState createState() => _CheckboxState();
 }
 
-class _CheckboxState extends State<VNLCheckbox>
-    with FormValueSupplier<CheckboxState, VNLCheckbox> {
+class _CheckboxState extends State<VNLCheckbox> with FormValueSupplier<CheckboxState, VNLCheckbox> {
   final bool _focusing = false;
   bool _shouldAnimate = false;
 
@@ -145,11 +141,7 @@ class _CheckboxState extends State<VNLCheckbox>
           break;
       }
     } else {
-      _changeTo(
-        widget.state == CheckboxState.checked
-            ? CheckboxState.unchecked
-            : CheckboxState.checked,
-      );
+      _changeTo(widget.state == CheckboxState.checked ? CheckboxState.unchecked : CheckboxState.checked);
     }
   }
 
@@ -171,12 +163,13 @@ class _CheckboxState extends State<VNLCheckbox>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return Clickable(
       enabled: widget.onChanged != null,
-      mouseCursor: enabled
-          ? const WidgetStatePropertyAll(SystemMouseCursors.click)
-          : const WidgetStatePropertyAll(SystemMouseCursors.forbidden),
+      mouseCursor:
+          enabled
+              ? const WidgetStatePropertyAll(SystemMouseCursors.click)
+              : const WidgetStatePropertyAll(SystemMouseCursors.forbidden),
       onPressed: enabled ? _tap : null,
       enableFeedback: enabled,
       child: Row(
@@ -190,65 +183,64 @@ class _CheckboxState extends State<VNLCheckbox>
             width: theme.scaling * 16,
             height: theme.scaling * 16,
             decoration: BoxDecoration(
-              color: widget.state == CheckboxState.checked
-                  ? theme.colorScheme.primary
-                  : theme.colorScheme.primary.withValues(alpha: 0),
+              color:
+                  widget.state == CheckboxState.checked
+                      ? theme.colorScheme.primary
+                      : theme.colorScheme.primary.withValues(alpha: 0),
               borderRadius: BorderRadius.circular(theme.radiusSm),
               border: Border.all(
-                color: !enabled
-                    ? theme.colorScheme.muted
-                    : _focusing
+                color:
+                    !enabled
+                        ? theme.colorScheme.muted
+                        : _focusing
                         ? theme.colorScheme.ring
                         : widget.state == CheckboxState.checked
-                            ? theme.colorScheme.primary
-                            : theme.colorScheme.mutedForeground,
+                        ? theme.colorScheme.primary
+                        : theme.colorScheme.mutedForeground,
                 width: (_focusing ? 2 : 1) * theme.scaling,
               ),
             ),
-            child: widget.state == CheckboxState.checked
-                ? Center(
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 100),
-                      child: SizedBox(
-                        width: theme.scaling * 9,
-                        height: theme.scaling * 6.5,
-                        child: AnimatedValueBuilder(
-                          value: 1.0,
-                          initialValue: _shouldAnimate ? 0.0 : null,
-                          duration: const Duration(milliseconds: 300),
-                          curve: const IntervalDuration(
-                            start: Duration(milliseconds: 175),
-                            duration: Duration(milliseconds: 300),
+            child:
+                widget.state == CheckboxState.checked
+                    ? Center(
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 100),
+                        child: SizedBox(
+                          width: theme.scaling * 9,
+                          height: theme.scaling * 6.5,
+                          child: AnimatedValueBuilder(
+                            value: 1.0,
+                            initialValue: _shouldAnimate ? 0.0 : null,
+                            duration: const Duration(milliseconds: 300),
+                            curve: const IntervalDuration(
+                              start: Duration(milliseconds: 175),
+                              duration: Duration(milliseconds: 300),
+                            ),
+                            builder: (context, value, child) {
+                              return CustomPaint(
+                                painter: AnimatedCheckPainter(
+                                  progress: value,
+                                  color: theme.colorScheme.primaryForeground,
+                                  strokeWidth: theme.scaling * 1,
+                                ),
+                              );
+                            },
                           ),
-                          builder: (context, value, child) {
-                            return CustomPaint(
-                              painter: AnimatedCheckPainter(
-                                progress: value,
-                                color: theme.colorScheme.primaryForeground,
-                                strokeWidth: theme.scaling * 1,
-                              ),
-                            );
-                          },
+                        ),
+                      ),
+                    )
+                    : Center(
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 100),
+                        width: widget.state == CheckboxState.indeterminate ? theme.scaling * 8 : 0,
+                        height: widget.state == CheckboxState.indeterminate ? theme.scaling * 8 : 0,
+                        padding: EdgeInsets.zero,
+                        decoration: BoxDecoration(
+                          color: theme.colorScheme.primary,
+                          borderRadius: BorderRadius.circular(theme.radiusXs),
                         ),
                       ),
                     ),
-                  )
-                : Center(
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 100),
-                      width: widget.state == CheckboxState.indeterminate
-                          ? theme.scaling * 8
-                          : 0,
-                      height: widget.state == CheckboxState.indeterminate
-                          ? theme.scaling * 8
-                          : 0,
-                      padding: EdgeInsets.zero,
-                      decoration: BoxDecoration(
-                        color: theme.colorScheme.primary,
-                        borderRadius: BorderRadius.circular(theme.radiusXs),
-                      ),
-                    ),
-                  ),
           ),
           SizedBox(width: theme.scaling * 8),
           if (widget.trailing != null) widget.trailing!.small().medium(),
@@ -263,63 +255,49 @@ class AnimatedCheckPainter extends CustomPainter {
   final Color color;
   final double strokeWidth;
 
-  AnimatedCheckPainter({
-    required this.progress,
-    required this.color,
-    required this.strokeWidth,
-  });
+  AnimatedCheckPainter({required this.progress, required this.color, required this.strokeWidth});
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = strokeWidth
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
+    final paint =
+        Paint()
+          ..color = color
+          ..strokeWidth = strokeWidth
+          ..style = PaintingStyle.stroke
+          ..strokeCap = StrokeCap.round;
     final path = Path();
     Offset firstStrokeStart = Offset(0, size.height * 0.5);
     Offset firstStrokeEnd = Offset(size.width * 0.35, size.height);
     Offset secondStrokeStart = firstStrokeEnd;
     Offset secondStrokeEnd = Offset(size.width, 0);
-    double firstStrokeLength =
-        (firstStrokeEnd - firstStrokeStart).distanceSquared;
-    double secondStrokeLength =
-        (secondStrokeEnd - secondStrokeStart).distanceSquared;
+    double firstStrokeLength = (firstStrokeEnd - firstStrokeStart).distanceSquared;
+    double secondStrokeLength = (secondStrokeEnd - secondStrokeStart).distanceSquared;
     double totalLength = firstStrokeLength + secondStrokeLength;
 
     double normalizedFirstStrokeLength = firstStrokeLength / totalLength;
     double normalizedSecondStrokeLength = secondStrokeLength / totalLength;
 
-    double firstStrokeProgress =
-        progress.clamp(0.0, normalizedFirstStrokeLength) /
-            normalizedFirstStrokeLength;
-    double secondStrokeProgress = (progress - normalizedFirstStrokeLength)
-            .clamp(0.0, normalizedSecondStrokeLength) /
+    double firstStrokeProgress = progress.clamp(0.0, normalizedFirstStrokeLength) / normalizedFirstStrokeLength;
+    double secondStrokeProgress =
+        (progress - normalizedFirstStrokeLength).clamp(0.0, normalizedSecondStrokeLength) /
         normalizedSecondStrokeLength;
     if (firstStrokeProgress <= 0) {
       return;
     }
-    Offset currentPoint =
-        Offset.lerp(firstStrokeStart, firstStrokeEnd, firstStrokeProgress)!;
+    Offset currentPoint = Offset.lerp(firstStrokeStart, firstStrokeEnd, firstStrokeProgress)!;
     path.moveTo(firstStrokeStart.dx, firstStrokeStart.dy);
     path.lineTo(currentPoint.dx, currentPoint.dy);
     if (secondStrokeProgress <= 0) {
       canvas.drawPath(path, paint);
       return;
     }
-    Offset secondPoint = Offset.lerp(
-      secondStrokeStart,
-      secondStrokeEnd,
-      secondStrokeProgress,
-    )!;
+    Offset secondPoint = Offset.lerp(secondStrokeStart, secondStrokeEnd, secondStrokeProgress)!;
     path.lineTo(secondPoint.dx, secondPoint.dy);
     canvas.drawPath(path, paint);
   }
 
   @override
   bool shouldRepaint(covariant AnimatedCheckPainter oldDelegate) {
-    return oldDelegate.progress != progress ||
-        oldDelegate.color != color ||
-        oldDelegate.strokeWidth != strokeWidth;
+    return oldDelegate.progress != progress || oldDelegate.color != color || oldDelegate.strokeWidth != strokeWidth;
   }
 }

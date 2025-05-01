@@ -11,19 +11,11 @@ class AdaptiveScaling {
   final double textScaling;
 
   const AdaptiveScaling([double scaling = 1])
-      : this.only(
-          radiusScaling: scaling,
-          sizeScaling: scaling,
-          textScaling: scaling,
-        );
+    : this.only(radiusScaling: scaling, sizeScaling: scaling, textScaling: scaling);
 
-  const AdaptiveScaling.only({
-    this.radiusScaling = 1,
-    this.sizeScaling = 1,
-    this.textScaling = 1,
-  });
+  const AdaptiveScaling.only({this.radiusScaling = 1, this.sizeScaling = 1, this.textScaling = 1});
 
-  ThemeData scale(ThemeData theme) {
+  VNLThemeData scale(VNLThemeData theme) {
     return theme.copyWith(
       radius: radiusScaling == 1 ? null : theme.radius * radiusScaling,
       scaling: sizeScaling == 1 ? null : theme.scaling * sizeScaling,
@@ -32,11 +24,7 @@ class AdaptiveScaling {
     );
   }
 
-  static AdaptiveScaling lerp(
-    AdaptiveScaling a,
-    AdaptiveScaling b,
-    double t,
-  ) {
+  static AdaptiveScaling lerp(AdaptiveScaling a, AdaptiveScaling b, double t) {
     return AdaptiveScaling.only(
       radiusScaling: lerpDouble(a.radiusScaling, b.radiusScaling, t)!,
       sizeScaling: lerpDouble(a.sizeScaling, b.sizeScaling, t)!,
@@ -47,11 +35,11 @@ class AdaptiveScaling {
 
 class AdaptiveScaler extends StatelessWidget {
   static AdaptiveScaling defaultScalingOf(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return defaultScaling(theme);
   }
 
-  static AdaptiveScaling defaultScaling(ThemeData theme) {
+  static AdaptiveScaling defaultScaling(VNLThemeData theme) {
     switch (theme.platform) {
       case TargetPlatform.iOS:
       case TargetPlatform.android:
@@ -64,23 +52,16 @@ class AdaptiveScaler extends StatelessWidget {
   final AdaptiveScaling scaling;
   final Widget child;
 
-  const AdaptiveScaler({
-    super.key,
-    required this.scaling,
-    required this.child,
-  });
+  const AdaptiveScaler({super.key, required this.scaling, required this.child});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Theme(
-      data: scaling.scale(theme),
-      child: child,
-    );
+    final theme = VNLTheme.of(context);
+    return VNLTheme(data: scaling.scale(theme), child: child);
   }
 }
 
-class ThemeData {
+class VNLThemeData {
   final VNLColorScheme colorScheme;
   final VNLTypography typography;
   final double radius;
@@ -90,7 +71,7 @@ class ThemeData {
   final double? surfaceOpacity;
   final double? surfaceBlur;
 
-  ThemeData({
+  VNLThemeData({
     required this.colorScheme,
     required this.radius,
     this.scaling = 1,
@@ -138,7 +119,7 @@ class ThemeData {
 
   Brightness get brightness => colorScheme.brightness;
 
-  ThemeData copyWith({
+  VNLThemeData copyWith({
     VNLColorScheme? colorScheme,
     double? radius,
     VNLTypography? typography,
@@ -148,7 +129,7 @@ class ThemeData {
     double? surfaceOpacity,
     double? surfaceBlur,
   }) {
-    return ThemeData(
+    return VNLThemeData(
       colorScheme: colorScheme ?? this.colorScheme,
       radius: radius ?? this.radius,
       typography: typography ?? this.typography,
@@ -160,12 +141,8 @@ class ThemeData {
     );
   }
 
-  static ThemeData lerp(
-    ThemeData a,
-    ThemeData b,
-    double t,
-  ) {
-    return ThemeData(
+  static VNLThemeData lerp(VNLThemeData a, VNLThemeData b, double t) {
+    return VNLThemeData(
       colorScheme: VNLColorScheme.lerp(a.colorScheme, b.colorScheme, t),
       radius: lerpDouble(a.radius, b.radius, t)!,
       typography: VNLTypography.lerp(a.typography, b.typography, t),
@@ -181,7 +158,7 @@ class ThemeData {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is ThemeData &&
+    return other is VNLThemeData &&
         other.colorScheme == colorScheme &&
         other.typography == typography &&
         other.radius == radius &&
@@ -193,15 +170,7 @@ class ThemeData {
 
   @override
   int get hashCode {
-    return Object.hash(
-      colorScheme,
-      typography,
-      radius,
-      scaling,
-      iconTheme,
-      surfaceOpacity,
-      surfaceBlur,
-    );
+    return Object.hash(colorScheme, typography, radius, scaling, iconTheme, surfaceOpacity, surfaceBlur);
   }
 
   @override
@@ -210,62 +179,52 @@ class ThemeData {
   }
 }
 
-class Theme extends InheritedTheme {
-  final ThemeData data;
+class VNLTheme extends InheritedTheme {
+  final VNLThemeData data;
 
-  const Theme({
-    super.key,
-    required this.data,
-    required super.child,
-  });
+  const VNLTheme({super.key, required this.data, required super.child});
 
-  static ThemeData of(BuildContext context) {
-    final theme = context.dependOnInheritedWidgetOfExactType<Theme>();
+  static VNLThemeData of(BuildContext context) {
+    final theme = context.dependOnInheritedWidgetOfExactType<VNLTheme>();
     assert(theme != null, 'No Theme found in context');
     return theme!.data;
   }
 
   @override
-  bool updateShouldNotify(covariant Theme oldWidget) {
+  bool updateShouldNotify(covariant VNLTheme oldWidget) {
     return oldWidget.data != data;
   }
 
   @override
   Widget wrap(BuildContext context, Widget child) {
-    final Theme? ancestorTheme = context.findAncestorWidgetOfExactType<Theme>();
-    return identical(this, ancestorTheme) ? child : Theme(data: data, child: child);
+    final VNLTheme? ancestorTheme = context.findAncestorWidgetOfExactType<VNLTheme>();
+    return identical(this, ancestorTheme) ? child : VNLTheme(data: data, child: child);
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<ThemeData>('data', data));
+    properties.add(DiagnosticsProperty<VNLThemeData>('data', data));
   }
 }
 
-class ThemeDataTween extends Tween<ThemeData> {
-  ThemeDataTween({required ThemeData super.begin, required super.end});
+class ThemeDataTween extends Tween<VNLThemeData> {
+  ThemeDataTween({required VNLThemeData super.begin, required super.end});
 
   @override
-  ThemeData lerp(double t) {
+  VNLThemeData lerp(double t) {
     if (end == null) {
       return begin!;
     }
-    return ThemeData.lerp(begin!, end!, t);
+    return VNLThemeData.lerp(begin!, end!, t);
   }
 }
 
 class AnimatedTheme extends ImplicitlyAnimatedWidget {
-  final ThemeData data;
+  final VNLThemeData data;
   final Widget child;
 
-  const AnimatedTheme({
-    super.key,
-    required this.data,
-    required super.duration,
-    super.curve,
-    required this.child,
-  });
+  const AnimatedTheme({super.key, required this.data, required super.duration, super.curve, required this.child});
 
   @override
   _AnimatedThemeState createState() => _AnimatedThemeState();
@@ -276,17 +235,15 @@ class _AnimatedThemeState extends AnimatedWidgetBaseState<AnimatedTheme> {
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    _data = visitor(
-      _data,
-      widget.data,
-      (dynamic value) => ThemeDataTween(begin: value as ThemeData, end: null),
-    ) as ThemeDataTween?;
+    _data =
+        visitor(_data, widget.data, (dynamic value) => ThemeDataTween(begin: value as VNLThemeData, end: null))
+            as ThemeDataTween?;
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = _data!.evaluate(animation);
-    return Theme(data: theme, child: widget.child);
+    return VNLTheme(data: theme, child: widget.child);
   }
 }
 
@@ -361,11 +318,7 @@ class IconThemeProperties {
     );
   }
 
-  static IconThemeProperties lerp(
-    IconThemeProperties a,
-    IconThemeProperties b,
-    double t,
-  ) {
+  static IconThemeProperties lerp(IconThemeProperties a, IconThemeProperties b, double t) {
     return IconThemeProperties(
       x4Small: IconThemeData.lerp(a.x4Small, b.x4Small, t),
       x3Small: IconThemeData.lerp(a.x3Small, b.x3Small, t),
@@ -401,19 +354,7 @@ class IconThemeProperties {
 
   @override
   int get hashCode {
-    return Object.hash(
-      x4Small,
-      x3Small,
-      x2Small,
-      xSmall,
-      small,
-      medium,
-      large,
-      xLarge,
-      x2Large,
-      x3Large,
-      x4Large,
-    );
+    return Object.hash(x4Small, x3Small, x2Small, xSmall, small, medium, large, xLarge, x2Large, x3Large, x4Large);
   }
 
   @override
@@ -425,11 +366,7 @@ class IconThemeProperties {
 class ComponentTheme<T> extends InheritedTheme {
   final T data;
 
-  const ComponentTheme({
-    super.key,
-    required this.data,
-    required super.child,
-  });
+  const ComponentTheme({super.key, required this.data, required super.child});
 
   @override
   Widget wrap(BuildContext context, Widget child) {
@@ -438,10 +375,7 @@ class ComponentTheme<T> extends InheritedTheme {
     if (identical(this, ancestorTheme)) {
       return child;
     }
-    return ComponentTheme<T>(
-      data: data,
-      child: child,
-    );
+    return ComponentTheme<T>(data: data, child: child);
   }
 
   static T of<T>(BuildContext context) {
@@ -464,8 +398,4 @@ class ComponentTheme<T> extends InheritedTheme {
   }
 }
 
-enum ThemeMode {
-  system,
-  light,
-  dark,
-}
+enum ThemeMode { system, light, dark }

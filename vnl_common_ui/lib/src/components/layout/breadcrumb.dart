@@ -7,13 +7,11 @@ class _ArrowSeparator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 12 * scaling),
-      child: const Icon(
-        RadixIcons.chevronRight,
-      ).iconXSmall().muted(),
+      child: const Icon(RadixIcons.chevronRight).iconXSmall().muted(),
     );
   }
 }
@@ -23,12 +21,9 @@ class _SlashSeparator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 4 * scaling),
-      child: const Text('/').small().muted(),
-    );
+    return Padding(padding: EdgeInsets.symmetric(horizontal: 4 * scaling), child: const Text('/').small().muted());
   }
 }
 
@@ -38,35 +33,26 @@ class VNLBreadcrumb extends StatelessWidget {
   final List<Widget> children;
   final Widget separator;
 
-  const VNLBreadcrumb({
-    super.key,
-    required this.children,
-    required this.separator,
-  });
+  const VNLBreadcrumb({super.key, required this.children, required this.separator});
 
   @override
   Widget build(BuildContext context) {
     return ScrollConfiguration(
-      behavior: ScrollConfiguration.of(context)
-          .copyWith(scrollbars: false, dragDevices: {PointerDeviceKind.touch}),
+      behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false, dragDevices: {PointerDeviceKind.touch}),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            if (children.length == 1) children[0].medium().foreground(),
-            if (children.length > 1)
-              for (var i = 0; i < children.length; i++)
-                if (i == children.length - 1)
-                  children[i].medium().foreground()
-                else
-                  Row(
-                    children: [
-                      children[i].medium(),
-                      separator,
-                    ],
-                  ),
-          ],
-        ).small().muted(),
+        child:
+            Row(
+              children: [
+                if (children.length == 1) children[0].medium().foreground(),
+                if (children.length > 1)
+                  for (var i = 0; i < children.length; i++)
+                    if (i == children.length - 1)
+                      children[i].medium().foreground()
+                    else
+                      Row(children: [children[i].medium(), separator]),
+              ],
+            ).small().muted(),
       ),
     );
   }

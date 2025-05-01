@@ -7,43 +7,24 @@ class VNLAlert extends StatelessWidget {
   final Widget? trailing;
   final bool destructive;
 
-  const VNLAlert(
-      {super.key,
-      this.leading,
-      this.title,
-      this.content,
-      this.trailing,
-      this.destructive = false});
+  const VNLAlert({super.key, this.leading, this.title, this.content, this.trailing, this.destructive = false});
 
-  const VNLAlert.destructive({
-    super.key,
-    this.leading,
-    this.title,
-    this.content,
-    this.trailing,
-  }) : destructive = true;
+  const VNLAlert.destructive({super.key, this.leading, this.title, this.content, this.trailing}) : destructive = true;
 
   @override
   Widget build(BuildContext context) {
     if (destructive) {
-      var destructive2 = Theme.of(context).colorScheme.destructive;
+      var destructive2 = VNLTheme.of(context).colorScheme.destructive;
       return DefaultTextStyle.merge(
-        style: TextStyle(
-          color: destructive2,
-        ),
-        child: IconTheme.merge(
-          data: IconThemeData(
-            color: destructive2,
-          ),
-          child: _build(context),
-        ),
+        style: TextStyle(color: destructive2),
+        child: IconTheme.merge(data: IconThemeData(color: destructive2), child: _build(context)),
       );
     }
     return _build(context);
   }
 
   Widget _build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     var scheme = theme.colorScheme;
 
@@ -51,14 +32,8 @@ class VNLAlert extends StatelessWidget {
       backgroundColor: scheme.background,
       borderColor: destructive ? scheme.destructive : null,
       child: Container(
-        padding: EdgeInsets.symmetric(
-            horizontal: 16 * scaling, vertical: 12 * scaling),
-        child: Basic(
-          leading: leading,
-          title: title,
-          content: content,
-          trailing: trailing,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 16 * scaling, vertical: 12 * scaling),
+        child: Basic(leading: leading, title: title, content: content, trailing: trailing),
       ),
     );
   }

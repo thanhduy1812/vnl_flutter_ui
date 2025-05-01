@@ -5,12 +5,7 @@ class VNLMenubar extends StatefulWidget {
   final Offset? popoverOffset;
   final bool border;
 
-  const VNLMenubar({
-    super.key,
-    this.popoverOffset,
-    this.border = true,
-    required this.children,
-  });
+  const VNLMenubar({super.key, this.popoverOffset, this.border = true, required this.children});
 
   @override
   State<VNLMenubar> createState() => MenubarState();
@@ -19,7 +14,7 @@ class VNLMenubar extends StatefulWidget {
 class MenubarState extends State<VNLMenubar> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     if (widget.border) {
       return OutlinedContainer(
         borderColor: theme.colorScheme.border,
@@ -35,7 +30,7 @@ class MenubarState extends State<VNLMenubar> {
     return buildContainer(context, theme);
   }
 
-  Widget buildContainer(BuildContext context, ThemeData theme) {
+  Widget buildContainer(BuildContext context, VNLThemeData theme) {
     return Data.inherit(
       data: this,
       child: MenuGroup(

@@ -64,12 +64,11 @@ class _ShadcnScrollbar extends RawScrollbar {
     super.interactive,
     super.scrollbarOrientation,
   }) : super(
-          fadeDuration: _kScrollbarFadeDuration,
-          timeToFade: _kScrollbarTimeToFade,
-          pressDuration: Duration.zero,
-          notificationPredicate:
-              notificationPredicate ?? defaultScrollNotificationPredicate,
-        );
+         fadeDuration: _kScrollbarFadeDuration,
+         timeToFade: _kScrollbarTimeToFade,
+         pressDuration: Duration.zero,
+         notificationPredicate: notificationPredicate ?? defaultScrollNotificationPredicate,
+       );
 
   @override
   _ShadcnScrollbarState createState() => _ShadcnScrollbarState();
@@ -78,12 +77,12 @@ class _ShadcnScrollbar extends RawScrollbar {
 class _ShadcnScrollbarState extends RawScrollbarState<_ShadcnScrollbar> {
   late AnimationController _hoverAnimationController;
   bool _hoverIsActive = false;
-  late ThemeData _theme;
+  late VNLThemeData _theme;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _theme = Theme.of(context);
+    _theme = VNLTheme.of(context);
   }
 
   @override
@@ -92,10 +91,7 @@ class _ShadcnScrollbarState extends RawScrollbarState<_ShadcnScrollbar> {
   @override
   void initState() {
     super.initState();
-    _hoverAnimationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 200),
-    );
+    _hoverAnimationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
     _hoverAnimationController.addListener(() {
       updateScrollbarPainter();
     });

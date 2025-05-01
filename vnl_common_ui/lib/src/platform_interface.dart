@@ -1,8 +1,7 @@
 import '../vnl_ui.dart';
 
 class VNLookPlatformImplementations {
-  void onAppInitialized() {
-  }
+  void onAppInitialized() {}
 
-  void onThemeChanged(ThemeData theme) {}
+  void onThemeChanged(VNLThemeData theme) {}
 }

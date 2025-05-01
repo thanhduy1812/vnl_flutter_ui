@@ -15,12 +15,7 @@ class VNLProgressTheme {
   final double? minHeight;
 
   /// Creates a [ProgressTheme].
-  const VNLProgressTheme({
-    this.color,
-    this.backgroundColor,
-    this.borderRadius,
-    this.minHeight,
-  });
+  const VNLProgressTheme({this.color, this.backgroundColor, this.borderRadius, this.minHeight});
 
   /// Creates a copy of this theme but with the given fields replaced with the new values.
   VNLProgressTheme copyWith({
@@ -48,12 +43,7 @@ class VNLProgressTheme {
   }
 
   @override
-  int get hashCode => Object.hash(
-        color,
-        backgroundColor,
-        borderRadius,
-        minHeight,
-      );
+  int get hashCode => Object.hash(color, backgroundColor, borderRadius, minHeight);
 }
 
 /// A progress indicator that shows the progress of a task.
@@ -97,7 +87,7 @@ class VNLProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final compTheme = ComponentTheme.maybeOf<VNLProgressTheme>(context);
     return LinearProgressIndicator(
       value: normalizedValue,

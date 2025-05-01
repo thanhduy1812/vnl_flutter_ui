@@ -1,4 +1,3 @@
-
 import 'package:meta/meta.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
@@ -33,20 +32,24 @@ class PageViewController<T extends PageViewModel> extends BaseViewController<T> 
 class PageViewControllerState<S extends PageViewController> extends BaseViewState<S> {
   @override
   Widget buildWidget(BuildContext context) {
-    return VNLScaffold(
-      key: widget.viewModel.scaffoldKey,
-      headers: widget.buildHeaders(context),
-      footers: widget.buildFooters(context),
-      loadingProgressIndeterminate: widget.viewModel.loadingProgressIndeterminate ?? false,
-      loadingProgress: widget.viewModel.loadingProgress,
-      floatingHeader: widget.viewModel.floatingHeader ?? false,
-      floatingFooter: widget.viewModel.floatingFooter ?? false,
-      backgroundColor: widget.viewModel.backgroundColor,
-      headerBackgroundColor: widget.viewModel.headerBackgroundColor,
-      footerBackgroundColor: widget.viewModel.footerBackgroundColor,
-      showLoadingSparks: widget.viewModel.showLoadingSparks ?? false,
-      resizeToAvoidBottomInset: widget.viewModel.resizeToAvoidBottomInset ?? true,
-      child: widget.buildBody(context),
+    return StageContainer(
+      builder: (context, padding) {
+        return VNLScaffold(
+          key: widget.viewModel.scaffoldKey,
+          headers: widget.buildHeaders(context),
+          footers: widget.buildFooters(context),
+          loadingProgressIndeterminate: widget.viewModel.loadingProgressIndeterminate ?? false,
+          loadingProgress: widget.viewModel.loadingProgress,
+          floatingHeader: widget.viewModel.floatingHeader ?? false,
+          floatingFooter: widget.viewModel.floatingFooter ?? false,
+          backgroundColor: widget.viewModel.backgroundColor,
+          headerBackgroundColor: widget.viewModel.headerBackgroundColor,
+          footerBackgroundColor: widget.viewModel.footerBackgroundColor,
+          showLoadingSparks: widget.viewModel.showLoadingSparks ?? false,
+          resizeToAvoidBottomInset: widget.viewModel.resizeToAvoidBottomInset ?? true,
+          child: widget.buildBody(context),
+        );
+      },
     );
   }
 }

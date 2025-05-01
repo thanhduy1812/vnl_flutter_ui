@@ -52,10 +52,7 @@ class FocusOutline extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: getAdjustedBorderRadius(textDirection),
-                  border: Border.all(
-                    color: Theme.of(context).colorScheme.ring,
-                    width: width,
-                  ),
+                  border: Border.all(color: VNLTheme.of(context).colorScheme.ring, width: width),
                 ),
               ),
             ),

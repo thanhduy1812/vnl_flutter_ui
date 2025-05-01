@@ -5,8 +5,7 @@ import '../layout/focus_outline.dart';
 
 const kSwitchDuration = Duration(milliseconds: 100);
 
-class SwitchController extends ValueNotifier<bool>
-    with ComponentController<bool> {
+class SwitchController extends ValueNotifier<bool> with ComponentController<bool> {
   SwitchController([super.value = false]);
 
   void toggle() {
@@ -103,7 +102,7 @@ class _SwitchState extends State<VNLSwitch> with FormValueSupplier<bool, VNLSwit
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     return FocusOutline(
       focused: _focusing,
@@ -111,11 +110,12 @@ class _SwitchState extends State<VNLSwitch> with FormValueSupplier<bool, VNLSwit
       align: 3 * scaling,
       width: 2 * scaling,
       child: GestureDetector(
-        onTap: _enabled
-            ? () {
-                widget.onChanged?.call(!widget.value);
-              }
-            : null,
+        onTap:
+            _enabled
+                ? () {
+                  widget.onChanged?.call(!widget.value);
+                }
+                : null,
         child: FocusableActionDetector(
           enabled: _enabled,
           onShowFocusHighlight: (value) {
@@ -135,9 +135,7 @@ class _SwitchState extends State<VNLSwitch> with FormValueSupplier<bool, VNLSwit
             SingleActivator(LogicalKeyboardKey.enter): ActivateIntent(),
             SingleActivator(LogicalKeyboardKey.space): ActivateIntent(),
           },
-          mouseCursor: _enabled
-              ? SystemMouseCursors.click
-              : SystemMouseCursors.forbidden,
+          mouseCursor: _enabled ? SystemMouseCursors.click : SystemMouseCursors.forbidden,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
@@ -151,9 +149,10 @@ class _SwitchState extends State<VNLSwitch> with FormValueSupplier<bool, VNLSwit
                 padding: EdgeInsets.all(2 * scaling),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(theme.radiusXl),
-                  color: !_enabled
-                      ? theme.colorScheme.muted
-                      : widget.value
+                  color:
+                      !_enabled
+                          ? theme.colorScheme.muted
+                          : widget.value
                           ? theme.colorScheme.primary
                           : theme.colorScheme.border,
                 ),

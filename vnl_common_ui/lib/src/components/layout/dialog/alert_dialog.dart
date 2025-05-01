@@ -31,11 +31,11 @@ class VNLAlertDialog extends StatefulWidget {
 class _AlertDialogState extends State<VNLAlertDialog> {
   @override
   Widget build(BuildContext context) {
-    var themeData = Theme.of(context);
+    var themeData = VNLTheme.of(context);
     var scaling = themeData.scaling;
     return ModalBackdrop(
       borderRadius: themeData.borderRadiusXxl,
-      barrierColor: widget.barrierColor ?? Colors.black.withValues(alpha: 0.8),
+      barrierColor: widget.barrierColor ?? VNLColors.black.withValues(alpha: 0.8),
       surfaceClip: ModalBackdrop.shouldClipSurface(widget.surfaceOpacity ?? themeData.surfaceOpacity),
       child: ModalContainer(
         fillColor: themeData.colorScheme.popover,

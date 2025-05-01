@@ -147,7 +147,7 @@ class _StarRatingState extends State<VNLStarRating> with FormValueSupplier<doubl
   }
 
   Widget _buildStar(BuildContext context, [bool focusBorder = false]) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     var starValleyRounding = widget.starValleyRounding ?? 0.0;
     var starSquash = widget.starSquash ?? 0.0;
@@ -158,7 +158,7 @@ class _StarRatingState extends State<VNLStarRating> with FormValueSupplier<doubl
       width: starSize * scaling,
       height: starSize * scaling,
       decoration: ShapeDecoration(
-        color: !focusBorder ? Colors.white : null,
+        color: !focusBorder ? VNLColors.white : null,
         shape: StarBorder(
           points: widget.starPoints,
           pointRounding: widget.starPointRounding ?? (theme.radius / 2),
@@ -166,10 +166,14 @@ class _StarRatingState extends State<VNLStarRating> with FormValueSupplier<doubl
           squash: starSquash,
           innerRadiusRatio: starInnerRadiusRatio,
           rotation: starRotation,
-          side: focusBorder && _focused
-              ? BorderSide(
-                  color: theme.colorScheme.ring, width: 2.0 * scaling, strokeAlign: BorderSide.strokeAlignOutside)
-              : BorderSide.none,
+          side:
+              focusBorder && _focused
+                  ? BorderSide(
+                    color: theme.colorScheme.ring,
+                    width: 2.0 * scaling,
+                    strokeAlign: BorderSide.strokeAlignOutside,
+                  )
+                  : BorderSide.none,
         ),
       ),
     );
@@ -184,7 +188,7 @@ class _StarRatingState extends State<VNLStarRating> with FormValueSupplier<doubl
       value: roundedValue,
       duration: kDefaultDuration,
       builder: (context, roundedValue, child) {
-        final theme = Theme.of(context);
+        final theme = VNLTheme.of(context);
         final scaling = theme.scaling;
         var starSize = widget.starSize != null ? widget.starSize! : 24.0 * scaling;
         var starSpacing = widget.starSpacing != null ? widget.starSpacing! : 5.0 * scaling;
@@ -294,10 +298,7 @@ class _StarRatingState extends State<VNLStarRating> with FormValueSupplier<doubl
                                     (_enabled ? theme.colorScheme.primary : theme.colorScheme.mutedForeground),
                                 widget.backgroundColor ?? theme.colorScheme.muted,
                               ],
-                              stops: [
-                                (roundedValue - i).clamp(0.0, 1.0),
-                                (roundedValue - i).clamp(0.0, 1.0),
-                              ],
+                              stops: [(roundedValue - i).clamp(0.0, 1.0), (roundedValue - i).clamp(0.0, 1.0)],
                               begin:
                                   widget.direction == Axis.horizontal ? Alignment.centerLeft : Alignment.bottomCenter,
                               end: widget.direction == Axis.horizontal ? Alignment.centerRight : Alignment.topCenter,

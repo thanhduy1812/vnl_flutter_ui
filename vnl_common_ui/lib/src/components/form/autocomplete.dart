@@ -38,11 +38,7 @@ class _AutoCompleteItem extends StatefulWidget {
   final bool selected;
   final VoidCallback onSelected;
 
-  const _AutoCompleteItem({
-    required this.suggestion,
-    required this.selected,
-    required this.onSelected,
-  });
+  const _AutoCompleteItem({required this.suggestion, required this.selected, required this.onSelected});
 
   @override
   State<_AutoCompleteItem> createState() => _AutoCompleteItemState();
@@ -107,33 +103,32 @@ class _AutoCompleteState extends State<VNLAutoComplete> {
         context: context,
         handler: const PopoverOverlayHandler(),
         builder: (context) {
-          final theme = Theme.of(context);
+          final theme = VNLTheme.of(context);
           return TextFieldTapRegion(
             child: ConstrainedBox(
-              constraints: widget.popoverConstraints ??
-                  BoxConstraints(
-                    maxHeight: 300 * theme.scaling,
-                  ),
+              constraints: widget.popoverConstraints ?? BoxConstraints(maxHeight: 300 * theme.scaling),
               child: SurfaceCard(
                 padding: const EdgeInsets.all(4) * theme.scaling,
                 child: AnimatedBuilder(
-                    animation: Listenable.merge([_suggestions, _selectedIndex]),
-                    builder: (context, child) {
-                      return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: _suggestions.value.length,
-                          itemBuilder: (context, index) {
-                            final suggestion = _suggestions.value[index];
-                            return _AutoCompleteItem(
-                              suggestion: suggestion,
-                              selected: index == _selectedIndex.value,
-                              onSelected: () {
-                                _selectedIndex.value = index;
-                                _handleProceed();
-                              },
-                            );
-                          });
-                    }),
+                  animation: Listenable.merge([_suggestions, _selectedIndex]),
+                  builder: (context, child) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: _suggestions.value.length,
+                      itemBuilder: (context, index) {
+                        final suggestion = _suggestions.value[index];
+                        return _AutoCompleteItem(
+                          suggestion: suggestion,
+                          selected: index == _selectedIndex.value,
+                          onSelected: () {
+                            _selectedIndex.value = index;
+                            _handleProceed();
+                          },
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
             ),
           );
@@ -152,9 +147,7 @@ class _AutoCompleteState extends State<VNLAutoComplete> {
     }
     _popoverController.close();
     var suggestion = _suggestions.value[selectedIndex];
-    suggestion = widget.completer(
-      suggestion,
-    );
+    suggestion = widget.completer(suggestion);
     switch (widget.mode) {
       case AutoCompleteMode.append:
         TextFieldAppendTextIntent intent = TextFieldAppendTextIntent(text: suggestion);
@@ -195,20 +188,22 @@ class _AutoCompleteState extends State<VNLAutoComplete> {
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-        listenable: _selectedIndex,
-        builder: (context, child) {
-          return FocusableActionDetector(
-            onFocusChange: _onFocusChanged,
-            shortcuts: _popoverController.hasOpenPopover
-                ? {
+      listenable: _selectedIndex,
+      builder: (context, child) {
+        return FocusableActionDetector(
+          onFocusChange: _onFocusChanged,
+          shortcuts:
+              _popoverController.hasOpenPopover
+                  ? {
                     LogicalKeySet(LogicalKeyboardKey.arrowDown): const NavigateSuggestionIntent(1),
                     LogicalKeySet(LogicalKeyboardKey.arrowUp): const NavigateSuggestionIntent(-1),
                     if (widget.suggestions.isNotEmpty && _selectedIndex.value != -1)
                       LogicalKeySet(LogicalKeyboardKey.tab): const AcceptSuggestionIntent(),
                   }
-                : null,
-            actions: _popoverController.hasOpenPopover
-                ? {
+                  : null,
+          actions:
+              _popoverController.hasOpenPopover
+                  ? {
                     NavigateSuggestionIntent: CallbackAction<NavigateSuggestionIntent>(
                       onInvoke: (intent) {
                         final direction = intent.direction;
@@ -229,18 +224,15 @@ class _AutoCompleteState extends State<VNLAutoComplete> {
                       },
                     ),
                   }
-                : null,
-            child: widget.child,
-          );
-        });
+                  : null,
+          child: widget.child,
+        );
+      },
+    );
   }
 }
 
-enum AutoCompleteMode {
-  append,
-  replaceWord,
-  replaceAll,
-}
+enum AutoCompleteMode { append, replaceWord, replaceAll }
 
 class NavigateSuggestionIntent extends Intent {
   final int direction;

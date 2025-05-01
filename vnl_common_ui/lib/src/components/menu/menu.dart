@@ -22,10 +22,7 @@ class MenuShortcut extends StatelessWidget {
       }
       children.add(displayMapper!.buildKeyboardDisplay(context, keys[i]));
     }
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: children,
-    ).xSmall().muted();
+    return Row(mainAxisSize: MainAxisSize.min, children: children).xSmall().muted();
   }
 }
 
@@ -41,12 +38,7 @@ class MenuRadioGroup<T> extends StatelessWidget implements MenuItem {
   final ContextedValueChanged<T>? onChanged;
   final List<Widget> children;
 
-  const MenuRadioGroup({
-    super.key,
-    required this.value,
-    required this.onChanged,
-    required this.children,
-  });
+  const MenuRadioGroup({super.key, required this.value, required this.onChanged, required this.children});
 
   @override
   bool get hasLeading => children.isNotEmpty;
@@ -90,21 +82,20 @@ class MenuRadio<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     final radioGroup = Data.maybeOf<MenuRadioGroup<T>>(context);
     assert(radioGroup != null, 'MenuRadio must be a child of MenuRadioGroup');
     return Data<MenuRadioGroup<T>>.boundary(
       child: MenuButton(
-        leading: radioGroup!.value == value
-            ? SizedBox(
-                width: 16 * scaling,
-                height: 16 * scaling,
-                child: const Icon(
-                  RadixIcons.dotFilled,
-                ).iconSmall(),
-              )
-            : SizedBox(width: 16 * scaling),
+        leading:
+            radioGroup!.value == value
+                ? SizedBox(
+                  width: 16 * scaling,
+                  height: 16 * scaling,
+                  child: const Icon(RadixIcons.dotFilled).iconSmall(),
+                )
+                : SizedBox(width: 16 * scaling),
         onPressed: (context) {
           radioGroup.onChanged?.call(context, value);
         },
@@ -123,29 +114,31 @@ class MenuDivider extends StatelessWidget implements MenuItem {
   @override
   Widget build(BuildContext context) {
     final menuGroupData = Data.maybeOf<MenuGroupData>(context);
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     return AnimatedPadding(
       duration: kDefaultDuration,
-      padding: (menuGroupData == null || menuGroupData.direction == Axis.vertical
+      padding:
+          (menuGroupData == null || menuGroupData.direction == Axis.vertical
               ? const EdgeInsets.symmetric(vertical: 4)
               : const EdgeInsets.symmetric(horizontal: 4)) *
           scaling,
-      child: menuGroupData == null || menuGroupData.direction == Axis.vertical
-          ? VNLDivider(
-              height: 1 * scaling,
-              thickness: 1 * scaling,
-              indent: -4 * scaling,
-              endIndent: -4 * scaling,
-              color: theme.colorScheme.border,
-            )
-          : VerticalDivider(
-              width: 1 * scaling,
-              thickness: 1 * scaling,
-              color: theme.colorScheme.border,
-              indent: -4 * scaling,
-              endIndent: -4 * scaling,
-            ),
+      child:
+          menuGroupData == null || menuGroupData.direction == Axis.vertical
+              ? VNLDivider(
+                height: 1 * scaling,
+                thickness: 1 * scaling,
+                indent: -4 * scaling,
+                endIndent: -4 * scaling,
+                color: theme.colorScheme.border,
+              )
+              : VerticalDivider(
+                width: 1 * scaling,
+                thickness: 1 * scaling,
+                color: theme.colorScheme.border,
+                indent: -4 * scaling,
+                endIndent: -4 * scaling,
+              ),
     );
   }
 
@@ -209,12 +202,7 @@ class MenuLabel extends StatelessWidget implements MenuItem {
   final Widget? trailing;
   final Widget? leading;
 
-  const MenuLabel({
-    super.key,
-    required this.child,
-    this.trailing,
-    this.leading,
-  });
+  const MenuLabel({super.key, required this.child, this.trailing, this.leading});
 
   @override
   bool get hasLeading => leading != null;
@@ -224,7 +212,7 @@ class MenuLabel extends StatelessWidget implements MenuItem {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     final menuGroupData = Data.maybeOf<MenuGroupData>(context);
     assert(menuGroupData != null, 'MenuLabel must be a child of MenuGroup');
@@ -232,15 +220,12 @@ class MenuLabel extends StatelessWidget implements MenuItem {
       padding: const EdgeInsets.only(left: 8, top: 6, right: 6, bottom: 6) * scaling + menuGroupData!.itemPadding,
       child: Basic(
         contentSpacing: 8 * scaling,
-        leading: leading == null && menuGroupData.hasLeading
-            ? SizedBox(width: 16 * scaling)
-            : leading == null
+        leading:
+            leading == null && menuGroupData.hasLeading
+                ? SizedBox(width: 16 * scaling)
+                : leading == null
                 ? null
-                : SizedBox(
-                    width: 16 * scaling,
-                    height: 16 * scaling,
-                    child: leading!.iconSmall(),
-                  ),
+                : SizedBox(width: 16 * scaling, height: 16 * scaling, child: leading!.iconSmall()),
         trailing: trailing,
         content: child.semiBold(),
         trailingAlignment: Alignment.center,
@@ -279,18 +264,13 @@ class MenuCheckbox extends StatelessWidget implements MenuItem {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     return MenuButton(
-      leading: value
-          ? SizedBox(
-              width: 16 * scaling,
-              height: 16 * scaling,
-              child: const Icon(
-                RadixIcons.check,
-              ).iconSmall(),
-            )
-          : SizedBox(width: 16 * scaling),
+      leading:
+          value
+              ? SizedBox(width: 16 * scaling, height: 16 * scaling, child: const Icon(RadixIcons.check).iconSmall())
+              : SizedBox(width: 16 * scaling),
       onPressed: (context) {
         onChanged?.call(context, !value);
       },
@@ -336,7 +316,7 @@ class _MenuButtonState extends State<MenuButton> {
     final menuGroupData = Data.maybeOf<MenuGroupData>(context);
     assert(menuGroupData != null, 'MenuButton must be a child of MenuGroup');
     // final dialogOverlayHandler = Data.maybeOf<DialogOverlayHandler>(context);
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     final isSheetOverlay = SheetOverlayHandler.isSheetOverlay(context);
     final isDialogOverlay = DialogOverlayHandler.isDialogOverlay(context);
@@ -351,11 +331,9 @@ class _MenuButtonState extends State<MenuButton> {
         dismissBackdropFocus: false,
         modal: true,
         handler: MenuOverlayHandler(overlayManager),
-        overlayBarrier: OverlayBarrier(
-          borderRadius: BorderRadius.circular(theme.radiusMd),
-        ),
+        overlayBarrier: OverlayBarrier(borderRadius: BorderRadius.circular(theme.radiusMd)),
         builder: (context) {
-          final theme = Theme.of(context);
+          final theme = VNLTheme.of(context);
           final scaling = theme.scaling;
           var itemPadding = menuGroupData.itemPadding;
           final isSheetOverlay = SheetOverlayHandler.isSheetOverlay(context);
@@ -363,27 +341,28 @@ class _MenuButtonState extends State<MenuButton> {
             itemPadding = const EdgeInsets.symmetric(horizontal: 8) * scaling;
           }
           return ConstrainedBox(
-            constraints: const BoxConstraints(
+            constraints:
+                const BoxConstraints(
                   minWidth: 192, // 12rem
                 ) *
                 scaling,
             child: AnimatedBuilder(
-                animation: _children,
-                builder: (context, child) {
-                  return MenuGroup(
-                      direction: menuGroupData.direction,
-                      parent: menuGroupData,
-                      onDismissed: menuGroupData.onDismissed,
-                      regionGroupId: menuGroupData.regionGroupId,
-                      subMenuOffset: const Offset(8, -4 + -1) * scaling,
-                      itemPadding: itemPadding,
-                      builder: (context, children) {
-                        return MenuPopup(
-                          children: children,
-                        );
-                      },
-                      children: _children.value);
-                }),
+              animation: _children,
+              builder: (context, child) {
+                return MenuGroup(
+                  direction: menuGroupData.direction,
+                  parent: menuGroupData,
+                  onDismissed: menuGroupData.onDismissed,
+                  regionGroupId: menuGroupData.regionGroupId,
+                  subMenuOffset: const Offset(8, -4 + -1) * scaling,
+                  itemPadding: itemPadding,
+                  builder: (context, children) {
+                    return MenuPopup(children: children);
+                  },
+                  children: _children.value,
+                );
+              },
+            ),
           );
         },
         alignment: Alignment.topLeft,
@@ -397,88 +376,85 @@ class _MenuButtonState extends State<MenuButton> {
         child: TapRegion(
           groupId: menuGroupData!.root,
           child: AnimatedBuilder(
-              animation: menuData!.popoverController,
-              builder: (context, child) {
-                return VNLButton(
-                  disableFocusOutline: true,
-                  alignment:
-                      menuGroupData.direction == Axis.vertical ? AlignmentDirectional.centerStart : Alignment.center,
-                  style: (menuBarData == null ? ButtonVariance.menu : ButtonVariance.menubar).copyWith(
-                    padding: (context, states, value) {
-                      return value.optionallyResolve(context) + menuGroupData.itemPadding;
-                    },
-                    decoration: (context, states, value) {
-                      final theme = Theme.of(context);
-                      return (value as BoxDecoration).copyWith(
-                        color: menuData.popoverController.hasOpenPopover ? theme.colorScheme.accent : null,
-                        borderRadius: BorderRadius.circular(theme.radiusMd),
-                      );
-                    },
-                  ),
-                  trailing: menuBarData != null
-                      ? widget.trailing
-                      : widget.trailing != null || (widget.subMenu != null && menuBarData == null)
-                          ? Row(
-                              children: [
-                                if (widget.trailing != null) widget.trailing!,
-                                if (widget.subMenu != null && menuBarData == null)
-                                  const Icon(
-                                    RadixIcons.chevronRight,
-                                  ).iconSmall(),
-                              ],
-                            ).gap(8 * scaling)
-                          : null,
-                  leading: widget.leading == null && menuGroupData.hasLeading && menuBarData == null
-                      ? SizedBox(width: 16 * scaling)
-                      : widget.leading == null
-                          ? null
-                          : SizedBox(
-                              width: 16 * scaling,
-                              height: 16 * scaling,
-                              child: widget.leading!.iconSmall(),
-                            ),
-                  disableTransition: true,
-                  enabled: widget.enabled,
-                  focusNode: _focusNode,
-                  onHover: (value) {
-                    if (value) {
-                      if ((menuBarData == null || menuGroupData.hasOpenPopovers) &&
-                          widget.subMenu != null &&
-                          widget.subMenu!.isNotEmpty) {
-                        if (!menuData.popoverController.hasOpenPopover && !isIndependentOverlay) {
-                          openSubMenu(context);
-                        }
-                      } else {
-                        menuGroupData.closeOthers();
-                      }
-                    }
+            animation: menuData!.popoverController,
+            builder: (context, child) {
+              return VNLButton(
+                disableFocusOutline: true,
+                alignment:
+                    menuGroupData.direction == Axis.vertical ? AlignmentDirectional.centerStart : Alignment.center,
+                style: (menuBarData == null ? ButtonVariance.menu : ButtonVariance.menubar).copyWith(
+                  padding: (context, states, value) {
+                    return value.optionallyResolve(context) + menuGroupData.itemPadding;
                   },
-                  onFocus: (value) {
-                    if (value) {
-                      if (widget.subMenu != null && widget.subMenu!.isNotEmpty) {
-                        if (!menuData.popoverController.hasOpenPopover && !isIndependentOverlay) {
-                          openSubMenu(context);
-                        }
-                      } else {
-                        menuGroupData.closeOthers();
-                      }
-                    }
+                  decoration: (context, states, value) {
+                    final theme = VNLTheme.of(context);
+                    return (value as BoxDecoration).copyWith(
+                      color: menuData.popoverController.hasOpenPopover ? theme.colorScheme.accent : null,
+                      borderRadius: BorderRadius.circular(theme.radiusMd),
+                    );
                   },
-                  onPressed: () {
-                    widget.onPressed?.call(context);
-                    if (widget.subMenu != null && widget.subMenu!.isNotEmpty) {
-                      if (!menuData.popoverController.hasOpenPopover) {
+                ),
+                trailing:
+                    menuBarData != null
+                        ? widget.trailing
+                        : widget.trailing != null || (widget.subMenu != null && menuBarData == null)
+                        ? Row(
+                          children: [
+                            if (widget.trailing != null) widget.trailing!,
+                            if (widget.subMenu != null && menuBarData == null)
+                              const Icon(RadixIcons.chevronRight).iconSmall(),
+                          ],
+                        ).gap(8 * scaling)
+                        : null,
+                leading:
+                    widget.leading == null && menuGroupData.hasLeading && menuBarData == null
+                        ? SizedBox(width: 16 * scaling)
+                        : widget.leading == null
+                        ? null
+                        : SizedBox(width: 16 * scaling, height: 16 * scaling, child: widget.leading!.iconSmall()),
+                disableTransition: true,
+                enabled: widget.enabled,
+                focusNode: _focusNode,
+                onHover: (value) {
+                  if (value) {
+                    if ((menuBarData == null || menuGroupData.hasOpenPopovers) &&
+                        widget.subMenu != null &&
+                        widget.subMenu!.isNotEmpty) {
+                      if (!menuData.popoverController.hasOpenPopover && !isIndependentOverlay) {
                         openSubMenu(context);
                       }
                     } else {
-                      if (widget.autoClose) {
-                        menuGroupData.closeAll();
-                      }
+                      menuGroupData.closeOthers();
                     }
-                  },
-                  child: widget.child,
-                );
-              }),
+                  }
+                },
+                onFocus: (value) {
+                  if (value) {
+                    if (widget.subMenu != null && widget.subMenu!.isNotEmpty) {
+                      if (!menuData.popoverController.hasOpenPopover && !isIndependentOverlay) {
+                        openSubMenu(context);
+                      }
+                    } else {
+                      menuGroupData.closeOthers();
+                    }
+                  }
+                },
+                onPressed: () {
+                  widget.onPressed?.call(context);
+                  if (widget.subMenu != null && widget.subMenu!.isNotEmpty) {
+                    if (!menuData.popoverController.hasOpenPopover) {
+                      openSubMenu(context);
+                    }
+                  } else {
+                    if (widget.autoClose) {
+                      menuGroupData.closeAll();
+                    }
+                  }
+                },
+                child: widget.child,
+              );
+            },
+          ),
         ),
       ),
     );
@@ -495,8 +471,16 @@ class MenuGroupData {
   final Axis direction;
   final EdgeInsets itemPadding;
 
-  MenuGroupData(this.parent, this.children, this.hasLeading, this.subMenuOffset, this.onDismissed, this.regionGroupId,
-      this.direction, this.itemPadding);
+  MenuGroupData(
+    this.parent,
+    this.children,
+    this.hasLeading,
+    this.subMenuOffset,
+    this.onDismissed,
+    this.regionGroupId,
+    this.direction,
+    this.itemPadding,
+  );
 
   bool get hasOpenPopovers {
     for (final child in children) {
@@ -545,13 +529,7 @@ class MenuGroupData {
   }
 
   @override
-  int get hashCode => Object.hash(
-        children,
-        parent,
-        hasLeading,
-        subMenuOffset,
-        onDismissed,
-      );
+  int get hashCode => Object.hash(children, parent, hasLeading, subMenuOffset, onDismissed);
 
   @override
   String toString() {
@@ -664,12 +642,7 @@ class _MenuGroupState extends State<MenuGroup> {
       if (child.hasLeading) {
         hasLeading = true;
       }
-      children.add(
-        Data<MenuData>.inherit(
-          data: data,
-          child: child,
-        ),
-      );
+      children.add(Data<MenuData>.inherit(data: data, child: child));
     }
     return Shortcuts(
       shortcuts: {

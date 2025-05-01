@@ -30,7 +30,7 @@ Future<T?> showCommandDialog<T>({
   return showDialog<T>(
     context: context,
     builder: (context) {
-      final theme = Theme.of(context);
+      final theme = VNLTheme.of(context);
       final scaling = theme.scaling;
       surfaceOpacity ??= theme.surfaceOpacity;
       surfaceBlur ??= theme.surfaceBlur;
@@ -117,7 +117,7 @@ class _CommandState extends State<VNLCommand> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     bool canPop = Navigator.of(context).canPop();
     return FocusScope(
       child: IntrinsicWidth(
@@ -131,9 +131,7 @@ class _CommandState extends State<VNLCommand> {
             children: [
               Row(
                 children: [
-                  const Icon(
-                    LucideIcons.search,
-                  ).iconSmall().iconMutedForeground(),
+                  const Icon(LucideIcons.search).iconSmall().iconMutedForeground(),
                   Expanded(
                     child: VNLTextField(
                       autofocus: true,
@@ -149,46 +147,45 @@ class _CommandState extends State<VNLCommand> {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: const Icon(
-                        LucideIcons.x,
-                      ).iconSmall(),
+                      child: const Icon(LucideIcons.x).iconSmall(),
                     ),
                 ],
               ).withPadding(horizontal: theme.scaling * 12),
               const VNLDivider(),
               Expanded(
                 child: ValueListenableBuilder(
-                    valueListenable: query,
-                    builder: (context, value, child) {
-                      return StreamBuilder(
-                        stream: _request(context, value),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            List<Widget> items = List.of(snapshot.data!);
-                            if (snapshot.connectionState == ConnectionState.active) {
-                              items.add(IconTheme.merge(
-                                data: IconThemeData(
-                                  color: theme.colorScheme.mutedForeground,
-                                ),
-                                child: const Center(child: CircularProgressIndicator())
-                                    .withPadding(vertical: theme.scaling * 24),
-                              ));
-                            } else if (items.isEmpty) {
-                              return widget.emptyBuilder?.call(context) ?? const CommandEmpty();
-                            }
-                            return ListView.separated(
-                              separatorBuilder: (context, index) => const VNLDivider(),
-                              shrinkWrap: true,
-                              itemCount: items.length,
-                              itemBuilder: (context, index) => items[index],
+                  valueListenable: query,
+                  builder: (context, value, child) {
+                    return StreamBuilder(
+                      stream: _request(context, value),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          List<Widget> items = List.of(snapshot.data!);
+                          if (snapshot.connectionState == ConnectionState.active) {
+                            items.add(
+                              IconTheme.merge(
+                                data: IconThemeData(color: theme.colorScheme.mutedForeground),
+                                child: const Center(
+                                  child: CircularProgressIndicator(),
+                                ).withPadding(vertical: theme.scaling * 24),
+                              ),
                             );
+                          } else if (items.isEmpty) {
+                            return widget.emptyBuilder?.call(context) ?? const CommandEmpty();
                           }
-                          return widget.loadingBuilder?.call(context) ??
-                              const Center(child: CircularProgressIndicator())
-                                  .withPadding(vertical: theme.scaling * 24);
-                        },
-                      );
-                    }),
+                          return ListView.separated(
+                            separatorBuilder: (context, index) => const VNLDivider(),
+                            shrinkWrap: true,
+                            itemCount: items.length,
+                            itemBuilder: (context, index) => items[index],
+                          );
+                        }
+                        return widget.loadingBuilder?.call(context) ??
+                            const Center(child: CircularProgressIndicator()).withPadding(vertical: theme.scaling * 24);
+                      },
+                    );
+                  },
+                ),
               ),
             ],
           ),
@@ -202,15 +199,11 @@ class CommandCategory extends StatelessWidget {
   final List<Widget> children;
   final Widget? title;
 
-  const CommandCategory({
-    super.key,
-    required this.children,
-    this.title,
-  });
+  const CommandCategory({super.key, required this.children, this.title});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -229,13 +222,7 @@ class CommandItem extends StatefulWidget {
   final Widget? trailing;
   final VoidCallback? onTap;
 
-  const CommandItem({
-    super.key,
-    this.leading,
-    required this.title,
-    this.trailing,
-    this.onTap,
-  });
+  const CommandItem({super.key, this.leading, required this.title, this.trailing, this.onTap});
 
   @override
   State<CommandItem> createState() => _CommandItemState();
@@ -253,7 +240,7 @@ class _CommandItemState extends State<CommandItem> {
 
   @override
   Widget build(BuildContext context) {
-    var themeData = Theme.of(context);
+    var themeData = VNLTheme.of(context);
     return GestureDetector(
       onTap: widget.onTap,
       child: FocusableActionDetector(
@@ -296,25 +283,28 @@ class _CommandItemState extends State<CommandItem> {
           padding: EdgeInsets.symmetric(horizontal: themeData.scaling * 8, vertical: themeData.scaling * 6),
           child: IconTheme(
             data: themeData.iconTheme.small.copyWith(
-              color: widget.onTap != null
-                  ? themeData.colorScheme.accentForeground
-                  : themeData.colorScheme.accentForeground.scaleAlpha(0.5),
+              color:
+                  widget.onTap != null
+                      ? themeData.colorScheme.accentForeground
+                      : themeData.colorScheme.accentForeground.scaleAlpha(0.5),
             ),
             child: DefaultTextStyle(
               style: TextStyle(
-                color: widget.onTap != null
-                    ? themeData.colorScheme.accentForeground
-                    : themeData.colorScheme.accentForeground.scaleAlpha(0.5),
+                color:
+                    widget.onTap != null
+                        ? themeData.colorScheme.accentForeground
+                        : themeData.colorScheme.accentForeground.scaleAlpha(0.5),
               ),
-              child: Row(
-                children: [
-                  if (widget.leading != null) widget.leading!,
-                  if (widget.leading != null) Gap(themeData.scaling * 8),
-                  Expanded(child: widget.title),
-                  if (widget.trailing != null) Gap(themeData.scaling * 8),
-                  if (widget.trailing != null) widget.trailing!.muted().xSmall(),
-                ],
-              ).small(),
+              child:
+                  Row(
+                    children: [
+                      if (widget.leading != null) widget.leading!,
+                      if (widget.leading != null) Gap(themeData.scaling * 8),
+                      Expanded(child: widget.title),
+                      if (widget.trailing != null) Gap(themeData.scaling * 8),
+                      if (widget.trailing != null) widget.trailing!.muted().xSmall(),
+                    ],
+                  ).small(),
             ),
           ),
         ),

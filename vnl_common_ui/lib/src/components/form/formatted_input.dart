@@ -126,7 +126,7 @@ class _EditablePartController extends TextEditingController {
 
   @override
   TextSpan buildTextSpan({required BuildContext context, TextStyle? style, required bool withComposing}) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     assert(!value.composing.isValid || !withComposing || value.isComposingRangeValid);
     final bool composingRegionOutOfRange = !value.isComposingRangeValid || !withComposing;
 
@@ -136,19 +136,16 @@ class _EditablePartController extends TextEditingController {
         return const TextSpan();
       }
       var padding = '_' * max(0, maxLength - text.length);
-      return TextSpan(children: [
-        TextSpan(
-          style: style,
-          text: text,
-        ),
-        TextSpan(
-          style: style?.copyWith(color: theme.colorScheme.mutedForeground),
-          text: padding,
-        ),
-      ]);
+      return TextSpan(
+        children: [
+          TextSpan(style: style, text: text),
+          TextSpan(style: style?.copyWith(color: theme.colorScheme.mutedForeground), text: padding),
+        ],
+      );
     }
 
-    final TextStyle composingStyle = style?.merge(const TextStyle(decoration: TextDecoration.underline)) ??
+    final TextStyle composingStyle =
+        style?.merge(const TextStyle(decoration: TextDecoration.underline)) ??
         const TextStyle(decoration: TextDecoration.underline);
     var textBefore = value.composing.textBefore(value.text);
     var textInside = value.composing.textInside(value.text);
@@ -162,15 +159,9 @@ class _EditablePartController extends TextEditingController {
       style: style,
       children: <TextSpan>[
         TextSpan(text: textBefore),
-        TextSpan(
-          style: composingStyle,
-          text: textInside,
-        ),
+        TextSpan(style: composingStyle, text: textInside),
         TextSpan(text: textAfter),
-        TextSpan(
-          style: style?.copyWith(color: theme.colorScheme.mutedForeground),
-          text: padding,
-        ),
+        TextSpan(style: style?.copyWith(color: theme.colorScheme.mutedForeground), text: padding),
       ],
     );
   }
@@ -310,7 +301,7 @@ class _EditablePartWidgetState extends State<_EditablePartWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return Focus(
       onKeyEvent: _onKeyEvent,
       child: FormEntry(
@@ -330,9 +321,7 @@ class _EditablePartWidgetState extends State<_EditablePartWidget> {
             obscureText: widget.obscureText,
             inputFormatters: widget.inputFormatters,
             placeholder: widget.placeholder,
-            padding: EdgeInsets.symmetric(
-              horizontal: 6 * theme.scaling,
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 6 * theme.scaling),
           ),
         ),
       ),
@@ -465,10 +454,7 @@ class _FormattedInputState extends State<VNLFormattedInput> {
       }
       return oldNodes.sublist(0, newLength);
     }
-    return [
-      ...oldNodes,
-      ...List.generate(newLength - oldNodes.length, (index) => FocusNode()),
-    ];
+    return [...oldNodes, ...List.generate(newLength - oldNodes.length, (index) => FocusNode())];
   }
 
   Widget _buildPart(int index, InputPart part) {
@@ -529,7 +515,7 @@ class _FormattedInputState extends State<VNLFormattedInput> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     List<Widget> children = [];
     if (_value != null) {
       int partIndex = 0;
@@ -554,9 +540,7 @@ class _FormattedInputState extends State<VNLFormattedInput> {
           child: OutlinedContainer(
             borderRadius: theme.borderRadiusMd,
             borderColor: _hasFocus ? theme.colorScheme.ring : theme.colorScheme.border,
-            padding: EdgeInsets.symmetric(
-              horizontal: 6 * theme.scaling,
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 6 * theme.scaling),
             child: VNLForm(
               controller: _controller,
               child: FocusTraversalGroup(
@@ -686,9 +670,7 @@ class _FormattedObjectInputState<T> extends State<FormattedObjectInput<T>> {
         valueParts.add(FormattedValuePart(part));
       }
     }
-    _formattedController = FormattedInputController(
-      FormattedValue(valueParts),
-    );
+    _formattedController = FormattedInputController(FormattedValue(valueParts));
     _formattedController.addListener(_onFormattedControllerUpdate);
     _controller.addListener(_onControllerUpdate);
   }
@@ -734,9 +716,11 @@ class _FormattedObjectInputState<T> extends State<FormattedObjectInput<T>> {
     _updating = true;
     try {
       var value = _formattedController.value;
-      T? newValue = widget.converter.convertB(value.values.map((part) {
-        return part.value ?? '';
-      }).toList());
+      T? newValue = widget.converter.convertB(
+        value.values.map((part) {
+          return part.value ?? '';
+        }).toList(),
+      );
       _controller.value = newValue;
       widget.onChanged?.call(newValue);
     } finally {
@@ -783,15 +767,16 @@ class _FormattedObjectInputState<T> extends State<FormattedObjectInput<T>> {
     if (popupBuilder == null) {
       return;
     }
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     _popoverController.show(
-        context: context,
-        alignment: widget.popoverAlignment ?? AlignmentDirectional.topStart,
-        anchorAlignment: widget.popoverAnchorAlignment ?? AlignmentDirectional.bottomStart,
-        offset: widget.popoverOffset ?? (const Offset(0, 4) * theme.scaling),
-        builder: (context) {
-          return popupBuilder(context, _controller);
-        });
+      context: context,
+      alignment: widget.popoverAlignment ?? AlignmentDirectional.topStart,
+      anchorAlignment: widget.popoverAnchorAlignment ?? AlignmentDirectional.bottomStart,
+      offset: widget.popoverOffset ?? (const Offset(0, 4) * theme.scaling),
+      builder: (context) {
+        return popupBuilder(context, _controller);
+      },
+    );
   }
 
   @override
@@ -804,31 +789,29 @@ class _FormattedObjectInputState<T> extends State<FormattedObjectInput<T>> {
   Widget build(BuildContext context) {
     var popoverIcon = widget.popoverIcon;
     return VNLFormattedInput(
-        controller: _formattedController,
-        onChanged: (value) {
-          List<String> values = value.values.map((part) {
-            return part.value ?? '';
-          }).toList();
-          widget.onPartsChanged?.call(values);
-          T? newValue = widget.converter.convertB(values);
-          _controller.value = newValue;
-        },
-        trailing: popoverIcon == null
-            ? null
-            : ListenableBuilder(
+      controller: _formattedController,
+      onChanged: (value) {
+        List<String> values =
+            value.values.map((part) {
+              return part.value ?? '';
+            }).toList();
+        widget.onPartsChanged?.call(values);
+        T? newValue = widget.converter.convertB(values);
+        _controller.value = newValue;
+      },
+      trailing:
+          popoverIcon == null
+              ? null
+              : ListenableBuilder(
                 listenable: _popoverController,
                 builder: (context, child) {
                   return WidgetStatesProvider(
-                    states: {
-                      if (_popoverController.hasOpenPopover) WidgetState.hovered,
-                    },
+                    states: {if (_popoverController.hasOpenPopover) WidgetState.hovered},
                     child: child!,
                   );
                 },
-                child: IconButton.text(
-                  icon: popoverIcon,
-                  density: ButtonDensity.compact,
-                  onPressed: _openPopover,
-                )));
+                child: IconButton.text(icon: popoverIcon, density: ButtonDensity.compact, onPressed: _openPopover),
+              ),
+    );
   }
 }

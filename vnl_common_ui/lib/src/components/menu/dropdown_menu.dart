@@ -24,7 +24,7 @@ OverlayCompleter<T?> showDropdown<T>({
   Duration? showDuration,
   Duration? dismissDuration,
 }) {
-  final theme = Theme.of(context);
+  final theme = VNLTheme.of(context);
   final scaling = theme.scaling;
   final GlobalKey key = GlobalKey();
   final overlayManager = OverlayManager.of(context);
@@ -49,14 +49,9 @@ OverlayCompleter<T?> showDropdown<T>({
     regionGroupId: key,
     modal: modal,
     dismissBackdropFocus: dismissBackdropFocus,
-    overlayBarrier: OverlayBarrier(
-      borderRadius: BorderRadius.circular(theme.radiusMd),
-    ),
+    overlayBarrier: OverlayBarrier(borderRadius: BorderRadius.circular(theme.radiusMd)),
     builder: (context) {
-      return Data.inherit(
-        data: DropdownMenuData(key),
-        child: builder(context),
-      );
+      return Data.inherit(data: DropdownMenuData(key), child: builder(context));
     },
   );
 }
@@ -72,12 +67,7 @@ class VNLDropdownMenu extends StatefulWidget {
   final double? surfaceBlur;
   final List<MenuItem> children;
 
-  const VNLDropdownMenu({
-    super.key,
-    this.surfaceOpacity,
-    this.surfaceBlur,
-    required this.children,
-  });
+  const VNLDropdownMenu({super.key, this.surfaceOpacity, this.surfaceBlur, required this.children});
 
   @override
   State<VNLDropdownMenu> createState() => _DropdownMenuState();
@@ -86,12 +76,10 @@ class VNLDropdownMenu extends StatefulWidget {
 class _DropdownMenuState extends State<VNLDropdownMenu> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final isSheetOverlay = SheetOverlayHandler.isSheetOverlay(context);
     return ConstrainedBox(
-      constraints: const BoxConstraints(
-        minWidth: 192,
-      ),
+      constraints: const BoxConstraints(minWidth: 192),
       child: MenuGroup(
         regionGroupId: Data.maybeOf<DropdownMenuData>(context)?.key,
         subMenuOffset: const Offset(8, -4) * theme.scaling,

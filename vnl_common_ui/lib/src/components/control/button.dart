@@ -2,8 +2,7 @@ import 'dart:math';
 
 import '../../../vnl_ui.dart';
 
-class ToggleController extends ValueNotifier<bool>
-    with ComponentController<bool> {
+class ToggleController extends ValueNotifier<bool> with ComponentController<bool> {
   ToggleController([super.value = false]);
 
   void toggle() {
@@ -104,35 +103,33 @@ class ToggleState extends State<VNLToggle> with FormValueSupplier<bool, VNLToggl
   @override
   Widget build(BuildContext context) {
     return VNLButton(
-        statesController: statesController,
-        enabled: widget.enabled,
-        style: widget.value
-            ? ButtonStyle.secondary(
-                density: widget.style.density,
-                shape: widget.style.shape,
-                size: widget.style.size,
-              )
-            : widget.style.copyWith(textStyle: (context, states, value) {
-                final theme = Theme.of(context);
-                return value.copyWith(
-                  color: states.contains(WidgetState.hovered)
-                      ? theme.colorScheme.mutedForeground
-                      : null,
-                );
-              }, iconTheme: (context, states, value) {
-                final theme = Theme.of(context);
-                return value.copyWith(
-                  color: states.contains(WidgetState.hovered)
-                      ? theme.colorScheme.mutedForeground
-                      : null,
-                );
-              }),
-        onPressed: widget.onChanged != null
-            ? () {
+      statesController: statesController,
+      enabled: widget.enabled,
+      style:
+          widget.value
+              ? ButtonStyle.secondary(density: widget.style.density, shape: widget.style.shape, size: widget.style.size)
+              : widget.style.copyWith(
+                textStyle: (context, states, value) {
+                  final theme = VNLTheme.of(context);
+                  return value.copyWith(
+                    color: states.contains(WidgetState.hovered) ? theme.colorScheme.mutedForeground : null,
+                  );
+                },
+                iconTheme: (context, states, value) {
+                  final theme = VNLTheme.of(context);
+                  return value.copyWith(
+                    color: states.contains(WidgetState.hovered) ? theme.colorScheme.mutedForeground : null,
+                  );
+                },
+              ),
+      onPressed:
+          widget.onChanged != null
+              ? () {
                 widget.onChanged!(!widget.value);
               }
-            : null,
-        child: widget.child);
+              : null,
+      child: widget.child,
+    );
   }
 }
 
@@ -231,40 +228,41 @@ class SelectedButtonState extends State<SelectedButton> {
   @override
   Widget build(BuildContext context) {
     return VNLButton(
-        statesController: statesController,
-        enabled: widget.enabled,
-        style: widget.value ? widget.selectedStyle : widget.style,
-        alignment: widget.alignment,
-        marginAlignment: widget.marginAlignment,
-        disableTransition: widget.disableTransition,
-        onHover: widget.onHover,
-        onFocus: widget.onFocus,
-        enableFeedback: widget.enableFeedback,
-        onTapDown: widget.onTapDown,
-        onTapUp: widget.onTapUp,
-        onTapCancel: widget.onTapCancel,
-        onSecondaryTapDown: widget.onSecondaryTapDown,
-        onSecondaryTapUp: widget.onSecondaryTapUp,
-        onSecondaryTapCancel: widget.onSecondaryTapCancel,
-        onTertiaryTapDown: widget.onTertiaryTapDown,
-        onTertiaryTapUp: widget.onTertiaryTapUp,
-        onTertiaryTapCancel: widget.onTertiaryTapCancel,
-        onLongPressStart: widget.onLongPressStart,
-        onLongPressUp: widget.onLongPressUp,
-        onLongPressMoveUpdate: widget.onLongPressMoveUpdate,
-        onLongPressEnd: widget.onLongPressEnd,
-        onSecondaryLongPress: widget.onSecondaryLongPress,
-        onTertiaryLongPress: widget.onTertiaryLongPress,
-        disableHoverEffect: widget.disableHoverEffect,
-        onPressed: () {
-          if (widget.onChanged != null) {
-            widget.onChanged!(!widget.value);
-          }
-          if (widget.onPressed != null) {
-            widget.onPressed!();
-          }
-        },
-        child: widget.child);
+      statesController: statesController,
+      enabled: widget.enabled,
+      style: widget.value ? widget.selectedStyle : widget.style,
+      alignment: widget.alignment,
+      marginAlignment: widget.marginAlignment,
+      disableTransition: widget.disableTransition,
+      onHover: widget.onHover,
+      onFocus: widget.onFocus,
+      enableFeedback: widget.enableFeedback,
+      onTapDown: widget.onTapDown,
+      onTapUp: widget.onTapUp,
+      onTapCancel: widget.onTapCancel,
+      onSecondaryTapDown: widget.onSecondaryTapDown,
+      onSecondaryTapUp: widget.onSecondaryTapUp,
+      onSecondaryTapCancel: widget.onSecondaryTapCancel,
+      onTertiaryTapDown: widget.onTertiaryTapDown,
+      onTertiaryTapUp: widget.onTertiaryTapUp,
+      onTertiaryTapCancel: widget.onTertiaryTapCancel,
+      onLongPressStart: widget.onLongPressStart,
+      onLongPressUp: widget.onLongPressUp,
+      onLongPressMoveUpdate: widget.onLongPressMoveUpdate,
+      onLongPressEnd: widget.onLongPressEnd,
+      onSecondaryLongPress: widget.onSecondaryLongPress,
+      onTertiaryLongPress: widget.onTertiaryLongPress,
+      disableHoverEffect: widget.disableHoverEffect,
+      onPressed: () {
+        if (widget.onChanged != null) {
+          widget.onChanged!(!widget.value);
+        }
+        if (widget.onPressed != null) {
+          widget.onPressed!();
+        }
+      },
+      child: widget.child,
+    );
   }
 }
 
@@ -657,7 +655,7 @@ class VNLButton extends StatefulWidget {
 
 class ButtonState<T extends VNLButton> extends State<T> {
   bool get _shouldEnableFeedback {
-    final platform = Theme.of(context).platform;
+    final platform = VNLTheme.of(context).platform;
     return isMobile(platform);
   }
 
@@ -731,7 +729,7 @@ class ButtonState<T extends VNLButton> extends State<T> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     bool enableFeedback = widget.enableFeedback ?? _shouldEnableFeedback;
     return Clickable(
@@ -751,15 +749,16 @@ class ButtonState<T extends VNLButton> extends State<T> {
       padding: WidgetStateProperty.resolveWith(_resolvePadding),
       textStyle: WidgetStateProperty.resolveWith(_resolveTextStyle),
       iconTheme: WidgetStateProperty.resolveWith(_resolveIconTheme),
-      transform: enableFeedback
-          ? WidgetStateProperty.resolveWith((states) {
-              if (states.contains(WidgetState.pressed)) {
-                // scale down to 95% with alignment at center
-                return Matrix4.identity()..scale(0.95);
-              }
-              return null;
-            })
-          : null,
+      transform:
+          enableFeedback
+              ? WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.pressed)) {
+                  // scale down to 95% with alignment at center
+                  return Matrix4.identity()..scale(0.95);
+                }
+                return null;
+              })
+              : null,
       onPressed: widget.onPressed,
       onTapDown: widget.onTapDown,
       onTapUp: widget.onTapUp,
@@ -776,36 +775,36 @@ class ButtonState<T extends VNLButton> extends State<T> {
       onLongPressEnd: widget.onLongPressEnd,
       onSecondaryLongPress: widget.onSecondaryLongPress,
       onTertiaryLongPress: widget.onTertiaryLongPress,
-      child: widget.leading == null && widget.trailing == null
-          ? Align(
-              heightFactor: 1,
-              widthFactor: 1,
-              alignment: widget.alignment ?? Alignment.center,
-              child: widget.child,
-            )
-          : IntrinsicWidth(
-              child: IntrinsicHeight(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (widget.leading != null) widget.leading!,
-                    if (widget.leading != null) Gap(8 * scaling),
-                    Expanded(
-                      child: Align(
-                        widthFactor: 1,
-                        heightFactor: 1,
-                        alignment: widget.alignment ??
-                            AlignmentDirectional.centerStart,
-                        child: widget.child,
+      child:
+          widget.leading == null && widget.trailing == null
+              ? Align(
+                heightFactor: 1,
+                widthFactor: 1,
+                alignment: widget.alignment ?? Alignment.center,
+                child: widget.child,
+              )
+              : IntrinsicWidth(
+                child: IntrinsicHeight(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (widget.leading != null) widget.leading!,
+                      if (widget.leading != null) Gap(8 * scaling),
+                      Expanded(
+                        child: Align(
+                          widthFactor: 1,
+                          heightFactor: 1,
+                          alignment: widget.alignment ?? AlignmentDirectional.centerStart,
+                          child: widget.child,
+                        ),
                       ),
-                    ),
-                    if (widget.trailing != null) Gap(8 * scaling),
-                    if (widget.trailing != null) widget.trailing!,
-                  ],
+                      if (widget.trailing != null) Gap(8 * scaling),
+                      if (widget.trailing != null) widget.trailing!,
+                    ],
+                  ),
                 ),
               ),
-            ),
     );
   }
 }
@@ -828,8 +827,7 @@ class ButtonDensity {
   static const ButtonDensity normal = ButtonDensity(_densityNormal);
   static const ButtonDensity comfortable = ButtonDensity(_densityComfortable);
   static const ButtonDensity icon = ButtonDensity(_densityIcon);
-  static const ButtonDensity iconComfortable =
-      ButtonDensity(_densityIconComfortable);
+  static const ButtonDensity iconComfortable = ButtonDensity(_densityIconComfortable);
   static const ButtonDensity iconDense = ButtonDensity(_densityIconDense);
   static const ButtonDensity dense = ButtonDensity(_densityDense);
   static const ButtonDensity compact = ButtonDensity(_densityCompact);
@@ -848,32 +846,24 @@ EdgeInsets _densityCompact(EdgeInsets padding) {
 }
 
 EdgeInsets _densityIcon(EdgeInsets padding) {
-  return EdgeInsets.all(
-      min(padding.top, min(padding.bottom, min(padding.left, padding.right))));
+  return EdgeInsets.all(min(padding.top, min(padding.bottom, min(padding.left, padding.right))));
 }
 
 EdgeInsets _densityIconComfortable(EdgeInsets padding) {
-  return EdgeInsets.all(
-      max(padding.top, max(padding.bottom, max(padding.left, padding.right))));
+  return EdgeInsets.all(max(padding.top, max(padding.bottom, max(padding.left, padding.right))));
 }
 
 EdgeInsets _densityIconDense(EdgeInsets padding) {
-  return EdgeInsets.all(
-      min(padding.top, min(padding.bottom, min(padding.left, padding.right))) *
-          0.5);
+  return EdgeInsets.all(min(padding.top, min(padding.bottom, min(padding.left, padding.right))) * 0.5);
 }
 
 EdgeInsets _densityComfortable(EdgeInsets padding) {
   return padding * 2;
 }
 
-enum ButtonShape {
-  rectangle,
-  circle,
-}
+enum ButtonShape { rectangle, circle }
 
-typedef ButtonStateProperty<T> = T Function(
-    BuildContext context, Set<WidgetState> states);
+typedef ButtonStateProperty<T> = T Function(BuildContext context, Set<WidgetState> states);
 
 abstract class AbstractButtonStyle {
   ButtonStateProperty<Decoration> get decoration;
@@ -1025,8 +1015,7 @@ class ButtonStyle implements AbstractButtonStyle {
     return variance.decoration;
   }
 
-  Decoration _resolveCircleDecoration(
-      BuildContext context, Set<WidgetState> states) {
+  Decoration _resolveCircleDecoration(BuildContext context, Set<WidgetState> states) {
     var decoration = variance.decoration(context, states);
     if (decoration is BoxDecoration) {
       return BoxDecoration(
@@ -1040,9 +1029,7 @@ class ButtonStyle implements AbstractButtonStyle {
         backgroundBlendMode: decoration.backgroundBlendMode,
       );
     } else if (decoration is ShapeDecoration) {
-      return decoration.copyWith(
-        shape: shape == ButtonShape.circle ? const CircleBorder() : null,
-      );
+      return decoration.copyWith(shape: shape == ButtonShape.circle ? const CircleBorder() : null);
     } else {
       throw Exception('Unsupported decoration type ${decoration.runtimeType}');
     }
@@ -1061,11 +1048,8 @@ class ButtonStyle implements AbstractButtonStyle {
     return _resolvePadding;
   }
 
-  EdgeInsetsGeometry _resolvePadding(
-      BuildContext context, Set<WidgetState> states) {
-    return density.modifier(
-        variance.padding(context, states).optionallyResolve(context) *
-            size.scale);
+  EdgeInsetsGeometry _resolvePadding(BuildContext context, Set<WidgetState> states) {
+    return density.modifier(variance.padding(context, states).optionallyResolve(context) * size.scale);
   }
 
   @override
@@ -1082,9 +1066,7 @@ class ButtonStyle implements AbstractButtonStyle {
       final textStyle = DefaultTextStyle.of(context).style;
       fontSize = textStyle.fontSize ?? 14;
     }
-    return variance.textStyle(context, states).copyWith(
-          fontSize: fontSize * size.scale,
-        );
+    return variance.textStyle(context, states).copyWith(fontSize: fontSize * size.scale);
   }
 
   @override
@@ -1095,13 +1077,10 @@ class ButtonStyle implements AbstractButtonStyle {
     return _resolveIconTheme;
   }
 
-  IconThemeData _resolveIconTheme(
-      BuildContext context, Set<WidgetState> states) {
+  IconThemeData _resolveIconTheme(BuildContext context, Set<WidgetState> states) {
     var iconSize = variance.iconTheme(context, states).size;
     iconSize ??= IconTheme.of(context).size ?? 24;
-    return variance.iconTheme(context, states).copyWith(
-          size: iconSize * size.scale,
-        );
+    return variance.iconTheme(context, states).copyWith(size: iconSize * size.scale);
   }
 
   @override
@@ -1118,13 +1097,7 @@ abstract class VNLButtonTheme {
   final ButtonStatePropertyDelegate<IconThemeData>? iconTheme;
   final ButtonStatePropertyDelegate<EdgeInsetsGeometry>? margin;
 
-  const VNLButtonTheme(
-      {this.decoration,
-      this.mouseCursor,
-      this.padding,
-      this.textStyle,
-      this.iconTheme,
-      this.margin});
+  const VNLButtonTheme({this.decoration, this.mouseCursor, this.padding, this.textStyle, this.iconTheme, this.margin});
 
   @override
   bool operator ==(Object other) {
@@ -1139,16 +1112,14 @@ abstract class VNLButtonTheme {
   }
 
   @override
-  int get hashCode => Object.hash(
-      decoration, mouseCursor, padding, textStyle, iconTheme, margin);
+  int get hashCode => Object.hash(decoration, mouseCursor, padding, textStyle, iconTheme, margin);
 
   @override
   String toString() =>
       '$runtimeType{decoration: $decoration, mouseCursor: $mouseCursor, padding: $padding, textStyle: $textStyle, iconTheme: $iconTheme, margin: $margin}';
 }
 
-class ComponentThemeButtonStyle<T extends VNLButtonTheme>
-    implements AbstractButtonStyle {
+class ComponentThemeButtonStyle<T extends VNLButtonTheme> implements AbstractButtonStyle {
   final AbstractButtonStyle fallback;
 
   const ComponentThemeButtonStyle({required this.fallback});
@@ -1162,25 +1133,21 @@ class ComponentThemeButtonStyle<T extends VNLButtonTheme>
 
   Decoration _resolveDecoration(BuildContext context, Set<WidgetState> states) {
     var resolved = fallback.decoration(context, states);
-    return find(context)?.decoration?.call(context, states, resolved) ??
-        resolved;
+    return find(context)?.decoration?.call(context, states, resolved) ?? resolved;
   }
 
   @override
   ButtonStateProperty<IconThemeData> get iconTheme => _resolveIconTheme;
 
-  IconThemeData _resolveIconTheme(
-      BuildContext context, Set<WidgetState> states) {
+  IconThemeData _resolveIconTheme(BuildContext context, Set<WidgetState> states) {
     var resolved = fallback.iconTheme(context, states);
-    return find(context)?.iconTheme?.call(context, states, resolved) ??
-        resolved;
+    return find(context)?.iconTheme?.call(context, states, resolved) ?? resolved;
   }
 
   @override
   ButtonStateProperty<EdgeInsetsGeometry> get margin => _resolveMargin;
 
-  EdgeInsetsGeometry _resolveMargin(
-      BuildContext context, Set<WidgetState> states) {
+  EdgeInsetsGeometry _resolveMargin(BuildContext context, Set<WidgetState> states) {
     var resolved = fallback.margin(context, states);
     return find(context)?.margin?.call(context, states, resolved) ?? resolved;
   }
@@ -1188,18 +1155,15 @@ class ComponentThemeButtonStyle<T extends VNLButtonTheme>
   @override
   ButtonStateProperty<MouseCursor> get mouseCursor => _resolveMouseCursor;
 
-  MouseCursor _resolveMouseCursor(
-      BuildContext context, Set<WidgetState> states) {
+  MouseCursor _resolveMouseCursor(BuildContext context, Set<WidgetState> states) {
     var resolved = fallback.mouseCursor(context, states);
-    return find(context)?.mouseCursor?.call(context, states, resolved) ??
-        resolved;
+    return find(context)?.mouseCursor?.call(context, states, resolved) ?? resolved;
   }
 
   @override
   ButtonStateProperty<EdgeInsetsGeometry> get padding => _resolvePadding;
 
-  EdgeInsetsGeometry _resolvePadding(
-      BuildContext context, Set<WidgetState> states) {
+  EdgeInsetsGeometry _resolvePadding(BuildContext context, Set<WidgetState> states) {
     var resolved = fallback.padding(context, states);
     return find(context)?.padding?.call(context, states, resolved) ?? resolved;
   }
@@ -1209,8 +1173,7 @@ class ComponentThemeButtonStyle<T extends VNLButtonTheme>
 
   TextStyle _resolveTextStyle(BuildContext context, Set<WidgetState> states) {
     var resolved = fallback.textStyle(context, states);
-    return find(context)?.textStyle?.call(context, states, resolved) ??
-        resolved;
+    return find(context)?.textStyle?.call(context, states, resolved) ?? resolved;
   }
 }
 
@@ -1253,8 +1216,7 @@ extension DecorationExtension on Decoration {
         boxShadow: boxShadow ?? boxDecoration.boxShadow,
         gradient: gradient ?? boxDecoration.gradient,
         shape: shape ?? boxDecoration.shape,
-        backgroundBlendMode:
-            backgroundBlendMode ?? boxDecoration.backgroundBlendMode,
+        backgroundBlendMode: backgroundBlendMode ?? boxDecoration.backgroundBlendMode,
       );
     }
     return BoxDecoration(
@@ -1297,13 +1259,14 @@ extension DecorationExtension on Decoration {
 }
 
 class PrimaryButtonTheme extends VNLButtonTheme {
-  const PrimaryButtonTheme(
-      {super.decoration,
-      super.mouseCursor,
-      super.padding,
-      super.textStyle,
-      super.iconTheme,
-      super.margin});
+  const PrimaryButtonTheme({
+    super.decoration,
+    super.mouseCursor,
+    super.padding,
+    super.textStyle,
+    super.iconTheme,
+    super.margin,
+  });
 
   PrimaryButtonTheme copyWith({
     ButtonStatePropertyDelegate<Decoration>? decoration,
@@ -1325,13 +1288,14 @@ class PrimaryButtonTheme extends VNLButtonTheme {
 }
 
 class SecondaryButtonTheme extends VNLButtonTheme {
-  const SecondaryButtonTheme(
-      {super.decoration,
-      super.mouseCursor,
-      super.padding,
-      super.textStyle,
-      super.iconTheme,
-      super.margin});
+  const SecondaryButtonTheme({
+    super.decoration,
+    super.mouseCursor,
+    super.padding,
+    super.textStyle,
+    super.iconTheme,
+    super.margin,
+  });
 
   SecondaryButtonTheme copyWith({
     ButtonStatePropertyDelegate<Decoration>? decoration,
@@ -1353,13 +1317,14 @@ class SecondaryButtonTheme extends VNLButtonTheme {
 }
 
 class OutlineButtonTheme extends VNLButtonTheme {
-  const OutlineButtonTheme(
-      {super.decoration,
-      super.mouseCursor,
-      super.padding,
-      super.textStyle,
-      super.iconTheme,
-      super.margin});
+  const OutlineButtonTheme({
+    super.decoration,
+    super.mouseCursor,
+    super.padding,
+    super.textStyle,
+    super.iconTheme,
+    super.margin,
+  });
 
   OutlineButtonTheme copyWith({
     ButtonStatePropertyDelegate<Decoration>? decoration,
@@ -1381,13 +1346,14 @@ class OutlineButtonTheme extends VNLButtonTheme {
 }
 
 class GhostButtonTheme extends VNLButtonTheme {
-  const GhostButtonTheme(
-      {super.decoration,
-      super.mouseCursor,
-      super.padding,
-      super.textStyle,
-      super.iconTheme,
-      super.margin});
+  const GhostButtonTheme({
+    super.decoration,
+    super.mouseCursor,
+    super.padding,
+    super.textStyle,
+    super.iconTheme,
+    super.margin,
+  });
 
   GhostButtonTheme copyWith({
     ButtonStatePropertyDelegate<Decoration>? decoration,
@@ -1409,13 +1375,14 @@ class GhostButtonTheme extends VNLButtonTheme {
 }
 
 class LinkButtonTheme extends VNLButtonTheme {
-  const LinkButtonTheme(
-      {super.decoration,
-      super.mouseCursor,
-      super.padding,
-      super.textStyle,
-      super.iconTheme,
-      super.margin});
+  const LinkButtonTheme({
+    super.decoration,
+    super.mouseCursor,
+    super.padding,
+    super.textStyle,
+    super.iconTheme,
+    super.margin,
+  });
 
   LinkButtonTheme copyWith({
     ButtonStatePropertyDelegate<Decoration>? decoration,
@@ -1437,13 +1404,14 @@ class LinkButtonTheme extends VNLButtonTheme {
 }
 
 class TextButtonTheme extends VNLButtonTheme {
-  const TextButtonTheme(
-      {super.decoration,
-      super.mouseCursor,
-      super.padding,
-      super.textStyle,
-      super.iconTheme,
-      super.margin});
+  const TextButtonTheme({
+    super.decoration,
+    super.mouseCursor,
+    super.padding,
+    super.textStyle,
+    super.iconTheme,
+    super.margin,
+  });
 
   TextButtonTheme copyWith({
     ButtonStatePropertyDelegate<Decoration>? decoration,
@@ -1465,13 +1433,14 @@ class TextButtonTheme extends VNLButtonTheme {
 }
 
 class DestructiveButtonTheme extends VNLButtonTheme {
-  const DestructiveButtonTheme(
-      {super.decoration,
-      super.mouseCursor,
-      super.padding,
-      super.textStyle,
-      super.iconTheme,
-      super.margin});
+  const DestructiveButtonTheme({
+    super.decoration,
+    super.mouseCursor,
+    super.padding,
+    super.textStyle,
+    super.iconTheme,
+    super.margin,
+  });
 
   DestructiveButtonTheme copyWith({
     ButtonStatePropertyDelegate<Decoration>? decoration,
@@ -1493,13 +1462,14 @@ class DestructiveButtonTheme extends VNLButtonTheme {
 }
 
 class FixedButtonTheme extends VNLButtonTheme {
-  const FixedButtonTheme(
-      {super.decoration,
-      super.mouseCursor,
-      super.padding,
-      super.textStyle,
-      super.iconTheme,
-      super.margin});
+  const FixedButtonTheme({
+    super.decoration,
+    super.mouseCursor,
+    super.padding,
+    super.textStyle,
+    super.iconTheme,
+    super.margin,
+  });
 
   FixedButtonTheme copyWith({
     ButtonStatePropertyDelegate<Decoration>? decoration,
@@ -1521,13 +1491,14 @@ class FixedButtonTheme extends VNLButtonTheme {
 }
 
 class MenuButtonTheme extends VNLButtonTheme {
-  const MenuButtonTheme(
-      {super.decoration,
-      super.mouseCursor,
-      super.padding,
-      super.textStyle,
-      super.iconTheme,
-      super.margin});
+  const MenuButtonTheme({
+    super.decoration,
+    super.mouseCursor,
+    super.padding,
+    super.textStyle,
+    super.iconTheme,
+    super.margin,
+  });
 
   MenuButtonTheme copyWith({
     ButtonStatePropertyDelegate<Decoration>? decoration,
@@ -1549,13 +1520,14 @@ class MenuButtonTheme extends VNLButtonTheme {
 }
 
 class MenubarButtonTheme extends VNLButtonTheme {
-  const MenubarButtonTheme(
-      {super.decoration,
-      super.mouseCursor,
-      super.padding,
-      super.textStyle,
-      super.iconTheme,
-      super.margin});
+  const MenubarButtonTheme({
+    super.decoration,
+    super.mouseCursor,
+    super.padding,
+    super.textStyle,
+    super.iconTheme,
+    super.margin,
+  });
 
   MenubarButtonTheme copyWith({
     ButtonStatePropertyDelegate<Decoration>? decoration,
@@ -1577,13 +1549,14 @@ class MenubarButtonTheme extends VNLButtonTheme {
 }
 
 class MutedButtonTheme extends VNLButtonTheme {
-  const MutedButtonTheme(
-      {super.decoration,
-      super.mouseCursor,
-      super.padding,
-      super.textStyle,
-      super.iconTheme,
-      super.margin});
+  const MutedButtonTheme({
+    super.decoration,
+    super.mouseCursor,
+    super.padding,
+    super.textStyle,
+    super.iconTheme,
+    super.margin,
+  });
 
   MutedButtonTheme copyWith({
     ButtonStatePropertyDelegate<Decoration>? decoration,
@@ -1605,13 +1578,14 @@ class MutedButtonTheme extends VNLButtonTheme {
 }
 
 class CardButtonTheme extends VNLButtonTheme {
-  const CardButtonTheme(
-      {super.decoration,
-      super.mouseCursor,
-      super.padding,
-      super.textStyle,
-      super.iconTheme,
-      super.margin});
+  const CardButtonTheme({
+    super.decoration,
+    super.mouseCursor,
+    super.padding,
+    super.textStyle,
+    super.iconTheme,
+    super.margin,
+  });
 
   CardButtonTheme copyWith({
     ButtonStatePropertyDelegate<Decoration>? decoration,
@@ -1633,8 +1607,7 @@ class CardButtonTheme extends VNLButtonTheme {
 }
 
 class ButtonVariance implements AbstractButtonStyle {
-  static const AbstractButtonStyle primary =
-      ComponentThemeButtonStyle<PrimaryButtonTheme>(
+  static const AbstractButtonStyle primary = ComponentThemeButtonStyle<PrimaryButtonTheme>(
     fallback: ButtonVariance(
       decoration: _buttonPrimaryDecoration,
       mouseCursor: _buttonMouseCursor,
@@ -1644,8 +1617,7 @@ class ButtonVariance implements AbstractButtonStyle {
       margin: _buttonZeroMargin,
     ),
   );
-  static const AbstractButtonStyle secondary =
-      ComponentThemeButtonStyle<SecondaryButtonTheme>(
+  static const AbstractButtonStyle secondary = ComponentThemeButtonStyle<SecondaryButtonTheme>(
     fallback: ButtonVariance(
       decoration: _buttonSecondaryDecoration,
       mouseCursor: _buttonMouseCursor,
@@ -1655,8 +1627,7 @@ class ButtonVariance implements AbstractButtonStyle {
       margin: _buttonZeroMargin,
     ),
   );
-  static const AbstractButtonStyle outline =
-      ComponentThemeButtonStyle<OutlineButtonTheme>(
+  static const AbstractButtonStyle outline = ComponentThemeButtonStyle<OutlineButtonTheme>(
     fallback: ButtonVariance(
       decoration: _buttonOutlineDecoration,
       mouseCursor: _buttonMouseCursor,
@@ -1666,8 +1637,7 @@ class ButtonVariance implements AbstractButtonStyle {
       margin: _buttonZeroMargin,
     ),
   );
-  static const AbstractButtonStyle ghost =
-      ComponentThemeButtonStyle<GhostButtonTheme>(
+  static const AbstractButtonStyle ghost = ComponentThemeButtonStyle<GhostButtonTheme>(
     fallback: ButtonVariance(
       decoration: _buttonGhostDecoration,
       mouseCursor: _buttonMouseCursor,
@@ -1677,8 +1647,7 @@ class ButtonVariance implements AbstractButtonStyle {
       margin: _buttonZeroMargin,
     ),
   );
-  static const AbstractButtonStyle link =
-      ComponentThemeButtonStyle<LinkButtonTheme>(
+  static const AbstractButtonStyle link = ComponentThemeButtonStyle<LinkButtonTheme>(
     fallback: ButtonVariance(
       decoration: _buttonLinkDecoration,
       mouseCursor: _buttonMouseCursor,
@@ -1688,8 +1657,7 @@ class ButtonVariance implements AbstractButtonStyle {
       margin: _buttonZeroMargin,
     ),
   );
-  static const AbstractButtonStyle text =
-      ComponentThemeButtonStyle<TextButtonTheme>(
+  static const AbstractButtonStyle text = ComponentThemeButtonStyle<TextButtonTheme>(
     fallback: ButtonVariance(
       decoration: _buttonTextDecoration,
       mouseCursor: _buttonMouseCursor,
@@ -1699,8 +1667,7 @@ class ButtonVariance implements AbstractButtonStyle {
       margin: _buttonZeroMargin,
     ),
   );
-  static const AbstractButtonStyle destructive =
-      ComponentThemeButtonStyle<DestructiveButtonTheme>(
+  static const AbstractButtonStyle destructive = ComponentThemeButtonStyle<DestructiveButtonTheme>(
     fallback: ButtonVariance(
       decoration: _buttonDestructiveDecoration,
       mouseCursor: _buttonMouseCursor,
@@ -1711,8 +1678,7 @@ class ButtonVariance implements AbstractButtonStyle {
     ),
   );
 
-  static const AbstractButtonStyle fixed =
-      ComponentThemeButtonStyle<FixedButtonTheme>(
+  static const AbstractButtonStyle fixed = ComponentThemeButtonStyle<FixedButtonTheme>(
     fallback: ButtonVariance(
       decoration: _buttonTextDecoration,
       mouseCursor: _buttonMouseCursor,
@@ -1723,8 +1689,7 @@ class ButtonVariance implements AbstractButtonStyle {
     ),
   );
 
-  static const AbstractButtonStyle menu =
-      ComponentThemeButtonStyle<MenuButtonTheme>(
+  static const AbstractButtonStyle menu = ComponentThemeButtonStyle<MenuButtonTheme>(
     fallback: ButtonVariance(
       decoration: _buttonMenuDecoration,
       mouseCursor: _buttonMouseCursor,
@@ -1735,8 +1700,7 @@ class ButtonVariance implements AbstractButtonStyle {
     ),
   );
 
-  static const AbstractButtonStyle menubar =
-      ComponentThemeButtonStyle<MenubarButtonTheme>(
+  static const AbstractButtonStyle menubar = ComponentThemeButtonStyle<MenubarButtonTheme>(
     fallback: ButtonVariance(
       decoration: _buttonMenuDecoration,
       mouseCursor: _buttonMouseCursor,
@@ -1747,8 +1711,7 @@ class ButtonVariance implements AbstractButtonStyle {
     ),
   );
 
-  static const AbstractButtonStyle muted =
-      ComponentThemeButtonStyle<MutedButtonTheme>(
+  static const AbstractButtonStyle muted = ComponentThemeButtonStyle<MutedButtonTheme>(
     fallback: ButtonVariance(
       decoration: _buttonTextDecoration,
       mouseCursor: _buttonMouseCursor,
@@ -1759,8 +1722,7 @@ class ButtonVariance implements AbstractButtonStyle {
     ),
   );
 
-  static const AbstractButtonStyle card =
-      ComponentThemeButtonStyle<CardButtonTheme>(
+  static const AbstractButtonStyle card = ComponentThemeButtonStyle<CardButtonTheme>(
     fallback: ButtonVariance(
       decoration: _buttonCardDecoration,
       mouseCursor: _buttonMouseCursor,
@@ -1808,8 +1770,7 @@ class ButtonVariance implements AbstractButtonStyle {
 
   @override
   int get hashCode {
-    return Object.hash(
-        decoration, mouseCursor, padding, textStyle, iconTheme, margin);
+    return Object.hash(decoration, mouseCursor, padding, textStyle, iconTheme, margin);
   }
 
   @override
@@ -1860,33 +1821,22 @@ extension ButtonStyleExtension on AbstractButtonStyle {
         margin == null) {
       return this;
     }
-    return _CopyWithButtonStyle(
-      this,
-      decoration,
-      mouseCursor,
-      padding,
-      textStyle,
-      iconTheme,
-      margin,
-    );
+    return _CopyWithButtonStyle(this, decoration, mouseCursor, padding, textStyle, iconTheme, margin);
   }
 
-  AbstractButtonStyle withBackgroundColor(
-      {Color? color,
-      Color? hoverColor,
-      Color? focusColor,
-      Color? disabledColor}) {
+  AbstractButtonStyle withBackgroundColor({Color? color, Color? hoverColor, Color? focusColor, Color? disabledColor}) {
     return copyWith(
       decoration: (context, states, decoration) {
         if (decoration is BoxDecoration) {
           return decoration.copyWith(
-            color: states.disabled
-                ? disabledColor ?? decoration.color
-                : states.hovered
+            color:
+                states.disabled
+                    ? disabledColor ?? decoration.color
+                    : states.hovered
                     ? hoverColor ?? decoration.color
                     : states.focused
-                        ? focusColor ?? decoration.color
-                        : color,
+                    ? focusColor ?? decoration.color
+                    : color,
           );
         }
         return decoration;
@@ -1894,53 +1844,48 @@ extension ButtonStyleExtension on AbstractButtonStyle {
     );
   }
 
-  AbstractButtonStyle withForegroundColor(
-      {Color? color,
-      Color? hoverColor,
-      Color? focusColor,
-      Color? disabledColor}) {
+  AbstractButtonStyle withForegroundColor({Color? color, Color? hoverColor, Color? focusColor, Color? disabledColor}) {
     return copyWith(
       textStyle: (context, states, textStyle) {
         return textStyle.copyWith(
-          color: states.disabled
-              ? disabledColor ?? textStyle.color
-              : states.hovered
+          color:
+              states.disabled
+                  ? disabledColor ?? textStyle.color
+                  : states.hovered
                   ? hoverColor ?? textStyle.color
                   : states.focused
-                      ? focusColor ?? textStyle.color
-                      : color,
+                  ? focusColor ?? textStyle.color
+                  : color,
         );
       },
       iconTheme: (context, states, iconTheme) {
         return iconTheme.copyWith(
-          color: states.disabled
-              ? disabledColor ?? iconTheme.color
-              : states.hovered
+          color:
+              states.disabled
+                  ? disabledColor ?? iconTheme.color
+                  : states.hovered
                   ? hoverColor ?? iconTheme.color
                   : states.focused
-                      ? focusColor ?? iconTheme.color
-                      : color,
+                  ? focusColor ?? iconTheme.color
+                  : color,
         );
       },
     );
   }
 
-  AbstractButtonStyle withBorder(
-      {Border? border,
-      Border? hoverBorder,
-      Border? focusBorder,
-      Border? disabledBorder}) {
+  AbstractButtonStyle withBorder({Border? border, Border? hoverBorder, Border? focusBorder, Border? disabledBorder}) {
     return copyWith(
       decoration: (context, states, decoration) {
         if (decoration is BoxDecoration) {
           return decoration.copyWith(
-            border: states.disabled
-                ? disabledBorder ?? decoration.border
-                : states.hovered
+            border:
+                states.disabled
+                    ? disabledBorder ?? decoration.border
+                    : states.hovered
                     ? hoverBorder ?? decoration.border
                     : states.focused
-                        ? focusBorder ?? decoration.border
-                        : border,
+                    ? focusBorder ?? decoration.border
+                    : border,
           );
         }
         return decoration;
@@ -1948,22 +1893,24 @@ extension ButtonStyleExtension on AbstractButtonStyle {
     );
   }
 
-  AbstractButtonStyle withBorderRadius(
-      {BorderRadiusGeometry? borderRadius,
-      BorderRadiusGeometry? hoverBorderRadius,
-      BorderRadiusGeometry? focusBorderRadius,
-      BorderRadiusGeometry? disabledBorderRadius}) {
+  AbstractButtonStyle withBorderRadius({
+    BorderRadiusGeometry? borderRadius,
+    BorderRadiusGeometry? hoverBorderRadius,
+    BorderRadiusGeometry? focusBorderRadius,
+    BorderRadiusGeometry? disabledBorderRadius,
+  }) {
     return copyWith(
       decoration: (context, states, decoration) {
         if (decoration is BoxDecoration) {
           return decoration.copyWith(
-            borderRadius: states.disabled
-                ? disabledBorderRadius ?? decoration.borderRadius
-                : states.hovered
+            borderRadius:
+                states.disabled
+                    ? disabledBorderRadius ?? decoration.borderRadius
+                    : states.hovered
                     ? hoverBorderRadius ?? decoration.borderRadius
                     : states.focused
-                        ? focusBorderRadius ?? decoration.borderRadius
-                        : borderRadius,
+                    ? focusBorderRadius ?? decoration.borderRadius
+                    : borderRadius,
           );
         }
         return decoration;
@@ -1971,27 +1918,27 @@ extension ButtonStyleExtension on AbstractButtonStyle {
     );
   }
 
-  AbstractButtonStyle withPadding(
-      {EdgeInsetsGeometry? padding,
-      EdgeInsetsGeometry? hoverPadding,
-      EdgeInsetsGeometry? focusPadding,
-      EdgeInsetsGeometry? disabledPadding}) {
+  AbstractButtonStyle withPadding({
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? hoverPadding,
+    EdgeInsetsGeometry? focusPadding,
+    EdgeInsetsGeometry? disabledPadding,
+  }) {
     return copyWith(
       padding: (context, states, padding) {
         return states.disabled
             ? disabledPadding ?? padding
             : states.hovered
-                ? hoverPadding ?? padding
-                : states.focused
-                    ? focusPadding ?? padding
-                    : padding;
+            ? hoverPadding ?? padding
+            : states.focused
+            ? focusPadding ?? padding
+            : padding;
       },
     );
   }
 }
 
-typedef ButtonStatePropertyDelegate<T> = T Function(
-    BuildContext context, Set<WidgetState> states, T value);
+typedef ButtonStatePropertyDelegate<T> = T Function(BuildContext context, Set<WidgetState> states, T value);
 
 class _CopyWithButtonStyle implements AbstractButtonStyle {
   final ButtonStatePropertyDelegate<Decoration>? _decoration;
@@ -2044,8 +1991,7 @@ class _CopyWithButtonStyle implements AbstractButtonStyle {
     return _buildPadding;
   }
 
-  EdgeInsetsGeometry _buildPadding(
-      BuildContext context, Set<WidgetState> states) {
+  EdgeInsetsGeometry _buildPadding(BuildContext context, Set<WidgetState> states) {
     return _padding!(context, states, _delegate.padding(context, states));
   }
 
@@ -2058,8 +2004,7 @@ class _CopyWithButtonStyle implements AbstractButtonStyle {
   }
 
   MouseCursor _buildMouseCursor(BuildContext context, Set<WidgetState> states) {
-    return _mouseCursor!(
-        context, states, _delegate.mouseCursor(context, states));
+    return _mouseCursor!(context, states, _delegate.mouseCursor(context, states));
   }
 
   @override
@@ -2082,8 +2027,7 @@ class _CopyWithButtonStyle implements AbstractButtonStyle {
     return _buildMargin;
   }
 
-  EdgeInsetsGeometry _buildMargin(
-      BuildContext context, Set<WidgetState> states) {
+  EdgeInsetsGeometry _buildMargin(BuildContext context, Set<WidgetState> states) {
     return _margin!(context, states, _delegate.margin(context, states));
   }
 
@@ -2103,8 +2047,7 @@ class _CopyWithButtonStyle implements AbstractButtonStyle {
 
   @override
   int get hashCode {
-    return Object.hash(_delegate, _decoration, _mouseCursor, _padding,
-        _textStyle, _iconTheme, _margin);
+    return Object.hash(_delegate, _decoration, _mouseCursor, _padding, _textStyle, _iconTheme, _margin);
   }
 
   @override
@@ -2118,106 +2061,77 @@ EdgeInsets _buttonZeroMargin(BuildContext context, Set<WidgetState> states) {
 }
 
 MouseCursor _buttonMouseCursor(BuildContext context, Set<WidgetState> states) {
-  return states.contains(WidgetState.disabled)
-      ? SystemMouseCursors.basic
-      : SystemMouseCursors.click;
+  return states.contains(WidgetState.disabled) ? SystemMouseCursors.basic : SystemMouseCursors.click;
 }
 
 EdgeInsets _buttonPadding(BuildContext context, Set<WidgetState> states) {
-  final theme = Theme.of(context);
-  return EdgeInsets.symmetric(
-    horizontal: theme.scaling * 16,
-    vertical: theme.scaling * 8,
-  );
+  final theme = VNLTheme.of(context);
+  return EdgeInsets.symmetric(horizontal: theme.scaling * 16, vertical: theme.scaling * 8);
 }
 
 // CARD
 TextStyle _buttonCardTextStyle(BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
-  return themeData.typography.small.copyWith(
-    color: themeData.colorScheme.cardForeground,
-  );
+  var themeData = VNLTheme.of(context);
+  return themeData.typography.small.copyWith(color: themeData.colorScheme.cardForeground);
 }
 
-IconThemeData _buttonCardIconTheme(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
-  return IconThemeData(
-    color: themeData.colorScheme.cardForeground,
-  );
+IconThemeData _buttonCardIconTheme(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
+  return IconThemeData(color: themeData.colorScheme.cardForeground);
 }
 
-Decoration _buttonCardDecoration(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
+Decoration _buttonCardDecoration(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
   if (states.contains(WidgetState.disabled)) {
     return BoxDecoration(
       color: themeData.colorScheme.muted,
       borderRadius: BorderRadius.circular(themeData.radiusXl),
-      border: Border.all(
-        color: themeData.colorScheme.border,
-        width: 1,
-      ),
+      border: Border.all(color: themeData.colorScheme.border, width: 1),
     );
   }
-  if (states.contains(WidgetState.hovered) ||
-      states.contains(WidgetState.selected)) {
+  if (states.contains(WidgetState.hovered) || states.contains(WidgetState.selected)) {
     return BoxDecoration(
       color: themeData.colorScheme.border,
       borderRadius: BorderRadius.circular(themeData.radiusXl),
-      border: Border.all(
-        color: themeData.colorScheme.border,
-        width: 1,
-      ),
+      border: Border.all(color: themeData.colorScheme.border, width: 1),
     );
   }
   return BoxDecoration(
     color: themeData.colorScheme.card,
     borderRadius: BorderRadius.circular(themeData.radiusXl),
-    border: Border.all(
-      color: themeData.colorScheme.border,
-      width: 1,
-    ),
+    border: Border.all(color: themeData.colorScheme.border, width: 1),
   );
 }
 
 EdgeInsets _buttonCardPadding(BuildContext context, Set<WidgetState> states) {
-  final theme = Theme.of(context);
+  final theme = VNLTheme.of(context);
   return const EdgeInsets.all(16) * theme.scaling;
 }
 
 // MENUBUTTON
-Decoration _buttonMenuDecoration(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
+Decoration _buttonMenuDecoration(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
   if (states.contains(WidgetState.disabled)) {
     return const BoxDecoration();
   }
   if (states.contains(WidgetState.focused) ||
       states.contains(WidgetState.hovered) ||
       states.contains(WidgetState.selected)) {
-    return BoxDecoration(
-      color: themeData.colorScheme.accent,
-      borderRadius: BorderRadius.circular(themeData.radiusSm),
-    );
+    return BoxDecoration(color: themeData.colorScheme.accent, borderRadius: BorderRadius.circular(themeData.radiusSm));
   }
   return const BoxDecoration();
 }
 
 TextStyle _buttonMenuTextStyle(BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
+  var themeData = VNLTheme.of(context);
   if (states.contains(WidgetState.disabled)) {
-    return themeData.typography.small.copyWith(
-      color: themeData.colorScheme.accentForeground.scaleAlpha(0.5),
-    );
+    return themeData.typography.small.copyWith(color: themeData.colorScheme.accentForeground.scaleAlpha(0.5));
   }
-  return themeData.typography.small.copyWith(
-    color: themeData.colorScheme.accentForeground,
-  );
+  return themeData.typography.small.copyWith(color: themeData.colorScheme.accentForeground);
 }
 
 EdgeInsets _buttonMenuPadding(BuildContext context, Set<WidgetState> states) {
-  final theme = Theme.of(context);
+  final theme = VNLTheme.of(context);
   final scaling = theme.scaling;
   final menuGroupData = Data.maybeOf<MenuGroupData>(context);
   if (menuGroupData != null && menuGroupData.direction == Axis.horizontal) {
@@ -2226,25 +2140,20 @@ EdgeInsets _buttonMenuPadding(BuildContext context, Set<WidgetState> states) {
   return const EdgeInsets.only(left: 8, top: 6, right: 6, bottom: 6) * scaling;
 }
 
-EdgeInsets _buttonMenubarPadding(
-    BuildContext context, Set<WidgetState> states) {
-  final theme = Theme.of(context);
+EdgeInsets _buttonMenubarPadding(BuildContext context, Set<WidgetState> states) {
+  final theme = VNLTheme.of(context);
   final scaling = theme.scaling;
   return const EdgeInsets.symmetric(horizontal: 12, vertical: 4) * scaling;
 }
 
-IconThemeData _buttonMenuIconTheme(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
-  return IconThemeData(
-    color: themeData.colorScheme.accentForeground,
-  );
+IconThemeData _buttonMenuIconTheme(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
+  return IconThemeData(color: themeData.colorScheme.accentForeground);
 }
 
 // PRIMARY
-Decoration _buttonPrimaryDecoration(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
+Decoration _buttonPrimaryDecoration(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
   if (states.contains(WidgetState.disabled)) {
     return BoxDecoration(
       color: themeData.colorScheme.mutedForeground,
@@ -2257,32 +2166,24 @@ Decoration _buttonPrimaryDecoration(
       borderRadius: BorderRadius.circular(themeData.radiusMd),
     );
   }
-  return BoxDecoration(
-    color: themeData.colorScheme.primary,
-    borderRadius: BorderRadius.circular(themeData.radiusMd),
-  );
+  return BoxDecoration(color: themeData.colorScheme.primary, borderRadius: BorderRadius.circular(themeData.radiusMd));
 }
 
-TextStyle _buttonPrimaryTextStyle(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
-  return themeData.typography.small.merge(themeData.typography.medium).copyWith(
-        color: themeData.colorScheme.primaryForeground,
-      );
+TextStyle _buttonPrimaryTextStyle(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
+  return themeData.typography.small
+      .merge(themeData.typography.medium)
+      .copyWith(color: themeData.colorScheme.primaryForeground);
 }
 
-IconThemeData _buttonPrimaryIconTheme(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
-  return IconThemeData(
-    color: themeData.colorScheme.primaryForeground,
-  );
+IconThemeData _buttonPrimaryIconTheme(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
+  return IconThemeData(color: themeData.colorScheme.primaryForeground);
 }
 
 // SECONDARY
-Decoration _buttonSecondaryDecoration(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
+Decoration _buttonSecondaryDecoration(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
   if (states.contains(WidgetState.disabled)) {
     return BoxDecoration(
       color: themeData.colorScheme.primaryForeground,
@@ -2295,90 +2196,78 @@ Decoration _buttonSecondaryDecoration(
       borderRadius: BorderRadius.circular(themeData.radiusMd),
     );
   }
-  return BoxDecoration(
-    color: themeData.colorScheme.secondary,
-    borderRadius: BorderRadius.circular(themeData.radiusMd),
-  );
+  return BoxDecoration(color: themeData.colorScheme.secondary, borderRadius: BorderRadius.circular(themeData.radiusMd));
 }
 
-TextStyle _buttonSecondaryTextStyle(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
-  return themeData.typography.small.merge(themeData.typography.medium).copyWith(
-        color: states.contains(WidgetState.disabled)
-            ? themeData.colorScheme.mutedForeground
-            : themeData.colorScheme.secondaryForeground,
+TextStyle _buttonSecondaryTextStyle(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
+  return themeData.typography.small
+      .merge(themeData.typography.medium)
+      .copyWith(
+        color:
+            states.contains(WidgetState.disabled)
+                ? themeData.colorScheme.mutedForeground
+                : themeData.colorScheme.secondaryForeground,
       );
 }
 
-IconThemeData _buttonSecondaryIconTheme(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
+IconThemeData _buttonSecondaryIconTheme(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
   return IconThemeData(
-    color: states.contains(WidgetState.disabled)
-        ? themeData.colorScheme.mutedForeground
-        : themeData.colorScheme.secondaryForeground,
+    color:
+        states.contains(WidgetState.disabled)
+            ? themeData.colorScheme.mutedForeground
+            : themeData.colorScheme.secondaryForeground,
   );
 }
 
-Decoration _buttonOutlineDecoration(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
+Decoration _buttonOutlineDecoration(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
   if (states.contains(WidgetState.disabled)) {
     return BoxDecoration(
-      color: themeData.colorScheme.border.withValues(
-        alpha: 0,
-      ),
-      border: Border.all(
-        color: themeData.colorScheme.border,
-        width: 1,
-      ),
+      color: themeData.colorScheme.border.withValues(alpha: 0),
+      border: Border.all(color: themeData.colorScheme.border, width: 1),
       borderRadius: BorderRadius.circular(themeData.radiusMd),
     );
   }
   if (states.contains(WidgetState.hovered)) {
     return BoxDecoration(
       color: themeData.colorScheme.muted.scaleAlpha(0.8),
-      border: Border.all(
-        color: themeData.colorScheme.muted.scaleAlpha(0.8),
-        width: 1,
-      ),
+      border: Border.all(color: themeData.colorScheme.muted.scaleAlpha(0.8), width: 1),
       borderRadius: BorderRadius.circular(themeData.radiusMd),
     );
   }
   return BoxDecoration(
     color: themeData.colorScheme.muted.withValues(alpha: 0),
-    border: Border.all(
-      color: themeData.colorScheme.muted,
-      width: 1,
-    ),
+    border: Border.all(color: themeData.colorScheme.muted, width: 1),
     borderRadius: BorderRadius.circular(themeData.radiusMd),
   );
 }
 
-TextStyle _buttonOutlineTextStyle(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
-  return themeData.typography.small.merge(themeData.typography.medium).copyWith(
-        color: states.contains(WidgetState.disabled)
-            ? themeData.colorScheme.mutedForeground
-            : themeData.colorScheme.foreground,
+TextStyle _buttonOutlineTextStyle(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
+  return themeData.typography.small
+      .merge(themeData.typography.medium)
+      .copyWith(
+        color:
+            states.contains(WidgetState.disabled)
+                ? themeData.colorScheme.mutedForeground
+                : themeData.colorScheme.foreground,
       );
 }
 
-IconThemeData _buttonOutlineIconTheme(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
+IconThemeData _buttonOutlineIconTheme(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
   return IconThemeData(
-    color: states.contains(WidgetState.disabled)
-        ? themeData.colorScheme.mutedForeground
-        : themeData.colorScheme.foreground,
+    color:
+        states.contains(WidgetState.disabled)
+            ? themeData.colorScheme.mutedForeground
+            : themeData.colorScheme.foreground,
   );
 }
 
-Decoration _buttonGhostDecoration(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
+Decoration _buttonGhostDecoration(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
   if (states.contains(WidgetState.disabled)) {
     return BoxDecoration(
       color: themeData.colorScheme.muted.withValues(alpha: 0),
@@ -2398,99 +2287,93 @@ Decoration _buttonGhostDecoration(
 }
 
 TextStyle _buttonGhostTextStyle(BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
-  return themeData.typography.small.merge(themeData.typography.medium).copyWith(
-        color: states.contains(WidgetState.disabled)
-            ? themeData.colorScheme.mutedForeground
-            : themeData.colorScheme.foreground,
+  var themeData = VNLTheme.of(context);
+  return themeData.typography.small
+      .merge(themeData.typography.medium)
+      .copyWith(
+        color:
+            states.contains(WidgetState.disabled)
+                ? themeData.colorScheme.mutedForeground
+                : themeData.colorScheme.foreground,
       );
 }
 
-IconThemeData _buttonGhostIconTheme(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
+IconThemeData _buttonGhostIconTheme(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
   return IconThemeData(
-    color: states.contains(WidgetState.disabled)
-        ? themeData.colorScheme.mutedForeground
-        : themeData.colorScheme.foreground,
+    color:
+        states.contains(WidgetState.disabled)
+            ? themeData.colorScheme.mutedForeground
+            : themeData.colorScheme.foreground,
   );
 }
 
 TextStyle _buttonMutedTextStyle(BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
-  return themeData.typography.small.merge(themeData.typography.medium).copyWith(
-        color: themeData.colorScheme.mutedForeground,
-      );
+  var themeData = VNLTheme.of(context);
+  return themeData.typography.small
+      .merge(themeData.typography.medium)
+      .copyWith(color: themeData.colorScheme.mutedForeground);
 }
 
-IconThemeData _buttonMutedIconTheme(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
-  return IconThemeData(
-    color: themeData.colorScheme.mutedForeground,
-  );
+IconThemeData _buttonMutedIconTheme(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
+  return IconThemeData(color: themeData.colorScheme.mutedForeground);
 }
 
-Decoration _buttonLinkDecoration(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
-  return BoxDecoration(
-    borderRadius: BorderRadius.circular(themeData.radiusMd),
-  );
+Decoration _buttonLinkDecoration(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
+  return BoxDecoration(borderRadius: BorderRadius.circular(themeData.radiusMd));
 }
 
 TextStyle _buttonLinkTextStyle(BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
-  return themeData.typography.small.merge(themeData.typography.medium).copyWith(
-        color: states.contains(WidgetState.disabled)
-            ? themeData.colorScheme.mutedForeground
-            : themeData.colorScheme.foreground,
-        decoration: states.contains(WidgetState.hovered)
-            ? TextDecoration.underline
-            : TextDecoration.none,
+  var themeData = VNLTheme.of(context);
+  return themeData.typography.small
+      .merge(themeData.typography.medium)
+      .copyWith(
+        color:
+            states.contains(WidgetState.disabled)
+                ? themeData.colorScheme.mutedForeground
+                : themeData.colorScheme.foreground,
+        decoration: states.contains(WidgetState.hovered) ? TextDecoration.underline : TextDecoration.none,
       );
 }
 
-IconThemeData _buttonLinkIconTheme(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
+IconThemeData _buttonLinkIconTheme(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
   return IconThemeData(
-    color: states.contains(WidgetState.disabled)
-        ? themeData.colorScheme.mutedForeground
-        : themeData.colorScheme.foreground,
+    color:
+        states.contains(WidgetState.disabled)
+            ? themeData.colorScheme.mutedForeground
+            : themeData.colorScheme.foreground,
   );
 }
 
-Decoration _buttonTextDecoration(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
-  return BoxDecoration(
-    borderRadius: BorderRadius.circular(themeData.radiusMd),
-  );
+Decoration _buttonTextDecoration(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
+  return BoxDecoration(borderRadius: BorderRadius.circular(themeData.radiusMd));
 }
 
 TextStyle _buttonTextTextStyle(BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
-  return themeData.typography.small.merge(themeData.typography.medium).copyWith(
-        color: states.contains(WidgetState.hovered)
-            ? themeData.colorScheme.primary
-            : themeData.colorScheme.mutedForeground,
+  var themeData = VNLTheme.of(context);
+  return themeData.typography.small
+      .merge(themeData.typography.medium)
+      .copyWith(
+        color:
+            states.contains(WidgetState.hovered)
+                ? themeData.colorScheme.primary
+                : themeData.colorScheme.mutedForeground,
       );
 }
 
-IconThemeData _buttonTextIconTheme(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
+IconThemeData _buttonTextIconTheme(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
   return IconThemeData(
-    color: states.contains(WidgetState.hovered)
-        ? themeData.colorScheme.primary
-        : themeData.colorScheme.mutedForeground,
+    color: states.contains(WidgetState.hovered) ? themeData.colorScheme.primary : themeData.colorScheme.mutedForeground,
   );
 }
 
-Decoration _buttonDestructiveDecoration(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
+Decoration _buttonDestructiveDecoration(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
   if (states.contains(WidgetState.disabled)) {
     return BoxDecoration(
       color: themeData.colorScheme.primaryForeground,
@@ -2509,37 +2392,35 @@ Decoration _buttonDestructiveDecoration(
   );
 }
 
-TextStyle _buttonDestructiveTextStyle(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
-  return themeData.typography.small.merge(themeData.typography.medium).copyWith(
-        color: states.contains(WidgetState.disabled)
-            ? themeData.colorScheme.mutedForeground
-            : themeData.colorScheme.destructiveForeground,
+TextStyle _buttonDestructiveTextStyle(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
+  return themeData.typography.small
+      .merge(themeData.typography.medium)
+      .copyWith(
+        color:
+            states.contains(WidgetState.disabled)
+                ? themeData.colorScheme.mutedForeground
+                : themeData.colorScheme.destructiveForeground,
       );
 }
 
-IconThemeData _buttonDestructiveIconTheme(
-    BuildContext context, Set<WidgetState> states) {
-  var themeData = Theme.of(context);
+IconThemeData _buttonDestructiveIconTheme(BuildContext context, Set<WidgetState> states) {
+  var themeData = VNLTheme.of(context);
   return IconThemeData(
-    color: states.contains(WidgetState.disabled)
-        ? themeData.colorScheme.mutedForeground
-        : themeData.colorScheme.destructiveForeground,
+    color:
+        states.contains(WidgetState.disabled)
+            ? themeData.colorScheme.mutedForeground
+            : themeData.colorScheme.destructiveForeground,
   );
 }
 
 // STATIC BUTTON
-TextStyle _buttonStaticTextStyle(
-    BuildContext context, Set<WidgetState> states) {
-  final theme = Theme.of(context);
-  return theme.typography.small.merge(theme.typography.medium).copyWith(
-        color: theme.colorScheme.foreground,
-      );
+TextStyle _buttonStaticTextStyle(BuildContext context, Set<WidgetState> states) {
+  final theme = VNLTheme.of(context);
+  return theme.typography.small.merge(theme.typography.medium).copyWith(color: theme.colorScheme.foreground);
 }
 
-IconThemeData _buttonStaticIconTheme(
-    BuildContext context, Set<WidgetState> states) {
+IconThemeData _buttonStaticIconTheme(BuildContext context, Set<WidgetState> states) {
   return const IconThemeData();
 }
 
@@ -3191,8 +3072,7 @@ class DestructiveButton extends StatelessWidget {
       leading: leading,
       trailing: trailing,
       alignment: alignment,
-      style:
-          ButtonStyle.destructive(size: size, density: density, shape: shape),
+      style: ButtonStyle.destructive(size: size, density: density, shape: shape),
       focusNode: focusNode,
       disableTransition: disableTransition,
       onHover: onHover,
@@ -3728,12 +3608,7 @@ class IconButton extends StatelessWidget {
       leading: leading,
       trailing: trailing,
       alignment: alignment,
-      style: ButtonStyle(
-        variance: variance,
-        size: size,
-        density: density,
-        shape: shape,
-      ),
+      style: ButtonStyle(variance: variance, size: size, density: density, shape: shape),
       focusNode: focusNode,
       disableTransition: disableTransition,
       onHover: onHover,
@@ -3803,38 +3678,32 @@ class ButtonStyleOverride extends StatelessWidget {
       var data = Data.maybeOf<ButtonStyleOverrideData>(context);
       if (data != null) {
         decoration = (context, state, value) {
-          return data.decoration?.call(context, state,
-                  decoration?.call(context, state, value) ?? value) ??
+          return data.decoration?.call(context, state, decoration?.call(context, state, value) ?? value) ??
               decoration?.call(context, state, value) ??
               value;
         };
         mouseCursor = (context, state, value) {
-          return data.mouseCursor?.call(context, state,
-                  mouseCursor?.call(context, state, value) ?? value) ??
+          return data.mouseCursor?.call(context, state, mouseCursor?.call(context, state, value) ?? value) ??
               mouseCursor?.call(context, state, value) ??
               value;
         };
         padding = (context, state, value) {
-          return data.padding?.call(context, state,
-                  padding?.call(context, state, value) ?? value) ??
+          return data.padding?.call(context, state, padding?.call(context, state, value) ?? value) ??
               padding?.call(context, state, value) ??
               value;
         };
         textStyle = (context, state, value) {
-          return data.textStyle?.call(context, state,
-                  textStyle?.call(context, state, value) ?? value) ??
+          return data.textStyle?.call(context, state, textStyle?.call(context, state, value) ?? value) ??
               textStyle?.call(context, state, value) ??
               value;
         };
         iconTheme = (context, state, value) {
-          return data.iconTheme?.call(context, state,
-                  iconTheme?.call(context, state, value) ?? value) ??
+          return data.iconTheme?.call(context, state, iconTheme?.call(context, state, value) ?? value) ??
               iconTheme?.call(context, state, value) ??
               value;
         };
         margin = (context, state, value) {
-          return data.margin?.call(context, state,
-                  margin?.call(context, state, value) ?? value) ??
+          return data.margin?.call(context, state, margin?.call(context, state, value) ?? value) ??
               margin?.call(context, state, value) ??
               value;
         };
@@ -3886,14 +3755,7 @@ class ButtonStyleOverrideData {
 
   @override
   int get hashCode {
-    return Object.hash(
-      decoration,
-      mouseCursor,
-      padding,
-      textStyle,
-      iconTheme,
-      margin,
-    );
+    return Object.hash(decoration, mouseCursor, padding, textStyle, iconTheme, margin);
   }
 
   @override
@@ -3906,11 +3768,7 @@ class ButtonGroup extends StatelessWidget {
   final Axis direction;
   final List<Widget> children;
 
-  const ButtonGroup({
-    super.key,
-    this.direction = Axis.horizontal,
-    required this.children,
-  });
+  const ButtonGroup({super.key, this.direction = Axis.horizontal, required this.children});
 
   @override
   Widget build(BuildContext context) {
@@ -3927,23 +3785,16 @@ class ButtonGroup extends StatelessWidget {
               } else if (borderRadius == null) {
                 resolvedBorderRadius = BorderRadius.zero;
               } else {
-                resolvedBorderRadius =
-                    borderRadius.resolve(Directionality.of(context));
+                resolvedBorderRadius = borderRadius.resolve(Directionality.of(context));
               }
               if (direction == Axis.horizontal) {
                 if (i == 0) {
                   return value.copyWith(
-                    borderRadius: resolvedBorderRadius.copyWith(
-                      topRight: Radius.zero,
-                      bottomRight: Radius.zero,
-                    ),
+                    borderRadius: resolvedBorderRadius.copyWith(topRight: Radius.zero, bottomRight: Radius.zero),
                   );
                 } else if (i == children.length - 1) {
                   return value.copyWith(
-                    borderRadius: resolvedBorderRadius.copyWith(
-                      topLeft: Radius.zero,
-                      bottomLeft: Radius.zero,
-                    ),
+                    borderRadius: resolvedBorderRadius.copyWith(topLeft: Radius.zero, bottomLeft: Radius.zero),
                   );
                 } else {
                   return value.copyWith(
@@ -3958,17 +3809,11 @@ class ButtonGroup extends StatelessWidget {
               } else {
                 if (i == 0) {
                   return value.copyWith(
-                    borderRadius: resolvedBorderRadius.copyWith(
-                      bottomLeft: Radius.zero,
-                      bottomRight: Radius.zero,
-                    ),
+                    borderRadius: resolvedBorderRadius.copyWith(bottomLeft: Radius.zero, bottomRight: Radius.zero),
                   );
                 } else if (i == children.length - 1) {
                   return value.copyWith(
-                    borderRadius: resolvedBorderRadius.copyWith(
-                      topLeft: Radius.zero,
-                      topRight: Radius.zero,
-                    ),
+                    borderRadius: resolvedBorderRadius.copyWith(topLeft: Radius.zero, topRight: Radius.zero),
                   );
                 } else {
                   return value.copyWith(

@@ -30,10 +30,7 @@ class _HoverActivityState extends State<HoverActivity> with SingleTickerProvider
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: widget.debounceDuration,
-    );
+    _controller = AnimationController(vsync: this, duration: widget.debounceDuration);
     _controller.addStatusListener(_onStatusChanged);
   }
 
@@ -99,10 +96,7 @@ class _HoverState extends State<Hover> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: widget.waitDuration,
-    );
+    _controller = AnimationController(vsync: this, duration: widget.waitDuration);
     _controller.addStatusListener(_onStatusChanged);
   }
 
@@ -139,7 +133,7 @@ class _HoverState extends State<Hover> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final platform = Theme.of(context).platform;
+    final platform = VNLTheme.of(context).platform;
     bool enableLongPress =
         platform == TargetPlatform.iOS || platform == TargetPlatform.android || platform == TargetPlatform.fuchsia;
     return TapRegion(
@@ -153,21 +147,24 @@ class _HoverState extends State<Hover> with SingleTickerProviderStateMixin {
         },
         child: GestureDetector(
           // for mobile platforms, hover is triggered by a long press
-          onLongPressDown: enableLongPress
-              ? (details) {
-                  _onEnter();
-                }
-              : null,
-          onLongPressCancel: enableLongPress
-              ? () {
-                  _onExit(true);
-                }
-              : null,
-          onLongPressUp: enableLongPress
-              ? () {
-                  _onExit(true);
-                }
-              : null,
+          onLongPressDown:
+              enableLongPress
+                  ? (details) {
+                    _onEnter();
+                  }
+                  : null,
+          onLongPressCancel:
+              enableLongPress
+                  ? () {
+                    _onExit(true);
+                  }
+                  : null,
+          onLongPressUp:
+              enableLongPress
+                  ? () {
+                    _onExit(true);
+                  }
+                  : null,
           child: widget.child,
         ),
       ),

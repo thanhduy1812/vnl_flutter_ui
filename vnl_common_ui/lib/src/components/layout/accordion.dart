@@ -18,25 +18,25 @@ class _AccordionState extends State<Accordion> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     final accTheme = ComponentTheme.maybeOf<AccordionTheme>(context);
     return Data.inherit(
-        data: this,
-        child: IntrinsicWidth(
-          child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                ...join(
-                    widget.items,
-                    Container(
-                      color: theme.colorScheme.muted,
-                      height: accTheme?.dividerHeight ?? 1 * scaling,
-                    )),
-                const VNLDivider(),
-              ]),
-        ));
+      data: this,
+      child: IntrinsicWidth(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ...join(
+              widget.items,
+              Container(color: theme.colorScheme.muted, height: accTheme?.dividerHeight ?? 1 * scaling),
+            ),
+            const VNLDivider(),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -130,16 +130,16 @@ class AccordionTheme {
 
   @override
   int get hashCode => Object.hash(
-        duration,
-        curve,
-        reverseCurve,
-        padding,
-        iconGap,
-        dividerHeight,
-        dividerColor,
-        arrowIcon,
-        arrowIconColor,
-      );
+    duration,
+    curve,
+    reverseCurve,
+    padding,
+    iconGap,
+    dividerHeight,
+    dividerColor,
+    arrowIcon,
+    arrowIconColor,
+  );
 
   @override
   String toString() {
@@ -152,19 +152,13 @@ class AccordionItem extends StatefulWidget {
   final Widget content;
   final bool expanded;
 
-  const AccordionItem({
-    super.key,
-    required this.trigger,
-    required this.content,
-    this.expanded = false,
-  });
+  const AccordionItem({super.key, required this.trigger, required this.content, this.expanded = false});
 
   @override
   State<AccordionItem> createState() => _AccordionItemState();
 }
 
-class _AccordionItemState extends State<AccordionItem>
-    with SingleTickerProviderStateMixin {
+class _AccordionItemState extends State<AccordionItem> with SingleTickerProviderStateMixin {
   _AccordionState? accordion;
   final ValueNotifier<bool> _expanded = ValueNotifier(false);
 
@@ -250,7 +244,7 @@ class _AccordionItemState extends State<AccordionItem>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
 
     return Data.inherit(
@@ -262,12 +256,11 @@ class _AccordionItemState extends State<AccordionItem>
             SizeTransition(
               sizeFactor: _easeInAnimation!,
               axisAlignment: -1,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  bottom: _theme?.padding ?? 16 * scaling,
-                ),
-                child: widget.content,
-              ).small().normal(),
+              child:
+                  Padding(
+                    padding: EdgeInsets.only(bottom: _theme?.padding ?? 16 * scaling),
+                    child: widget.content,
+                  ).small().normal(),
             ),
           ],
         ),
@@ -318,7 +311,7 @@ class _AccordionTriggerState extends State<AccordionTrigger> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
+    var theme = VNLTheme.of(context);
     final accTheme = ComponentTheme.maybeOf<AccordionTheme>(context);
     final scaling = theme.scaling;
     return GestureDetector(
@@ -352,55 +345,42 @@ class _AccordionTriggerState extends State<AccordionTrigger> {
         child: Container(
           decoration: BoxDecoration(
             border: Border.all(
-              color: _focusing
-                  ? theme.colorScheme.ring
-                  : theme.colorScheme.ring.withValues(alpha: 0),
+              color: _focusing ? theme.colorScheme.ring : theme.colorScheme.ring.withValues(alpha: 0),
               width: 1,
             ),
             borderRadius: BorderRadius.circular(theme.radiusXs),
           ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: accTheme?.padding ?? 16 * scaling,
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: DefaultTextStyle.merge(
-                      style: TextStyle(
-                        decoration: _hovering
-                            ? TextDecoration.underline
-                            : TextDecoration.none,
-                      ),
-                      child: widget.child,
-                    ),
-                  ),
-                ),
-                SizedBox(width: accTheme?.iconGap ?? 18 * scaling),
-                TweenAnimationBuilder(
-                    tween: _expanded
-                        ? Tween(begin: 1.0, end: 0)
-                        : Tween(begin: 0, end: 1.0),
-                    duration: accTheme?.duration ?? kDefaultDuration,
-                    builder: (context, value, child) {
-                      return Transform.rotate(
-                        angle: value * pi,
-                        child: IconTheme(
-                          data: IconThemeData(
-                            color: accTheme?.arrowIconColor ??
-                                theme.colorScheme.mutedForeground,
-                          ),
-                          child: Icon(accTheme?.arrowIcon ??
-                                  Icons.keyboard_arrow_up)
-                              .iconMedium(),
+          child:
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: accTheme?.padding ?? 16 * scaling),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: DefaultTextStyle.merge(
+                          style: TextStyle(decoration: _hovering ? TextDecoration.underline : TextDecoration.none),
+                          child: widget.child,
                         ),
-                      );
-                    }),
-              ],
-            ),
-          ).medium().small(),
+                      ),
+                    ),
+                    SizedBox(width: accTheme?.iconGap ?? 18 * scaling),
+                    TweenAnimationBuilder(
+                      tween: _expanded ? Tween(begin: 1.0, end: 0) : Tween(begin: 0, end: 1.0),
+                      duration: accTheme?.duration ?? kDefaultDuration,
+                      builder: (context, value, child) {
+                        return Transform.rotate(
+                          angle: value * pi,
+                          child: IconTheme(
+                            data: IconThemeData(color: accTheme?.arrowIconColor ?? theme.colorScheme.mutedForeground),
+                            child: Icon(accTheme?.arrowIcon ?? Icons.keyboard_arrow_up).iconMedium(),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ).medium().small(),
         ),
       ),
     );

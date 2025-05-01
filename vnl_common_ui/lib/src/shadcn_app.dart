@@ -54,11 +54,11 @@ class VNLookApp extends StatefulWidget {
     this.tooltipHandler,
     this.menuHandler,
     this.enableThemeAnimation = true,
-  })  : routeInformationProvider = null,
-        routeInformationParser = null,
-        routerDelegate = null,
-        backButtonDispatcher = null,
-        routerConfig = null;
+  }) : routeInformationProvider = null,
+       routeInformationParser = null,
+       routerDelegate = null,
+       backButtonDispatcher = null,
+       routerConfig = null;
 
   const VNLookApp.router({
     super.key,
@@ -101,15 +101,15 @@ class VNLookApp extends StatefulWidget {
     this.tooltipHandler,
     this.menuHandler,
     this.enableThemeAnimation = true,
-  })  : assert(routerDelegate != null || routerConfig != null),
-        navigatorObservers = null,
-        navigatorKey = null,
-        onGenerateRoute = null,
-        home = null,
-        onGenerateInitialRoutes = null,
-        onUnknownRoute = null,
-        routes = null,
-        initialRoute = null;
+  }) : assert(routerDelegate != null || routerConfig != null),
+       navigatorObservers = null,
+       navigatorKey = null,
+       onGenerateRoute = null,
+       home = null,
+       onGenerateInitialRoutes = null,
+       onUnknownRoute = null,
+       routes = null,
+       initialRoute = null;
 
   final GlobalKey<NavigatorState>? navigatorKey;
 
@@ -147,8 +147,8 @@ class VNLookApp extends StatefulWidget {
 
   final GenerateAppTitle? onGenerateTitle;
 
-  final ThemeData theme;
-  final ThemeData? darkTheme;
+  final VNLThemeData theme;
+  final VNLThemeData? darkTheme;
   final ThemeMode themeMode;
   final Color? color;
   final Locale? locale;
@@ -202,10 +202,7 @@ class VNLookScrollBehavior extends ScrollBehavior {
           case TargetPlatform.linux:
           case TargetPlatform.macOS:
           case TargetPlatform.windows:
-            return Scrollbar(
-              controller: details.controller,
-              child: child,
-            );
+            return Scrollbar(controller: details.controller, child: child);
           case TargetPlatform.android:
           case TargetPlatform.fuchsia:
           case TargetPlatform.iOS:
@@ -235,7 +232,7 @@ class VNLookScrollBehavior extends ScrollBehavior {
     }
     return GlowingOverscrollIndicator(
       axisDirection: details.direction,
-      color: Theme.of(context).colorScheme.secondary,
+      color: VNLTheme.of(context).colorScheme.secondary,
       child: child,
     );
   }
@@ -337,9 +334,7 @@ class _VNLookAppState extends State<VNLookApp> {
         builder: _builder,
         title: widget.title,
         onGenerateTitle: widget.onGenerateTitle,
-        textStyle: widget.theme.typography.sans.copyWith(
-          color: widget.theme.colorScheme.foreground,
-        ),
+        textStyle: widget.theme.typography.sans.copyWith(color: widget.theme.colorScheme.foreground),
         color: primaryColor,
         locale: widget.locale,
         localizationsDelegates: _localizationsDelegates,
@@ -374,9 +369,7 @@ class _VNLookAppState extends State<VNLookApp> {
       builder: _builder,
       title: widget.title,
       onGenerateTitle: widget.onGenerateTitle,
-      textStyle: widget.theme.typography.sans.copyWith(
-        color: widget.theme.colorScheme.foreground,
-      ),
+      textStyle: widget.theme.typography.sans.copyWith(color: widget.theme.colorScheme.foreground),
       color: primaryColor,
       locale: widget.locale,
       localizationsDelegates: _localizationsDelegates,
@@ -397,17 +390,13 @@ class _VNLookAppState extends State<VNLookApp> {
     Widget result = _buildWidgetApp(context);
     assert(() {
       if (widget.debugShowMaterialGrid) {
-        result = GridPaper(
-          color: const Color(0xE0F9BBE0),
-          interval: 8.0,
-          subdivisions: 1,
-          child: result,
-        );
+        result = GridPaper(color: const Color(0xE0F9BBE0), interval: 8.0, subdivisions: 1, child: result);
       }
       return true;
     }());
     return m.Theme(
-      data: widget.materialTheme ??
+      data:
+          widget.materialTheme ??
           m.ThemeData.from(
             colorScheme: m.ColorScheme.fromSeed(
               seedColor: widget.theme.colorScheme.primary,
@@ -419,7 +408,8 @@ class _VNLookAppState extends State<VNLookApp> {
             ),
           ),
       child: c.CupertinoTheme(
-        data: widget.cupertinoTheme ??
+        data:
+            widget.cupertinoTheme ??
             c.CupertinoThemeData(
               brightness: widget.theme.brightness,
               primaryColor: widget.theme.colorScheme.primary,
@@ -433,10 +423,7 @@ class _VNLookAppState extends State<VNLookApp> {
           child: m.ScaffoldMessenger(
             child: ScrollConfiguration(
               behavior: (widget.scrollBehavior ?? const VNLookScrollBehavior()),
-              child: HeroControllerScope(
-                controller: _heroController,
-                child: result,
-              ),
+              child: HeroControllerScope(controller: _heroController, child: result),
             ),
           ),
         ),
@@ -447,8 +434,8 @@ class _VNLookAppState extends State<VNLookApp> {
 
 class VNLookLayer extends StatelessWidget {
   final Widget? child;
-  final ThemeData theme;
-  final ThemeData? darkTheme;
+  final VNLThemeData theme;
+  final VNLThemeData? darkTheme;
   final ThemeMode themeMode;
   final AdaptiveScaling? scaling;
   final List<Color> initialRecentColors;
@@ -496,35 +483,34 @@ class VNLookLayer extends StatelessWidget {
       child: VNLookAnimatedTheme(
         duration: kDefaultDuration,
         data: scaledTheme,
-        child: Builder(builder: (context) {
-          var theme = Theme.of(context);
-          return DataMessengerRoot(
-            child: ScrollViewInterceptor(
-              enabled: enableScrollInterception,
-              child: VNLookSkeletonizerConfigLayer(
-                theme: theme,
-                child: DefaultTextStyle.merge(
-                  style: theme.typography.base.copyWith(
-                    color: theme.colorScheme.foreground,
-                  ),
-                  child: IconTheme.merge(
-                    data: theme.iconTheme.medium.copyWith(
-                      color: theme.colorScheme.foreground,
-                    ),
-                    child: RecentColorsScope(
-                      initialRecentColors: initialRecentColors,
-                      maxRecentColors: maxRecentColors,
-                      onRecentColorsChanged: onRecentColorsChanged,
-                      child: ColorPickingLayer(
-                        child: KeyboardShortcutDisplayMapper(
-                          child: ToastLayer(
-                            child: builder != null
-                                ? Builder(
-                                    builder: (BuildContext context) {
-                                      return builder!(context, child);
-                                    },
-                                  )
-                                : child ?? const SizedBox.shrink(),
+        child: Builder(
+          builder: (context) {
+            var theme = VNLTheme.of(context);
+            return DataMessengerRoot(
+              child: ScrollViewInterceptor(
+                enabled: enableScrollInterception,
+                child: VNLookSkeletonizerConfigLayer(
+                  theme: theme,
+                  child: DefaultTextStyle.merge(
+                    style: theme.typography.base.copyWith(color: theme.colorScheme.foreground),
+                    child: IconTheme.merge(
+                      data: theme.iconTheme.medium.copyWith(color: theme.colorScheme.foreground),
+                      child: RecentColorsScope(
+                        initialRecentColors: initialRecentColors,
+                        maxRecentColors: maxRecentColors,
+                        onRecentColorsChanged: onRecentColorsChanged,
+                        child: ColorPickingLayer(
+                          child: KeyboardShortcutDisplayMapper(
+                            child: ToastLayer(
+                              child:
+                                  builder != null
+                                      ? Builder(
+                                        builder: (BuildContext context) {
+                                          return builder!(context, child);
+                                        },
+                                      )
+                                      : child ?? const SizedBox.shrink(),
+                            ),
                           ),
                         ),
                       ),
@@ -532,9 +518,9 @@ class VNLookLayer extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-          );
-        }),
+            );
+          },
+        ),
       ),
     );
   }
@@ -542,7 +528,7 @@ class VNLookLayer extends StatelessWidget {
 
 class VNLookAnimatedTheme extends StatelessWidget {
   final Widget child;
-  final ThemeData data;
+  final VNLThemeData data;
   final Duration duration;
   final Curve curve;
   final VoidCallback? onEnd;
@@ -559,25 +545,14 @@ class VNLookAnimatedTheme extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (duration == Duration.zero) {
-      return Theme(
-        data: data,
-        child: child,
-      );
+      return VNLTheme(data: data, child: child);
     }
-    return AnimatedTheme(
-      data: data,
-      duration: duration,
-      curve: curve,
-      child: child,
-    );
+    return AnimatedTheme(data: data, duration: duration, curve: curve, child: child);
   }
 }
 
 class VNLookRectArcTween extends RectTween {
-  VNLookRectArcTween({
-    super.begin,
-    super.end,
-  });
+  VNLookRectArcTween({super.begin, super.end});
 
   bool _dirty = true;
 
@@ -585,16 +560,15 @@ class VNLookRectArcTween extends RectTween {
     assert(begin != null);
     assert(end != null);
     final Offset centersVector = end!.center - begin!.center;
-    final _BorderRadiusCorner diagonal =
-        _findMax<_BorderRadiusCorner>(_allDiagonals, (_BorderRadiusCorner d) => _diagonalSupport(centersVector, d));
+    final _BorderRadiusCorner diagonal = _findMax<_BorderRadiusCorner>(
+      _allDiagonals,
+      (_BorderRadiusCorner d) => _diagonalSupport(centersVector, d),
+    );
     _beginArc = VNLookPointArcTween(
       begin: _cornerFor(begin!, diagonal.beginId),
       end: _cornerFor(end!, diagonal.beginId),
     );
-    _endArc = VNLookPointArcTween(
-      begin: _cornerFor(begin!, diagonal.endId),
-      end: _cornerFor(end!, diagonal.endId),
-    );
+    _endArc = VNLookPointArcTween(begin: _cornerFor(begin!, diagonal.endId), end: _cornerFor(end!, diagonal.endId));
     _dirty = false;
   }
 
@@ -700,10 +674,7 @@ class _BorderRadiusCorner {
 const double _kOnAxisDelta = 2.0;
 
 class VNLookPointArcTween extends Tween<Offset> {
-  VNLookPointArcTween({
-    super.begin,
-    super.end,
-  });
+  VNLookPointArcTween({super.begin, super.end});
 
   bool _dirty = true;
 
@@ -840,27 +811,15 @@ class VNLookUI extends StatelessWidget {
   final TextStyle? textStyle;
   final Widget child;
 
-  const VNLookUI({
-    super.key,
-    this.textStyle,
-    required this.child,
-  });
+  const VNLookUI({super.key, this.textStyle, required this.child});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return AnimatedDefaultTextStyle(
-      style: textStyle ??
-          theme.typography.sans.copyWith(
-            color: theme.colorScheme.foreground,
-          ),
+      style: textStyle ?? theme.typography.sans.copyWith(color: theme.colorScheme.foreground),
       duration: kDefaultDuration,
-      child: IconTheme(
-        data: IconThemeData(
-          color: theme.colorScheme.foreground,
-        ),
-        child: child,
-      ),
+      child: IconTheme(data: IconThemeData(color: theme.colorScheme.foreground), child: child),
     );
   }
 }
@@ -868,9 +827,7 @@ class VNLookUI extends StatelessWidget {
 class _GlobalPointerListener extends c.StatefulWidget {
   final Widget child;
 
-  const _GlobalPointerListener({
-    required this.child,
-  });
+  const _GlobalPointerListener({required this.child});
 
   @override
   c.State<_GlobalPointerListener> createState() => _GlobalPointerListenerState();
@@ -879,9 +836,7 @@ class _GlobalPointerListener extends c.StatefulWidget {
 class PointerData {
   final Offset position;
 
-  PointerData({
-    required this.position,
-  });
+  PointerData({required this.position});
 
   @override
   bool operator ==(Object other) {
@@ -922,10 +877,7 @@ class _GlobalPointerListenerState extends c.State<_GlobalPointerListener> {
       child: widget.child,
     );
     if (_position != null) {
-      child = Data.inherit(
-        data: PointerData(position: _position!),
-        child: child,
-      );
+      child = Data.inherit(data: PointerData(position: _position!), child: child);
     }
     return child;
   }

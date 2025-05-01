@@ -47,40 +47,41 @@ class LinearProgressIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final directionality = Directionality.of(context);
     Widget childWidget;
     if (value != null) {
       childWidget = AnimatedValueBuilder(
-          value: _LinearProgressIndicatorProperties(
-            start: 0,
-            end: value!.clamp(0, 1),
-            color: color ?? theme.colorScheme.primary,
-            backgroundColor: backgroundColor ?? theme.colorScheme.primary.scaleAlpha(0.2),
-            showSparks: showSparks,
-            sparksColor: color ?? theme.colorScheme.primary,
-            sparksRadius: theme.scaling * 16,
-            textDirection: directionality,
-          ),
-          duration: disableAnimation ? Duration.zero : kDefaultDuration,
-          lerp: _LinearProgressIndicatorProperties.lerp,
-          curve: Curves.easeInOut,
-          builder: (context, value, child) {
-            return CustomPaint(
-              painter: _LinearProgressIndicatorPainter(
-                start: 0,
-                end: value.end,
-                start2: value.start2,
-                end2: value.end2,
-                color: value.color,
-                backgroundColor: value.backgroundColor,
-                showSparks: value.showSparks,
-                sparksColor: value.sparksColor,
-                sparksRadius: value.sparksRadius,
-                textDirection: value.textDirection,
-              ),
-            );
-          });
+        value: _LinearProgressIndicatorProperties(
+          start: 0,
+          end: value!.clamp(0, 1),
+          color: color ?? theme.colorScheme.primary,
+          backgroundColor: backgroundColor ?? theme.colorScheme.primary.scaleAlpha(0.2),
+          showSparks: showSparks,
+          sparksColor: color ?? theme.colorScheme.primary,
+          sparksRadius: theme.scaling * 16,
+          textDirection: directionality,
+        ),
+        duration: disableAnimation ? Duration.zero : kDefaultDuration,
+        lerp: _LinearProgressIndicatorProperties.lerp,
+        curve: Curves.easeInOut,
+        builder: (context, value, child) {
+          return CustomPaint(
+            painter: _LinearProgressIndicatorPainter(
+              start: 0,
+              end: value.end,
+              start2: value.start2,
+              end2: value.end2,
+              color: value.color,
+              backgroundColor: value.backgroundColor,
+              showSparks: value.showSparks,
+              sparksColor: value.sparksColor,
+              sparksRadius: value.sparksRadius,
+              textDirection: value.textDirection,
+            ),
+          );
+        },
+      );
     } else {
       // indeterminate
       childWidget = RepeatedAnimationBuilder(
@@ -93,47 +94,45 @@ class LinearProgressIndicator extends StatelessWidget {
           double start2 = _line2Tail.transform(value);
           double end2 = _line2Head.transform(value);
           return AnimatedValueBuilder(
-              duration: kDefaultDuration,
-              lerp: _LinearProgressIndicatorProperties.lerp,
-              value: _LinearProgressIndicatorProperties(
-                start: start,
-                end: end,
-                start2: start2,
-                end2: end2,
-                color: color ?? theme.colorScheme.primary,
-                backgroundColor: backgroundColor ?? theme.colorScheme.primary.scaleAlpha(0.2),
-                showSparks: showSparks,
-                sparksColor: color ?? theme.colorScheme.primary,
-                sparksRadius: theme.scaling * 16,
-                textDirection: directionality,
-              ),
-              builder: (context, prop, child) {
-                return CustomPaint(
-                  painter: _LinearProgressIndicatorPainter(
-                    // do not animate start and end value
-                    start: start,
-                    end: end,
-                    start2: start2,
-                    end2: end2,
-                    color: prop.color,
-                    backgroundColor: prop.backgroundColor,
-                    showSparks: prop.showSparks,
-                    sparksColor: prop.sparksColor,
-                    sparksRadius: prop.sparksRadius,
-                    textDirection: prop.textDirection,
-                  ),
-                );
-              });
+            duration: kDefaultDuration,
+            lerp: _LinearProgressIndicatorProperties.lerp,
+            value: _LinearProgressIndicatorProperties(
+              start: start,
+              end: end,
+              start2: start2,
+              end2: end2,
+              color: color ?? theme.colorScheme.primary,
+              backgroundColor: backgroundColor ?? theme.colorScheme.primary.scaleAlpha(0.2),
+              showSparks: showSparks,
+              sparksColor: color ?? theme.colorScheme.primary,
+              sparksRadius: theme.scaling * 16,
+              textDirection: directionality,
+            ),
+            builder: (context, prop, child) {
+              return CustomPaint(
+                painter: _LinearProgressIndicatorPainter(
+                  // do not animate start and end value
+                  start: start,
+                  end: end,
+                  start2: start2,
+                  end2: end2,
+                  color: prop.color,
+                  backgroundColor: prop.backgroundColor,
+                  showSparks: prop.showSparks,
+                  sparksColor: prop.sparksColor,
+                  sparksRadius: prop.sparksRadius,
+                  textDirection: prop.textDirection,
+                ),
+              );
+            },
+          );
         },
       );
     }
     return RepaintBoundary(
       child: SizedBox(
         height: minHeight ?? (theme.scaling * 2),
-        child: ClipRRect(
-          borderRadius: borderRadius ?? BorderRadius.zero,
-          child: childWidget,
-        ),
+        child: ClipRRect(borderRadius: borderRadius ?? BorderRadius.zero, child: childWidget),
       ),
     );
   }
@@ -253,26 +252,13 @@ class _LinearProgressIndicatorPainter extends CustomPainter {
 
     paint.color = backgroundColor;
 
-    canvas.drawRRect(
-      RRect.fromLTRBR(0, 0, size.width, size.height, Radius.circular(size.height / 2)),
-      paint,
-    );
+    canvas.drawRRect(RRect.fromLTRBR(0, 0, size.width, size.height, Radius.circular(size.height / 2)), paint);
 
     paint.color = color;
-    var rectValue = Rect.fromLTWH(
-      size.width * start,
-      0,
-      size.width * (end - start),
-      size.height,
-    );
+    var rectValue = Rect.fromLTWH(size.width * start, 0, size.width * (end - start), size.height);
     canvas.drawRect(rectValue, paint);
     if (start2 != null && end2 != null) {
-      rectValue = Rect.fromLTWH(
-        size.width * start2,
-        0,
-        size.width * (end2 - start2),
-        size.height,
-      );
+      rectValue = Rect.fromLTWH(size.width * start2, 0, size.width * (end2 - start2), size.height);
       canvas.drawRect(rectValue, paint);
     }
 
@@ -284,21 +270,14 @@ class _LinearProgressIndicatorPainter extends CustomPainter {
         // stops: const [0.0, 1.0],
         Offset(size.width * (end - start), size.height / 2),
         sparksRadius,
-        [
-          sparksColor,
-          sparksColor.withAlpha(0),
-        ],
+        [sparksColor, sparksColor.withAlpha(0)],
         [0.0, 1.0],
         ui.TileMode.clamp,
         // scale to make oval
         gradientTransform,
       );
       paint.shader = gradient;
-      canvas.drawCircle(
-        Offset(size.width * (end - start), size.height / 2),
-        sparksRadius,
-        paint,
-      );
+      canvas.drawCircle(Offset(size.width * (end - start), size.height / 2), sparksRadius, paint);
     }
   }
 

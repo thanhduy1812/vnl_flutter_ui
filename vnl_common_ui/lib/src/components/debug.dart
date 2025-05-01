@@ -23,16 +23,8 @@ void debugPostSticker(BuildContext context, Rect rect, Color color, String text)
             opacity: 0.2,
             child: Container(
               padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: color,
-              ),
-              child: Text(
-                text,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                ),
-              ),
+              decoration: BoxDecoration(color: color),
+              child: Text(text, style: const TextStyle(color: VNLColors.white, fontSize: 12)),
             ),
           ),
         ),
@@ -46,13 +38,10 @@ void debugPostSticker(BuildContext context, Rect rect, Color color, String text)
 }
 
 extension DebugContainer on Widget {
-  Widget debugContainer([Color color = Colors.red]) {
+  Widget debugContainer([Color color = VNLColors.red]) {
     if (!kDebugContainerVisible) {
       return this;
     }
-    return Container(
-      color: color,
-      child: this,
-    );
+    return Container(color: color, child: this);
   }
 }

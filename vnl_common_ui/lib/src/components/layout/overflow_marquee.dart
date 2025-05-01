@@ -215,13 +215,9 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
   @override
   Size computeDryLayout(covariant BoxConstraints constraints) {
     if (direction == Axis.horizontal) {
-      constraints = constraints.copyWith(
-        maxWidth: double.infinity,
-      );
+      constraints = constraints.copyWith(maxWidth: double.infinity);
     } else {
-      constraints = constraints.copyWith(
-        maxHeight: double.infinity,
-      );
+      constraints = constraints.copyWith(maxHeight: double.infinity);
     }
     final child = this.child;
     if (child != null) {
@@ -291,20 +287,20 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
     List<double> stops = [];
     if (fadeStart) {
       double start = fadeStartProgress;
-      Color startColor = Colors.white.withValues(alpha: 1 - start);
-      colors.addAll([startColor, Colors.white]);
+      Color startColor = VNLColors.white.withValues(alpha: 1 - start);
+      colors.addAll([startColor, VNLColors.white]);
       stops.addAll([0.0, portionSize]);
     } else {
-      colors.addAll([Colors.white]);
+      colors.addAll([VNLColors.white]);
       stops.addAll([0.0]);
     }
     if (fadeEnd) {
       double end = fadeEndProgress;
-      Color endColor = Colors.white.withValues(alpha: 1 - end);
-      colors.addAll([Colors.white, endColor]);
+      Color endColor = VNLColors.white.withValues(alpha: 1 - end);
+      colors.addAll([VNLColors.white, endColor]);
       stops.addAll([1.0 - portionSize, 1.0]);
     } else {
-      colors.addAll([Colors.white]);
+      colors.addAll([VNLColors.white]);
       stops.addAll([1.0]);
     }
     AlignmentGeometry begin;
@@ -316,12 +312,7 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
       begin = Alignment.topCenter;
       end = Alignment.bottomCenter;
     }
-    return LinearGradient(
-      begin: begin,
-      end: end,
-      colors: colors,
-      stops: stops,
-    ).createShader(bounds);
+    return LinearGradient(begin: begin, end: end, colors: colors, stops: stops).createShader(bounds);
   }
 
   @override
@@ -367,13 +358,9 @@ class _RenderOverflowMarqueeLayout extends RenderShiftedBox
     if (child != null) {
       var constraints = this.constraints;
       if (direction == Axis.horizontal) {
-        constraints = constraints.copyWith(
-          maxWidth: double.infinity,
-        );
+        constraints = constraints.copyWith(maxWidth: double.infinity);
       } else {
-        constraints = constraints.copyWith(
-          maxHeight: double.infinity,
-        );
+        constraints = constraints.copyWith(maxHeight: double.infinity);
       }
       child.layout(constraints, parentUsesSize: true);
       size = this.constraints.constrain(child.size);

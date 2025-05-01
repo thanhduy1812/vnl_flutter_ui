@@ -43,9 +43,7 @@ class ControlledChipInput<T> extends StatelessWidget with ControlledComponent<Li
     this.onChanged,
     this.enabled = true,
     this.textEditingController,
-    this.popoverConstraints = const BoxConstraints(
-      maxHeight: 300,
-    ),
+    this.popoverConstraints = const BoxConstraints(maxHeight: 300),
     this.undoHistoryController,
     this.onSubmitted,
     this.initialText,
@@ -124,9 +122,7 @@ class ChipInput<T> extends StatefulWidget {
   const ChipInput({
     super.key,
     this.controller,
-    this.popoverConstraints = const BoxConstraints(
-      maxHeight: 300,
-    ),
+    this.popoverConstraints = const BoxConstraints(maxHeight: 300),
     this.undoHistoryController,
     this.initialText,
     this.onSubmitted,
@@ -190,7 +186,7 @@ class ChipInputState<T> extends State<ChipInput<T>> with FormValueSupplier<List<
     if (_suggestions.value.isEmpty || !_focusNode.hasFocus) {
       _popoverController.close();
     } else if (!_popoverController.hasOpenPopover && _suggestions.value.isNotEmpty) {
-      final theme = Theme.of(context);
+      final theme = VNLTheme.of(context);
       _popoverController.show(
         context: context,
         handler: const PopoverOverlayHandler(),
@@ -244,7 +240,7 @@ class ChipInputState<T> extends State<ChipInput<T>> with FormValueSupplier<List<
   }
 
   Widget buildPopover(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return TextFieldTapRegion(
       child: Data.inherit(
         data: this,
@@ -278,7 +274,8 @@ class ChipInputState<T> extends State<ChipInput<T>> with FormValueSupplier<List<
                               SizedBox(width: theme.scaling * 10), // Add spacing here
                             ],
                             Expanded(
-                              child: widget.suggestionBuilder?.call(context, _suggestions.value[i]) ??
+                              child:
+                                  widget.suggestionBuilder?.call(context, _suggestions.value[i]) ??
                                   Text(_suggestions.value[i].toString()).normal().small(),
                             ),
                             if (widget.suggestionTrailingBuilder != null) ...[
@@ -321,7 +318,7 @@ class ChipInputState<T> extends State<ChipInput<T>> with FormValueSupplier<List<
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return GestureDetector(
       onTap: () {
         _focusNode.requestFocus();
@@ -382,14 +379,8 @@ class ChipInputState<T> extends State<ChipInput<T>> with FormValueSupplier<List<
                     Wrap(
                       runSpacing: theme.scaling * 4,
                       spacing: theme.scaling * 4,
-                      children: [
-                        for (int i = 0; i < widget.chips.length; i++) _chipBuilder(i),
-                      ],
-                    ).withPadding(
-                      left: theme.scaling * 6,
-                      right: theme.scaling * 6,
-                      bottom: theme.scaling * 4,
-                    ),
+                      children: [for (int i = 0; i < widget.chips.length; i++) _chipBuilder(i)],
+                    ).withPadding(left: theme.scaling * 6, right: theme.scaling * 6, bottom: theme.scaling * 4),
                   ],
                 );
               } else {
@@ -412,10 +403,7 @@ class ChipInputState<T> extends State<ChipInput<T>> with FormValueSupplier<List<
                       children: [
                         for (int i = 0; i < widget.chips.length; i++) _chipBuilder(i),
                         if (_controller.text.isNotEmpty) const Gap(4),
-                        if (_controller.text.isNotEmpty)
-                          Text(
-                            _controller.text,
-                          ).base(),
+                        if (_controller.text.isNotEmpty) Text(_controller.text).base(),
                       ],
                     ).withPadding(horizontal: theme.scaling * 6, vertical: theme.scaling * 4),
                   ],
@@ -424,19 +412,16 @@ class ChipInputState<T> extends State<ChipInput<T>> with FormValueSupplier<List<
             }
             return TextFieldTapRegion(
               child: OutlinedContainer(
-                backgroundColor: Colors.transparent,
+                backgroundColor: VNLColors.transparent,
                 borderRadius: theme.borderRadiusMd,
                 borderColor: _focusNode.hasFocus ? theme.colorScheme.ring : theme.colorScheme.border,
                 child: Row(
                   children: [
                     Expanded(child: child!),
                     if (widget.inputTrailingWidget != null) ...[
-                      const VerticalDivider(
-                        indent: 10,
-                        endIndent: 10,
-                      ),
+                      const VerticalDivider(indent: 10, endIndent: 10),
                       widget.inputTrailingWidget!,
-                    ]
+                    ],
                   ],
                 ),
               ),

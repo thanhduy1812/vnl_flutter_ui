@@ -32,7 +32,7 @@ class VNLCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     return OutlinedContainer(
       clipBehavior: clipBehavior,
@@ -45,12 +45,7 @@ class VNLCard extends StatelessWidget {
       surfaceOpacity: surfaceOpacity,
       surfaceBlur: surfaceBlur,
       duration: duration,
-      child: DefaultTextStyle.merge(
-        child: child,
-        style: TextStyle(
-          color: theme.colorScheme.cardForeground,
-        ),
-      ),
+      child: DefaultTextStyle.merge(child: child, style: TextStyle(color: theme.colorScheme.cardForeground)),
     );
   }
 }
@@ -87,15 +82,12 @@ class SurfaceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     var isSheetOverlay = SheetOverlayHandler.isSheetOverlay(context);
     final scaling = theme.scaling;
     var padding = this.padding;
     if (isSheetOverlay) {
-      return Padding(
-        padding: padding ?? (EdgeInsets.all(16 * scaling)),
-        child: child,
-      );
+      return Padding(padding: padding ?? (EdgeInsets.all(16 * scaling)), child: child);
     }
     return VNLCard(
       clipBehavior: clipBehavior,

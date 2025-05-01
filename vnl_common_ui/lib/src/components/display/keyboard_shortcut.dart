@@ -1,10 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-typedef KeyboardShortcutDisplayBuilder = Widget Function(
-  BuildContext context,
-  LogicalKeyboardKey key,
-);
+typedef KeyboardShortcutDisplayBuilder = Widget Function(BuildContext context, LogicalKeyboardKey key);
 
 class KeyboardShortcutDisplayHandle {
   final KeyboardShortcutDisplayBuilder _builder;
@@ -43,11 +40,7 @@ class KeyboardShortcutDisplayMapper extends StatefulWidget {
   final KeyboardShortcutDisplayBuilder builder;
   final Widget child;
 
-  const KeyboardShortcutDisplayMapper({
-    super.key,
-    this.builder = _defaultBuilder,
-    required this.child,
-  });
+  const KeyboardShortcutDisplayMapper({super.key, this.builder = _defaultBuilder, required this.child});
 
   @override
   State<KeyboardShortcutDisplayMapper> createState() => _KeyboardShortcutDisplayMapperState();
@@ -72,10 +65,7 @@ class _KeyboardShortcutDisplayMapperState extends State<KeyboardShortcutDisplayM
 
   @override
   Widget build(BuildContext context) {
-    return Data.inherit(
-      data: _handle,
-      child: widget.child,
-    );
+    return Data.inherit(data: _handle, child: widget.child);
   }
 }
 
@@ -84,27 +74,22 @@ class VNLKeyboardDisplay extends StatelessWidget {
   final ShortcutActivator? _activator;
   final double? spacing;
 
-  const VNLKeyboardDisplay({
-    super.key,
-    required List<LogicalKeyboardKey> keys,
-    this.spacing,
-  })  : _keys = keys,
-        _activator = null;
+  const VNLKeyboardDisplay({super.key, required List<LogicalKeyboardKey> keys, this.spacing})
+    : _keys = keys,
+      _activator = null;
 
-  const VNLKeyboardDisplay.fromActivator({
-    super.key,
-    required ShortcutActivator activator,
-    this.spacing,
-  })  : _keys = null,
-        _activator = activator;
+  const VNLKeyboardDisplay.fromActivator({super.key, required ShortcutActivator activator, this.spacing})
+    : _keys = null,
+      _activator = activator;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     var keys = _keys ?? shortcutActivatorToKeySet(_activator!);
     return Row(
-            mainAxisSize: MainAxisSize.min, children: keys.map((key) => KeyboardKeyDisplay(keyboardKey: key)).toList())
-        .gap(spacing ?? (2 * theme.scaling));
+      mainAxisSize: MainAxisSize.min,
+      children: keys.map((key) => KeyboardKeyDisplay(keyboardKey: key)).toList(),
+    ).gap(spacing ?? (2 * theme.scaling));
   }
 }
 
@@ -112,16 +97,12 @@ class KeyboardKeyDisplay extends StatelessWidget {
   final LogicalKeyboardKey keyboardKey;
   final EdgeInsetsGeometry? padding;
 
-  const KeyboardKeyDisplay({
-    super.key,
-    required this.keyboardKey,
-    this.padding,
-  });
+  const KeyboardKeyDisplay({super.key, required this.keyboardKey, this.padding});
 
   @override
   Widget build(BuildContext context) {
     final displayMapper = Data.of<KeyboardShortcutDisplayHandle>(context);
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return VNLCard(
       padding: padding ?? (const EdgeInsets.symmetric(horizontal: 6, vertical: 4) * theme.scaling),
       boxShadow: [

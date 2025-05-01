@@ -54,15 +54,12 @@ class _DefaultRefreshIndicatorState extends State<DefaultRefreshIndicator> {
     final localizations = VNLookLocalizations.of(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: [
-        Flexible(child: Text(localizations.refreshTriggerRefreshing)),
-        const CircularProgressIndicator(),
-      ],
+      children: [Flexible(child: Text(localizations.refreshTriggerRefreshing)), const CircularProgressIndicator()],
     ).gap(8);
   }
 
   Widget buildCompletedContent(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final localizations = VNLookLocalizations.of(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -72,19 +69,20 @@ class _DefaultRefreshIndicatorState extends State<DefaultRefreshIndicator> {
           width: 12.0 * theme.scaling,
           height: 8.0 * theme.scaling,
           child: AnimatedValueBuilder(
-              initialValue: 0.0,
-              value: 1.0,
-              duration: const Duration(milliseconds: 300),
-              curve: const Interval(0.5, 1.0),
-              builder: (context, value, _) {
-                return CustomPaint(
-                  painter: AnimatedCheckPainter(
-                    progress: value,
-                    color: theme.colorScheme.foreground,
-                    strokeWidth: 1.5 * theme.scaling,
-                  ),
-                );
-              }),
+            initialValue: 0.0,
+            value: 1.0,
+            duration: const Duration(milliseconds: 300),
+            curve: const Interval(0.5, 1.0),
+            builder: (context, value, _) {
+              return CustomPaint(
+                painter: AnimatedCheckPainter(
+                  progress: value,
+                  color: theme.colorScheme.foreground,
+                  strokeWidth: 1.5 * theme.scaling,
+                ),
+              );
+            },
+          ),
         ),
       ],
     ).gap(8);
@@ -93,43 +91,37 @@ class _DefaultRefreshIndicatorState extends State<DefaultRefreshIndicator> {
   Widget buildPullingContent(BuildContext context) {
     final localizations = VNLookLocalizations.of(context);
     return AnimatedBuilder(
-        animation: widget.stage.extent,
-        builder: (context, child) {
-          double angle;
-          if (widget.stage.direction == Axis.vertical) {
-            // 0 -> 1 (0 -> 180)
-            angle = -pi * widget.stage.extent.value.clamp(0, 1);
-          } else {
-            // 0 -> 1 (90 -> 270)
-            angle = -pi / 2 + -pi * widget.stage.extent.value.clamp(0, 1);
-          }
-          return Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Transform.rotate(
-                angle: angle,
-                child: const Icon(Icons.arrow_downward),
+      animation: widget.stage.extent,
+      builder: (context, child) {
+        double angle;
+        if (widget.stage.direction == Axis.vertical) {
+          // 0 -> 1 (0 -> 180)
+          angle = -pi * widget.stage.extent.value.clamp(0, 1);
+        } else {
+          // 0 -> 1 (90 -> 270)
+          angle = -pi / 2 + -pi * widget.stage.extent.value.clamp(0, 1);
+        }
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Transform.rotate(angle: angle, child: const Icon(Icons.arrow_downward)),
+            Flexible(
+              child: Text(
+                widget.stage.extent.value < 1 ? localizations.refreshTriggerPull : localizations.refreshTriggerRelease,
               ),
-              Flexible(
-                  child: Text(widget.stage.extent.value < 1
-                      ? localizations.refreshTriggerPull
-                      : localizations.refreshTriggerRelease)),
-              Transform.rotate(
-                angle: angle,
-                child: const Icon(Icons.arrow_downward),
-              ),
-            ],
-          ).gap(8);
-        });
+            ),
+            Transform.rotate(angle: angle, child: const Icon(Icons.arrow_downward)),
+          ],
+        ).gap(8);
+      },
+    );
   }
 
   Widget buildIdleContent(BuildContext context) {
     final localizations = VNLookLocalizations.of(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: [
-        Flexible(child: Text(localizations.refreshTriggerPull)),
-      ],
+      children: [Flexible(child: Text(localizations.refreshTriggerPull))],
     ).gap(8);
   }
 
@@ -150,19 +142,15 @@ class _DefaultRefreshIndicatorState extends State<DefaultRefreshIndicator> {
         child = buildIdleContent(context);
         break;
     }
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return Center(
       child: SurfaceCard(
-        padding: widget.stage.stage == TriggerStage.pulling
-            ? const EdgeInsets.all(4) * theme.scaling
-            : const EdgeInsets.symmetric(horizontal: 12, vertical: 4) * theme.scaling,
+        padding:
+            widget.stage.stage == TriggerStage.pulling
+                ? const EdgeInsets.all(4) * theme.scaling
+                : const EdgeInsets.symmetric(horizontal: 12, vertical: 4) * theme.scaling,
         borderRadius: theme.borderRadiusXl,
-        child: CrossFadedTransition(
-          child: KeyedSubtree(
-            key: ValueKey(widget.stage.stage),
-            child: child,
-          ),
-        ),
+        child: CrossFadedTransition(child: KeyedSubtree(key: ValueKey(widget.stage.stage), child: child)),
       ),
     );
   }
@@ -352,31 +340,29 @@ class RefreshTriggerState extends State<VNLRefreshTrigger> with SingleTickerProv
                 animation: animation,
                 child: widget.indicatorBuilder(
                   context,
-                  RefreshTriggerStage(
-                    _stage,
-                    tween.animate(animation),
-                    widget.direction,
-                  ),
+                  RefreshTriggerStage(_stage, tween.animate(animation), widget.direction),
                 ),
                 builder: (context, child) {
                   return Positioned.fill(
-                      child: ClipRect(
-                    child: Stack(
-                      children: [
-                        _wrapPositioned(
-                          FractionalTranslation(
-                            translation: _offset,
-                            child: Transform.translate(
-                              offset: widget.direction == Axis.vertical
-                                  ? Offset(0, _calculateSafeExtent(animation.value))
-                                  : Offset(_calculateSafeExtent(animation.value), 0),
-                              child: child,
+                    child: ClipRect(
+                      child: Stack(
+                        children: [
+                          _wrapPositioned(
+                            FractionalTranslation(
+                              translation: _offset,
+                              child: Transform.translate(
+                                offset:
+                                    widget.direction == Axis.vertical
+                                        ? Offset(0, _calculateSafeExtent(animation.value))
+                                        : Offset(_calculateSafeExtent(animation.value), 0),
+                                child: child,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ));
+                  );
                 },
               ),
             ],
@@ -387,12 +373,7 @@ class RefreshTriggerState extends State<VNLRefreshTrigger> with SingleTickerProv
   }
 }
 
-enum TriggerStage {
-  idle,
-  pulling,
-  refreshing,
-  completed,
-}
+enum TriggerStage { idle, pulling, refreshing, completed }
 
 class RefreshTriggerStage {
   final TriggerStage stage;

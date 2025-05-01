@@ -70,7 +70,7 @@ class VNLScaffoldState extends State<VNLScaffold> {
                           left: 0,
                           right: 0,
                           child: LinearProgressIndicator(
-                            backgroundColor: Colors.transparent,
+                            backgroundColor: VNLColors.transparent,
                             value: widget.loadingProgressIndeterminate ? null : widget.loadingProgress,
                             showSparks: false,
                           ),
@@ -102,7 +102,7 @@ class VNLScaffoldState extends State<VNLScaffold> {
                       left: 0,
                       right: 0,
                       child: LinearProgressIndicator(
-                        backgroundColor: Colors.transparent,
+                        backgroundColor: VNLColors.transparent,
                         value: widget.loadingProgressIndeterminate ? null : widget.loadingProgress,
                         showSparks: true,
                       ),
@@ -139,7 +139,7 @@ class VNLScaffoldState extends State<VNLScaffold> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final viewInsets = MediaQuery.viewInsetsOf(context);
     return DrawerOverlay(
       child: Container(
@@ -310,7 +310,7 @@ class VNLAppBar extends StatefulWidget {
 class _AppBarState extends State<VNLAppBar> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     final barData = Data.maybeOf<ScaffoldBarData>(context);
     var surfaceBlur = widget.surfaceBlur ?? theme.surfaceBlur;

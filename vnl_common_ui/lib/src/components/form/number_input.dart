@@ -4,9 +4,7 @@ import 'package:vnl_common_ui/vnl_ui.dart';
 
 @Deprecated('Use TextField with InputFeature.spinner() instead.')
 class VNLNumberInput extends StatefulWidget {
-  static final _decimalFormatter = FilteringTextInputFormatter.allow(
-    RegExp(r'^-?[0-9]+\.?[0-9]*$'),
-  );
+  static final _decimalFormatter = FilteringTextInputFormatter.allow(RegExp(r'^-?[0-9]+\.?[0-9]*$'));
   final TextEditingController? controller;
   final double initialValue;
   final Widget? leading;
@@ -90,22 +88,15 @@ class _NumberInputState extends State<VNLNumberInput> with FormValueSupplier<num
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return OutlinedContainer(
-      borderRadius: theme.borderRadiusMd,
-      child: buildTextField(context, theme),
-    );
+    final theme = VNLTheme.of(context);
+    return OutlinedContainer(borderRadius: theme.borderRadiusMd, child: buildTextField(context, theme));
   }
 
   AbstractButtonStyle get _buttonStyle {
-    return widget.buttonStyle ??
-        const ButtonStyle.text(
-          density: ButtonDensity.compact,
-          size: ButtonSize.small,
-        );
+    return widget.buttonStyle ?? const ButtonStyle.text(density: ButtonDensity.compact, size: ButtonSize.small);
   }
 
-  Widget buildButton(BuildContext context, ThemeData theme) {
+  Widget buildButton(BuildContext context, VNLThemeData theme) {
     return SizedBox(
       width: 24 * theme.scaling,
       height: 32 * theme.scaling,
@@ -170,9 +161,7 @@ class _NumberInputState extends State<VNLNumberInput> with FormValueSupplier<num
                           setState(() {});
                         }
                       },
-                      child: const Icon(
-                        Icons.arrow_drop_up,
-                      ),
+                      child: const Icon(Icons.arrow_drop_up),
                     ),
                   ),
                   Flexible(
@@ -189,23 +178,20 @@ class _NumberInputState extends State<VNLNumberInput> with FormValueSupplier<num
                           setState(() {});
                         }
                       },
-                      child: const Icon(
-                        Icons.arrow_drop_down,
-                      ),
+                      child: const Icon(Icons.arrow_drop_down),
                     ),
                   ),
                 ],
               ),
               const Positioned.fill(
                 child: Center(
-                    child: MouseRegion(
-                        cursor: SystemMouseCursors.resizeUpDown,
-                        hitTestBehavior: HitTestBehavior.translucent,
-                        child: SizedBox(
-                          width: double.infinity,
-                          height: 8,
-                        ))),
-              )
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.resizeUpDown,
+                    hitTestBehavior: HitTestBehavior.translucent,
+                    child: SizedBox(width: double.infinity, height: 8),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -237,12 +223,10 @@ class _NumberInputState extends State<VNLNumberInput> with FormValueSupplier<num
     }
   }
 
-  Widget buildTextField(BuildContext context, ThemeData theme) {
+  Widget buildTextField(BuildContext context, VNLThemeData theme) {
     final scaling = theme.scaling;
     return ConstrainedBox(
-      constraints: BoxConstraints(
-        minWidth: 50 * scaling,
-      ),
+      constraints: BoxConstraints(minWidth: 50 * scaling),
       child: VNLTextField(
         border: false,
         minLines: 1,
@@ -254,10 +238,7 @@ class _NumberInputState extends State<VNLNumberInput> with FormValueSupplier<num
             if (widget.showButtons) buildButton(context, theme),
           ],
         ),
-        padding: widget.padding ??
-            EdgeInsetsDirectional.only(
-              start: 10 * scaling,
-            ),
+        padding: widget.padding ?? EdgeInsetsDirectional.only(start: 10 * scaling),
         style: widget.style,
         inputFormatters: [
           if (!widget.allowDecimals) FilteringTextInputFormatter.digitsOnly,
@@ -289,12 +270,13 @@ class _NumberInputState extends State<VNLNumberInput> with FormValueSupplier<num
           }
           widget.onEditingComplete?.call();
         },
-        borderRadius: widget.showButtons
-            ? BorderRadiusDirectional.only(
-                topStart: Radius.circular(4 * scaling),
-                bottomStart: Radius.circular(4 * scaling),
-              )
-            : BorderRadius.circular(4 * scaling),
+        borderRadius:
+            widget.showButtons
+                ? BorderRadiusDirectional.only(
+                  topStart: Radius.circular(4 * scaling),
+                  bottomStart: Radius.circular(4 * scaling),
+                )
+                : BorderRadius.circular(4 * scaling),
         enabled: widget.enabled ?? true,
         initialValue: _valueAsString,
         keyboardType: TextInputType.numberWithOptions(decimal: widget.allowDecimals),

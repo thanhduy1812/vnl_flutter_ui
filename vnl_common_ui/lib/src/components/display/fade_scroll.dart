@@ -41,49 +41,43 @@ class FadeScroll extends StatelessWidget {
         }
         return ShaderMask(
           shaderCallback: (bounds) {
-            Alignment start = direction == Axis.horizontal
-                ? Alignment.centerLeft
-                : Alignment.topCenter;
-            Alignment end = direction == Axis.horizontal
-                ? Alignment.centerRight
-                : Alignment.bottomCenter;
+            Alignment start = direction == Axis.horizontal ? Alignment.centerLeft : Alignment.topCenter;
+            Alignment end = direction == Axis.horizontal ? Alignment.centerRight : Alignment.bottomCenter;
             double relativeStart = startOffset / size;
             double relativeEnd = 1 - endOffset / size;
-            List<double> stops = shouldFadeStart && shouldFadeEnd
-                ? [
-                    for (int i = 0; i < gradient.length; i++)
-                      (i / gradient.length) * relativeStart,
-                    relativeStart,
-                    relativeEnd,
-                    for (int i = 1; i < gradient.length + 1; i++)
-                      relativeEnd + (i / gradient.length) * (1 - relativeEnd),
-                  ]
-                : shouldFadeStart
+            List<double> stops =
+                shouldFadeStart && shouldFadeEnd
                     ? [
-                        for (int i = 0; i < gradient.length; i++)
-                          (i / gradient.length) * relativeStart,
-                        relativeStart,
-                        1
-                      ]
+                      for (int i = 0; i < gradient.length; i++) (i / gradient.length) * relativeStart,
+                      relativeStart,
+                      relativeEnd,
+                      for (int i = 1; i < gradient.length + 1; i++)
+                        relativeEnd + (i / gradient.length) * (1 - relativeEnd),
+                    ]
+                    : shouldFadeStart
+                    ? [
+                      for (int i = 0; i < gradient.length; i++) (i / gradient.length) * relativeStart,
+                      relativeStart,
+                      1,
+                    ]
                     : [
-                        0,
-                        relativeEnd,
-                        for (int i = 1; i < gradient.length + 1; i++)
-                          relativeEnd +
-                              (i / gradient.length) * (1 - relativeEnd),
-                      ];
+                      0,
+                      relativeEnd,
+                      for (int i = 1; i < gradient.length + 1; i++)
+                        relativeEnd + (i / gradient.length) * (1 - relativeEnd),
+                    ];
             return LinearGradient(
-                    colors: [
-                  if (shouldFadeStart) ...gradient,
-                  Colors.white,
-                  Colors.white,
-                  if (shouldFadeEnd) ...gradient.reversed,
-                ],
-                    stops: stops,
-                    begin: start,
-                    end: end,
-                    transform: const _ScaleGradient(Offset(1, 1.5)))
-                .createShader(bounds);
+              colors: [
+                if (shouldFadeStart) ...gradient,
+                VNLColors.white,
+                VNLColors.white,
+                if (shouldFadeEnd) ...gradient.reversed,
+              ],
+              stops: stops,
+              begin: start,
+              end: end,
+              transform: const _ScaleGradient(Offset(1, 1.5)),
+            ).createShader(bounds);
           },
           child: child!,
         );
@@ -108,4 +102,3 @@ class _ScaleGradient extends GradientTransform {
       ..translate(-dx, -dy);
   }
 }
-

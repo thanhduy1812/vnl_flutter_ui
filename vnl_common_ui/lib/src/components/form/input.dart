@@ -3,10 +3,7 @@ import 'dart:async';
 import 'package:flutter/services.dart' show Clipboard, LogicalKeyboardKey;
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-enum InputFeaturePosition {
-  leading,
-  trailing,
-}
+enum InputFeaturePosition { leading, trailing }
 
 class InputHintFeature extends InputFeature {
   final WidgetBuilder popupBuilder;
@@ -31,12 +28,14 @@ class _InputHintFeatureState extends InputFeatureState<InputHintFeature> {
     _popoverController.show(
       context: context,
       builder: feature.popupBuilder,
-      alignment: feature.position == InputFeaturePosition.trailing
-          ? AlignmentDirectional.topEnd
-          : AlignmentDirectional.topStart,
-      anchorAlignment: feature.position == InputFeaturePosition.trailing
-          ? AlignmentDirectional.bottomEnd
-          : AlignmentDirectional.bottomStart,
+      alignment:
+          feature.position == InputFeaturePosition.trailing
+              ? AlignmentDirectional.topEnd
+              : AlignmentDirectional.topStart,
+      anchorAlignment:
+          feature.position == InputFeaturePosition.trailing
+              ? AlignmentDirectional.bottomEnd
+              : AlignmentDirectional.bottomStart,
     );
   }
 
@@ -65,10 +64,7 @@ class _InputHintFeatureState extends InputFeatureState<InputHintFeature> {
   @override
   Iterable<MapEntry<ShortcutActivator, Intent>> buildShortcuts() sync* {
     if (feature.enableShortcuts) {
-      yield const MapEntry(
-        SingleActivator(LogicalKeyboardKey.f1),
-        InputShowHintIntent(),
-      );
+      yield const MapEntry(SingleActivator(LogicalKeyboardKey.f1), InputShowHintIntent());
     }
   }
 
@@ -92,10 +88,7 @@ class InputShowHintIntent extends Intent {
   const InputShowHintIntent();
 }
 
-enum PasswordPeekMode {
-  hold,
-  toggle,
-}
+enum PasswordPeekMode { hold, toggle }
 
 class InputPasswordToggleFeature extends InputFeature {
   final PasswordPeekMode mode;
@@ -166,29 +159,19 @@ class _InputPasswordToggleFeatureState extends InputFeatureState<InputPasswordTo
         density: ButtonDensity.compact,
       );
     }
-    return IconButton.text(
-      icon: _buildIcon(),
-      onPressed: _toggleObscureText,
-      density: ButtonDensity.compact,
-    );
+    return IconButton.text(icon: _buildIcon(), onPressed: _toggleObscureText, density: ButtonDensity.compact);
   }
 
   @override
   VNLTextField interceptInput(VNLTextField input) {
-    return input.copyWith(
-      obscureText: _obscureText,
-    );
+    return input.copyWith(obscureText: _obscureText);
   }
 }
 
 class InputClearFeature extends InputFeature {
   final InputFeaturePosition position;
   final Widget? icon;
-  const InputClearFeature({
-    super.visibility,
-    this.position = InputFeaturePosition.trailing,
-    this.icon,
-  });
+  const InputClearFeature({super.visibility, this.position = InputFeaturePosition.trailing, this.icon});
 
   @override
   InputFeatureState createState() => _InputClearFeatureState();
@@ -225,11 +208,7 @@ class _InputClearFeatureState extends InputFeatureState<InputClearFeature> {
 class InputRevalidateFeature extends InputFeature {
   final InputFeaturePosition position;
   final Widget? icon;
-  const InputRevalidateFeature({
-    super.visibility,
-    this.position = InputFeaturePosition.trailing,
-    this.icon,
-  });
+  const InputRevalidateFeature({super.visibility, this.position = InputFeaturePosition.trailing, this.icon});
 
   @override
   InputFeatureState createState() => _InputRevalidateFeatureState();
@@ -266,10 +245,7 @@ class _InputRevalidateFeatureState extends InputFeatureState<InputRevalidateFeat
                   duration: const Duration(seconds: 1),
                   child: feature.icon ?? const Icon(LucideIcons.refreshCw),
                   builder: (context, value, child) {
-                    return Transform.rotate(
-                      angle: degToRad(value),
-                      child: child,
-                    );
+                    return Transform.rotate(angle: degToRad(value), child: child);
                   },
                 ),
                 onPressed: null,
@@ -380,12 +356,7 @@ class InputSpinnerFeature extends InputFeature {
   final double step;
   final bool enableGesture;
   final double? invalidValue;
-  const InputSpinnerFeature({
-    super.visibility,
-    this.step = 1.0,
-    this.enableGesture = true,
-    this.invalidValue = 0.0,
-  });
+  const InputSpinnerFeature({super.visibility, this.step = 1.0, this.enableGesture = true, this.invalidValue = 0.0});
 
   @override
   InputFeatureState createState() => _InputSpinnerFeatureState();
@@ -455,40 +426,42 @@ class _InputSpinnerFeatureState extends InputFeatureState<InputSpinnerFeature> {
   }
 
   Widget _buildButtons() {
-    return Builder(builder: (context) {
-      final theme = Theme.of(context);
-      return Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          IconButton.text(
-            icon: Transform.translate(
-              offset: Offset(0, -1 * theme.scaling),
-              child: Transform.scale(
-                alignment: Alignment.center,
-                scale: 1.5,
-                child: const Icon(LucideIcons.chevronUp),
+    return Builder(
+      builder: (context) {
+        final theme = VNLTheme.of(context);
+        return Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            IconButton.text(
+              icon: Transform.translate(
+                offset: Offset(0, -1 * theme.scaling),
+                child: Transform.scale(
+                  alignment: Alignment.center,
+                  scale: 1.5,
+                  child: const Icon(LucideIcons.chevronUp),
+                ),
               ),
+              onPressed: _increase,
+              density: ButtonDensity.compact,
+              size: ButtonSize.xSmall,
             ),
-            onPressed: _increase,
-            density: ButtonDensity.compact,
-            size: ButtonSize.xSmall,
-          ),
-          IconButton.text(
-            icon: Transform.translate(
-              offset: Offset(0, 1 * theme.scaling),
-              child: Transform.scale(
-                alignment: Alignment.center,
-                scale: 1.5,
-                child: const Icon(LucideIcons.chevronDown),
+            IconButton.text(
+              icon: Transform.translate(
+                offset: Offset(0, 1 * theme.scaling),
+                child: Transform.scale(
+                  alignment: Alignment.center,
+                  scale: 1.5,
+                  child: const Icon(LucideIcons.chevronDown),
+                ),
               ),
+              onPressed: _decrease,
+              density: ButtonDensity.compact,
+              size: ButtonSize.xSmall,
             ),
-            onPressed: _decrease,
-            density: ButtonDensity.compact,
-            size: ButtonSize.xSmall,
-          ),
-        ],
-      );
-    });
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -504,11 +477,7 @@ class _InputSpinnerFeatureState extends InputFeatureState<InputSpinnerFeature> {
 class InputCopyFeature extends InputFeature {
   final InputFeaturePosition position;
   final Widget? icon;
-  const InputCopyFeature({
-    super.visibility,
-    this.position = InputFeaturePosition.trailing,
-    this.icon,
-  });
+  const InputCopyFeature({super.visibility, this.position = InputFeaturePosition.trailing, this.icon});
 
   @override
   InputFeatureState createState() => _InputCopyFeatureState();
@@ -544,10 +513,7 @@ class _InputCopyFeatureState extends InputFeatureState<InputCopyFeature> {
 
 class InputLeadingFeature extends InputFeature {
   final Widget prefix;
-  const InputLeadingFeature(
-    this.prefix, {
-    super.visibility,
-  });
+  const InputLeadingFeature(this.prefix, {super.visibility});
 
   @override
   InputFeatureState createState() => _InputLeadingFeatureState();
@@ -562,10 +528,7 @@ class _InputLeadingFeatureState extends InputFeatureState<InputLeadingFeature> {
 
 class InputTrailingFeature extends InputFeature {
   final Widget suffix;
-  const InputTrailingFeature(
-    this.suffix, {
-    super.visibility,
-  });
+  const InputTrailingFeature(this.suffix, {super.visibility});
 
   @override
   InputFeatureState createState() => _InputTrailingFeatureState();
@@ -581,11 +544,7 @@ class _InputTrailingFeatureState extends InputFeatureState<InputTrailingFeature>
 class InputPasteFeature extends InputFeature {
   final InputFeaturePosition position;
   final Widget? icon;
-  const InputPasteFeature({
-    super.visibility,
-    this.position = InputFeaturePosition.trailing,
-    this.icon,
-  });
+  const InputPasteFeature({super.visibility, this.position = InputFeaturePosition.trailing, this.icon});
 
   @override
   InputFeatureState createState() => _InputPasteFeatureState();

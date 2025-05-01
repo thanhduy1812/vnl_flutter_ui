@@ -5,12 +5,7 @@ class MenuPopup extends StatelessWidget {
   final double? surfaceBlur;
   final List<Widget> children;
 
-  const MenuPopup({
-    super.key,
-    this.surfaceOpacity,
-    this.surfaceBlur,
-    required this.children,
-  });
+  const MenuPopup({super.key, this.surfaceOpacity, this.surfaceBlur, required this.children});
 
   Widget _buildIntrinsicContainer(Widget child, Axis direction, bool wrap) {
     if (!wrap) {
@@ -25,7 +20,7 @@ class MenuPopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final data = Data.maybeOf<MenuGroupData>(context);
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final isSheetOverlay = SheetOverlayHandler.isSheetOverlay(context);
     final isDialogOverlay = DialogOverlayHandler.isDialogOverlay(context);
     return ModalContainer(
@@ -35,10 +30,10 @@ class MenuPopup extends StatelessWidget {
       borderColor: theme.colorScheme.border,
       surfaceBlur: surfaceBlur ?? theme.surfaceBlur,
       surfaceOpacity: surfaceOpacity ?? theme.surfaceOpacity,
-      padding: isSheetOverlay
-          ? const EdgeInsets.symmetric(vertical: 12, horizontal: 4) *
-              theme.scaling
-          : const EdgeInsets.all(4) * theme.scaling,
+      padding:
+          isSheetOverlay
+              ? const EdgeInsets.symmetric(vertical: 12, horizontal: 4) * theme.scaling
+              : const EdgeInsets.all(4) * theme.scaling,
       child: SingleChildScrollView(
         scrollDirection: data?.direction ?? Axis.vertical,
         child: _buildIntrinsicContainer(

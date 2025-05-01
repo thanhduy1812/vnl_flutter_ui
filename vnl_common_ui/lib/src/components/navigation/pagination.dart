@@ -95,7 +95,7 @@ class VNLPagination extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     VNLookLocalizations localizations = VNLookLocalizations.of(context);
     return IntrinsicHeight(
@@ -106,36 +106,18 @@ class VNLPagination extends StatelessWidget {
           if (!hidePreviousOnFirstPage || hasPrevious) _buildPreviousLabel(localizations),
           if (hasMorePreviousPages) ...[
             if (showSkipToFirstPage && firstShownPage - 1 > 1)
-              GhostButton(
-                onPressed: () => onPageChanged(1),
-                child: const Text('1'),
-              ),
-            GhostButton(
-              onPressed: () => onPageChanged(firstShownPage - 1),
-              child: const MoreDots(),
-            ),
+              GhostButton(onPressed: () => onPageChanged(1), child: const Text('1')),
+            GhostButton(onPressed: () => onPageChanged(firstShownPage - 1), child: const MoreDots()),
           ],
           for (final p in pages)
             if (p == page)
-              OutlineButton(
-                onPressed: () => onPageChanged(p),
-                child: Text('$p'),
-              )
+              OutlineButton(onPressed: () => onPageChanged(p), child: Text('$p'))
             else
-              GhostButton(
-                onPressed: () => onPageChanged(p),
-                child: Text('$p'),
-              ),
+              GhostButton(onPressed: () => onPageChanged(p), child: Text('$p')),
           if (hasMoreNextPages) ...[
-            GhostButton(
-              onPressed: () => onPageChanged(lastShownPage + 1),
-              child: const MoreDots(),
-            ),
+            GhostButton(onPressed: () => onPageChanged(lastShownPage + 1), child: const MoreDots()),
             if (showSkipToLastPage && lastShownPage + 1 < totalPages)
-              GhostButton(
-                onPressed: () => onPageChanged(totalPages),
-                child: Text('$totalPages'),
-              ),
+              GhostButton(onPressed: () => onPageChanged(totalPages), child: Text('$totalPages')),
           ],
           if (!hideNextOnLastPage || hasNext) _buildNextLabel(localizations),
         ],

@@ -4,34 +4,22 @@ class Radio extends StatelessWidget {
   final bool value;
   final bool focusing;
 
-  const Radio({
-    super.key,
-    required this.value,
-    this.focusing = false,
-  });
+  const Radio({super.key, required this.value, this.focusing = false});
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
+    final VNLThemeData theme = VNLTheme.of(context);
     return AnimatedContainer(
       duration: kDefaultDuration,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(
-            color: focusing
-                ? theme.colorScheme.ring
-                : theme.colorScheme.ring.withValues(alpha: 0)),
+        border: Border.all(color: focusing ? theme.colorScheme.ring : theme.colorScheme.ring.withValues(alpha: 0)),
       ),
       child: AnimatedContainer(
         duration: kDefaultDuration,
         width: 16 * theme.scaling,
         height: 16 * theme.scaling,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: theme.colorScheme.primary,
-          ),
-        ),
+        decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: theme.colorScheme.primary)),
         child: Center(
           child: AnimatedContainer(
             duration: kDefaultDuration,
@@ -39,10 +27,7 @@ class Radio extends StatelessWidget {
             // -2 is the border width of the radio (1 each side)
             width: value ? (16 - 6 - 2) * theme.scaling : 0,
             height: value ? (16 - 6 - 2) * theme.scaling : 0,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: theme.colorScheme.primary,
-            ),
+            decoration: BoxDecoration(shape: BoxShape.circle, color: theme.colorScheme.primary),
           ),
         ),
       ),
@@ -65,14 +50,7 @@ class RadioItem<T> extends StatefulWidget {
   final bool enabled;
   final FocusNode? focusNode;
 
-  const RadioItem({
-    super.key,
-    this.leading,
-    this.trailing,
-    required this.value,
-    this.enabled = true,
-    this.focusNode,
-  });
+  const RadioItem({super.key, this.leading, this.trailing, required this.value, this.enabled = true, this.focusNode});
 
   @override
   State<RadioItem<T>> createState() => _RadioItemState<T>();
@@ -100,22 +78,21 @@ class _RadioItemState<T> extends State<RadioItem<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final groupData = Data.maybeOf<RadioGroupData<T>>(context);
     final group = Data.maybeOf<_RadioGroupState<T>>(context);
-    assert(groupData != null,
-        'RadioItem<$T> must be a descendant of RadioGroup<$T>');
+    assert(groupData != null, 'RadioItem<$T> must be a descendant of RadioGroup<$T>');
     return GestureDetector(
-      onTap: widget.enabled && groupData?.enabled == true
-          ? () {
-              group?._setSelected(widget.value);
-            }
-          : null,
+      onTap:
+          widget.enabled && groupData?.enabled == true
+              ? () {
+                group?._setSelected(widget.value);
+              }
+              : null,
       child: FocusableActionDetector(
         focusNode: _focusNode,
-        mouseCursor: widget.enabled && groupData?.enabled == true
-            ? SystemMouseCursors.click
-            : SystemMouseCursors.forbidden,
+        mouseCursor:
+            widget.enabled && groupData?.enabled == true ? SystemMouseCursors.click : SystemMouseCursors.forbidden,
         onShowFocusHighlight: (value) {
           if (value && widget.enabled && groupData?.enabled == true) {
             group?._setSelected(widget.value);
@@ -134,14 +111,12 @@ class _RadioItemState<T> extends State<RadioItem<T>> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   if (widget.leading != null) widget.leading!,
-                  if (widget.leading != null)
-                    SizedBox(width: 8 * theme.scaling),
+                  if (widget.leading != null) SizedBox(width: 8 * theme.scaling),
                   Radio(
-                      value: groupData?.selectedItem == widget.value,
-                      focusing:
-                          _focusing && groupData?.selectedItem == widget.value),
-                  if (widget.trailing != null)
-                    SizedBox(width: 8 * theme.scaling),
+                    value: groupData?.selectedItem == widget.value,
+                    focusing: _focusing && groupData?.selectedItem == widget.value,
+                  ),
+                  if (widget.trailing != null) SizedBox(width: 8 * theme.scaling),
                   if (widget.trailing != null) widget.trailing!,
                 ],
               ),
@@ -159,13 +134,7 @@ class RadioCard<T> extends StatefulWidget {
   final bool enabled;
   final FocusNode? focusNode;
 
-  const RadioCard({
-    super.key,
-    required this.child,
-    required this.value,
-    this.enabled = true,
-    this.focusNode,
-  });
+  const RadioCard({super.key, required this.child, required this.value, this.enabled = true, this.focusNode});
 
   @override
   State<RadioCard<T>> createState() => _RadioCardState<T>();
@@ -236,22 +205,16 @@ class VNLRadioCardTheme {
     ValueGetter<Color?>? selectedBorderColor,
   }) {
     return VNLRadioCardTheme(
-      enabledCursor:
-          enabledCursor != null ? enabledCursor() : this.enabledCursor,
-      disabledCursor:
-          disabledCursor != null ? disabledCursor() : this.disabledCursor,
+      enabledCursor: enabledCursor != null ? enabledCursor() : this.enabledCursor,
+      disabledCursor: disabledCursor != null ? disabledCursor() : this.disabledCursor,
       hoverColor: hoverColor != null ? hoverColor() : this.hoverColor,
       color: color != null ? color() : this.color,
       borderWidth: borderWidth != null ? borderWidth() : this.borderWidth,
-      selectedBorderWidth: selectedBorderWidth != null
-          ? selectedBorderWidth()
-          : this.selectedBorderWidth,
+      selectedBorderWidth: selectedBorderWidth != null ? selectedBorderWidth() : this.selectedBorderWidth,
       borderRadius: borderRadius != null ? borderRadius() : this.borderRadius,
       padding: padding != null ? padding() : this.padding,
       borderColor: borderColor != null ? borderColor() : this.borderColor,
-      selectedBorderColor: selectedBorderColor != null
-          ? selectedBorderColor()
-          : this.selectedBorderColor,
+      selectedBorderColor: selectedBorderColor != null ? selectedBorderColor() : this.selectedBorderColor,
     );
   }
 
@@ -274,17 +237,17 @@ class VNLRadioCardTheme {
 
   @override
   int get hashCode => Object.hash(
-        enabledCursor,
-        disabledCursor,
-        hoverColor,
-        color,
-        borderWidth,
-        selectedBorderWidth,
-        borderRadius,
-        padding,
-        borderColor,
-        selectedBorderColor,
-      );
+    enabledCursor,
+    disabledCursor,
+    hoverColor,
+    color,
+    borderWidth,
+    selectedBorderWidth,
+    borderRadius,
+    padding,
+    borderColor,
+    selectedBorderColor,
+  );
 }
 
 class _RadioCardState<T> extends State<RadioCard<T>> {
@@ -309,27 +272,24 @@ class _RadioCardState<T> extends State<RadioCard<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final componentTheme = ComponentTheme.maybeOf<VNLRadioCardTheme>(context);
     final groupData = Data.maybeOf<RadioGroupData<T>>(context);
     final group = Data.maybeOf<_RadioGroupState<T>>(context);
-    assert(groupData != null,
-        'RadioCard<$T> must be a descendant of RadioGroup<$T>');
+    assert(groupData != null, 'RadioCard<$T> must be a descendant of RadioGroup<$T>');
     return GestureDetector(
-      onTap: widget.enabled && groupData?.enabled == true
-          ? () {
-              group?._setSelected(widget.value);
-            }
-          : null,
+      onTap:
+          widget.enabled && groupData?.enabled == true
+              ? () {
+                group?._setSelected(widget.value);
+              }
+              : null,
       child: FocusableActionDetector(
         focusNode: _focusNode,
-        mouseCursor: widget.enabled && groupData?.enabled == true
-            ? styleValue(
-                defaultValue: SystemMouseCursors.click,
-                themeValue: componentTheme?.enabledCursor)
-            : styleValue(
-                defaultValue: SystemMouseCursors.forbidden,
-                themeValue: componentTheme?.disabledCursor),
+        mouseCursor:
+            widget.enabled && groupData?.enabled == true
+                ? styleValue(defaultValue: SystemMouseCursors.click, themeValue: componentTheme?.enabledCursor)
+                : styleValue(defaultValue: SystemMouseCursors.forbidden, themeValue: componentTheme?.disabledCursor),
         onShowFocusHighlight: (value) {
           if (value && widget.enabled && groupData?.enabled == true) {
             group?._setSelected(widget.value);
@@ -350,39 +310,25 @@ class _RadioCardState<T> extends State<RadioCard<T>> {
         child: Data<RadioGroupData<T>>.boundary(
           child: Data<_RadioCardState<T>>.boundary(
             child: VNLCard(
-              borderColor: groupData?.selectedItem == widget.value
-                  ? styleValue(
-                      defaultValue: theme.colorScheme.primary,
-                      themeValue: componentTheme?.selectedBorderColor,
-                    )
-                  : styleValue(
-                      defaultValue: theme.colorScheme.muted,
-                      themeValue: componentTheme?.borderColor,
-                    ),
-              borderWidth: groupData?.selectedItem == widget.value
-                  ? styleValue(
-                      defaultValue: 2 * theme.scaling,
-                      themeValue: componentTheme?.selectedBorderWidth,
-                    )
-                  : styleValue(
-                      defaultValue: 1 * theme.scaling,
-                      themeValue: componentTheme?.borderWidth,
-                    ),
-              borderRadius: styleValue(
-                  defaultValue: theme.borderRadiusMd,
-                  themeValue: componentTheme?.borderRadius),
+              borderColor:
+                  groupData?.selectedItem == widget.value
+                      ? styleValue(
+                        defaultValue: theme.colorScheme.primary,
+                        themeValue: componentTheme?.selectedBorderColor,
+                      )
+                      : styleValue(defaultValue: theme.colorScheme.muted, themeValue: componentTheme?.borderColor),
+              borderWidth:
+                  groupData?.selectedItem == widget.value
+                      ? styleValue(defaultValue: 2 * theme.scaling, themeValue: componentTheme?.selectedBorderWidth)
+                      : styleValue(defaultValue: 1 * theme.scaling, themeValue: componentTheme?.borderWidth),
+              borderRadius: styleValue(defaultValue: theme.borderRadiusMd, themeValue: componentTheme?.borderRadius),
               padding: EdgeInsets.zero,
               clipBehavior: Clip.antiAlias,
               duration: kDefaultDuration,
-              fillColor: _hovering
-                  ? styleValue(
-                      defaultValue: theme.colorScheme.muted,
-                      themeValue: componentTheme?.hoverColor,
-                    )
-                  : styleValue(
-                      defaultValue: theme.colorScheme.background,
-                      themeValue: componentTheme?.color,
-                    ),
+              fillColor:
+                  _hovering
+                      ? styleValue(defaultValue: theme.colorScheme.muted, themeValue: componentTheme?.hoverColor)
+                      : styleValue(defaultValue: theme.colorScheme.background, themeValue: componentTheme?.color),
               child: Container(
                 padding: styleValue(
                   defaultValue: EdgeInsets.all(16 * theme.scaling),
@@ -390,24 +336,23 @@ class _RadioCardState<T> extends State<RadioCard<T>> {
                 ),
                 child: AnimatedPadding(
                   duration: kDefaultDuration,
-                  padding: groupData?.selectedItem == widget.value
-                      ? styleValue(
-                          defaultValue: EdgeInsets.zero,
-                          themeValue: componentTheme?.borderWidth != null
-                              ? EdgeInsets.all(componentTheme!.borderWidth!)
-                              : null,
-                        )
-                      // to compensate for the border width
-                      : styleValue(
-                          defaultValue: EdgeInsets.all(1 * theme.scaling),
-                          themeValue: componentTheme?.borderWidth != null &&
-                                  componentTheme?.selectedBorderWidth != null
-                              ? EdgeInsets.all(
-                                  componentTheme!.borderWidth! -
-                                      componentTheme.selectedBorderWidth!,
-                                )
-                              : null,
-                        ),
+                  padding:
+                      groupData?.selectedItem == widget.value
+                          ? styleValue(
+                            defaultValue: EdgeInsets.zero,
+                            themeValue:
+                                componentTheme?.borderWidth != null
+                                    ? EdgeInsets.all(componentTheme!.borderWidth!)
+                                    : null,
+                          )
+                          // to compensate for the border width
+                          : styleValue(
+                            defaultValue: EdgeInsets.all(1 * theme.scaling),
+                            themeValue:
+                                componentTheme?.borderWidth != null && componentTheme?.selectedBorderWidth != null
+                                    ? EdgeInsets.all(componentTheme!.borderWidth! - componentTheme.selectedBorderWidth!)
+                                    : null,
+                          ),
                   child: widget.child,
                 ),
               ),
@@ -419,13 +364,11 @@ class _RadioCardState<T> extends State<RadioCard<T>> {
   }
 }
 
-class RadioGroupController<T> extends ValueNotifier<T?>
-    with ComponentController<T?> {
+class RadioGroupController<T> extends ValueNotifier<T?> with ComponentController<T?> {
   RadioGroupController([super.value]);
 }
 
-class ControlledRadioGroup<T> extends StatelessWidget
-    with ControlledComponent<T?> {
+class ControlledRadioGroup<T> extends StatelessWidget with ControlledComponent<T?> {
   @override
   final T? initialValue;
   @override
@@ -454,11 +397,7 @@ class ControlledRadioGroup<T> extends StatelessWidget
       onChanged: onChanged,
       enabled: enabled,
       builder: (context, data) {
-        return RadioGroup(
-          value: data.value,
-          onChanged: data.onChanged,
-          child: child,
-        );
+        return RadioGroup(value: data.value, onChanged: data.onChanged, child: child);
       },
     );
   }
@@ -469,13 +408,7 @@ class RadioGroup<T> extends StatefulWidget {
   final T? value;
   final ValueChanged<T>? onChanged;
   final bool? enabled;
-  const RadioGroup({
-    super.key,
-    required this.child,
-    this.value,
-    this.onChanged,
-    this.enabled,
-  });
+  const RadioGroup({super.key, required this.child, this.value, this.onChanged, this.enabled});
 
   @override
   _RadioGroupState<T> createState() => _RadioGroupState<T>();
@@ -490,17 +423,14 @@ class RadioGroupData<T> {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is RadioGroupData<T> &&
-        other.selectedItem == selectedItem &&
-        other.enabled == enabled;
+    return other is RadioGroupData<T> && other.selectedItem == selectedItem && other.enabled == enabled;
   }
 
   @override
   int get hashCode => Object.hash(selectedItem, enabled);
 }
 
-class _RadioGroupState<T> extends State<RadioGroup<T>>
-    with FormValueSupplier<T, RadioGroup<T>> {
+class _RadioGroupState<T> extends State<RadioGroup<T>> with FormValueSupplier<T, RadioGroup<T>> {
   bool get enabled => widget.enabled ?? widget.onChanged != null;
   void _setSelected(T value) {
     if (!enabled) return;
@@ -535,9 +465,7 @@ class _RadioGroupState<T> extends State<RadioGroup<T>>
         data: this,
         child: Data.inherit(
           data: RadioGroupData<T>(widget.value, enabled),
-          child: FocusTraversalGroup(
-            child: widget.child,
-          ),
+          child: FocusTraversalGroup(child: widget.child),
         ),
       ),
     );

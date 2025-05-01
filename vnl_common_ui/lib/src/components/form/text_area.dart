@@ -119,96 +119,96 @@ class _TextAreaState extends State<VNLTextArea> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     return SizedBox(
-        height: _height,
-        width: _width,
-        child: Stack(
-          fit: StackFit.passthrough,
-          children: [
-            Positioned.fill(
-              child: VNLTextField(
-                expands: true,
-                controller: widget.controller,
-                onSubmitted: widget.onSubmitted,
-                onEditingComplete: widget.onEditingComplete,
-                focusNode: widget.focusNode,
-                onTap: widget.onTap,
-                enabled: widget.enabled,
-                readOnly: widget.readOnly,
-                obscureText: widget.obscureText,
-                obscuringCharacter: widget.obscuringCharacter,
-                initialValue: widget.initialValue,
-                maxLength: widget.maxLength,
-                maxLengthEnforcement: widget.maxLengthEnforcement,
-                maxLines: null,
-                minLines: null,
-                textAlign: widget.textAlign,
-                border: widget.border,
-                filled: widget.filled,
-                placeholder: widget.placeholder,
-                leading: widget.leading,
-                trailing: widget.trailing,
-                padding: widget.padding,
-                borderRadius: widget.borderRadius,
-                textAlignVertical: widget.textAlignVertical,
-                undoController: widget.undoController,
-                onChanged: widget.onChanged,
-                autofillHints: widget.autofillHints,
-                onTapOutside: widget.onTapOutside,
-                inputFormatters: widget.inputFormatters,
-                style: widget.style,
-                contextMenuBuilder: widget.contextMenuBuilder,
-                keyboardType: widget.keyboardType,
-                textInputAction: widget.textInputAction,
-                clipBehavior: widget.clipBehavior,
-                autofocus: widget.autofocus,
-              ),
+      height: _height,
+      width: _width,
+      child: Stack(
+        fit: StackFit.passthrough,
+        children: [
+          Positioned.fill(
+            child: VNLTextField(
+              expands: true,
+              controller: widget.controller,
+              onSubmitted: widget.onSubmitted,
+              onEditingComplete: widget.onEditingComplete,
+              focusNode: widget.focusNode,
+              onTap: widget.onTap,
+              enabled: widget.enabled,
+              readOnly: widget.readOnly,
+              obscureText: widget.obscureText,
+              obscuringCharacter: widget.obscuringCharacter,
+              initialValue: widget.initialValue,
+              maxLength: widget.maxLength,
+              maxLengthEnforcement: widget.maxLengthEnforcement,
+              maxLines: null,
+              minLines: null,
+              textAlign: widget.textAlign,
+              border: widget.border,
+              filled: widget.filled,
+              placeholder: widget.placeholder,
+              leading: widget.leading,
+              trailing: widget.trailing,
+              padding: widget.padding,
+              borderRadius: widget.borderRadius,
+              textAlignVertical: widget.textAlignVertical,
+              undoController: widget.undoController,
+              onChanged: widget.onChanged,
+              autofillHints: widget.autofillHints,
+              onTapOutside: widget.onTapOutside,
+              inputFormatters: widget.inputFormatters,
+              style: widget.style,
+              contextMenuBuilder: widget.contextMenuBuilder,
+              keyboardType: widget.keyboardType,
+              textInputAction: widget.textInputAction,
+              clipBehavior: widget.clipBehavior,
+              autofocus: widget.autofocus,
             ),
-            Positioned(
-              bottom: -1 * scaling,
-              right: -1 * scaling,
-              width: (8 + 8) * scaling,
-              height: (8 + 8) * scaling,
-              child: MouseRegion(
-                hitTestBehavior: HitTestBehavior.translucent,
-                cursor: widget.expandableWidth
-                    ? widget.expandableHeight
-                        ? SystemMouseCursors.resizeDownRight
-                        : SystemMouseCursors.resizeLeftRight
-                    : widget.expandableHeight
-                        ? SystemMouseCursors.resizeUpDown
-                        : SystemMouseCursors.basic,
-                child: GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onPanUpdate: (details) {
-                    if (widget.expandableHeight && _height.isFinite) {
-                      setState(() {
-                        _height += details.delta.dy;
-                        _height = _height.clamp(widget.minHeight, widget.maxHeight);
-                        widget.onHeightChanged?.call(_height);
-                      });
-                    }
-                    if (widget.expandableWidth && _width.isFinite) {
-                      setState(() {
-                        _width += details.delta.dx;
-                        _width = _width.clamp(widget.minWidth, widget.maxWidth);
-                        widget.onWidthChanged?.call(_width);
-                      });
-                    }
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.all(4.0 * scaling),
-                    child: CustomPaint(
-                      painter: _TextAreaDragHandlePainter(theme.colorScheme.foreground),
-                    ),
-                  ),
+          ),
+          Positioned(
+            bottom: -1 * scaling,
+            right: -1 * scaling,
+            width: (8 + 8) * scaling,
+            height: (8 + 8) * scaling,
+            child: MouseRegion(
+              hitTestBehavior: HitTestBehavior.translucent,
+              cursor:
+                  widget.expandableWidth
+                      ? widget.expandableHeight
+                          ? SystemMouseCursors.resizeDownRight
+                          : SystemMouseCursors.resizeLeftRight
+                      : widget.expandableHeight
+                      ? SystemMouseCursors.resizeUpDown
+                      : SystemMouseCursors.basic,
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onPanUpdate: (details) {
+                  if (widget.expandableHeight && _height.isFinite) {
+                    setState(() {
+                      _height += details.delta.dy;
+                      _height = _height.clamp(widget.minHeight, widget.maxHeight);
+                      widget.onHeightChanged?.call(_height);
+                    });
+                  }
+                  if (widget.expandableWidth && _width.isFinite) {
+                    setState(() {
+                      _width += details.delta.dx;
+                      _width = _width.clamp(widget.minWidth, widget.maxWidth);
+                      widget.onWidthChanged?.call(_width);
+                    });
+                  }
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(4.0 * scaling),
+                  child: CustomPaint(painter: _TextAreaDragHandlePainter(theme.colorScheme.foreground)),
                 ),
               ),
-            )
-          ],
-        ));
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -219,10 +219,11 @@ class _TextAreaDragHandlePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = 1
-      ..strokeCap = StrokeCap.round;
+    final paint =
+        Paint()
+          ..color = color
+          ..strokeWidth = 1
+          ..strokeCap = StrokeCap.round;
     final start = Offset(size.width, 0);
     final end = Offset(0, size.height);
     final start2 = Offset(size.width, size.height / 2);

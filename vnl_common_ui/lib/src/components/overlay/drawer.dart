@@ -3,8 +3,8 @@ import 'dart:math';
 
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-typedef DrawerBuilder = Widget Function(
-    BuildContext context, Size extraSize, Size size, EdgeInsets padding, int stackIndex);
+typedef DrawerBuilder =
+    Widget Function(BuildContext context, Size extraSize, Size size, EdgeInsets padding, int stackIndex);
 
 DrawerOverlayCompleter<T?> openDrawerOverlay<T>({
   required BuildContext context,
@@ -52,9 +52,11 @@ DrawerOverlayCompleter<T?> openDrawerOverlay<T>({
         surfaceBlur: surfaceBlur,
         barrierColor: barrierColor,
         stackIndex: stackIndex,
-        child: Builder(builder: (context) {
-          return builder(context);
-        }),
+        child: Builder(
+          builder: (context) {
+            return builder(context);
+          },
+        ),
       );
     },
     position: position,
@@ -95,9 +97,11 @@ DrawerOverlayCompleter<T?> openSheetOverlay<T>({
         padding: padding,
         barrierColor: barrierColor,
         stackIndex: stackIndex,
-        child: Builder(builder: (context) {
-          return builder(context);
-        }),
+        child: Builder(
+          builder: (context) {
+            return builder(context);
+          },
+        ),
       );
     },
     position: position,
@@ -239,11 +243,8 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
   @override
   void initState() {
     super.initState();
-    _controller = widget.animationController ??
-        AnimationController(
-          vsync: this,
-          duration: const Duration(milliseconds: 350),
-        );
+    _controller =
+        widget.animationController ?? AnimationController(vsync: this, duration: const Duration(milliseconds: 350));
     _extraOffset = ControlledAnimation(_controller);
   }
 
@@ -267,27 +268,21 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
     }
   }
 
-  Widget buildDraggableBar(ThemeData theme) {
+  Widget buildDraggableBar(VNLThemeData theme) {
     switch (resolvedPosition) {
       case OverlayPosition.left:
       case OverlayPosition.right:
         return Container(
           width: widget.dragHandleSize?.width ?? 6 * theme.scaling,
           height: widget.dragHandleSize?.height ?? 100 * theme.scaling,
-          decoration: BoxDecoration(
-            color: theme.colorScheme.muted,
-            borderRadius: theme.borderRadiusXxl,
-          ),
+          decoration: BoxDecoration(color: theme.colorScheme.muted, borderRadius: theme.borderRadiusXxl),
         );
       case OverlayPosition.top:
       case OverlayPosition.bottom:
         return Container(
           width: widget.dragHandleSize?.width ?? 100 * theme.scaling,
           height: widget.dragHandleSize?.height ?? 6 * theme.scaling,
-          decoration: BoxDecoration(
-            color: theme.colorScheme.muted,
-            borderRadius: theme.borderRadiusXxl,
-          ),
+          decoration: BoxDecoration(color: theme.colorScheme.muted, borderRadius: theme.borderRadiusXxl),
         );
       default:
         throw UnimplementedError('Unknown position');
@@ -299,7 +294,7 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
     return renderBox?.hasSize ?? false ? renderBox?.size ?? widget.size : widget.size;
   }
 
-  Widget buildDraggable(BuildContext context, ControlledAnimation? controlled, Widget child, ThemeData theme) {
+  Widget buildDraggable(BuildContext context, ControlledAnimation? controlled, Widget child, VNLThemeData theme) {
     switch (resolvedPosition) {
       case OverlayPosition.left:
         return GestureDetector(
@@ -337,17 +332,19 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
             mainAxisSize: MainAxisSize.min,
             children: [
               AnimatedBuilder(
-                  animation: _extraOffset,
-                  builder: (context, child) {
-                    return Gap(widget.extraSize.width + _extraOffset.value.max(0));
-                  }),
+                animation: _extraOffset,
+                builder: (context, child) {
+                  return Gap(widget.extraSize.width + _extraOffset.value.max(0));
+                },
+              ),
               Flexible(
                 child: AnimatedBuilder(
                   builder: (context, child) {
                     return Transform.scale(
-                        scaleX: 1 + _extraOffset.value / getSize(context).width / 4,
-                        alignment: AlignmentDirectional.centerEnd,
-                        child: child);
+                      scaleX: 1 + _extraOffset.value / getSize(context).width / 4,
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: child,
+                    );
                   },
                   animation: _extraOffset,
                   child: child,
@@ -405,19 +402,21 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
                 child: AnimatedBuilder(
                   builder: (context, child) {
                     return Transform.scale(
-                        scaleX: 1 + _extraOffset.value / getSize(context).width / 4,
-                        alignment: AlignmentDirectional.centerStart,
-                        child: child);
+                      scaleX: 1 + _extraOffset.value / getSize(context).width / 4,
+                      alignment: AlignmentDirectional.centerStart,
+                      child: child,
+                    );
                   },
                   animation: _extraOffset,
                   child: child,
                 ),
               ),
               AnimatedBuilder(
-                  animation: _extraOffset,
-                  builder: (context, child) {
-                    return Gap(widget.extraSize.width + _extraOffset.value.max(0));
-                  }),
+                animation: _extraOffset,
+                builder: (context, child) {
+                  return Gap(widget.extraSize.width + _extraOffset.value.max(0));
+                },
+              ),
             ],
           ),
         );
@@ -457,17 +456,19 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
             mainAxisSize: MainAxisSize.min,
             children: [
               AnimatedBuilder(
-                  animation: _extraOffset,
-                  builder: (context, child) {
-                    return Gap(widget.extraSize.height + _extraOffset.value.max(0));
-                  }),
+                animation: _extraOffset,
+                builder: (context, child) {
+                  return Gap(widget.extraSize.height + _extraOffset.value.max(0));
+                },
+              ),
               Flexible(
                 child: AnimatedBuilder(
                   builder: (context, child) {
                     return Transform.scale(
-                        scaleY: 1 + _extraOffset.value / getSize(context).height / 4,
-                        alignment: Alignment.bottomCenter,
-                        child: child);
+                      scaleY: 1 + _extraOffset.value / getSize(context).height / 4,
+                      alignment: Alignment.bottomCenter,
+                      child: child,
+                    );
                   },
                   animation: _extraOffset,
                   child: child,
@@ -525,19 +526,21 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
                 child: AnimatedBuilder(
                   builder: (context, child) {
                     return Transform.scale(
-                        scaleY: 1 + _extraOffset.value / getSize(context).height / 4,
-                        alignment: Alignment.topCenter,
-                        child: child);
+                      scaleY: 1 + _extraOffset.value / getSize(context).height / 4,
+                      alignment: Alignment.topCenter,
+                      child: child,
+                    );
                   },
                   animation: _extraOffset,
                   child: child,
                 ),
               ),
               AnimatedBuilder(
-                  animation: _extraOffset,
-                  builder: (context, child) {
-                    return Gap(widget.extraSize.height + _extraOffset.value.max(0));
-                  }),
+                animation: _extraOffset,
+                builder: (context, child) {
+                  return Gap(widget.extraSize.height + _extraOffset.value.max(0));
+                },
+              ),
             ],
           ),
         );
@@ -553,11 +556,8 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
       if (oldWidget.animationController == null) {
         _controller.dispose();
       }
-      _controller = widget.animationController ??
-          AnimationController(
-            vsync: this,
-            duration: const Duration(milliseconds: 350),
-          );
+      _controller =
+          widget.animationController ?? AnimationController(vsync: this, duration: const Duration(milliseconds: 350));
     }
   }
 
@@ -569,7 +569,7 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
     super.dispose();
   }
 
-  Border getBorder(ThemeData theme) {
+  Border getBorder(VNLThemeData theme) {
     switch (resolvedPosition) {
       case OverlayPosition.left:
         // top, right, bottom
@@ -607,31 +607,19 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
   BorderRadiusGeometry getBorderRadius(double radius) {
     switch (resolvedPosition) {
       case OverlayPosition.left:
-        return BorderRadius.only(
-          topRight: Radius.circular(radius),
-          bottomRight: Radius.circular(radius),
-        );
+        return BorderRadius.only(topRight: Radius.circular(radius), bottomRight: Radius.circular(radius));
       case OverlayPosition.right:
-        return BorderRadius.only(
-          topLeft: Radius.circular(radius),
-          bottomLeft: Radius.circular(radius),
-        );
+        return BorderRadius.only(topLeft: Radius.circular(radius), bottomLeft: Radius.circular(radius));
       case OverlayPosition.top:
-        return BorderRadius.only(
-          bottomLeft: Radius.circular(radius),
-          bottomRight: Radius.circular(radius),
-        );
+        return BorderRadius.only(bottomLeft: Radius.circular(radius), bottomRight: Radius.circular(radius));
       case OverlayPosition.bottom:
-        return BorderRadius.only(
-          topLeft: Radius.circular(radius),
-          topRight: Radius.circular(radius),
-        );
+        return BorderRadius.only(topLeft: Radius.circular(radius), topRight: Radius.circular(radius));
       default:
         throw UnimplementedError('Unknown position');
     }
   }
 
-  BoxDecoration getDecoration(ThemeData theme) {
+  BoxDecoration getDecoration(VNLThemeData theme) {
     var border = getBorder(theme);
     // according to the design, the border radius is 10
     // seems to be a fixed value
@@ -646,11 +634,7 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
       }
       backgroundColor = backgroundColor.scaleAlpha(surfaceOpacity);
     }
-    return BoxDecoration(
-      borderRadius: borderRadius,
-      color: backgroundColor,
-      border: border,
-    );
+    return BoxDecoration(borderRadius: borderRadius, color: backgroundColor, border: border);
   }
 
   Widget buildChild(BuildContext context) {
@@ -669,7 +653,7 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
   Widget build(BuildContext context) {
     final data = Data.maybeOf<_MountedOverlayEntryData>(context);
     final animation = data?.state._controlledAnimation;
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     var surfaceBlur = widget.surfaceBlur ?? theme.surfaceBlur;
     var surfaceOpacity = widget.surfaceOpacity ?? theme.surfaceOpacity;
     var borderRadius = widget.borderRadius ?? getBorderRadius(theme.radiusXxl);
@@ -683,17 +667,11 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
     );
 
     if (widget.constraints != null) {
-      container = ConstrainedBox(
-        constraints: widget.constraints!,
-        child: container,
-      );
+      container = ConstrainedBox(constraints: widget.constraints!, child: container);
     }
 
     if (widget.alignment != null) {
-      container = Align(
-        alignment: widget.alignment!,
-        child: container,
-      );
+      container = Align(alignment: widget.alignment!, child: container);
     }
 
     if (surfaceBlur != null && surfaceBlur > 0) {
@@ -703,7 +681,7 @@ class _DrawerWrapperState extends State<DrawerWrapper> with SingleTickerProvider
         child: container,
       );
     }
-    var barrierColor = widget.barrierColor ?? Colors.black.scaleAlpha(0.8);
+    var barrierColor = widget.barrierColor ?? VNLColors.black.scaleAlpha(0.8);
     if (animation != null) {
       if (widget.stackIndex != 0) {
         // weaken the barrier color for the upper sheets
@@ -753,7 +731,7 @@ class SheetWrapper extends DrawerWrapper {
 
 class _SheetWrapperState extends _DrawerWrapperState {
   @override
-  Border getBorder(ThemeData theme) {
+  Border getBorder(VNLThemeData theme) {
     switch (resolvedPosition) {
       case OverlayPosition.left:
         return Border(right: BorderSide(color: theme.colorScheme.border));
@@ -792,12 +770,7 @@ class _SheetWrapperState extends _DrawerWrapperState {
         throw UnimplementedError('Unknown position');
     }
     return super.buildMargin(context) +
-        EdgeInsets.only(
-          top: marginTop,
-          bottom: marginBottom,
-          left: marginLeft,
-          right: marginRight,
-        );
+        EdgeInsets.only(top: marginTop, bottom: marginBottom, left: marginLeft, right: marginRight);
   }
 
   @override
@@ -832,12 +805,7 @@ class _SheetWrapperState extends _DrawerWrapperState {
         throw UnimplementedError('Unknown position');
     }
     return Padding(
-      padding: EdgeInsets.only(
-        top: paddingTop,
-        bottom: paddingBottom,
-        left: paddingLeft,
-        right: paddingRight,
-      ),
+      padding: EdgeInsets.only(top: paddingTop, bottom: paddingBottom, left: paddingLeft, right: paddingRight),
       child: super.buildChild(context),
     );
   }
@@ -848,7 +816,7 @@ class _SheetWrapperState extends _DrawerWrapperState {
   }
 
   @override
-  BoxDecoration getDecoration(ThemeData theme) {
+  BoxDecoration getDecoration(VNLThemeData theme) {
     var backgroundColor = theme.colorScheme.background;
     var surfaceOpacity = widget.surfaceOpacity ?? theme.surfaceOpacity;
     if (surfaceOpacity != null && surfaceOpacity < 1) {
@@ -859,21 +827,11 @@ class _SheetWrapperState extends _DrawerWrapperState {
       }
       backgroundColor = backgroundColor.scaleAlpha(surfaceOpacity);
     }
-    return BoxDecoration(
-      color: backgroundColor,
-      border: getBorder(theme),
-    );
+    return BoxDecoration(color: backgroundColor, border: getBorder(theme));
   }
 }
 
-enum OverlayPosition {
-  left,
-  right,
-  top,
-  bottom,
-  start,
-  end,
-}
+enum OverlayPosition { left, right, top, bottom, start, end }
 
 const kBackdropScaleDown = 0.95;
 
@@ -886,10 +844,7 @@ class BackdropTransformData {
 class _DrawerOverlayWrapper extends StatefulWidget {
   final Widget child;
   final Completer completer;
-  const _DrawerOverlayWrapper({
-    required this.child,
-    required this.completer,
-  });
+  const _DrawerOverlayWrapper({required this.child, required this.completer});
 
   @override
   State<_DrawerOverlayWrapper> createState() => _DrawerOverlayWrapperState();
@@ -898,10 +853,7 @@ class _DrawerOverlayWrapper extends StatefulWidget {
 class _DrawerOverlayWrapperState extends State<_DrawerOverlayWrapper> with OverlayHandlerStateMixin {
   @override
   Widget build(BuildContext context) {
-    return Data<OverlayHandlerStateMixin>.inherit(
-      data: this,
-      child: widget.child,
-    );
+    return Data<OverlayHandlerStateMixin>.inherit(data: this, child: widget.child);
   }
 
   @override
@@ -966,9 +918,11 @@ DrawerOverlayCompleter<T?> openRawDrawer<T>({
     builder: (context, extraSize, size, padding, stackIndex) {
       return _DrawerOverlayWrapper(
         completer: completer,
-        child: Builder(builder: (context) {
-          return builder(context, extraSize, size, padding, stackIndex);
-        }),
+        child: Builder(
+          builder: (context) {
+            return builder(context, extraSize, size, padding, stackIndex);
+          },
+        ),
       );
     },
     modal: modal,
@@ -977,76 +931,67 @@ DrawerOverlayCompleter<T?> openRawDrawer<T>({
     useSafeArea: useSafeArea,
     constraints: constraints,
     alignment: alignment,
-    backdropBuilder: transformBackdrop
-        ? (context, child, animation, stackIndex) {
-            final theme = Theme.of(context);
-            final existingData = Data.maybeOf<BackdropTransformData>(context);
-            return LayoutBuilder(builder: (context, constraints) {
-              return stackIndex == 0
-                  ? AnimatedBuilder(
-                      animation: animation,
-                      builder: (context, child) {
-                        Size size = constraints.biggest;
-                        double scale = 1 - (1 - kBackdropScaleDown) * animation.value;
-                        Size sizeAfterScale = Size(
-                          size.width * scale,
-                          size.height * scale,
-                        );
-                        var extraSize = Size(
-                          size.width - sizeAfterScale.width / kBackdropScaleDown,
-                          size.height - sizeAfterScale.height / kBackdropScaleDown,
-                        );
-                        if (existingData != null) {
-                          extraSize = Size(
-                            extraSize.width + existingData.sizeDifference.width / kBackdropScaleDown,
-                            extraSize.height + existingData.sizeDifference.height / kBackdropScaleDown,
+    backdropBuilder:
+        transformBackdrop
+            ? (context, child, animation, stackIndex) {
+              final theme = VNLTheme.of(context);
+              final existingData = Data.maybeOf<BackdropTransformData>(context);
+              return LayoutBuilder(
+                builder: (context, constraints) {
+                  return stackIndex == 0
+                      ? AnimatedBuilder(
+                        animation: animation,
+                        builder: (context, child) {
+                          Size size = constraints.biggest;
+                          double scale = 1 - (1 - kBackdropScaleDown) * animation.value;
+                          Size sizeAfterScale = Size(size.width * scale, size.height * scale);
+                          var extraSize = Size(
+                            size.width - sizeAfterScale.width / kBackdropScaleDown,
+                            size.height - sizeAfterScale.height / kBackdropScaleDown,
                           );
-                        }
-                        return Data.inherit(
-                          data: BackdropTransformData(extraSize),
-                          child: Transform.scale(
-                            scale: scale,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(theme.radiusXxl * animation.value),
-                              child: child,
+                          if (existingData != null) {
+                            extraSize = Size(
+                              extraSize.width + existingData.sizeDifference.width / kBackdropScaleDown,
+                              extraSize.height + existingData.sizeDifference.height / kBackdropScaleDown,
+                            );
+                          }
+                          return Data.inherit(
+                            data: BackdropTransformData(extraSize),
+                            child: Transform.scale(
+                              scale: scale,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(theme.radiusXxl * animation.value),
+                                child: child,
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                      child: child,
-                    )
-                  : AnimatedBuilder(
-                      animation: animation,
-                      builder: (context, child) {
-                        Size size = constraints.biggest;
-                        double scale = 1 - (1 - kBackdropScaleDown) * animation.value;
-                        Size sizeAfterScale = Size(
-                          size.width * scale,
-                          size.height * scale,
-                        );
-                        var extraSize = Size(
-                          size.width - sizeAfterScale.width,
-                          size.height - sizeAfterScale.height,
-                        );
-                        if (existingData != null) {
-                          extraSize = Size(
-                            extraSize.width + existingData.sizeDifference.width / kBackdropScaleDown,
-                            extraSize.height + existingData.sizeDifference.height / kBackdropScaleDown,
                           );
-                        }
-                        return Data.inherit(
-                          data: BackdropTransformData(extraSize),
-                          child: Transform.scale(
-                            scale: scale,
-                            child: child,
-                          ),
-                        );
-                      },
-                      child: child,
-                    );
-            });
-          }
-        : (context, child, animation, stackIndex) => child,
+                        },
+                        child: child,
+                      )
+                      : AnimatedBuilder(
+                        animation: animation,
+                        builder: (context, child) {
+                          Size size = constraints.biggest;
+                          double scale = 1 - (1 - kBackdropScaleDown) * animation.value;
+                          Size sizeAfterScale = Size(size.width * scale, size.height * scale);
+                          var extraSize = Size(size.width - sizeAfterScale.width, size.height - sizeAfterScale.height);
+                          if (existingData != null) {
+                            extraSize = Size(
+                              extraSize.width + existingData.sizeDifference.width / kBackdropScaleDown,
+                              extraSize.height + existingData.sizeDifference.height / kBackdropScaleDown,
+                            );
+                          }
+                          return Data.inherit(
+                            data: BackdropTransformData(extraSize),
+                            child: Transform.scale(scale: scale, child: child),
+                          );
+                        },
+                        child: child,
+                      );
+                },
+              );
+            }
+            : (context, child, animation, stackIndex) => child,
     barrierBuilder: (context, child, animation, stackIndex) {
       if (stackIndex > 0) {
         if (!transformBackdrop) {
@@ -1063,17 +1008,12 @@ DrawerOverlayCompleter<T?> openRawDrawer<T>({
           child: AnimatedBuilder(
             animation: animation,
             builder: (context, child) {
-              return IgnorePointer(
-                ignoring: animation.status != AnimationStatus.completed,
-                child: child!,
-              );
+              return IgnorePointer(ignoring: animation.status != AnimationStatus.completed, child: child!);
             },
             child: GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: barrierDismissible ? () => closeDrawer(context) : null,
-              child: Container(
-                child: backdropBuilder?.call(context),
-              ),
+              child: Container(child: backdropBuilder?.call(context)),
             ),
           ),
         ),
@@ -1179,10 +1119,7 @@ class DrawerOverlayState extends State<DrawerOverlay> {
   @override
   Widget build(BuildContext context) {
     final parentLayer = Data.maybeOf<DrawerLayerData>(context);
-    Widget child = KeyedSubtree(
-      key: backdropKey,
-      child: widget.child,
-    );
+    Widget child = KeyedSubtree(key: backdropKey, child: widget.child);
     int index = 0;
     for (final entry in _entries) {
       child = DrawerEntryWidget(
@@ -1221,10 +1158,7 @@ class DrawerOverlayState extends State<DrawerOverlay> {
           }
         }
       },
-      child: ForwardableData(
-        data: DrawerLayerData(this, parentLayer),
-        child: child,
-      ),
+      child: ForwardableData(data: DrawerLayerData(this, parentLayer), child: child),
     );
   }
 }
@@ -1302,11 +1236,8 @@ class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>> with SingleT
       if (oldWidget.animationController == null) {
         _controller.dispose();
       }
-      _controller = widget.animationController ??
-          AnimationController(
-            vsync: this,
-            duration: const Duration(milliseconds: 350),
-          );
+      _controller =
+          widget.animationController ?? AnimationController(vsync: this, duration: const Duration(milliseconds: 350));
     }
   }
 
@@ -1351,125 +1282,132 @@ class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>> with SingleT
         data: widget.data,
         child: Data.inherit(
           data: _MountedOverlayEntryData(this),
-          child: Builder(builder: (context) {
-            Widget barrier = (widget.modal
-                    ? widget.barrierBuilder(context, widget.backdrop, _controlledAnimation, widget.stackIndex)
-                    : null) ??
-                Positioned(
-                  top: -9999,
-                  left: -9999,
-                  right: -9999,
-                  bottom: -9999,
-                  child: GestureDetector(
-                    onTap: () {
-                      close();
-                    },
-                  ),
-                );
-            final extraSize = Data.maybeOf<BackdropTransformData>(context)?.sizeDifference;
-            Size additionalSize;
-            Offset additionalOffset;
-            bool insetTop = widget.useSafeArea && widget.position == OverlayPosition.top;
-            bool insetBottom = widget.useSafeArea && widget.position == OverlayPosition.bottom;
-            bool insetLeft = widget.useSafeArea && widget.position == OverlayPosition.left;
-            bool insetRight = widget.useSafeArea && widget.position == OverlayPosition.right;
-            MediaQueryData mediaQueryData = MediaQuery.of(context);
-            EdgeInsets padding = mediaQueryData.padding + mediaQueryData.viewInsets;
-            if (extraSize == null) {
-              additionalSize = Size.zero;
-              additionalOffset = Offset.zero;
-            } else {
-              switch (widget.position) {
-                case OverlayPosition.left:
-                  additionalSize = Size(extraSize.width / 2, 0);
-                  additionalOffset = Offset(-additionalSize.width, 0);
-                  break;
-                case OverlayPosition.right:
-                  additionalSize = Size(extraSize.width / 2, 0);
-                  additionalOffset = Offset(additionalSize.width, 0);
-                  break;
-                case OverlayPosition.top:
-                  additionalSize = Size(0, extraSize.height / 2);
-                  additionalOffset = Offset(0, -additionalSize.height);
-                  break;
-                case OverlayPosition.bottom:
-                  additionalSize = Size(0, extraSize.height / 2);
-                  additionalOffset = Offset(0, additionalSize.height);
-                  break;
-                default:
-                  throw UnimplementedError('Unknown position');
+          child: Builder(
+            builder: (context) {
+              Widget barrier =
+                  (widget.modal
+                      ? widget.barrierBuilder(context, widget.backdrop, _controlledAnimation, widget.stackIndex)
+                      : null) ??
+                  Positioned(
+                    top: -9999,
+                    left: -9999,
+                    right: -9999,
+                    bottom: -9999,
+                    child: GestureDetector(
+                      onTap: () {
+                        close();
+                      },
+                    ),
+                  );
+              final extraSize = Data.maybeOf<BackdropTransformData>(context)?.sizeDifference;
+              Size additionalSize;
+              Offset additionalOffset;
+              bool insetTop = widget.useSafeArea && widget.position == OverlayPosition.top;
+              bool insetBottom = widget.useSafeArea && widget.position == OverlayPosition.bottom;
+              bool insetLeft = widget.useSafeArea && widget.position == OverlayPosition.left;
+              bool insetRight = widget.useSafeArea && widget.position == OverlayPosition.right;
+              MediaQueryData mediaQueryData = MediaQuery.of(context);
+              EdgeInsets padding = mediaQueryData.padding + mediaQueryData.viewInsets;
+              if (extraSize == null) {
+                additionalSize = Size.zero;
+                additionalOffset = Offset.zero;
+              } else {
+                switch (widget.position) {
+                  case OverlayPosition.left:
+                    additionalSize = Size(extraSize.width / 2, 0);
+                    additionalOffset = Offset(-additionalSize.width, 0);
+                    break;
+                  case OverlayPosition.right:
+                    additionalSize = Size(extraSize.width / 2, 0);
+                    additionalOffset = Offset(additionalSize.width, 0);
+                    break;
+                  case OverlayPosition.top:
+                    additionalSize = Size(0, extraSize.height / 2);
+                    additionalOffset = Offset(0, -additionalSize.height);
+                    break;
+                  case OverlayPosition.bottom:
+                    additionalSize = Size(0, extraSize.height / 2);
+                    additionalOffset = Offset(0, additionalSize.height);
+                    break;
+                  default:
+                    throw UnimplementedError('Unknown position');
+                }
               }
-            }
-            return Stack(
-              clipBehavior: Clip.none,
-              fit: StackFit.passthrough,
-              children: [
-                IgnorePointer(
-                  child: widget.backdropBuilder(context, widget.backdrop, _controlledAnimation, widget.stackIndex),
-                ),
-                barrier,
-                Positioned.fill(
-                  child: LayoutBuilder(builder: (context, constraints) {
-                    return MediaQuery(
-                      data: widget.useSafeArea
-                          ? mediaQueryData.removePadding(
-                              removeTop: true,
-                              removeBottom: true,
-                              removeLeft: true,
-                              removeRight: true,
-                            )
-                          : mediaQueryData,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          top: padTop ? padding.top : 0,
-                          bottom: padBottom ? padding.bottom : 0,
-                          left: padLeft ? padding.left : 0,
-                          right: padRight ? padding.right : 0,
-                        ),
-                        child: Align(
-                          alignment: alignment,
-                          child: AnimatedBuilder(
-                            animation: _controlledAnimation,
-                            builder: (context, child) {
-                              return FractionalTranslation(
-                                translation: startFractionalOffset * (1 - _controlledAnimation.value),
-                                child: child,
-                              );
-                            },
-                            child: Transform.translate(
-                              offset: additionalOffset / kBackdropScaleDown,
-                              child: widget.builder(
-                                  context,
-                                  additionalSize,
-                                  constraints.biggest,
-                                  EdgeInsets.only(
-                                    top: insetTop ? padding.top : 0,
-                                    bottom: insetBottom ? padding.bottom : 0,
-                                    left: insetLeft ? padding.left : 0,
-                                    right: insetRight ? padding.right : 0,
+              return Stack(
+                clipBehavior: Clip.none,
+                fit: StackFit.passthrough,
+                children: [
+                  IgnorePointer(
+                    child: widget.backdropBuilder(context, widget.backdrop, _controlledAnimation, widget.stackIndex),
+                  ),
+                  barrier,
+                  Positioned.fill(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return MediaQuery(
+                          data:
+                              widget.useSafeArea
+                                  ? mediaQueryData.removePadding(
+                                    removeTop: true,
+                                    removeBottom: true,
+                                    removeLeft: true,
+                                    removeRight: true,
+                                  )
+                                  : mediaQueryData,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: padTop ? padding.top : 0,
+                              bottom: padBottom ? padding.bottom : 0,
+                              left: padLeft ? padding.left : 0,
+                              right: padRight ? padding.right : 0,
+                            ),
+                            child: Align(
+                              alignment: alignment,
+                              child: AnimatedBuilder(
+                                animation: _controlledAnimation,
+                                builder: (context, child) {
+                                  return FractionalTranslation(
+                                    translation: startFractionalOffset * (1 - _controlledAnimation.value),
+                                    child: child,
+                                  );
+                                },
+                                child: Transform.translate(
+                                  offset: additionalOffset / kBackdropScaleDown,
+                                  child: widget.builder(
+                                    context,
+                                    additionalSize,
+                                    constraints.biggest,
+                                    EdgeInsets.only(
+                                      top: insetTop ? padding.top : 0,
+                                      bottom: insetBottom ? padding.bottom : 0,
+                                      left: insetLeft ? padding.left : 0,
+                                      right: insetRight ? padding.right : 0,
+                                    ),
+                                    widget.stackIndex,
                                   ),
-                                  widget.stackIndex),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    );
-                  }),
-                ),
-              ],
-            );
-          }),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
   }
 }
 
-typedef BackdropBuilder = Widget Function(
-    BuildContext context, Widget child, Animation<double> animation, int stackIndex);
+typedef BackdropBuilder =
+    Widget Function(BuildContext context, Widget child, Animation<double> animation, int stackIndex);
 
-typedef BarrierBuilder = Widget? Function(
-    BuildContext context, Widget child, Animation<double> animation, int stackIndex);
+typedef BarrierBuilder =
+    Widget? Function(BuildContext context, Widget child, Animation<double> animation, int stackIndex);
 
 class DrawerOverlayEntry<T> {
   final GlobalKey<DrawerEntryWidgetState<T>> key = GlobalKey();
@@ -1544,10 +1482,7 @@ class SheetOverlayHandler extends OverlayHandler {
   final OverlayPosition position;
   final Color? barrierColor;
 
-  const SheetOverlayHandler({
-    this.position = OverlayPosition.bottom,
-    this.barrierColor,
-  });
+  const SheetOverlayHandler({this.position = OverlayPosition.bottom, this.barrierColor});
 
   @override
   bool operator ==(Object other) {
@@ -1593,11 +1528,9 @@ class SheetOverlayHandler extends OverlayHandler {
       useSafeArea: true,
       barrierDismissible: barrierDismissable,
       builder: (context, extraSize, size, padding, stackIndex) {
-        final theme = Theme.of(context);
+        final theme = VNLTheme.of(context);
         return MultiModel(
-          data: const [
-            Model(#vnl_ui_sheet_overlay, true),
-          ],
+          data: const [Model(#vnl_ui_sheet_overlay, true)],
           child: SheetWrapper(
             position: this.position,
             gapAfterDragger: 8 * theme.scaling,
@@ -1608,9 +1541,11 @@ class SheetOverlayHandler extends OverlayHandler {
             padding: padding,
             barrierColor: barrierColor,
             stackIndex: stackIndex,
-            child: Builder(builder: (context) {
-              return builder(context);
-            }),
+            child: Builder(
+              builder: (context) {
+                return builder(context);
+              },
+            ),
           ),
         );
       },

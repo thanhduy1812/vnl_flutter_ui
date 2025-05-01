@@ -28,7 +28,7 @@ class VNLDotIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final directionality = Directionality.of(context);
     final scaling = theme.scaling;
     final spacing = this.spacing ?? (8 * scaling);
@@ -46,17 +46,16 @@ class VNLDotIndicator extends StatelessWidget {
         left: leftPadding,
         right: rightPadding,
       );
-      children.add(Flexible(
-        child: Clickable(
-          behavior: HitTestBehavior.translucent,
-          onPressed: onChanged != null ? () => onChanged!(i) : null,
-          mouseCursor: const WidgetStatePropertyAll(SystemMouseCursors.click),
-          child: Padding(
-            padding: itemPadding,
-            child: dotBuilder(context, i, i == index),
+      children.add(
+        Flexible(
+          child: Clickable(
+            behavior: HitTestBehavior.translucent,
+            onPressed: onChanged != null ? () => onChanged!(i) : null,
+            mouseCursor: const WidgetStatePropertyAll(SystemMouseCursors.click),
+            child: Padding(padding: itemPadding, child: dotBuilder(context, i, i == index)),
           ),
         ),
-      ));
+      );
     }
     return IntrinsicHeight(
       child: Flex(
@@ -76,14 +75,7 @@ class DotItem extends StatelessWidget {
   final Color? borderColor;
   final double? borderWidth;
 
-  const DotItem({
-    super.key,
-    this.size,
-    this.color,
-    this.borderRadius,
-    this.borderColor,
-    this.borderWidth,
-  });
+  const DotItem({super.key, this.size, this.color, this.borderRadius, this.borderColor, this.borderWidth});
 
   @override
   Widget build(BuildContext context) {
@@ -108,18 +100,11 @@ class ActiveDotItem extends StatelessWidget {
   final Color? borderColor;
   final double? borderWidth;
 
-  const ActiveDotItem({
-    super.key,
-    this.size,
-    this.color,
-    this.borderRadius,
-    this.borderColor,
-    this.borderWidth,
-  });
+  const ActiveDotItem({super.key, this.size, this.color, this.borderRadius, this.borderColor, this.borderWidth});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     final size = this.size ?? (12 * scaling);
     final color = this.color ?? theme.colorScheme.primary;
@@ -144,18 +129,11 @@ class InactiveDotItem extends StatelessWidget {
   final Color? borderColor;
   final double? borderWidth;
 
-  const InactiveDotItem({
-    super.key,
-    this.size,
-    this.color,
-    this.borderRadius,
-    this.borderColor,
-    this.borderWidth,
-  });
+  const InactiveDotItem({super.key, this.size, this.color, this.borderRadius, this.borderColor, this.borderWidth});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     final size = this.size ?? (12 * scaling);
     final borderRadius = this.borderRadius ?? theme.radiusMd;

@@ -12,12 +12,7 @@ class TableTheme {
   final Color? backgroundColor;
   final TableCellTheme? cellTheme;
 
-  const TableTheme({
-    this.border,
-    this.backgroundColor,
-    this.borderRadius,
-    this.cellTheme,
-  });
+  const TableTheme({this.border, this.backgroundColor, this.borderRadius, this.cellTheme});
 
   @override
   bool operator ==(Object other) {
@@ -34,11 +29,7 @@ class TableTheme {
     return Object.hash(border, backgroundColor, cellTheme);
   }
 
-  TableTheme copyWith({
-    Border? border,
-    Color? backgroundColor,
-    TableCellTheme? cellTheme,
-  }) {
+  TableTheme copyWith({Border? border, Color? backgroundColor, TableCellTheme? cellTheme}) {
     return TableTheme(
       border: border ?? this.border,
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -51,10 +42,7 @@ class ConstrainedTableSize {
   final double min;
   final double max;
 
-  const ConstrainedTableSize({
-    this.min = double.negativeInfinity,
-    this.max = double.infinity,
-  });
+  const ConstrainedTableSize({this.min = double.negativeInfinity, this.max = double.infinity});
 }
 
 class TableCellTheme {
@@ -62,11 +50,7 @@ class TableCellTheme {
   final WidgetStateProperty<Color?>? backgroundColor;
   final WidgetStateProperty<TextStyle?>? textStyle;
 
-  const TableCellTheme({
-    this.border,
-    this.backgroundColor,
-    this.textStyle,
-  });
+  const TableCellTheme({this.border, this.backgroundColor, this.textStyle});
 
   @override
   bool operator ==(Object other) {
@@ -101,11 +85,7 @@ class ResizableTableTheme {
   final double? resizerThickness;
   final Color? resizerColor;
 
-  const ResizableTableTheme({
-    this.tableTheme,
-    this.resizerThickness,
-    this.resizerColor,
-  });
+  const ResizableTableTheme({this.tableTheme, this.resizerThickness, this.resizerColor});
 
   @override
   bool operator ==(Object other) {
@@ -122,11 +102,7 @@ class ResizableTableTheme {
     return Object.hash(tableTheme, resizerThickness, resizerColor);
   }
 
-  ResizableTableTheme copyWith({
-    TableTheme? tableTheme,
-    double? resizerThickness,
-    Color? resizerColor,
-  }) {
+  ResizableTableTheme copyWith({TableTheme? tableTheme, double? resizerThickness, Color? resizerColor}) {
     return ResizableTableTheme(
       tableTheme: tableTheme ?? this.tableTheme,
       resizerThickness: resizerThickness ?? this.resizerThickness,
@@ -145,9 +121,7 @@ class _HoveredLine {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is _HoveredLine &&
-        other.index == index &&
-        other.direction == direction;
+    return other is _HoveredLine && other.index == index && other.direction == direction;
   }
 
   @override
@@ -175,24 +149,23 @@ class ResizableTableController extends ChangeNotifier {
     ConstrainedTableSize? defaultHeightConstraint,
     Map<int, ConstrainedTableSize>? widthConstraints,
     Map<int, ConstrainedTableSize>? heightConstraints,
-  })  : _columnWidths = columnWidths,
-        _rowHeights = rowHeights,
-        _defaultColumnWidth = defaultColumnWidth,
-        _defaultRowHeight = defaultRowHeight,
-        _widthConstraints = widthConstraints,
-        _heightConstraints = heightConstraints,
-        _defaultWidthConstraint = defaultWidthConstraint,
-        _defaultHeightConstraint = defaultHeightConstraint;
+  }) : _columnWidths = columnWidths,
+       _rowHeights = rowHeights,
+       _defaultColumnWidth = defaultColumnWidth,
+       _defaultRowHeight = defaultRowHeight,
+       _widthConstraints = widthConstraints,
+       _heightConstraints = heightConstraints,
+       _defaultWidthConstraint = defaultWidthConstraint,
+       _defaultHeightConstraint = defaultHeightConstraint;
 
   bool resizeColumn(int column, double width) {
     if (column < 0 || width < 0) {
       return false;
     }
     width = width.clamp(
-        _widthConstraints?[column]?.min ?? _defaultWidthConstraint?.min ?? 0,
-        _widthConstraints?[column]?.max ??
-            _defaultWidthConstraint?.max ??
-            double.infinity);
+      _widthConstraints?[column]?.min ?? _defaultWidthConstraint?.min ?? 0,
+      _widthConstraints?[column]?.max ?? _defaultWidthConstraint?.max ?? double.infinity,
+    );
     if (_columnWidths != null && _columnWidths![column] == width) {
       return false;
     }
@@ -202,8 +175,7 @@ class ResizableTableController extends ChangeNotifier {
     return true;
   }
 
-  double resizeColumnBorder(
-      int previousColumn, int nextColumn, double deltaWidth) {
+  double resizeColumnBorder(int previousColumn, int nextColumn, double deltaWidth) {
     if (previousColumn < 0 || nextColumn < 0 || deltaWidth == 0) {
       return 0;
     }
@@ -213,19 +185,13 @@ class ResizableTableController extends ChangeNotifier {
     var nextWidth = _columnWidths?[nextColumn] ?? _defaultColumnWidth;
     double newNextWidth = nextWidth - deltaWidth;
     double clampedPreviousWidth = newPreviousWidth.clamp(
-        _widthConstraints?[previousColumn]?.min ??
-            _defaultWidthConstraint?.min ??
-            0,
-        _widthConstraints?[previousColumn]?.max ??
-            _defaultWidthConstraint?.max ??
-            double.infinity);
+      _widthConstraints?[previousColumn]?.min ?? _defaultWidthConstraint?.min ?? 0,
+      _widthConstraints?[previousColumn]?.max ?? _defaultWidthConstraint?.max ?? double.infinity,
+    );
     double clampedNextWidth = newNextWidth.clamp(
-        _widthConstraints?[nextColumn]?.min ??
-            _defaultWidthConstraint?.min ??
-            0,
-        _widthConstraints?[nextColumn]?.max ??
-            _defaultWidthConstraint?.max ??
-            double.infinity);
+      _widthConstraints?[nextColumn]?.min ?? _defaultWidthConstraint?.min ?? 0,
+      _widthConstraints?[nextColumn]?.max ?? _defaultWidthConstraint?.max ?? double.infinity,
+    );
     double previousDelta = clampedPreviousWidth - previousWidth;
     double nextDelta = clampedNextWidth - nextWidth;
     // find the delta that can be applied to both columns
@@ -256,17 +222,13 @@ class ResizableTableController extends ChangeNotifier {
     var nextHeight = _rowHeights?[nextRow] ?? _defaultRowHeight;
     double newNextHeight = nextHeight - deltaHeight;
     double clampedPreviousHeight = newPreviousHeight.clamp(
-        _heightConstraints?[previousRow]?.min ??
-            _defaultHeightConstraint?.min ??
-            0,
-        _heightConstraints?[previousRow]?.max ??
-            _defaultHeightConstraint?.max ??
-            double.infinity);
+      _heightConstraints?[previousRow]?.min ?? _defaultHeightConstraint?.min ?? 0,
+      _heightConstraints?[previousRow]?.max ?? _defaultHeightConstraint?.max ?? double.infinity,
+    );
     double clampedNextHeight = newNextHeight.clamp(
-        _heightConstraints?[nextRow]?.min ?? _defaultHeightConstraint?.min ?? 0,
-        _heightConstraints?[nextRow]?.max ??
-            _defaultHeightConstraint?.max ??
-            double.infinity);
+      _heightConstraints?[nextRow]?.min ?? _defaultHeightConstraint?.min ?? 0,
+      _heightConstraints?[nextRow]?.max ?? _defaultHeightConstraint?.max ?? double.infinity,
+    );
     double previousDelta = clampedPreviousHeight - previousHeight;
     double nextDelta = clampedNextHeight - nextHeight;
     // find the delta that can be applied to both rows
@@ -286,10 +248,9 @@ class ResizableTableController extends ChangeNotifier {
       return false;
     }
     height = height.clamp(
-        _heightConstraints?[row]?.min ?? _defaultHeightConstraint?.min ?? 0,
-        _heightConstraints?[row]?.max ??
-            _defaultHeightConstraint?.max ??
-            double.infinity);
+      _heightConstraints?[row]?.min ?? _defaultHeightConstraint?.min ?? 0,
+      _heightConstraints?[row]?.max ?? _defaultHeightConstraint?.max ?? double.infinity,
+    );
     if (_rowHeights != null && _rowHeights![row] == height) {
       return false;
     }
@@ -299,12 +260,9 @@ class ResizableTableController extends ChangeNotifier {
     return true;
   }
 
-  Map<int, double>? get columnWidths => _columnWidths == null
-      ? null
-      : Map<int, double>.unmodifiable(_columnWidths!);
+  Map<int, double>? get columnWidths => _columnWidths == null ? null : Map<int, double>.unmodifiable(_columnWidths!);
 
-  Map<int, double>? get rowHeights =>
-      _rowHeights == null ? null : Map<int, double>.unmodifiable(_rowHeights!);
+  Map<int, double>? get rowHeights => _rowHeights == null ? null : Map<int, double>.unmodifiable(_rowHeights!);
 
   double getColumnWidth(int index) {
     return _columnWidths?[index] ?? _defaultColumnWidth;
@@ -354,7 +312,8 @@ class ResizableTable extends StatefulWidget {
   final double? verticalOffset;
   final Size? viewportSize;
 
-  const ResizableTable({super.key, 
+  const ResizableTable({
+    super.key,
     required this.rows,
     required this.controller,
     this.theme,
@@ -399,18 +358,20 @@ class _ResizableTableState extends State<ResizableTable> {
       final row = widget.rows[r];
       for (int c = 0; c < row.cells.length; c++) {
         final cell = row.cells[c];
-        _cells.add(_FlattenedTableCell(
-          column: c,
-          row: r,
-          columnSpan: cell.columnSpan,
-          rowSpan: cell.rowSpan,
-          builder: cell.build,
-          enabled: cell.enabled,
-          hoveredCellNotifier: _hoveredCellNotifier,
-          dragNotifier: _dragNotifier,
-          tableCellThemeBuilder: row.buildDefaultTheme,
-          selected: row.selected,
-        ));
+        _cells.add(
+          _FlattenedTableCell(
+            column: c,
+            row: r,
+            columnSpan: cell.columnSpan,
+            rowSpan: cell.rowSpan,
+            builder: cell.build,
+            enabled: cell.enabled,
+            hoveredCellNotifier: _hoveredCellNotifier,
+            dragNotifier: _dragNotifier,
+            tableCellThemeBuilder: row.buildDefaultTheme,
+            selected: row.selected,
+          ),
+        );
       }
     }
     _cells = _reorganizeCells(_cells);
@@ -425,8 +386,7 @@ class _ResizableTableState extends State<ResizableTable> {
   void _onHover(bool hover, int index, Axis direction) {
     if (hover) {
       _hoverNotifier.value = _HoveredLine(index, direction);
-    } else if (_hoverNotifier.value?.index == index &&
-        _hoverNotifier.value?.direction == direction) {
+    } else if (_hoverNotifier.value?.index == index && _hoverNotifier.value?.direction == direction) {
       _hoverNotifier.value = null;
     }
   }
@@ -449,33 +409,35 @@ class _ResizableTableState extends State<ResizableTable> {
 
   @override
   Widget build(BuildContext context) {
-    ResizableTableTheme? resizableTableTheme =
-        widget.theme ?? ComponentTheme.maybeOf<ResizableTableTheme>(context);
-    TableTheme? tableTheme = resizableTableTheme?.tableTheme ??
-        ComponentTheme.maybeOf<TableTheme>(context);
-    var children = _cells.map((cell) {
-      return Data.inherit(
-        data: cell,
-        child: RawCell(
-          column: cell.column,
-          row: cell.row,
-          columnSpan: cell.columnSpan,
-          rowSpan: cell.rowSpan,
-          child: Builder(builder: (context) {
-            return cell.builder(context);
-          }),
-        ),
-      );
-    }).toList();
+    ResizableTableTheme? resizableTableTheme = widget.theme ?? ComponentTheme.maybeOf<ResizableTableTheme>(context);
+    TableTheme? tableTheme = resizableTableTheme?.tableTheme ?? ComponentTheme.maybeOf<TableTheme>(context);
+    var children =
+        _cells.map((cell) {
+          return Data.inherit(
+            data: cell,
+            child: RawCell(
+              column: cell.column,
+              row: cell.row,
+              columnSpan: cell.columnSpan,
+              rowSpan: cell.rowSpan,
+              child: Builder(
+                builder: (context) {
+                  return cell.builder(context);
+                },
+              ),
+            ),
+          );
+        }).toList();
     return Data.inherit(
       data: this,
       child: Data.inherit(
         data: _ResizableTableData(
-            controller: widget.controller,
-            cellWidthResizeMode: widget.cellWidthResizeMode,
-            cellHeightResizeMode: widget.cellHeightResizeMode,
-            maxColumn: _maxColumn,
-            maxRow: _maxRow),
+          controller: widget.controller,
+          cellWidthResizeMode: widget.cellWidthResizeMode,
+          cellHeightResizeMode: widget.cellHeightResizeMode,
+          maxColumn: _maxColumn,
+          maxRow: _maxRow,
+        ),
         child: Container(
           clipBehavior: widget.clipBehavior,
           decoration: BoxDecoration(
@@ -484,24 +446,25 @@ class _ResizableTableState extends State<ResizableTable> {
             borderRadius: tableTheme?.borderRadius,
           ),
           child: ListenableBuilder(
-              listenable: widget.controller,
-              builder: (context, child) {
-                return RawTableLayout(
-                  clipBehavior: widget.clipBehavior,
-                  horizontalOffset: widget.horizontalOffset,
-                  verticalOffset: widget.verticalOffset,
-                  frozenColumn: widget.frozenCells?.testColumn,
-                  frozenRow: widget.frozenCells?.testRow,
-                  viewportSize: widget.viewportSize,
-                  width: (index) {
-                    return _width(index);
-                  },
-                  height: (index) {
-                    return _height(index);
-                  },
-                  children: children,
-                );
-              }),
+            listenable: widget.controller,
+            builder: (context, child) {
+              return RawTableLayout(
+                clipBehavior: widget.clipBehavior,
+                horizontalOffset: widget.horizontalOffset,
+                verticalOffset: widget.verticalOffset,
+                frozenColumn: widget.frozenCells?.testColumn,
+                frozenRow: widget.frozenCells?.testRow,
+                viewportSize: widget.viewportSize,
+                width: (index) {
+                  return _width(index);
+                },
+                height: (index) {
+                  return _height(index);
+                },
+                children: children,
+              );
+            },
+          ),
         ),
       ),
     );
@@ -538,8 +501,7 @@ class _ResizableTableData {
 
   @override
   int get hashCode {
-    return Object.hash(
-        cellWidthResizeMode, maxColumn, maxRow, cellHeightResizeMode);
+    return Object.hash(cellWidthResizeMode, maxColumn, maxRow, cellHeightResizeMode);
   }
 }
 
@@ -575,11 +537,13 @@ class _CellResizerState extends State<_CellResizer> {
   void _onDragStartRow(DragStartDetails details) {
     List<ResizableItem> items = [];
     for (int i = 0; i <= widget.maxRow; i++) {
-      items.add(ResizableItem(
-        value: widget.controller.getRowHeight(i),
-        min: widget.controller.getRowMinHeight(i) ?? 0,
-        max: widget.controller.getRowMaxHeight(i) ?? double.infinity,
-      ));
+      items.add(
+        ResizableItem(
+          value: widget.controller.getRowHeight(i),
+          min: widget.controller.getRowMinHeight(i) ?? 0,
+          max: widget.controller.getRowMaxHeight(i) ?? double.infinity,
+        ),
+      );
     }
     _resizer = Resizer(items);
     _resizeRow = true;
@@ -589,11 +553,13 @@ class _CellResizerState extends State<_CellResizer> {
   void _onDragStartColumn(DragStartDetails details) {
     List<ResizableItem> items = [];
     for (int i = 0; i <= widget.maxColumn; i++) {
-      items.add(ResizableItem(
-        value: widget.controller.getColumnWidth(i),
-        min: widget.controller.getColumnMinWidth(i) ?? 0,
-        max: widget.controller.getColumnMaxWidth(i) ?? double.infinity,
-      ));
+      items.add(
+        ResizableItem(
+          value: widget.controller.getColumnWidth(i),
+          min: widget.controller.getColumnMinWidth(i) ?? 0,
+          max: widget.controller.getColumnMaxWidth(i) ?? double.infinity,
+        ),
+      );
     }
     _resizer = Resizer(items);
     _resizeRow = false;
@@ -648,7 +614,7 @@ class _CellResizerState extends State<_CellResizer> {
     final tableData = Data.of<_ResizableTableData>(context);
     final widthMode = tableData.cellWidthResizeMode;
     final heightMode = tableData.cellHeightResizeMode;
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return Stack(
       children: [
         // top
@@ -675,19 +641,16 @@ class _CellResizerState extends State<_CellResizer> {
                     _onDragUpdate(row - 1, row, details);
                   } else {
                     widget.controller.resizeRow(
-                        row - 1,
-                        widget.controller.getRowHeight(row - 1) +
-                            details.primaryDelta!);
+                      row - 1,
+                      widget.controller.getRowHeight(row - 1) + details.primaryDelta!,
+                    );
                   }
                 },
                 onVerticalDragEnd: _onDragEnd,
                 onVerticalDragCancel: _onDragCancel,
                 child: ListenableBuilder(
                   // valueListenable: widget.hoverNotifier,
-                  listenable: Listenable.merge([
-                    widget.hoverNotifier,
-                    widget.dragNotifier,
-                  ]),
+                  listenable: Listenable.merge([widget.hoverNotifier, widget.dragNotifier]),
                   builder: (context, child) {
                     _HoveredLine? hover = widget.hoverNotifier.value;
                     _HoveredLine? drag = widget.dragNotifier.value;
@@ -695,13 +658,11 @@ class _CellResizerState extends State<_CellResizer> {
                       hover = null;
                     }
                     return Container(
-                      color: (hover?.index == row - 1 &&
-                                  hover?.direction == Axis.horizontal) ||
-                              (drag?.index == row - 1 &&
-                                  drag?.direction == Axis.horizontal)
-                          ? widget.theme?.resizerColor ??
-                              theme.colorScheme.primary
-                          : null,
+                      color:
+                          (hover?.index == row - 1 && hover?.direction == Axis.horizontal) ||
+                                  (drag?.index == row - 1 && drag?.direction == Axis.horizontal)
+                              ? widget.theme?.resizerColor ?? theme.colorScheme.primary
+                              : null,
                     );
                   },
                 ),
@@ -709,8 +670,7 @@ class _CellResizerState extends State<_CellResizer> {
             ),
           ),
         // bottom
-        if ((row + rowSpan <= tableData.maxRow ||
-                heightMode == TableCellResizeMode.expand) &&
+        if ((row + rowSpan <= tableData.maxRow || heightMode == TableCellResizeMode.expand) &&
             heightMode != TableCellResizeMode.none)
           Positioned(
             bottom: -thickness / 2,
@@ -734,18 +694,15 @@ class _CellResizerState extends State<_CellResizer> {
                     _onDragUpdate(row + rowSpan - 1, row + rowSpan, details);
                   } else {
                     widget.controller.resizeRow(
-                        row + rowSpan - 1,
-                        widget.controller.getRowHeight(row + rowSpan - 1) +
-                            details.primaryDelta!);
+                      row + rowSpan - 1,
+                      widget.controller.getRowHeight(row + rowSpan - 1) + details.primaryDelta!,
+                    );
                   }
                 },
                 onVerticalDragEnd: _onDragEnd,
                 onVerticalDragCancel: _onDragCancel,
                 child: ListenableBuilder(
-                  listenable: Listenable.merge([
-                    widget.hoverNotifier,
-                    widget.dragNotifier,
-                  ]),
+                  listenable: Listenable.merge([widget.hoverNotifier, widget.dragNotifier]),
                   builder: (context, child) {
                     _HoveredLine? hover = widget.hoverNotifier.value;
                     _HoveredLine? drag = widget.dragNotifier.value;
@@ -753,13 +710,11 @@ class _CellResizerState extends State<_CellResizer> {
                       hover = null;
                     }
                     return Container(
-                      color: (hover?.index == row + rowSpan - 1 &&
-                                  hover?.direction == Axis.horizontal) ||
-                              (drag?.index == row + rowSpan - 1 &&
-                                  drag?.direction == Axis.horizontal)
-                          ? widget.theme?.resizerColor ??
-                              theme.colorScheme.primary
-                          : null,
+                      color:
+                          (hover?.index == row + rowSpan - 1 && hover?.direction == Axis.horizontal) ||
+                                  (drag?.index == row + rowSpan - 1 && drag?.direction == Axis.horizontal)
+                              ? widget.theme?.resizerColor ?? theme.colorScheme.primary
+                              : null,
                     );
                   },
                 ),
@@ -790,18 +745,15 @@ class _CellResizerState extends State<_CellResizer> {
                     _onDragUpdate(column - 1, column, details);
                   } else {
                     widget.controller.resizeColumn(
-                        column - 1,
-                        widget.controller.getColumnWidth(column - 1) +
-                            details.primaryDelta!);
+                      column - 1,
+                      widget.controller.getColumnWidth(column - 1) + details.primaryDelta!,
+                    );
                   }
                 },
                 onHorizontalDragEnd: _onDragEnd,
                 onHorizontalDragCancel: _onDragCancel,
                 child: ListenableBuilder(
-                  listenable: Listenable.merge([
-                    widget.hoverNotifier,
-                    widget.dragNotifier,
-                  ]),
+                  listenable: Listenable.merge([widget.hoverNotifier, widget.dragNotifier]),
                   builder: (context, child) {
                     _HoveredLine? hover = widget.hoverNotifier.value;
                     _HoveredLine? drag = widget.dragNotifier.value;
@@ -809,13 +761,11 @@ class _CellResizerState extends State<_CellResizer> {
                       hover = null;
                     }
                     return Container(
-                      color: (hover?.index == column - 1 &&
-                                  hover?.direction == Axis.vertical) ||
-                              (drag?.index == column - 1 &&
-                                  drag?.direction == Axis.vertical)
-                          ? widget.theme?.resizerColor ??
-                              theme.colorScheme.primary
-                          : null,
+                      color:
+                          (hover?.index == column - 1 && hover?.direction == Axis.vertical) ||
+                                  (drag?.index == column - 1 && drag?.direction == Axis.vertical)
+                              ? widget.theme?.resizerColor ?? theme.colorScheme.primary
+                              : null,
                     );
                   },
                 ),
@@ -823,8 +773,7 @@ class _CellResizerState extends State<_CellResizer> {
             ),
           ),
         // right
-        if ((column + columnSpan <= tableData.maxColumn ||
-                widthMode == TableCellResizeMode.expand) &&
+        if ((column + columnSpan <= tableData.maxColumn || widthMode == TableCellResizeMode.expand) &&
             widthMode != TableCellResizeMode.none)
           Positioned(
             right: -thickness / 2,
@@ -845,23 +794,18 @@ class _CellResizerState extends State<_CellResizer> {
                 onHorizontalDragStart: _onDragStartColumn,
                 onHorizontalDragUpdate: (details) {
                   if (widthMode == TableCellResizeMode.reallocate) {
-                    _onDragUpdate(
-                        column + columnSpan - 1, column + columnSpan, details);
+                    _onDragUpdate(column + columnSpan - 1, column + columnSpan, details);
                   } else {
                     widget.controller.resizeColumn(
-                        column + columnSpan - 1,
-                        widget.controller
-                                .getColumnWidth(column + columnSpan - 1) +
-                            details.primaryDelta!);
+                      column + columnSpan - 1,
+                      widget.controller.getColumnWidth(column + columnSpan - 1) + details.primaryDelta!,
+                    );
                   }
                 },
                 onHorizontalDragEnd: _onDragEnd,
                 onHorizontalDragCancel: _onDragCancel,
                 child: ListenableBuilder(
-                  listenable: Listenable.merge([
-                    widget.hoverNotifier,
-                    widget.dragNotifier,
-                  ]),
+                  listenable: Listenable.merge([widget.hoverNotifier, widget.dragNotifier]),
                   builder: (context, child) {
                     _HoveredLine? hover = widget.hoverNotifier.value;
                     _HoveredLine? drag = widget.dragNotifier.value;
@@ -869,13 +813,11 @@ class _CellResizerState extends State<_CellResizer> {
                       hover = null;
                     }
                     return Container(
-                      color: (hover?.index == column + columnSpan - 1 &&
-                                  hover?.direction == Axis.vertical) ||
-                              (drag?.index == column + columnSpan - 1 &&
-                                  drag?.direction == Axis.vertical)
-                          ? widget.theme?.resizerColor ??
-                              theme.colorScheme.primary
-                          : null,
+                      color:
+                          (hover?.index == column + columnSpan - 1 && hover?.direction == Axis.vertical) ||
+                                  (drag?.index == column + columnSpan - 1 && drag?.direction == Axis.vertical)
+                              ? widget.theme?.resizerColor ?? theme.colorScheme.primary
+                              : null,
                     );
                   },
                 ),
@@ -933,12 +875,10 @@ List<T> _reorganizeCells<T extends _TableCellData>(List<T> cells) {
                 // shift the cell to the right (+ columnSpan)
                 if (row != r) {
                   cellMap.putIfAbsent(i + cell.columnSpan, () => {});
-                  cellMap[i + cell.columnSpan]![row] =
-                      rightCell.shift(cell.columnSpan, 0);
+                  cellMap[i + cell.columnSpan]![row] = rightCell.shift(cell.columnSpan, 0);
                 } else {
                   cellMap.putIfAbsent(i + cell.columnSpan - 1, () => {});
-                  cellMap[i + cell.columnSpan - 1]![row] =
-                      rightCell.shift(cell.columnSpan - 1, 0);
+                  cellMap[i + cell.columnSpan - 1]![row] = rightCell.shift(cell.columnSpan - 1, 0);
                 }
               }
             }
@@ -984,8 +924,7 @@ class _HoveredCell {
       return true;
     }
     if (expected == Axis.vertical) {
-      return column < other.column + other.columnSpan &&
-          column + columnSpan > other.column;
+      return column < other.column + other.columnSpan && column + columnSpan > other.column;
     } else {
       return row < other.row + other.rowSpan && row + rowSpan > other.row;
     }
@@ -1025,7 +964,7 @@ class TableCell {
     );
     var theme = this.theme;
     var defaultTheme = flattenedData.tableCellThemeBuilder(context);
-    final appTheme = Theme.of(context);
+    final appTheme = VNLTheme.of(context);
     return Stack(
       fit: StackFit.passthrough,
       children: [
@@ -1046,10 +985,7 @@ class TableCell {
             },
             child: ListenableBuilder(
               // valueListenable: flattenedData.hoveredCellNotifier,
-              listenable: Listenable.merge([
-                flattenedData.hoveredCellNotifier,
-                flattenedData.dragNotifier,
-              ]),
+              listenable: Listenable.merge([flattenedData.hoveredCellNotifier, flattenedData.dragNotifier]),
               builder: (context, child) {
                 var hoveredCell = flattenedData.hoveredCellNotifier.value;
                 var drag = flattenedData.dragNotifier?.value;
@@ -1058,26 +994,21 @@ class TableCell {
                 }
                 var resolvedStates = {
                   if (hoveredCell != null &&
-                      ((columnHover &&
-                              hoveredCell.intersects(
-                                  currentCell, Axis.vertical)) ||
-                          (rowHover &&
-                              hoveredCell.intersects(
-                                  currentCell, Axis.horizontal))))
+                      ((columnHover && hoveredCell.intersects(currentCell, Axis.vertical)) ||
+                          (rowHover && hoveredCell.intersects(currentCell, Axis.horizontal))))
                     WidgetState.hovered,
                   if (flattenedData.selected) WidgetState.selected,
                   if (!flattenedData.enabled) WidgetState.disabled,
                 };
                 return Container(
                   decoration: BoxDecoration(
-                    border: theme?.border?.resolve(resolvedStates) ??
-                        defaultTheme.border?.resolve(resolvedStates),
-                    color: theme?.backgroundColor?.resolve(resolvedStates) ??
+                    border: theme?.border?.resolve(resolvedStates) ?? defaultTheme.border?.resolve(resolvedStates),
+                    color:
+                        theme?.backgroundColor?.resolve(resolvedStates) ??
                         defaultTheme.backgroundColor?.resolve(resolvedStates),
                   ),
                   child: DefaultTextStyle.merge(
-                    style: theme?.textStyle?.resolve(resolvedStates) ??
-                        defaultTheme.textStyle?.resolve(resolvedStates),
+                    style: theme?.textStyle?.resolve(resolvedStates) ?? defaultTheme.textStyle?.resolve(resolvedStates),
                     child: child!,
                   ),
                 );
@@ -1089,15 +1020,16 @@ class TableCell {
         if (resizedData != null && resizedState != null)
           Positioned.fill(
             child: _CellResizer(
-                controller: resizedData.controller,
-                onHover: resizedState._onHover,
-                onDrag: resizedState._onDrag,
-                hoverNotifier: resizedState._hoverNotifier,
-                dragNotifier: resizedState._dragNotifier,
-                maxRow: resizedState._maxRow,
-                theme: resizedState.widget.theme,
-                maxColumn: resizedState._maxColumn),
-          )
+              controller: resizedData.controller,
+              onHover: resizedState._onHover,
+              onDrag: resizedState._onDrag,
+              hoverNotifier: resizedState._hoverNotifier,
+              dragNotifier: resizedState._dragNotifier,
+              maxRow: resizedState._maxRow,
+              theme: resizedState.widget.theme,
+              maxColumn: resizedState._maxColumn,
+            ),
+          ),
       ],
     );
   }
@@ -1119,8 +1051,7 @@ class TableCell {
 
   @override
   int get hashCode {
-    return Object.hash(columnSpan, rowSpan, child, theme, enabled, columnHover,
-        rowHover, backgroundColor);
+    return Object.hash(columnSpan, rowSpan, child, theme, enabled, columnHover, rowHover, backgroundColor);
   }
 }
 
@@ -1137,34 +1068,17 @@ class TableRow {
     if (cellTheme != null) {
       return cellTheme!;
     }
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return TableCellTheme(
-      border: WidgetStateProperty.resolveWith(
-        (states) {
-          return Border(
-            bottom: BorderSide(
-              color: theme.colorScheme.border,
-              width: 1,
-            ),
-          );
-        },
-      ),
-      backgroundColor: WidgetStateProperty.resolveWith(
-        (states) {
-          return states.contains(WidgetState.hovered)
-              ? theme.colorScheme.muted.withValues(alpha: 0.5)
-              : null;
-        },
-      ),
-      textStyle: WidgetStateProperty.resolveWith(
-        (states) {
-          return TextStyle(
-            color: states.contains(WidgetState.disabled)
-                ? theme.colorScheme.muted
-                : null,
-          );
-        },
-      ),
+      border: WidgetStateProperty.resolveWith((states) {
+        return Border(bottom: BorderSide(color: theme.colorScheme.border, width: 1));
+      }),
+      backgroundColor: WidgetStateProperty.resolveWith((states) {
+        return states.contains(WidgetState.hovered) ? theme.colorScheme.muted.withValues(alpha: 0.5) : null;
+      }),
+      textStyle: WidgetStateProperty.resolveWith((states) {
+        return TextStyle(color: states.contains(WidgetState.disabled) ? theme.colorScheme.muted : null);
+      }),
     );
   }
 
@@ -1192,66 +1106,44 @@ class TableFooter extends TableRow {
     if (cellTheme != null) {
       return cellTheme!;
     }
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return TableCellTheme(
       border: const WidgetStatePropertyAll(null),
-      backgroundColor: WidgetStateProperty.resolveWith(
-        (states) {
-          return states.contains(WidgetState.hovered)
-              ? theme.colorScheme.muted
-              : theme.colorScheme.muted.withValues(alpha: 0.5);
-        },
-      ),
-      textStyle: WidgetStateProperty.resolveWith(
-        (states) {
-          return TextStyle(
-            color: states.contains(WidgetState.disabled)
-                ? theme.colorScheme.muted
-                : null,
-          );
-        },
-      ),
+      backgroundColor: WidgetStateProperty.resolveWith((states) {
+        return states.contains(WidgetState.hovered)
+            ? theme.colorScheme.muted
+            : theme.colorScheme.muted.withValues(alpha: 0.5);
+      }),
+      textStyle: WidgetStateProperty.resolveWith((states) {
+        return TextStyle(color: states.contains(WidgetState.disabled) ? theme.colorScheme.muted : null);
+      }),
     );
   }
 }
 
 class TableHeader extends TableRow {
-  const TableHeader({required cells, cellTheme})
-      : super(cells: cells, cellTheme: cellTheme);
+  const TableHeader({required cells, cellTheme}) : super(cells: cells, cellTheme: cellTheme);
 
   @override
   TableCellTheme buildDefaultTheme(BuildContext context) {
     if (cellTheme != null) {
       return cellTheme!;
     }
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return TableCellTheme(
-      border: WidgetStateProperty.resolveWith(
-        (states) {
-          return Border(
-            bottom: BorderSide(
-              color: theme.colorScheme.border,
-              width: 1,
-            ),
-          );
-        },
-      ),
-      backgroundColor: WidgetStateProperty.resolveWith(
-        (states) {
-          return states.contains(WidgetState.hovered)
-              ? theme.colorScheme.muted
-              : theme.colorScheme.muted.withValues(alpha: 0.5);
-        },
-      ),
-      textStyle: WidgetStateProperty.resolveWith(
-        (states) {
-          return theme.typography.semiBold.merge(TextStyle(
-            color: states.contains(WidgetState.disabled)
-                ? theme.colorScheme.muted
-                : null,
-          ));
-        },
-      ),
+      border: WidgetStateProperty.resolveWith((states) {
+        return Border(bottom: BorderSide(color: theme.colorScheme.border, width: 1));
+      }),
+      backgroundColor: WidgetStateProperty.resolveWith((states) {
+        return states.contains(WidgetState.hovered)
+            ? theme.colorScheme.muted
+            : theme.colorScheme.muted.withValues(alpha: 0.5);
+      }),
+      textStyle: WidgetStateProperty.resolveWith((states) {
+        return theme.typography.semiBold.merge(
+          TextStyle(color: states.contains(WidgetState.disabled) ? theme.colorScheme.muted : null),
+        );
+      }),
     );
   }
 }
@@ -1347,7 +1239,8 @@ class Table extends StatefulWidget {
   final double? horizontalOffset;
   final double? verticalOffset;
   final Size? viewportSize;
-  const Table({super.key, 
+  const Table({
+    super.key,
     required this.rows,
     this.defaultColumnWidth = const FlexTableSize(),
     this.defaultRowHeight = const IntrinsicTableSize(),
@@ -1389,18 +1282,20 @@ class _TableState extends State<Table> {
       final row = widget.rows[r];
       for (int c = 0; c < row.cells.length; c++) {
         final cell = row.cells[c];
-        _cells.add(_FlattenedTableCell(
-          column: c,
-          row: r,
-          columnSpan: cell.columnSpan,
-          rowSpan: cell.rowSpan,
-          builder: cell.build,
-          enabled: cell.enabled,
-          hoveredCellNotifier: _hoveredCellNotifier,
-          dragNotifier: null,
-          tableCellThemeBuilder: row.buildDefaultTheme,
-          selected: row.selected,
-        ));
+        _cells.add(
+          _FlattenedTableCell(
+            column: c,
+            row: r,
+            columnSpan: cell.columnSpan,
+            rowSpan: cell.rowSpan,
+            builder: cell.build,
+            enabled: cell.enabled,
+            hoveredCellNotifier: _hoveredCellNotifier,
+            dragNotifier: null,
+            tableCellThemeBuilder: row.buildDefaultTheme,
+            selected: row.selected,
+          ),
+        );
       }
     }
     _cells = _reorganizeCells(_cells);
@@ -1408,8 +1303,7 @@ class _TableState extends State<Table> {
 
   @override
   Widget build(BuildContext context) {
-    TableTheme? tableTheme =
-        widget.theme ?? ComponentTheme.maybeOf<TableTheme>(context);
+    TableTheme? tableTheme = widget.theme ?? ComponentTheme.maybeOf<TableTheme>(context);
     return Container(
       clipBehavior: widget.clipBehavior,
       decoration: BoxDecoration(
@@ -1436,20 +1330,23 @@ class _TableState extends State<Table> {
           }
           return widget.defaultRowHeight;
         },
-        children: _cells.map((cell) {
-          return Data.inherit(
-            data: cell,
-            child: RawCell(
-              column: cell.column,
-              row: cell.row,
-              columnSpan: cell.columnSpan,
-              rowSpan: cell.rowSpan,
-              child: Builder(builder: (context) {
-                return cell.builder(context);
-              }),
-            ),
-          );
-        }).toList(),
+        children:
+            _cells.map((cell) {
+              return Data.inherit(
+                data: cell,
+                child: RawCell(
+                  column: cell.column,
+                  row: cell.row,
+                  columnSpan: cell.columnSpan,
+                  rowSpan: cell.rowSpan,
+                  child: Builder(
+                    builder: (context) {
+                      return cell.builder(context);
+                    },
+                  ),
+                ),
+              );
+            }).toList(),
       ),
     );
   }
@@ -1470,8 +1367,7 @@ class FrozenTableData {
   final Iterable<TableRef> frozenRows;
   final Iterable<TableRef> frozenColumns;
 
-  const FrozenTableData(
-      {this.frozenRows = const [], this.frozenColumns = const []});
+  const FrozenTableData({this.frozenRows = const [], this.frozenColumns = const []});
 
   bool testRow(int index, int span) {
     for (final ref in frozenRows) {
@@ -1600,19 +1496,19 @@ class RawTableLayout extends MultiChildRenderObjectWidget {
   @override
   RenderTableLayout createRenderObject(BuildContext context) {
     return RenderTableLayout(
-        width: width,
-        height: height,
-        clipBehavior: clipBehavior,
-        frozenCell: frozenColumn,
-        frozenRow: frozenRow,
-        verticalOffset: verticalOffset,
-        horizontalOffset: horizontalOffset,
-        viewportSize: viewportSize);
+      width: width,
+      height: height,
+      clipBehavior: clipBehavior,
+      frozenCell: frozenColumn,
+      frozenRow: frozenRow,
+      verticalOffset: verticalOffset,
+      horizontalOffset: horizontalOffset,
+      viewportSize: viewportSize,
+    );
   }
 
   @override
-  void updateRenderObject(
-      BuildContext context, RenderTableLayout renderObject) {
+  void updateRenderObject(BuildContext context, RenderTableLayout renderObject) {
     bool needsRelayout = false;
     if (renderObject._width != width) {
       renderObject._width = width;
@@ -1669,24 +1565,24 @@ class RenderTableLayout extends RenderBox
 
   TableLayoutResult? _layoutResult;
 
-  RenderTableLayout(
-      {List<RenderBox>? children,
-      required TableSizeSupplier width,
-      required TableSizeSupplier height,
-      required Clip clipBehavior,
-      CellPredicate? frozenCell,
-      CellPredicate? frozenRow,
-      double? verticalOffset,
-      double? horizontalOffset,
-      Size? viewportSize})
-      : _clipBehavior = clipBehavior,
-        _width = width,
-        _height = height,
-        _frozenColumn = frozenCell,
-        _frozenRow = frozenRow,
-        _verticalOffset = verticalOffset,
-        _horizontalOffset = horizontalOffset,
-        _viewportSize = viewportSize {
+  RenderTableLayout({
+    List<RenderBox>? children,
+    required TableSizeSupplier width,
+    required TableSizeSupplier height,
+    required Clip clipBehavior,
+    CellPredicate? frozenCell,
+    CellPredicate? frozenRow,
+    double? verticalOffset,
+    double? horizontalOffset,
+    Size? viewportSize,
+  }) : _clipBehavior = clipBehavior,
+       _width = width,
+       _height = height,
+       _frozenColumn = frozenCell,
+       _frozenRow = frozenRow,
+       _verticalOffset = verticalOffset,
+       _horizontalOffset = horizontalOffset,
+       _viewportSize = viewportSize {
     addAll(children);
   }
 
@@ -1721,8 +1617,7 @@ class RenderTableLayout extends RenderBox
 
   @override
   double computeMinIntrinsicWidth(double height) {
-    return computeTableSize(BoxConstraints.loose(Size(double.infinity, height)),
-        (child, extent) {
+    return computeTableSize(BoxConstraints.loose(Size(double.infinity, height)), (child, extent) {
       return child.getMinIntrinsicWidth(extent);
     }).width;
   }
@@ -1738,66 +1633,44 @@ class RenderTableLayout extends RenderBox
     // important for column and row spans
     // (ASSUMPTION: children are already sorted in the correct order)
     if (_clipBehavior != Clip.none) {
-      context.pushClipRect(
-        needsCompositing,
-        offset,
-        Offset.zero & size,
-        (context, offset) {
-          RenderBox? child = lastChild;
-          while (child != null) {
-            final parentData = child.parentData as TableParentData;
-            if (parentData.computeSize &&
-                !parentData.frozenRow &&
-                !parentData.frozenColumn) {
-              context.paintChild(child, offset + parentData.offset);
-            }
-            child = childBefore(child);
+      context.pushClipRect(needsCompositing, offset, Offset.zero & size, (context, offset) {
+        RenderBox? child = lastChild;
+        while (child != null) {
+          final parentData = child.parentData as TableParentData;
+          if (parentData.computeSize && !parentData.frozenRow && !parentData.frozenColumn) {
+            context.paintChild(child, offset + parentData.offset);
           }
-        },
-        clipBehavior: _clipBehavior,
-      );
+          child = childBefore(child);
+        }
+      }, clipBehavior: _clipBehavior);
       RenderBox? child = lastChild;
       while (child != null) {
         final parentData = child.parentData as TableParentData;
-        if (!parentData.computeSize &&
-            !parentData.frozenRow &&
-            !parentData.frozenColumn) {
+        if (!parentData.computeSize && !parentData.frozenRow && !parentData.frozenColumn) {
           context.paintChild(child, offset + parentData.offset);
         }
         child = childBefore(child);
       }
-      context.pushClipRect(
-        needsCompositing,
-        offset,
-        Offset.zero & size,
-        (context, offset) {
-          RenderBox? child = lastChild;
-          while (child != null) {
-            final parentData = child.parentData as TableParentData;
-            if (parentData.frozenColumn) {
-              context.paintChild(child, offset + parentData.offset);
-            }
-            child = childBefore(child);
+      context.pushClipRect(needsCompositing, offset, Offset.zero & size, (context, offset) {
+        RenderBox? child = lastChild;
+        while (child != null) {
+          final parentData = child.parentData as TableParentData;
+          if (parentData.frozenColumn) {
+            context.paintChild(child, offset + parentData.offset);
           }
-        },
-        clipBehavior: _clipBehavior,
-      );
-      context.pushClipRect(
-        needsCompositing,
-        offset,
-        Offset.zero & size,
-        (context, offset) {
-          RenderBox? child = lastChild;
-          while (child != null) {
-            final parentData = child.parentData as TableParentData;
-            if (parentData.frozenRow) {
-              context.paintChild(child, offset + parentData.offset);
-            }
-            child = childBefore(child);
+          child = childBefore(child);
+        }
+      }, clipBehavior: _clipBehavior);
+      context.pushClipRect(needsCompositing, offset, Offset.zero & size, (context, offset) {
+        RenderBox? child = lastChild;
+        while (child != null) {
+          final parentData = child.parentData as TableParentData;
+          if (parentData.frozenRow) {
+            context.paintChild(child, offset + parentData.offset);
           }
-        },
-        clipBehavior: _clipBehavior,
-      );
+          child = childBefore(child);
+        }
+      }, clipBehavior: _clipBehavior);
       child = lastChild;
       while (child != null) {
         final parentData = child.parentData as TableParentData;
@@ -1862,14 +1735,10 @@ class RenderTableLayout extends RenderBox
         int rowSpan = parentData.rowSpan ?? 1;
         bool frozenRow = _frozenRow?.call(row, rowSpan) ?? false;
         bool frozenColumn = _frozenColumn?.call(column, columnSpan) ?? false;
-        for (int i = 0;
-            i < columnSpan && column + i < result.columnWidths.length;
-            i++) {
+        for (int i = 0; i < columnSpan && column + i < result.columnWidths.length; i++) {
           width += result.columnWidths[column + i];
         }
-        for (int i = 0;
-            i < rowSpan && row + i < result.rowHeights.length;
-            i++) {
+        for (int i = 0; i < rowSpan && row + i < result.rowHeights.length; i++) {
           height += result.rowHeights[row + i];
         }
         child.layout(BoxConstraints.tightFor(width: width, height: height));
@@ -1934,8 +1803,7 @@ class RenderTableLayout extends RenderBox
     _layoutResult = result;
   }
 
-  TableLayoutResult computeTableSize(BoxConstraints constraints,
-      [IntrinsicComputer? intrinsicComputer]) {
+  TableLayoutResult computeTableSize(BoxConstraints constraints, [IntrinsicComputer? intrinsicComputer]) {
     double flexWidth = 0;
     double flexHeight = 0;
     double fixedWidth = 0;
@@ -1974,9 +1842,7 @@ class RenderTableLayout extends RenderBox
     // row
     for (int r = 0; r <= maxRow; r++) {
       final heightConstraint = _height(r);
-      if (heightConstraint is FlexTableSize &&
-          constraints.hasBoundedHeight &&
-          intrinsicComputer == null) {
+      if (heightConstraint is FlexTableSize && constraints.hasBoundedHeight && intrinsicComputer == null) {
         flexHeight += heightConstraint.flex;
         hasFlexHeight = true;
         if (heightConstraint.fit == FlexFit.tight) {
@@ -2030,32 +1896,27 @@ class RenderTableLayout extends RenderBox
           if (widthConstraint is IntrinsicTableSize ||
               (widthConstraint is FlexTableSize && intrinsicComputer != null)) {
             var extent = rowHeights[row] ?? remainingHeight;
-            double maxIntrinsicWidth = intrinsicComputer != null
-                ? intrinsicComputer(child, extent)
-                : child.getMaxIntrinsicWidth(extent);
+            double maxIntrinsicWidth =
+                intrinsicComputer != null ? intrinsicComputer(child, extent) : child.getMaxIntrinsicWidth(extent);
             maxIntrinsicWidth = min(maxIntrinsicWidth, remainingWidth);
             int columnSpan = parentData.columnSpan ?? 1;
             // distribute the intrinsic width to all columns
             maxIntrinsicWidth = maxIntrinsicWidth / columnSpan;
             for (int i = 0; i < columnSpan; i++) {
-              columnWidths[column + i] =
-                  max(columnWidths[column + i] ?? 0, maxIntrinsicWidth);
+              columnWidths[column + i] = max(columnWidths[column + i] ?? 0, maxIntrinsicWidth);
             }
           }
           if (heightConstraint is IntrinsicTableSize ||
-              (heightConstraint is FlexTableSize &&
-                  intrinsicComputer != null)) {
+              (heightConstraint is FlexTableSize && intrinsicComputer != null)) {
             var extent = columnWidths[column] ?? remainingWidth;
-            double maxIntrinsicHeight = intrinsicComputer != null
-                ? intrinsicComputer(child, extent)
-                : child.getMaxIntrinsicHeight(extent);
+            double maxIntrinsicHeight =
+                intrinsicComputer != null ? intrinsicComputer(child, extent) : child.getMaxIntrinsicHeight(extent);
             maxIntrinsicHeight = min(maxIntrinsicHeight, remainingHeight);
             int rowSpan = parentData.rowSpan ?? 1;
             // distribute the intrinsic height to all rows
             maxIntrinsicHeight = maxIntrinsicHeight / rowSpan;
             for (int i = 0; i < rowSpan; i++) {
-              rowHeights[row + i] =
-                  max(columnWidths[row + i] ?? 0, maxIntrinsicHeight);
+              rowHeights[row + i] = max(columnWidths[row + i] ?? 0, maxIntrinsicHeight);
             }
           }
         }
@@ -2146,8 +2007,8 @@ class RenderTableLayout extends RenderBox
       columnWidthsList[key] = value;
     });
     List<double> rowHeightsList =
-        // List.filled(rowHeights.keys.reduce(max) + 1, 0);
-        List.generate(maxRow + 1, (index) {
+    // List.filled(rowHeights.keys.reduce(max) + 1, 0);
+    List.generate(maxRow + 1, (index) {
       return rowHeights[index] ?? 0;
     });
     rowHeights.forEach((key, value) {
@@ -2167,24 +2028,21 @@ class RenderTableLayout extends RenderBox
 
   @override
   double computeMaxIntrinsicWidth(double height) {
-    return computeTableSize(BoxConstraints.loose(Size(double.infinity, height)),
-        (child, extent) {
+    return computeTableSize(BoxConstraints.loose(Size(double.infinity, height)), (child, extent) {
       return child.getMaxIntrinsicWidth(extent);
     }).width;
   }
 
   @override
   double computeMinIntrinsicHeight(double width) {
-    return computeTableSize(BoxConstraints.loose(Size(width, double.infinity)),
-        (child, extent) {
+    return computeTableSize(BoxConstraints.loose(Size(width, double.infinity)), (child, extent) {
       return child.getMinIntrinsicHeight(extent);
     }).height;
   }
 
   @override
   double computeMaxIntrinsicHeight(double width) {
-    return computeTableSize(BoxConstraints.loose(Size(width, double.infinity)),
-        (child, extent) {
+    return computeTableSize(BoxConstraints.loose(Size(width, double.infinity)), (child, extent) {
       return child.getMaxIntrinsicHeight(extent);
     }).height;
   }

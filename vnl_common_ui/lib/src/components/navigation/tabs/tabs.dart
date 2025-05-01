@@ -6,16 +6,10 @@ class VNLTabs extends StatelessWidget {
   final List<TabChild> children;
   final EdgeInsetsGeometry? padding;
 
-  const VNLTabs({
-    super.key,
-    required this.index,
-    required this.onChanged,
-    required this.children,
-    this.padding,
-  });
+  const VNLTabs({super.key, required this.index, required this.onChanged, required this.children, this.padding});
 
   Widget _childBuilder(BuildContext context, TabContainerData data, Widget child) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     final i = data.index;
     return GestureDetector(
@@ -29,17 +23,10 @@ class VNLTabs extends StatelessWidget {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 50), // slightly faster than kDefaultDuration
           alignment: Alignment.center,
-          padding: padding ??
-              const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 4,
-                  ) *
-                  scaling,
+          padding: padding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 4) * scaling,
           decoration: BoxDecoration(
             color: i == index ? theme.colorScheme.background : null,
-            borderRadius: BorderRadius.circular(
-              theme.radiusMd,
-            ),
+            borderRadius: BorderRadius.circular(theme.radiusMd),
           ),
           child: (i == index ? child.foreground() : child.muted()).small().medium(),
         ),
@@ -49,7 +36,7 @@ class VNLTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     return TabContainer(
       selected: index,
@@ -62,11 +49,12 @@ class VNLTabs extends StatelessWidget {
           ),
           padding: const EdgeInsets.all(4) * scaling,
           child: IntrinsicHeight(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: children,
-            ).muted(),
+            child:
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: children,
+                ).muted(),
           ),
         );
       },

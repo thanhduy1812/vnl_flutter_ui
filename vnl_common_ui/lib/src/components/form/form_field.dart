@@ -1,9 +1,6 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-enum PromptMode {
-  dialog,
-  popover,
-}
+enum PromptMode { dialog, popover }
 
 class ObjectFormField<T> extends StatefulWidget {
   final T? value;
@@ -125,16 +122,14 @@ class ObjectFormFieldState<T> extends State<ObjectFormField<T>> with FormValueSu
   }
 
   void _showPopover([T? value]) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     value ??= formValue;
     _popoverController.show(
       context: context,
       alignment: widget.popoverAlignment ?? Alignment.topLeft,
       anchorAlignment: widget.popoverAnchorAlignment ?? Alignment.bottomLeft,
-      overlayBarrier: OverlayBarrier(
-        borderRadius: BorderRadius.circular(theme.radiusLg),
-      ),
+      overlayBarrier: OverlayBarrier(borderRadius: BorderRadius.circular(theme.radiusLg)),
       modal: true,
       offset: Offset(0, 8 * scaling),
       builder: (context) {
@@ -246,30 +241,26 @@ class _ObjectFormFieldDialogState<T> extends State<_ObjectFormFieldDialog<T>> im
       return widget.editorBuilder(context, this);
     }
     final localizations = VNLookLocalizations.of(context);
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return Data<ObjectFormHandler<T>>.inherit(
       data: this,
       child: VNLAlertDialog(
         title: widget.dialogTitle,
-        content: Padding(
-          padding: EdgeInsets.only(top: 8 * theme.scaling),
-          child: widget.editorBuilder(
-            context,
-            this,
-          ),
-        ),
+        content: Padding(padding: EdgeInsets.only(top: 8 * theme.scaling), child: widget.editorBuilder(context, this)),
         actions: [
           if (widget.dialogActions != null) ...widget.dialogActions!(context, this),
           SecondaryButton(
-              child: Text(localizations.buttonCancel),
-              onPressed: () {
-                Navigator.of(context).pop();
-              }),
+            child: Text(localizations.buttonCancel),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
           PrimaryButton(
-              child: Text(localizations.buttonSave),
-              onPressed: () {
-                Navigator.of(context).pop(ObjectFormFieldDialogResult(_value));
-              }),
+            child: Text(localizations.buttonSave),
+            onPressed: () {
+              Navigator.of(context).pop(ObjectFormFieldDialogResult(_value));
+            },
+          ),
         ],
       ),
     );
@@ -337,15 +328,12 @@ class _ObjectFormFieldPopupState<T> extends State<_ObjectFormFieldPopup<T>> impl
     if (!widget.decorate) {
       return widget.editorBuilder(context, this);
     }
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     return Data<ObjectFormHandler<T>>.inherit(
       data: this,
       child: SurfaceCard(
         padding: widget.popoverPadding ?? (const EdgeInsets.symmetric(vertical: 16, horizontal: 16) * theme.scaling),
-        child: widget.editorBuilder(
-          context,
-          this,
-        ),
+        child: widget.editorBuilder(context, this),
       ),
     );
   }

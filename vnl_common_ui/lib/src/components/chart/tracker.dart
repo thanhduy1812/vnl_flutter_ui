@@ -12,25 +12,25 @@ abstract class TrackerLevel {
   ///
   /// [color] is set to `Colors.green`
   /// [name] is set to `"Fine"`
-  static const TrackerLevel fine = _SimpleTrackerLevel(Colors.green, 'Fine');
+  static const TrackerLevel fine = _SimpleTrackerLevel(VNLColors.green, 'Fine');
 
   /// Default values for the warning level.
   ///
   /// [color] is set to `Colors.orange`
   /// [name] is set to `"Warning"`
-  static const TrackerLevel warning = _SimpleTrackerLevel(Colors.orange, 'Warning');
+  static const TrackerLevel warning = _SimpleTrackerLevel(VNLColors.orange, 'Warning');
 
   /// Default values for the critical level.
   ///
   /// [color] is set to `Colors.red`
   /// [name] is set to `"Critical"`
-  static const TrackerLevel critical = _SimpleTrackerLevel(Colors.red, 'Critical');
+  static const TrackerLevel critical = _SimpleTrackerLevel(VNLColors.red, 'Critical');
 
   /// Default values for the unknown level.
   ///
   /// [color] is set to `Colors.gray`
   /// [name] is set to `"Unknown"`
-  static const TrackerLevel unknown = _SimpleTrackerLevel(Colors.gray, 'Unknown');
+  static const TrackerLevel unknown = _SimpleTrackerLevel(VNLColors.gray, 'Unknown');
   // enum? no, this will allow custom implementations
   /// Gets the color for the specified [TrackerLevel].
   Color get color;
@@ -72,10 +72,7 @@ class TrackerData {
   ///
   /// This constructor initializes a new instance of [TrackerData]
   /// with the specified tooltip and tracker level.
-  const TrackerData({
-    required this.tooltip,
-    required this.level,
-  });
+  const TrackerData({required this.tooltip, required this.level});
 }
 
 class TrackerTheme {
@@ -83,22 +80,10 @@ class TrackerTheme {
   final double? gap;
   final double? itemHeight;
 
-  const TrackerTheme({
-    this.radius,
-    this.gap,
-    this.itemHeight,
-  });
+  const TrackerTheme({this.radius, this.gap, this.itemHeight});
 
-  TrackerTheme copyWith({
-    double? radius,
-    double? gap,
-    double? itemHeight,
-  }) {
-    return TrackerTheme(
-      radius: radius ?? this.radius,
-      gap: gap ?? this.gap,
-      itemHeight: itemHeight ?? this.itemHeight,
-    );
+  TrackerTheme copyWith({double? radius, double? gap, double? itemHeight}) {
+    return TrackerTheme(radius: radius ?? this.radius, gap: gap ?? this.gap, itemHeight: itemHeight ?? this.itemHeight);
   }
 
   @override
@@ -109,11 +94,7 @@ class TrackerTheme {
   }
 
   @override
-  int get hashCode => Object.hash(
-        radius,
-        gap,
-        itemHeight,
-      );
+  int get hashCode => Object.hash(radius, gap, itemHeight);
 
   @override
   String toString() => 'TrackerTheme(radius: $radius, gap: $gap, itemHeight: $itemHeight)';
@@ -136,14 +117,11 @@ class Tracker extends StatelessWidget {
   ///
   /// This constructor initializes a new instance of [Tracker]
   /// with the specified data.
-  const Tracker({
-    super.key,
-    required this.data,
-  });
+  const Tracker({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final trackerTheme = ComponentTheme.maybeOf<TrackerTheme>(context);
     return ClipRRect(
       borderRadius: BorderRadius.circular(trackerTheme?.radius ?? theme.radiusMd),
@@ -153,16 +131,11 @@ class Tracker extends StatelessWidget {
             Expanded(
               child: InstantTooltip(
                 tooltipBuilder: (context) {
-                  return TooltipContainer(
-                    child: data.tooltip,
-                  );
+                  return TooltipContainer(child: data.tooltip);
                 },
-                child: Container(
-                  height: trackerTheme?.itemHeight ?? 32,
-                  color: data.level.color,
-                ),
+                child: Container(height: trackerTheme?.itemHeight ?? 32, color: data.level.color),
               ),
-            )
+            ),
         ],
       ).gap(trackerTheme?.gap ?? theme.scaling * 2),
     );

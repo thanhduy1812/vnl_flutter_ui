@@ -57,7 +57,7 @@ class VNLookPlatformImplementations {
     _window.dispatchEvent(event);
   }
 
-  void onThemeChanged(ThemeData theme) {
+  void onThemeChanged(VNLThemeData theme) {
     if (!_isPreloaderAvailable) {
       return;
     }

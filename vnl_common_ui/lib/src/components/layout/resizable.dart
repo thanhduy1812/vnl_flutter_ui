@@ -13,21 +13,15 @@ class HorizontalResizableDragger extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     return Center(
       child: Container(
-        decoration: BoxDecoration(
-          color: theme.colorScheme.border,
-          borderRadius: BorderRadius.circular(theme.radiusSm),
-        ),
+        decoration: BoxDecoration(color: theme.colorScheme.border, borderRadius: BorderRadius.circular(theme.radiusSm)),
         alignment: Alignment.center,
         width: 3 * 4 * scaling,
         height: 4 * 4 * scaling,
-        child: Icon(
-          RadixIcons.dragHandleDots2,
-          size: 4 * 2.5 * scaling,
-        ),
+        child: Icon(RadixIcons.dragHandleDots2, size: 4 * 2.5 * scaling),
       ),
     );
   }
@@ -40,24 +34,15 @@ class VerticalResizableDragger extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     return Center(
       child: Container(
-        decoration: BoxDecoration(
-          color: theme.colorScheme.border,
-          borderRadius: BorderRadius.circular(theme.radiusSm),
-        ),
+        decoration: BoxDecoration(color: theme.colorScheme.border, borderRadius: BorderRadius.circular(theme.radiusSm)),
         alignment: Alignment.center,
         width: 4 * 4 * scaling,
         height: 3 * 4 * scaling,
-        child: Transform.rotate(
-          angle: pi / 2,
-          child: Icon(
-            RadixIcons.dragHandleDots2,
-            size: 4 * 2.5 * scaling,
-          ),
-        ),
+        child: Transform.rotate(angle: pi / 2, child: Icon(RadixIcons.dragHandleDots2, size: 4 * 2.5 * scaling)),
       ),
     );
   }
@@ -220,8 +205,8 @@ class ResizablePane extends StatefulWidget {
     this.onSizeChangeEnd,
     this.onSizeChangeCancel,
     bool this.initialCollapsed = false,
-  })  : controller = null,
-        initialFlex = null;
+  }) : controller = null,
+       initialFlex = null;
 
   const ResizablePane.flex({
     super.key,
@@ -235,8 +220,8 @@ class ResizablePane extends StatefulWidget {
     this.onSizeChangeEnd,
     this.onSizeChangeCancel,
     bool this.initialCollapsed = false,
-  })  : controller = null,
-        initialSize = null;
+  }) : controller = null,
+       initialSize = null;
 
   const ResizablePane.controlled({
     super.key,
@@ -249,9 +234,9 @@ class ResizablePane extends StatefulWidget {
     this.onSizeChange,
     this.onSizeChangeEnd,
     this.onSizeChangeCancel,
-  })  : initialSize = null,
-        initialFlex = null,
-        initialCollapsed = null;
+  }) : initialSize = null,
+       initialFlex = null,
+       initialCollapsed = null;
 
   @override
   State<ResizablePane> createState() => _ResizablePaneState();
@@ -376,13 +361,7 @@ class _ResizablePaneState extends State<ResizablePane> {
             flex = controller.value;
           }
         }
-        return _ResizableLayoutChild(
-          size: size,
-          flex: flex,
-          child: ClipRect(
-            child: widget.child,
-          ),
-        );
+        return _ResizableLayoutChild(size: size, flex: flex, child: ClipRect(child: widget.child));
       },
     );
   }
@@ -506,14 +485,16 @@ class _ResizablePanelState extends State<ResizablePanel> {
         minSize: controller.collapsed ? null : controller._paneState!.widget.minSize,
         maxSize: controller.collapsed ? null : controller._paneState!.widget.maxSize,
       );
-      draggers.add(_ResizableItem(
-        value: computedSize,
-        min: controller._paneState!.widget.minSize ?? 0,
-        max: controller._paneState!.widget.maxSize ?? double.infinity,
-        controller: controller,
-        collapsed: controller.collapsed,
-        collapsedSize: controller._paneState!.widget.collapsedSize,
-      ));
+      draggers.add(
+        _ResizableItem(
+          value: computedSize,
+          min: controller._paneState!.widget.minSize ?? 0,
+          max: controller._paneState!.widget.maxSize ?? double.infinity,
+          controller: controller,
+          collapsed: controller.collapsed,
+          collapsedSize: controller._paneState!.widget.collapsedSize,
+        ),
+      );
     }
     return draggers;
   }
@@ -560,12 +541,7 @@ class _ResizablePanelState extends State<ResizablePanel> {
 
   @override
   Widget build(BuildContext context) {
-    return Data.inherit(
-      data: ResizableData(widget.direction),
-      child: Builder(
-        builder: _build,
-      ),
-    );
+    return Data.inherit(data: ResizableData(widget.direction), child: Builder(builder: _build));
   }
 
   Widget _build(BuildContext context) {
@@ -583,37 +559,31 @@ class _ResizablePanelState extends State<ResizablePanel> {
     }
     List<Widget> children = [];
     for (var i = 0; i < widget.children.length; i++) {
-      children.add(Data<_ResizablePanelData>.inherit(
-        data: _ResizablePanelData(this, i),
-        child: widget.children[i],
-      ));
+      children.add(Data<_ResizablePanelData>.inherit(data: _ResizablePanelData(this, i), child: widget.children[i]));
       if (i < dividers.length) {
-        children.add(_ResizableLayoutChild(
-          isDivider: true,
-          child: dividers[i],
-        ));
+        children.add(_ResizableLayoutChild(isDivider: true, child: dividers[i]));
       }
     }
     if (widget.draggerBuilder != null) {
       for (var i = 0; i < widget.children.length - 1; i++) {
-        children.add(_ResizableLayoutChild(
-          index: i,
-          isDragger: true,
-          child: widget.draggerBuilder!(context) ?? const SizedBox(),
-        ));
+        children.add(
+          _ResizableLayoutChild(index: i, isDragger: true, child: widget.draggerBuilder!(context) ?? const SizedBox()),
+        );
       }
     }
     for (var i = 0; i < widget.children.length - 1; i++) {
-      children.add(_ResizableLayoutChild(
-        index: i,
-        isDragger: false,
-        child: _Resizer(
-          direction: widget.direction,
+      children.add(
+        _ResizableLayoutChild(
           index: i,
-          thickness: widget.draggerThickness ?? 8,
-          panelState: this,
+          isDragger: false,
+          child: _Resizer(
+            direction: widget.direction,
+            index: i,
+            thickness: widget.draggerThickness ?? 8,
+            panelState: this,
+          ),
         ),
-      ));
+      );
     }
     return _ResizableLayout(
       direction: widget.direction,
@@ -637,12 +607,7 @@ class _Resizer extends StatefulWidget {
   final double thickness;
   final _ResizablePanelState panelState;
 
-  const _Resizer({
-    required this.direction,
-    required this.index,
-    required this.thickness,
-    required this.panelState,
-  });
+  const _Resizer({required this.direction, required this.index, required this.thickness, required this.panelState});
 
   @override
   State<_Resizer> createState() => _ResizerState();
@@ -651,9 +616,7 @@ class _Resizer extends StatefulWidget {
 class _ResizerState extends State<_Resizer> {
   Resizer? _dragSession;
   void _onDragStart(DragStartDetails details) {
-    _dragSession = Resizer(
-      widget.panelState.computeDraggers(),
-    );
+    _dragSession = Resizer(widget.panelState.computeDraggers());
   }
 
   void _onDragUpdate(DragUpdateDetails details) {
@@ -714,14 +677,7 @@ class _ResizableLayoutChild extends ParentDataWidget<_ResizableLayoutParentData>
   final double? size;
   final double? flex;
 
-  const _ResizableLayoutChild({
-    this.index,
-    this.isDragger,
-    this.isDivider,
-    this.size,
-    this.flex,
-    required super.child,
-  });
+  const _ResizableLayoutChild({this.index, this.isDragger, this.isDivider, this.size, this.flex, required super.child});
 
   @override
   void applyParentData(RenderObject renderObject) {
@@ -769,11 +725,7 @@ class _ResizableLayout extends MultiChildRenderObjectWidget {
   final Axis direction;
   final _ResizableLayoutCallback onLayout;
 
-  const _ResizableLayout({
-    required this.direction,
-    required super.children,
-    required this.onLayout,
-  });
+  const _ResizableLayout({required this.direction, required super.children, required this.onLayout});
 
   @override
   RenderObject createRenderObject(BuildContext context) {

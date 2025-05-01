@@ -7,12 +7,7 @@ class TooltipContainer extends StatelessWidget {
   final double? surfaceOpacity;
   final double? surfaceBlur;
 
-  const TooltipContainer({
-    super.key,
-    this.surfaceOpacity,
-    this.surfaceBlur,
-    required this.child,
-  });
+  const TooltipContainer({super.key, this.surfaceOpacity, this.surfaceBlur, required this.child});
 
   Widget call(BuildContext context) {
     return this;
@@ -20,7 +15,7 @@ class TooltipContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = VNLTheme.of(context);
     final scaling = theme.scaling;
     var backgroundColor = theme.colorScheme.primary;
     // var surfaceOpacity = this.surfaceOpacity ?? theme.surfaceOpacity;
@@ -33,15 +28,8 @@ class TooltipContainer extends StatelessWidget {
       backgroundColor = backgroundColor.scaleAlpha(surfaceOpacity);
     }
     Widget animatedContainer = Container(
-      padding: const EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 6,
-          ) *
-          scaling,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(theme.radiusSm),
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6) * scaling,
+      decoration: BoxDecoration(color: backgroundColor, borderRadius: BorderRadius.circular(theme.radiusSm)),
       child: child.xSmall().primaryForeground(),
     );
     if (surfaceBlur != null && surfaceBlur > 0) {
@@ -51,10 +39,7 @@ class TooltipContainer extends StatelessWidget {
         child: animatedContainer,
       );
     }
-    return Padding(
-      padding: const EdgeInsets.all(6) * scaling,
-      child: animatedContainer,
-    );
+    return Padding(padding: const EdgeInsets.all(6) * scaling, child: animatedContainer);
   }
 }
 
@@ -101,11 +86,8 @@ class _TooltipState extends State<VNLTooltip> {
             alignment: widget.alignment,
             anchorAlignment: widget.anchorAlignment,
             dismissBackdropFocus: false,
-            overlayBarrier: const OverlayBarrier(
-              barrierColor: Colors.transparent,
-            ),
-            handler: OverlayManagerAsTooltipOverlayHandler(
-                overlayManager: OverlayManager.of(context)),
+            overlayBarrier: const OverlayBarrier(barrierColor: VNLColors.transparent),
+            handler: OverlayManagerAsTooltipOverlayHandler(overlayManager: OverlayManager.of(context)),
           );
         } else {
           _controller.close();
@@ -160,11 +142,8 @@ class _InstantTooltipState extends State<InstantTooltip> {
           dismissBackdropFocus: false,
           showDuration: Duration.zero,
           hideDuration: Duration.zero,
-          overlayBarrier: const OverlayBarrier(
-            barrierColor: Colors.transparent,
-          ),
-          handler: OverlayManagerAsTooltipOverlayHandler(
-              overlayManager: overlayManager),
+          overlayBarrier: const OverlayBarrier(barrierColor: VNLColors.transparent),
+          handler: OverlayManagerAsTooltipOverlayHandler(overlayManager: overlayManager),
         );
       },
       onExit: (event) {
@@ -179,9 +158,7 @@ class _InstantTooltipState extends State<InstantTooltip> {
 class OverlayManagerAsTooltipOverlayHandler extends OverlayHandler {
   final OverlayManager overlayManager;
 
-  const OverlayManagerAsTooltipOverlayHandler({
-    required this.overlayManager,
-  });
+  const OverlayManagerAsTooltipOverlayHandler({required this.overlayManager});
 
   @override
   OverlayCompleter<T?> show<T>({
@@ -293,75 +270,75 @@ class FixedTooltipOverlayHandler extends OverlayHandler {
           child: FocusScope(
             autofocus: dismissBackdropFocus,
             child: AnimatedBuilder(
-                animation: isClosed,
-                builder: (innerContext, child) {
-                  return AnimatedValueBuilder.animation(
-                      value: isClosed.value ? 0.0 : 1.0,
-                      initialValue: 0.0,
-                      curve: isClosed.value
-                          ? const Interval(0, 2 / 3)
-                          : Curves.linear,
-                      duration: isClosed.value
+              animation: isClosed,
+              builder: (innerContext, child) {
+                return AnimatedValueBuilder.animation(
+                  value: isClosed.value ? 0.0 : 1.0,
+                  initialValue: 0.0,
+                  curve: isClosed.value ? const Interval(0, 2 / 3) : Curves.linear,
+                  duration:
+                      isClosed.value
                           ? (showDuration ?? kDefaultDuration)
-                          : (dismissDuration ??
-                              const Duration(milliseconds: 100)),
-                      onEnd: (value) {
-                        if (value == 0.0 && isClosed.value) {
-                          popoverEntry.remove();
-                          popoverEntry.dispose();
-                          animationCompleter.complete();
+                          : (dismissDuration ?? const Duration(milliseconds: 100)),
+                  onEnd: (value) {
+                    if (value == 0.0 && isClosed.value) {
+                      popoverEntry.remove();
+                      popoverEntry.dispose();
+                      animationCompleter.complete();
+                    }
+                  },
+                  builder: (innerContext, animation) {
+                    final theme = VNLTheme.of(innerContext);
+                    var popoverAnchor = PopoverOverlayWidget(
+                      animation: animation,
+                      onTapOutside: () {
+                        if (isClosed.value) return;
+                        if (!modal) {
+                          isClosed.value = true;
+                          completer.complete();
                         }
                       },
-                      builder: (innerContext, animation) {
-                        final theme = Theme.of(innerContext);
-                        var popoverAnchor = PopoverOverlayWidget(
-                          animation: animation,
-                          onTapOutside: () {
-                            if (isClosed.value) return;
-                            if (!modal) {
-                              isClosed.value = true;
-                              completer.complete();
-                            }
-                          },
-                          key: key,
-                          anchorContext: context,
-                          position: position,
-                          alignment: resolvedAlignment,
-                          themes: themes,
-                          builder: builder,
-                          // anchorAlignment: anchorAlignment ?? alignment * -1,
-                          anchorAlignment: resolvedAnchorAlignment,
-                          widthConstraint: widthConstraint,
-                          heightConstraint: heightConstraint,
-                          regionGroupId: regionGroupId,
-                          offset: offset,
-                          transitionAlignment: Alignment.center,
-                          margin: const EdgeInsets.all(48) * theme.scaling,
-                          follow: false,
-                          consumeOutsideTaps: consumeOutsideTaps,
-                          allowInvertHorizontal: allowInvertHorizontal,
-                          allowInvertVertical: allowInvertVertical,
-                          data: data,
-                          onClose: () {
-                            if (isClosed.value) return Future.value();
-                            isClosed.value = true;
-                            completer.complete();
-                            return animationCompleter.future;
-                          },
-                          onImmediateClose: () {
-                            popoverEntry.remove();
-                            completer.complete();
-                          },
-                          onCloseWithResult: (value) {
-                            if (isClosed.value) return Future.value();
-                            isClosed.value = true;
-                            completer.complete(value as T);
-                            return animationCompleter.future;
-                          },
-                        );
-                        return popoverAnchor;
-                      });
-                }),
+                      key: key,
+                      anchorContext: context,
+                      position: position,
+                      alignment: resolvedAlignment,
+                      themes: themes,
+                      builder: builder,
+                      // anchorAlignment: anchorAlignment ?? alignment * -1,
+                      anchorAlignment: resolvedAnchorAlignment,
+                      widthConstraint: widthConstraint,
+                      heightConstraint: heightConstraint,
+                      regionGroupId: regionGroupId,
+                      offset: offset,
+                      transitionAlignment: Alignment.center,
+                      margin: const EdgeInsets.all(48) * theme.scaling,
+                      follow: false,
+                      consumeOutsideTaps: consumeOutsideTaps,
+                      allowInvertHorizontal: allowInvertHorizontal,
+                      allowInvertVertical: allowInvertVertical,
+                      data: data,
+                      onClose: () {
+                        if (isClosed.value) return Future.value();
+                        isClosed.value = true;
+                        completer.complete();
+                        return animationCompleter.future;
+                      },
+                      onImmediateClose: () {
+                        popoverEntry.remove();
+                        completer.complete();
+                      },
+                      onCloseWithResult: (value) {
+                        if (isClosed.value) return Future.value();
+                        isClosed.value = true;
+                        completer.complete(value as T);
+                        return animationCompleter.future;
+                      },
+                    );
+                    return popoverAnchor;
+                  },
+                );
+              },
+            ),
           ),
         );
       },

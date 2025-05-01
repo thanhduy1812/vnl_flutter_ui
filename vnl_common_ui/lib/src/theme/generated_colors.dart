@@ -1,6 +1,6 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-class Colors {
+class VNLColors {
   static const Color black = Color(0xff000000);
   static const Color white = Color(0xffffffff);
   static const ColorShades slate = ColorShades.raw({
