@@ -1,14 +1,14 @@
+
 import 'package:meta/meta.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../view_model/page_view_model.dart';
+import 'base_view_controller.dart';
 
-class PageViewController<T extends PageViewModel> extends StatefulWidget {
+class PageViewController<T extends PageViewModel> extends BaseViewController<T> {
   static String get route => "pageRoute";
   String getRoute() => route;
-  final T viewModel;
-  const PageViewController({super.key, required this.viewModel});
-
+  const PageViewController({super.key, required super.viewModel});
   @protected
   List<Widget> buildHeaders(BuildContext pageContext) {
     return [];
@@ -25,29 +25,28 @@ class PageViewController<T extends PageViewModel> extends StatefulWidget {
   }
 
   @override
-  State<PageViewController> createState() => _PageViewControllerState();
+  BaseViewState<PageViewController> createState() {
+    return PageViewControllerState();
+  }
 }
 
-class _PageViewControllerState extends State<PageViewController> {
+class PageViewControllerState<S extends PageViewController> extends BaseViewState<S> {
   @override
-  Widget build(BuildContext context) {
-    return Data.inherit(
-      data: widget.viewModel,
-      child: VNLScaffold(
-        key: widget.viewModel.scaffoldKey,
-        headers: widget.buildHeaders(context),
-        footers: widget.buildFooters(context),
-        loadingProgressIndeterminate: widget.viewModel.loadingProgressIndeterminate ?? false,
-        loadingProgress: widget.viewModel.loadingProgress,
-        floatingHeader: widget.viewModel.floatingHeader ?? false,
-        floatingFooter: widget.viewModel.floatingFooter ?? false,
-        backgroundColor: widget.viewModel.backgroundColor,
-        headerBackgroundColor: widget.viewModel.headerBackgroundColor,
-        footerBackgroundColor: widget.viewModel.footerBackgroundColor,
-        showLoadingSparks: widget.viewModel.showLoadingSparks ?? false,
-        resizeToAvoidBottomInset: widget.viewModel.resizeToAvoidBottomInset ?? true,
-        child: widget.buildBody(context),
-      ),
+  Widget buildWidget(BuildContext context) {
+    return VNLScaffold(
+      key: widget.viewModel.scaffoldKey,
+      headers: widget.buildHeaders(context),
+      footers: widget.buildFooters(context),
+      loadingProgressIndeterminate: widget.viewModel.loadingProgressIndeterminate ?? false,
+      loadingProgress: widget.viewModel.loadingProgress,
+      floatingHeader: widget.viewModel.floatingHeader ?? false,
+      floatingFooter: widget.viewModel.floatingFooter ?? false,
+      backgroundColor: widget.viewModel.backgroundColor,
+      headerBackgroundColor: widget.viewModel.headerBackgroundColor,
+      footerBackgroundColor: widget.viewModel.footerBackgroundColor,
+      showLoadingSparks: widget.viewModel.showLoadingSparks ?? false,
+      resizeToAvoidBottomInset: widget.viewModel.resizeToAvoidBottomInset ?? true,
+      child: widget.buildBody(context),
     );
   }
 }
