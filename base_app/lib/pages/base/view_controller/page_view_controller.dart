@@ -8,6 +8,14 @@ class PageViewController<T extends PageViewModel> extends BaseViewController<T> 
   static String get route => "pageRoute";
   String getRoute() => route;
   const PageViewController({super.key, required super.viewModel});
+
+  @override
+  BaseViewState<PageViewController> createState() {
+    return PageViewControllerState();
+  }
+}
+
+class PageViewControllerState<S extends PageViewController> extends BaseViewState<S> {
   @protected
   List<Widget> buildHeaders(BuildContext pageContext) {
     return [];
@@ -24,20 +32,13 @@ class PageViewController<T extends PageViewModel> extends BaseViewController<T> 
   }
 
   @override
-  BaseViewState<PageViewController> createState() {
-    return PageViewControllerState();
-  }
-}
-
-class PageViewControllerState<S extends PageViewController> extends BaseViewState<S> {
-  @override
   Widget buildWidget(BuildContext context) {
     return StageContainer(
       builder: (context, padding) {
         return VNLScaffold(
           key: widget.viewModel.scaffoldKey,
-          headers: widget.buildHeaders(context),
-          footers: widget.buildFooters(context),
+          headers: buildHeaders(context),
+          footers: buildFooters(context),
           loadingProgressIndeterminate: widget.viewModel.loadingProgressIndeterminate ?? false,
           loadingProgress: widget.viewModel.loadingProgress,
           floatingHeader: widget.viewModel.floatingHeader ?? false,
@@ -47,7 +48,7 @@ class PageViewControllerState<S extends PageViewController> extends BaseViewStat
           footerBackgroundColor: widget.viewModel.footerBackgroundColor,
           showLoadingSparks: widget.viewModel.showLoadingSparks ?? false,
           resizeToAvoidBottomInset: widget.viewModel.resizeToAvoidBottomInset ?? true,
-          child: widget.buildBody(context),
+          child: buildBody(context),
         );
       },
     );

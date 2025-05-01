@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:base_app/app/app_theme_setting.dart';
 import 'package:base_app/app/theme_page.dart';
-import 'package:base_app/pages/home/view_controller/home_view_controller.dart';
-import 'package:base_app/pages/home/view_model/home_view_model.dart';
+import 'package:base_app/pages/home/view_controller/home_page.dart';
+import 'package:base_app/pages/home/view_model/home_page_view_model.dart';
 import 'package:base_app/pages/splash/view_controller/splash_view_controller.dart';
 import 'package:base_app/router/app_router.dart';
 import 'package:flutter/foundation.dart';
@@ -52,7 +52,7 @@ class VNLMainAppState extends State<VNLMainApp> {
     GoRoute(path: '/', builder: (context, state) => const SplashScreen(), name: AppRouterPath.splash),
     GoRoute(
       path: '/${AppRouterPath.home}',
-      builder: (context, state) => HomeViewController(viewModel: HomeViewModel()),
+      builder: (context, state) => HomePage(viewModel: HomePageViewModel()),
       name: AppRouterPath.home,
     ),
     GoRoute(path: '/${AppRouterPath.theme}', builder: (context, state) => ThemePage(), name: AppRouterPath.theme),
