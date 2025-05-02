@@ -5,7 +5,7 @@ import 'package:gtd_helper/gtd_helper.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
 import 'app/app_global_const.dart';
-import 'app/theme_page.dart';
+import 'pages/app_themes/theme_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

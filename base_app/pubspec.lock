@@ -326,7 +326,7 @@ packages:
       path: dvt_helper
       relative: true
     source: path
-    version: "1.0.5"
+    version: "1.0.6"
   gtd_network:
     dependency: "direct main"
     description:

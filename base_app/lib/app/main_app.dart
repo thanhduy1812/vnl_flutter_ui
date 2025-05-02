@@ -1,10 +1,15 @@
 import 'dart:io';
 
 import 'package:base_app/app/app_theme_setting.dart';
-import 'package:base_app/app/theme_page.dart';
+import 'package:base_app/pages/app_themes/theme_page.dart';
 import 'package:base_app/pages/home/view_controller/home_page.dart';
 import 'package:base_app/pages/home/view_model/home_page_view_model.dart';
+import 'package:base_app/pages/introduce/view/introduce_view.dart';
+import 'package:base_app/pages/introduce/view_controller/introduce_page.dart';
+import 'package:base_app/pages/introduce/view_model/introduce_page_view_model.dart';
+import 'package:base_app/pages/introduce/view_model/introduce_view_model.dart';
 import 'package:base_app/pages/splash/view_controller/splash_view_controller.dart';
+import 'package:base_app/pages/app_panel/multi_panel_layout.dart';
 import 'package:base_app/router/app_router.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
@@ -52,7 +57,13 @@ class VNLMainAppState extends State<VNLMainApp> {
     GoRoute(path: '/', builder: (context, state) => const SplashScreen(), name: AppRouterPath.splash),
     GoRoute(
       path: '/${AppRouterPath.home}',
-      builder: (context, state) => HomePage(viewModel: HomePageViewModel()),
+      // builder: (context, state) => HomePage(viewModel: HomePageViewModel()),
+      builder:
+          (context, state) => MultiPanelLayout(
+            leftPanel: Container(color: VNLColors.red),
+            centerPanel: ThemePage(),
+            rightPanel: Container(color: VNLColors.green),
+          ),
       name: AppRouterPath.home,
     ),
     GoRoute(path: '/${AppRouterPath.theme}', builder: (context, state) => ThemePage(), name: AppRouterPath.theme),

@@ -1,5 +1,5 @@
 import 'package:base_app/app/main_app.dart';
-import 'package:base_app/app/on_this_page.dart';
+import 'package:base_app/pages/app_panel/on_this_page.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
 class ThemePage extends StatefulWidget {
