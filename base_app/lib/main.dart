@@ -29,7 +29,7 @@ void main() {
   String initialPath = prefs?.getString('initialPath') ?? '/';
   runApp(
     VNLMainApp(
-      initialColorScheme: initialColorScheme ?? colorSchemes['darkGreen']!,
+      initialColorScheme: initialColorScheme ?? colorSchemes['lightBlue']!,
       initialRadius: initialRadius,
       initialScaling: initialScaling,
       initialSurfaceOpacity: initialSurfaceOpacity,
