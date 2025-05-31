@@ -24,12 +24,12 @@ class CardExample1 extends StatelessWidget {
           const SizedBox(height: 24),
           Row(
             children: [
-              OutlineButton(
+              VNLOutlineButton(
                 child: const Text('Cancel'),
                 onPressed: () {},
               ),
               const Spacer(),
-              PrimaryButton(
+              VNLPrimaryButton(
                 child: const Text('Deploy'),
                 onPressed: () {},
               ),

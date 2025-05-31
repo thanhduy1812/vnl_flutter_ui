@@ -40,10 +40,9 @@ class _CupertinoExample1State extends State<CupertinoExample1> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
-                      'You can also use vnl_ui widgets inside Material widgets'),
+                  const Text('You can also use vnl_ui widgets inside Material widgets'),
                   const vnlui.Gap(16),
-                  vnlui.PrimaryButton(
+                  vnlui.VNLPrimaryButton(
                     onPressed: () {
                       showCupertinoDialog(
                         context: context,
@@ -66,17 +65,16 @@ class _CupertinoExample1State extends State<CupertinoExample1> {
                     child: const Text('Open Cupertino Dialog'),
                   ),
                   const vnlui.Gap(8),
-                  vnlui.SecondaryButton(
+                  vnlui.VNLSecondaryButton(
                     onPressed: () {
                       vnlui.showDialog(
                         context: context,
                         builder: (context) {
                           return vnlui.VNLAlertDialog(
                             title: const Text('Hello'),
-                            content:
-                                const Text('This is vnl_ui dialog'),
+                            content: const Text('This is vnl_ui dialog'),
                             actions: [
-                              vnlui.PrimaryButton(
+                              vnlui.VNLPrimaryButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },

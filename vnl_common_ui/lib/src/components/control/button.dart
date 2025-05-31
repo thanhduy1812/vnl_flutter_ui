@@ -133,7 +133,7 @@ class ToggleState extends State<VNLToggle> with FormValueSupplier<bool, VNLToggl
   }
 }
 
-class SelectedButton extends StatefulWidget {
+class VNLSelectedButton extends StatefulWidget {
   final bool value;
   final ValueChanged<bool>? onChanged;
   final Widget child;
@@ -165,7 +165,7 @@ class SelectedButton extends StatefulWidget {
   final WidgetStatesController? statesController;
   final VoidCallback? onPressed;
 
-  const SelectedButton({
+  const VNLSelectedButton({
     super.key,
     required this.value,
     this.onChanged,
@@ -204,7 +204,7 @@ class SelectedButton extends StatefulWidget {
 }
 
 // toggle button is just ghost button
-class SelectedButtonState extends State<SelectedButton> {
+class SelectedButtonState extends State<VNLSelectedButton> {
   late WidgetStatesController statesController;
   @override
   void initState() {
@@ -214,7 +214,7 @@ class SelectedButtonState extends State<SelectedButton> {
   }
 
   @override
-  void didUpdateWidget(SelectedButton oldWidget) {
+  void didUpdateWidget(VNLSelectedButton oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.statesController != widget.statesController) {
       statesController = widget.statesController ?? WidgetStatesController();
@@ -2425,7 +2425,7 @@ IconThemeData _buttonStaticIconTheme(BuildContext context, Set<WidgetState> stat
 }
 
 // Backward compatibility
-class PrimaryButton extends StatelessWidget {
+class VNLPrimaryButton extends StatelessWidget {
   final Widget child;
   final VoidCallback? onPressed;
   final bool? enabled;
@@ -2456,7 +2456,7 @@ class PrimaryButton extends StatelessWidget {
   final GestureLongPressUpCallback? onSecondaryLongPress;
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
-  const PrimaryButton({
+  const VNLPrimaryButton({
     super.key,
     required this.child,
     this.onPressed,
@@ -2523,7 +2523,7 @@ class PrimaryButton extends StatelessWidget {
   }
 }
 
-class SecondaryButton extends StatelessWidget {
+class VNLSecondaryButton extends StatelessWidget {
   final Widget child;
   final VoidCallback? onPressed;
   final bool? enabled;
@@ -2555,7 +2555,7 @@ class SecondaryButton extends StatelessWidget {
   final GestureLongPressUpCallback? onSecondaryLongPress;
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
-  const SecondaryButton({
+  const VNLSecondaryButton({
     super.key,
     required this.child,
     this.onPressed,
@@ -2622,7 +2622,7 @@ class SecondaryButton extends StatelessWidget {
   }
 }
 
-class OutlineButton extends StatelessWidget {
+class VNLOutlineButton extends StatelessWidget {
   final Widget child;
   final VoidCallback? onPressed;
   final bool? enabled;
@@ -2654,7 +2654,7 @@ class OutlineButton extends StatelessWidget {
   final GestureLongPressUpCallback? onSecondaryLongPress;
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
-  const OutlineButton({
+  const VNLOutlineButton({
     super.key,
     required this.child,
     this.onPressed,
@@ -2919,7 +2919,7 @@ class LinkButton extends StatelessWidget {
   }
 }
 
-class TextButton extends StatelessWidget {
+class VNLTextButton extends StatelessWidget {
   final Widget child;
   final VoidCallback? onPressed;
   final bool? enabled;
@@ -2950,7 +2950,7 @@ class TextButton extends StatelessWidget {
   final GestureLongPressUpCallback? onSecondaryLongPress;
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
-  const TextButton({
+  const VNLTextButton({
     super.key,
     required this.child,
     this.onPressed,
@@ -3098,7 +3098,7 @@ class DestructiveButton extends StatelessWidget {
   }
 }
 
-class TabButton extends StatelessWidget {
+class VNLTabButton extends StatelessWidget {
   final Widget child;
   final VoidCallback? onPressed;
   final bool? enabled;
@@ -3130,7 +3130,7 @@ class TabButton extends StatelessWidget {
   final GestureLongPressUpCallback? onSecondaryLongPress;
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
-  const TabButton({
+  const VNLTabButton({
     super.key,
     required this.child,
     this.onPressed,
@@ -3197,7 +3197,7 @@ class TabButton extends StatelessWidget {
   }
 }
 
-class CardButton extends StatelessWidget {
+class VNLCardButton extends StatelessWidget {
   final Widget child;
   final VoidCallback? onPressed;
   final bool? enabled;
@@ -3229,7 +3229,7 @@ class CardButton extends StatelessWidget {
   final GestureLongPressUpCallback? onSecondaryLongPress;
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
-  const CardButton({
+  const VNLCardButton({
     super.key,
     required this.child,
     this.onPressed,
@@ -3296,7 +3296,7 @@ class CardButton extends StatelessWidget {
   }
 }
 
-class IconButton extends StatelessWidget {
+class VNLIconButton extends StatelessWidget {
   final Widget icon;
   final VoidCallback? onPressed;
   final bool? enabled;
@@ -3328,7 +3328,7 @@ class IconButton extends StatelessWidget {
   final GestureLongPressUpCallback? onTertiaryLongPress;
   final AbstractButtonStyle variance;
 
-  const IconButton({
+  const VNLIconButton({
     super.key,
     required this.icon,
     required this.variance,
@@ -3362,7 +3362,7 @@ class IconButton extends StatelessWidget {
     this.onTertiaryLongPress,
   });
 
-  const IconButton.primary({
+  const VNLIconButton.primary({
     super.key,
     required this.icon,
     this.onPressed,
@@ -3396,7 +3396,7 @@ class IconButton extends StatelessWidget {
     this.shape = ButtonShape.rectangle,
   });
 
-  const IconButton.secondary({
+  const VNLIconButton.secondary({
     super.key,
     required this.icon,
     this.onPressed,
@@ -3430,7 +3430,7 @@ class IconButton extends StatelessWidget {
     this.shape = ButtonShape.rectangle,
   });
 
-  const IconButton.outline({
+  const VNLIconButton.outline({
     super.key,
     required this.icon,
     this.onPressed,
@@ -3464,7 +3464,7 @@ class IconButton extends StatelessWidget {
     this.shape = ButtonShape.rectangle,
   });
 
-  const IconButton.ghost({
+  const VNLIconButton.ghost({
     super.key,
     required this.icon,
     this.onPressed,
@@ -3498,7 +3498,7 @@ class IconButton extends StatelessWidget {
     this.shape = ButtonShape.rectangle,
   });
 
-  const IconButton.link({
+  const VNLIconButton.link({
     super.key,
     required this.icon,
     this.onPressed,
@@ -3532,7 +3532,7 @@ class IconButton extends StatelessWidget {
     this.shape = ButtonShape.rectangle,
   });
 
-  const IconButton.text({
+  const VNLIconButton.text({
     super.key,
     required this.icon,
     this.onPressed,
@@ -3566,7 +3566,7 @@ class IconButton extends StatelessWidget {
     this.shape = ButtonShape.rectangle,
   });
 
-  const IconButton.destructive({
+  const VNLIconButton.destructive({
     super.key,
     required this.icon,
     this.onPressed,
@@ -3764,11 +3764,11 @@ class ButtonStyleOverrideData {
   }
 }
 
-class ButtonGroup extends StatelessWidget {
+class VNLButtonGroup extends StatelessWidget {
   final Axis direction;
   final List<Widget> children;
 
-  const ButtonGroup({super.key, this.direction = Axis.horizontal, required this.children});
+  const VNLButtonGroup({super.key, this.direction = Axis.horizontal, required this.children});
 
   @override
   Widget build(BuildContext context) {

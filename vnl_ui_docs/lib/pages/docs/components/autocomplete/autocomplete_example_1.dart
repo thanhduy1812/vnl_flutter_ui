@@ -49,7 +49,7 @@ class _AutoCompleteExample1State extends State<AutoCompleteExample1> {
       child: VNLTextField(
         controller: _controller,
         onChanged: _updateSuggestions,
-        trailing: const IconButton.text(
+        trailing: const VNLIconButton.text(
           density: ButtonDensity.compact,
           icon: Icon(Icons.clear),
           onPressed: clearActiveTextInput,

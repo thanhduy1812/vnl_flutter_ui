@@ -75,8 +75,8 @@ class NavigationMenuExample1 extends StatelessWidget {
                 onPressed: () {},
               ),
               NavigationMenuContent(
-                title: const Text('Avatar'),
-                content: const Text('Avatar component for Flutter.'),
+                title: const Text('VNLAvatar'),
+                content: const Text('VNLAvatar component for Flutter.'),
                 onPressed: () {},
               ),
               NavigationMenuContent(

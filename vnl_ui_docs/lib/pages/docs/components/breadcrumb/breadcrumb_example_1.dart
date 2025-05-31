@@ -8,13 +8,13 @@ class BreadcrumbExample1 extends StatelessWidget {
     return VNLBreadcrumb(
       separator: VNLBreadcrumb.arrowSeparator,
       children: [
-        TextButton(
+        VNLTextButton(
           onPressed: () {},
           density: ButtonDensity.compact,
           child: const Text('Home'),
         ),
         const MoreDots(),
-        TextButton(
+        VNLTextButton(
           onPressed: () {},
           density: ButtonDensity.compact,
           child: const Text('Components'),

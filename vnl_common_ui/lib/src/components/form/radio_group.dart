@@ -1,10 +1,10 @@
 import '../../../vnl_ui.dart';
 
-class Radio extends StatelessWidget {
+class VNLRadio extends StatelessWidget {
   final bool value;
   final bool focusing;
 
-  const Radio({super.key, required this.value, this.focusing = false});
+  const VNLRadio({super.key, required this.value, this.focusing = false});
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +112,7 @@ class _RadioItemState<T> extends State<RadioItem<T>> {
                 children: [
                   if (widget.leading != null) widget.leading!,
                   if (widget.leading != null) SizedBox(width: 8 * theme.scaling),
-                  Radio(
+                  VNLRadio(
                     value: groupData?.selectedItem == widget.value,
                     focusing: _focusing && groupData?.selectedItem == widget.value,
                   ),

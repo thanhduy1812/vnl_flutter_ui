@@ -11,7 +11,7 @@ class RadioCardExample extends StatelessWidget {
     return const ComponentPage(
       name: 'radio_card',
       description: 'A radio card is a card that can be selected.',
-      displayName: 'Radio Card',
+      displayName: 'VNLRadio Card',
       children: [
         WidgetUsageExample(
           title: 'Example',

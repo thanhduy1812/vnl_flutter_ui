@@ -61,7 +61,7 @@ class _IconsPageState extends State<IconsPage> {
             ),
           ),
           actions: [
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -263,7 +263,7 @@ class _IconsPageState extends State<IconsPage> {
                               tooltip: TooltipContainer(
                                 child: Text(e.key),
                               ),
-                              child: OutlineButton(
+                              child: VNLOutlineButton(
                                 onPressed: () {
                                   _onTap('RadixIcons', e);
                                 },
@@ -296,7 +296,7 @@ class _IconsPageState extends State<IconsPage> {
                               tooltip: TooltipContainer(
                                 child: Text(e.key),
                               ),
-                              child: OutlineButton(
+                              child: VNLOutlineButton(
                                 onPressed: () {
                                   _onTap('BootstrapIcons', e);
                                 },
@@ -329,7 +329,7 @@ class _IconsPageState extends State<IconsPage> {
                               tooltip: TooltipContainer(
                                 child: Text(e.key),
                               ),
-                              child: OutlineButton(
+                              child: VNLOutlineButton(
                                 onPressed: () {
                                   _onTap('LucideIcons', e);
                                 },

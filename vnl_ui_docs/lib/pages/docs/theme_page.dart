@@ -283,7 +283,7 @@ class _ThemePageState extends State<ThemePage> {
   Widget buildPremadeColorSchemeButton(String name) {
     var scheme = colorSchemes[name]!;
     return !customColorScheme && scheme == colorScheme
-        ? PrimaryButton(
+        ? VNLPrimaryButton(
             onPressed: () {
               setState(() {
                 colorScheme = scheme;
@@ -316,7 +316,7 @@ class _ThemePageState extends State<ThemePage> {
               ],
             ),
           )
-        : OutlineButton(
+        : VNLOutlineButton(
             onPressed: () {
               setState(() {
                 colorScheme = scheme;

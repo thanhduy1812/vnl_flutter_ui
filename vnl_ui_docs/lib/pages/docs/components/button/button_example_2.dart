@@ -5,7 +5,7 @@ class ButtonExample2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SecondaryButton(
+    return VNLSecondaryButton(
       onPressed: () {},
       child: const Text('Secondary'),
     );

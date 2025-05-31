@@ -1,19 +1,19 @@
 ActiveDotItem
 AdaptiveScaler
 AnimatedValueBuilder
-Avatar -> VNLAvatar
-AvatarBadge -> VNLAvatarBadge
-AvatarGroup -> VNLAvatarGroup
+VNLAvatar -> VNLAvatar
+VNLAvatarBadge -> VNLAvatarBadge
+VNLAvatarGroup -> VNLAvatarGroup
 AvatarWidget
-ButtonGroup -> VNLButtonGroup
+VNLButtonGroup -> VNLButtonGroup
 ButtonStyleOverride
 CalendarGrid
 CalendarItem
-Card -> VNLCard
-CardButton -> VNLCardButton
+VNLCard
+VNLCardButton
 CardImage -> VNLCardImage
 CarouselDotIndicator
-ChipButton -> VNLChipButton
+VNLChipButton -> VNLChipButton
 Clickable
 CodeSnippet
 CommandCategory
@@ -34,39 +34,39 @@ FadeScroll
 GhostButton
 Hover
 HoverActivity
-IconButton -> VNLIconButton
+VNLIconButton -> VNLIconButton
 InactiveDotItem
 KeyboardKeyDisplay
 KeyboardShortcutDisplayMapper
-Label -> VNLLabel
+VNLLabel -> VNLLabel
 LinearProgressIndicator
 LinkButton
-MenuPopup -> VNLMenuPopup
+VNLMenuPopup -> VNLMenuPopup
 MobileEditableTextContextMenu
 ModalBackdrop
 ModalContainer
 MonthCalendar
 NumberTicker
-OutlineBadge -> VNLOutlineBadge
-OutlineButton -> VNLOutlineButton
-Pagination -> VNLPagination
+VNLOutlineBadge -> VNLOutlineBadge
+VNLOutlineButton -> VNLOutlineButton
+VNLPagination -> VNLPagination
 PopoverOverlayWidget
-PrimaryBadge -> VNLPrimaryBadge
-PrimaryButton -> VNLPrimaryButton
+VNLPrimaryBadge -> VNLPrimaryBadge
+VNLPrimaryButton -> VNLPrimaryButton
 Progress -> VNLProgress
-Radio -> VNLRadio
+VNLRadio -> VNLRadio
 RadioCard
 ScrollViewInterceptor
-SecondaryBadge -> VNLSecondaryBadge
-SecondaryButton -> VNLSecondaryButton
-SelectedButton -> VNLSelectedButton
-Spinner -> VNLSpinner
+VNLSecondaryBadge -> VNLSecondaryBadge
+VNLSecondaryButton -> VNLSecondaryButton
+VNLSelectedButton -> VNLSelectedButton
+VNLSpinner -> VNLSpinner
 StatedWidget
-TabButton -> VNLTabButton
-TextButton -> VNLTextButton
+VNLTabButton -> VNLTabButton
+VNLTextButton -> VNLTextButton
 ToastEntryLayout
 ToastLayer
-Tooltip -> VNLTooltip
+VNLTooltip -> VNLTooltip
 TooltipContainer
 VNLButton
 VNLCalendar

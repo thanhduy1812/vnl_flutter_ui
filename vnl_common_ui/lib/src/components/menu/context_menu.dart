@@ -497,7 +497,7 @@ Future<void> _showContextMenu(
                     closeOverlay(context);
                   },
                   builder: (context, children) {
-                    return MenuPopup(children: children);
+                    return VNLMenuPopup(children: children);
                   },
                   children: children.value,
                 ),
@@ -553,7 +553,7 @@ class ContextMenuPopup extends StatelessWidget {
                 itemPadding:
                     isSheetOverlay ? const EdgeInsets.symmetric(horizontal: 8) * theme.scaling : EdgeInsets.zero,
                 builder: (context, children) {
-                  return MenuPopup(children: children);
+                  return VNLMenuPopup(children: children);
                 },
                 children: children,
               ),

@@ -31,7 +31,7 @@ class CardImageExample1 extends StatelessWidget {
                           title: const Text('Card Image'),
                           content: const Text('You clicked on a card image.'),
                           actions: [
-                            PrimaryButton(
+                            VNLPrimaryButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },

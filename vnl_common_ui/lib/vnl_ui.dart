@@ -1,4 +1,4 @@
-library vnl_ui;
+library;
 
 // bundle from https://pub.dev/packages/country_flags
 export 'package:country_flags/country_flags.dart' show CountryFlag;
@@ -8,22 +8,12 @@ export 'package:cross_file/cross_file.dart' show XFile;
 export 'package:data_widget/data_widget.dart';
 export 'package:data_widget/extension.dart';
 export 'package:flutter/cupertino.dart'
-    show
-        cupertinoDesktopTextSelectionControls,
-        cupertinoDesktopTextSelectionHandleControls;
+    show cupertinoDesktopTextSelectionControls, cupertinoDesktopTextSelectionHandleControls;
 // export Icons from material
 export 'package:flutter/material.dart'
     show Icons, MaterialPageRoute, MaterialPage, SliverAppBar, FlutterLogo
-    hide TextButton;
-export 'package:flutter/widgets.dart'
-    hide
-        ErrorWidgetBuilder,
-        Form,
-        FormState,
-        Table,
-        TableRow,
-        TableCell,
-        FormField;
+    hide VNLTextButton;
+export 'package:flutter/widgets.dart' hide ErrorWidgetBuilder, Form, FormState, Table, TableRow, TableCell, FormField;
 // bundle from gap
 export 'package:gap/gap.dart';
 // bundle from https://pub.dev/packages/phonecodes
@@ -139,4 +129,4 @@ export 'src/theme/typography.dart';
 export 'src/util.dart';
 export 'src/components/form/input.dart';
 export 'src/components/form/object_input.dart';
-export 'src/components/form/item_picker.dart'; 
+export 'src/components/form/item_picker.dart';

@@ -810,7 +810,7 @@ class _FormattedObjectInputState<T> extends State<FormattedObjectInput<T>> {
                     child: child!,
                   );
                 },
-                child: IconButton.text(icon: popoverIcon, density: ButtonDensity.compact, onPressed: _openPopover),
+                child: VNLIconButton.text(icon: popoverIcon, density: ButtonDensity.compact, onPressed: _openPopover),
               ),
     );
   }

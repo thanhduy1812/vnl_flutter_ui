@@ -208,7 +208,7 @@ class ChipInputState<T> extends State<ChipInput<T>> with FormValueSupplier<List<
       return widget.chipBuilder(context, widget.chips[index]);
     }
     return VNLChip(
-      trailing: ChipButton(
+      trailing: VNLChipButton(
         onPressed: () {
           List<T> chips = List.of(widget.chips);
           chips.removeAt(index);
@@ -255,7 +255,7 @@ class ChipInputState<T> extends State<ChipInput<T>> with FormValueSupplier<List<
                   padding: EdgeInsets.all(theme.scaling * 4),
                   children: [
                     for (int i = 0; i < _suggestions.value.length; i++)
-                      SelectedButton(
+                      VNLSelectedButton(
                         style: const ButtonStyle.ghost(),
                         selectedStyle: const ButtonStyle.secondary(),
                         value: i == _selectedSuggestions.value,
@@ -501,7 +501,7 @@ class PreviousSuggestionIntent extends Intent {
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     return SelectedButton(
+//     return VNLSelectedButton(
 //       value: widget.selected,
 //       onChanged: (value) {
 //         if (value) {

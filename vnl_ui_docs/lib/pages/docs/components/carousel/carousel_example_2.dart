@@ -18,7 +18,7 @@ class _CarouselExample2State extends State<CarouselExample2> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          OutlineButton(
+          VNLOutlineButton(
               shape: ButtonShape.circle,
               onPressed: () {
                 controller.animatePrevious(const Duration(milliseconds: 500));
@@ -41,7 +41,7 @@ class _CarouselExample2State extends State<CarouselExample2> {
             ),
           ),
           const Gap(24),
-          OutlineButton(
+          VNLOutlineButton(
               shape: ButtonShape.circle,
               onPressed: () {
                 controller.animateNext(const Duration(milliseconds: 500));

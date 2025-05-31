@@ -18,7 +18,7 @@ class _SheetExample1State extends State<SheetExample1> {
           title: const Text('Profile updated'),
           content: Text('Content: ${controller.values}'),
           actions: [
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -46,7 +46,7 @@ class _SheetExample1State extends State<SheetExample1> {
                 Expanded(
                   child: const Text('Edit profile').large().medium(),
                 ),
-                TextButton(
+                VNLTextButton(
                   density: ButtonDensity.icon,
                   child: const Icon(Icons.close),
                   onPressed: () {
@@ -85,7 +85,7 @@ class _SheetExample1State extends State<SheetExample1> {
               alignment: AlignmentDirectional.centerEnd,
               child: FormErrorBuilder(
                 builder: (context, errors, child) {
-                  return PrimaryButton(
+                  return VNLPrimaryButton(
                     onPressed: errors.isNotEmpty
                         ? null
                         : () {
@@ -114,7 +114,7 @@ class _SheetExample1State extends State<SheetExample1> {
 
   @override
   Widget build(BuildContext context) {
-    return PrimaryButton(
+    return VNLPrimaryButton(
       onPressed: () {
         openSheet(
           context: context,

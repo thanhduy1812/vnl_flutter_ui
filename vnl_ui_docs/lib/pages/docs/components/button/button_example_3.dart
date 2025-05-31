@@ -5,7 +5,7 @@ class ButtonExample3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlineButton(
+    return VNLOutlineButton(
       onPressed: () {},
       child: const Text('Outlined'),
     );

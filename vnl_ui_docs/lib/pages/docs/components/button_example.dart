@@ -76,7 +76,7 @@ class ButtonExample extends StatelessWidget {
           child: ButtonExample8(),
         ),
         WidgetUsageExample(
-          title: 'Icon Button with Label Example',
+          title: 'Icon Button with VNLLabel Example',
           path: 'lib/pages/docs/components/button/button_example_9.dart',
           child: ButtonExample9(),
         ),

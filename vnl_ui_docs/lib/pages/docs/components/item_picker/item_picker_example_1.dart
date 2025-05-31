@@ -5,7 +5,7 @@ class ItemPickerExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PrimaryButton(
+    return VNLPrimaryButton(
       onPressed: () {
         showItemPicker<int>(
           context,

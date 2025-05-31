@@ -117,7 +117,7 @@ enum VNLookFeatureTag {
     }
     return VNLTheme(
       data: copy,
-      child: PrimaryBadge(
+      child: VNLPrimaryBadge(
         child: Text(badgeText),
       ),
     );
@@ -184,8 +184,8 @@ class DocsPageState extends State<DocsPage> {
     VNLookDocsSection(
       'Display',
       [
-        VNLookDocsPage('Avatar', 'avatar'),
-        VNLookDocsPage('Avatar Group', 'avatar_group'),
+        VNLookDocsPage('VNLAvatar', 'VNLAvatar'),
+        VNLookDocsPage('VNLAvatar Group', 'avatar_group'),
         // VNLookDocsPage(
         // 'Data Table', 'data_table', VNLookFeatureTag.experimental),
         // TODO also make it zoomable like: https://zoom-chart-demo.vercel.app/
@@ -240,9 +240,9 @@ class DocsPageState extends State<DocsPage> {
         VNLookDocsPage('Number Input', 'number_input'),
         VNLookDocsPage('Input OTP', 'input_otp'),
         VNLookDocsPage('Phone Input', 'phone_input'),
-        VNLookDocsPage('Radio Group', 'radio_group'),
+        VNLookDocsPage('VNLRadio Group', 'radio_group'),
         //https://www.radix-ui.com/themes/docs/components/radio-cards
-        VNLookDocsPage('Radio Card', 'radio_card'),
+        VNLookDocsPage('VNLRadio Card', 'radio_card'),
         VNLookDocsPage('Select', 'select'),
         VNLookDocsPage('Slider', 'slider'),
         VNLookDocsPage('Star Rating', 'star_rating'),
@@ -277,7 +277,7 @@ class DocsPageState extends State<DocsPage> {
         VNLookDocsPage('Breadcrumb', 'breadcrumb'),
         VNLookDocsPage('Menubar', 'menubar'),
         VNLookDocsPage('Navigation Menu', 'navigation_menu'),
-        VNLookDocsPage('Pagination', 'pagination'),
+        VNLookDocsPage('VNLPagination', 'pagination'),
         VNLookDocsPage('Tabs', 'tabs'),
         VNLookDocsPage('Tab List', 'tab_list'),
         // TODO: like a chrome tab, complete with its view
@@ -301,7 +301,7 @@ class DocsPageState extends State<DocsPage> {
         VNLookDocsPage('Popover', 'popover'),
         VNLookDocsPage('Sheet', 'sheet'),
         VNLookDocsPage('Swiper', 'swiper', VNLookFeatureTag.newFeature),
-        VNLookDocsPage('Tooltip', 'tooltip'),
+        VNLookDocsPage('VNLTooltip', 'tooltip'),
         // TODO: window as in like a window in desktop
         VNLookDocsPage('Window', 'window', VNLookFeatureTag.experimental),
       ],
@@ -453,7 +453,7 @@ class DocsPageState extends State<DocsPage> {
         break;
     }
     return Builder(builder: (context) {
-      return PrimaryBadge(
+      return VNLPrimaryBadge(
         onPressed: () {
           showDropdown(
             context: context,
@@ -568,7 +568,7 @@ class DocsPageState extends State<DocsPage> {
                             child: Center(
                               child: SizedBox(
                                 width: double.infinity,
-                                child: OutlineButton(
+                                child: VNLOutlineButton(
                                   onPressed: () {
                                     showSearchBar();
                                   },
@@ -651,7 +651,7 @@ class DocsPageState extends State<DocsPage> {
                                         VNLBreadcrumb(
                                           separator: VNLBreadcrumb.arrowSeparator,
                                           children: [
-                                            TextButton(
+                                            VNLTextButton(
                                               onPressed: () {
                                                 context.goNamed('introduction');
                                               },
@@ -695,7 +695,7 @@ class DocsPageState extends State<DocsPage> {
                                     VNLBreadcrumb(
                                       separator: VNLBreadcrumb.arrowSeparator,
                                       children: [
-                                        TextButton(
+                                        VNLTextButton(
                                           onPressed: () {
                                             context.goNamed('introduction');
                                           },
@@ -767,7 +767,7 @@ class DocsPageState extends State<DocsPage> {
           alignment: AlignmentDirectional.centerEnd,
           child: SizedBox(
             width: 320 - 18,
-            child: OutlineButton(
+            child: VNLOutlineButton(
               onPressed: () {
                 showSearchBar();
               },
@@ -830,7 +830,7 @@ class DocsPageState extends State<DocsPage> {
                   Gap(12 * scaling),
                   buildFlavorTag(),
                   const Spacer(),
-                  TextButton(
+                  VNLTextButton(
                     density: ButtonDensity.icon,
                     size: ButtonSize.small,
                     onPressed: () {
@@ -863,7 +863,7 @@ class DocsPageState extends State<DocsPage> {
                                           content: const Text(
                                               'This page is still under development. Please come back later.'),
                                           actions: [
-                                            PrimaryButton(
+                                            VNLPrimaryButton(
                                                 onPressed: () {
                                                   Navigator.of(context).pop();
                                                 },
@@ -1062,7 +1062,7 @@ class _DocsSidebarButtonState extends State<_DocsSidebarButton> {
             title: const Text('Work in Progress'),
             content: const Text('This page is still under development. Please come back later.'),
             actions: [
-              PrimaryButton(
+              VNLPrimaryButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },

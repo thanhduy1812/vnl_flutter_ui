@@ -111,7 +111,7 @@ class VNLPagination extends StatelessWidget {
           ],
           for (final p in pages)
             if (p == page)
-              OutlineButton(onPressed: () => onPageChanged(p), child: Text('$p'))
+              VNLOutlineButton(onPressed: () => onPageChanged(p), child: Text('$p'))
             else
               GhostButton(onPressed: () => onPageChanged(p), child: Text('$p')),
           if (hasMoreNextPages) ...[

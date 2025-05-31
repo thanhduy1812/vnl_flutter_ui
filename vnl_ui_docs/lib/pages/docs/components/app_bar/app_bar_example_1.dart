@@ -12,19 +12,19 @@ class AppBarExample1 extends StatelessWidget {
         title: const Text('This is Title'),
         subtitle: const Text('This is Subtitle'),
         leading: [
-          OutlineButton(
+          VNLOutlineButton(
             density: ButtonDensity.icon,
             onPressed: () {},
             child: const Icon(Icons.arrow_back),
           ),
         ],
         trailing: [
-          OutlineButton(
+          VNLOutlineButton(
             density: ButtonDensity.icon,
             onPressed: () {},
             child: const Icon(Icons.search),
           ),
-          OutlineButton(
+          VNLOutlineButton(
             density: ButtonDensity.icon,
             onPressed: () {},
             child: const Icon(Icons.more_vert),

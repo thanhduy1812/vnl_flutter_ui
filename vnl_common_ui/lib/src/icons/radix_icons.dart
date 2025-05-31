@@ -61,9 +61,21 @@ class RadixIcons {
   static const IconData speakerModerate = IconData(57400, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
   static const IconData speakerLoud = IconData(57401, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
   static const IconData spaceEvenlyVertically = IconData(57402, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
-  static const IconData spaceEvenlyHorizontally = IconData(57403, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
-  static const IconData spaceBetweenVertically = IconData(57404, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
-  static const IconData spaceBetweenHorizontally = IconData(57405, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
+  static const IconData spaceEvenlyHorizontally = IconData(
+    57403,
+    fontFamily: 'RadixIcons',
+    fontPackage: 'vnl_common_ui',
+  );
+  static const IconData spaceBetweenVertically = IconData(
+    57404,
+    fontFamily: 'RadixIcons',
+    fontPackage: 'vnl_common_ui',
+  );
+  static const IconData spaceBetweenHorizontally = IconData(
+    57405,
+    fontFamily: 'RadixIcons',
+    fontPackage: 'vnl_common_ui',
+  );
   static const IconData slider = IconData(57406, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
   static const IconData slash = IconData(57407, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
   static const IconData sketchLogo = IconData(57408, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
@@ -84,7 +96,11 @@ class RadixIcons {
   static const IconData rulerHorizontal = IconData(57423, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
   static const IconData rows = IconData(57424, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
   static const IconData rowSpacing = IconData(57425, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
-  static const IconData rotateCounterClockwise = IconData(57426, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
+  static const IconData rotateCounterClockwise = IconData(
+    57426,
+    fontFamily: 'RadixIcons',
+    fontPackage: 'vnl_common_ui',
+  );
   static const IconData rocket = IconData(57427, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
   static const IconData resume = IconData(57428, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
   static const IconData reset = IconData(57429, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
@@ -307,7 +323,7 @@ class RadixIcons {
   static const IconData barChart = IconData(57646, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
   static const IconData badge = IconData(57647, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
   static const IconData backpack = IconData(57648, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
-  static const IconData avatar = IconData(57649, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
+  static const IconData VNLAvatar = IconData(57649, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
   static const IconData aspectRatio = IconData(57650, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
   static const IconData arrowUp = IconData(57651, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
   static const IconData arrowTopRight = IconData(57652, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
@@ -326,11 +342,19 @@ class RadixIcons {
   static const IconData alignStart = IconData(57665, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
   static const IconData alignRight = IconData(57666, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
   static const IconData alignLeft = IconData(57667, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
-  static const IconData alignHorizontalCenters = IconData(57668, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
+  static const IconData alignHorizontalCenters = IconData(
+    57668,
+    fontFamily: 'RadixIcons',
+    fontPackage: 'vnl_common_ui',
+  );
   static const IconData alignEnd = IconData(57669, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
   static const IconData alignCenter = IconData(57670, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
   static const IconData alignCenterVertically = IconData(57671, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
-  static const IconData alignCenterHorizontally = IconData(57672, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
+  static const IconData alignCenterHorizontally = IconData(
+    57672,
+    fontFamily: 'RadixIcons',
+    fontPackage: 'vnl_common_ui',
+  );
   static const IconData alignBottom = IconData(57673, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
   static const IconData alignBaseline = IconData(57674, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');
   static const IconData activityLog = IconData(57675, fontFamily: 'RadixIcons', fontPackage: 'vnl_common_ui');

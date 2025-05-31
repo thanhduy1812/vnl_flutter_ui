@@ -32,7 +32,7 @@ class DataExample6State extends State<DataExample6> {
               child: const Text('Toggle'),
             ),
             const Gap(24),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 setState(() {
                   counter++;

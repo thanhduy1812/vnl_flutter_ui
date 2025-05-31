@@ -5,13 +5,13 @@ class ButtonExample14 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ButtonGroup(
+    return VNLButtonGroup(
       children: [
-        PrimaryButton(
+        VNLPrimaryButton(
           child: const Text('Primary'),
           onPressed: () {},
         ),
-        SecondaryButton(
+        VNLSecondaryButton(
           child: const Text('Secondary'),
           onPressed: () {},
         ),
@@ -19,7 +19,7 @@ class ButtonExample14 extends StatelessWidget {
           child: const Text('Destructive'),
           onPressed: () {},
         ),
-        OutlineButton(
+        VNLOutlineButton(
           child: const Text('Outlined'),
           onPressed: () {},
         ),
@@ -27,7 +27,7 @@ class ButtonExample14 extends StatelessWidget {
           child: const Text('Ghost'),
           onPressed: () {},
         ),
-        IconButton.primary(
+        VNLIconButton.primary(
           icon: const Icon(Icons.add),
           onPressed: () {},
         ),

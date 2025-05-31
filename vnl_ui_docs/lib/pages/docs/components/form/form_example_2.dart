@@ -1,5 +1,6 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 import 'dart:convert';
+
 class FormExample2 extends StatefulWidget {
   const FormExample2({super.key});
 
@@ -45,7 +46,7 @@ class _FormExample2State extends State<FormExample2> {
                   ],
                 ),
                 actions: [
-                  PrimaryButton(
+                  VNLPrimaryButton(
                     onPressed: () => Navigator.of(context).pop(),
                     child: const Text('Close'),
                   ),
@@ -109,7 +110,7 @@ class _FormExample2State extends State<FormExample2> {
             const Gap(24),
             FormErrorBuilder(
               builder: (context, errors, child) {
-                return PrimaryButton(
+                return VNLPrimaryButton(
                   onPressed: errors.isEmpty ? () => context.submitForm() : null,
                   child: const Text('Submit'),
                 );

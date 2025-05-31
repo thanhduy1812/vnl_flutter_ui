@@ -52,7 +52,7 @@ class _InnerWidgetState extends State<InnerWidget> {
         children: [
           Text('InnerWidget Rebuild Count: $innerRebuildCount'),
           const Gap(12),
-          PrimaryButton(
+          VNLPrimaryButton(
             onPressed: () {
               // Use "find" instead of "of" to avoid unnecessary rebuilds
               final data = Data.find<DataExample7State>(context);

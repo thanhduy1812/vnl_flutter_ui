@@ -12,7 +12,7 @@ class RadioGroupExample extends StatelessWidget {
     return const ComponentPage(
       name: 'radio_group',
       description: 'A radio group is a group of radio buttons.',
-      displayName: 'Radio Group',
+      displayName: 'VNLRadio Group',
       children: [
         WidgetUsageExample(
           title: 'Example',

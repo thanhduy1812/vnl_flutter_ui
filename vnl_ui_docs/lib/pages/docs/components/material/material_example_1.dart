@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:vnl_common_ui/vnl_ui.dart' as vnlui;
+import 'package:flutter/material.dart' hide showDialog;
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class MaterialExample1 extends StatefulWidget {
   const MaterialExample1({super.key});
@@ -40,24 +40,24 @@ class _MaterialExample1State extends State<MaterialExample1> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            const vnlui.Gap(64),
-            vnlui.VNLookUI(
-                child: vnlui.VNLCard(
+            const Gap(64),
+            VNLookUI(
+                child: VNLCard(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text('You can also use vnl_ui widgets inside Material widgets'),
-                  const vnlui.Gap(16),
-                  vnlui.PrimaryButton(
+                  const Gap(16),
+                  VNLPrimaryButton(
                     onPressed: () {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return vnlui.VNLAlertDialog(
+                          return VNLAlertDialog(
                             title: const Text('Hello'),
                             content: const Text('This is Material dialog'),
                             actions: [
-                              TextButton(
+                              VNLTextButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
@@ -70,17 +70,17 @@ class _MaterialExample1State extends State<MaterialExample1> {
                     },
                     child: const Text('Open Material Dialog'),
                   ),
-                  const vnlui.Gap(8),
-                  vnlui.SecondaryButton(
+                  const Gap(8),
+                  VNLSecondaryButton(
                     onPressed: () {
-                      vnlui.showDialog(
+                      showDialog(
                         context: context,
                         builder: (context) {
-                          return vnlui.VNLAlertDialog(
+                          return VNLAlertDialog(
                             title: const Text('Hello'),
                             content: const Text('This is vnl_ui dialog'),
                             actions: [
-                              vnlui.PrimaryButton(
+                              VNLPrimaryButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },

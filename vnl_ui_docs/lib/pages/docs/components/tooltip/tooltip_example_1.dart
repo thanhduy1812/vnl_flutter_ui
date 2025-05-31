@@ -9,7 +9,7 @@ class TooltipExample1 extends StatelessWidget {
       tooltip: const TooltipContainer(
         child: Text('This is a tooltip.'),
       ),
-      child: PrimaryButton(
+      child: VNLPrimaryButton(
         onPressed: () {},
         child: const Text('Hover over me'),
       ),

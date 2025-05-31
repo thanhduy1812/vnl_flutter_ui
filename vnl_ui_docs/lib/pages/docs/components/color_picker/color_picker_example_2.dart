@@ -5,7 +5,7 @@ class ColorPickerExample2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PrimaryButton(
+    return VNLPrimaryButton(
       onPressed: () async {
         final history = ColorHistoryStorage.of(context);
         final result = await pickColorFromScreen(context, history);

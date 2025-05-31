@@ -36,7 +36,7 @@ class _WindowExample1State extends State<WindowExample1> {
             ),
           ),
         ),
-        PrimaryButton(
+        VNLPrimaryButton(
           child: const Text('Add Window'),
           onPressed: () {
             navigatorKey.currentState?.pushWindow(

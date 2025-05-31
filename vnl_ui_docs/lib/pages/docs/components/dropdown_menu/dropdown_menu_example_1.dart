@@ -5,7 +5,7 @@ class DropdownMenuExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlineButton(
+    return VNLOutlineButton(
       onPressed: () {
         showDropdown(
           context: context,

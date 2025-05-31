@@ -1,11 +1,11 @@
 import '../../../vnl_ui.dart';
 
-class MenuPopup extends StatelessWidget {
+class VNLMenuPopup extends StatelessWidget {
   final double? surfaceOpacity;
   final double? surfaceBlur;
   final List<Widget> children;
 
-  const MenuPopup({super.key, this.surfaceOpacity, this.surfaceBlur, required this.children});
+  const VNLMenuPopup({super.key, this.surfaceOpacity, this.surfaceBlur, required this.children});
 
   Widget _buildIntrinsicContainer(Widget child, Axis direction, bool wrap) {
     if (!wrap) {

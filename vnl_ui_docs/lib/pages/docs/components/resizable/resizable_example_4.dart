@@ -73,7 +73,7 @@ class _ResizableExample4State extends State<ResizableExample4> {
           spacing: 16,
           runSpacing: 16,
           children: [
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 controller1.size = 80;
                 controller2.size = 80;
@@ -83,49 +83,49 @@ class _ResizableExample4State extends State<ResizableExample4> {
               },
               child: const Text('Reset'),
             ),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 controller3.tryExpandSize(20);
               },
               child: const Text('Expand Panel 2'),
             ),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 controller3.tryExpandSize(-20);
               },
               child: const Text('Shrink Panel 2'),
             ),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 controller2.tryExpandSize(20);
               },
               child: const Text('Expand Panel 1'),
             ),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 controller2.tryExpandSize(-20);
               },
               child: const Text('Shrink Panel 1'),
             ),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 controller5.tryExpandSize(20);
               },
               child: const Text('Expand Panel 4'),
             ),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 controller5.tryExpandSize(-20);
               },
               child: const Text('Shrink Panel 4'),
             ),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 controller5.tryCollapse();
               },
               child: const Text('Collapse Panel 4'),
             ),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 controller5.tryExpand();
               },

@@ -9,7 +9,7 @@ class VNLTabList extends StatelessWidget {
 
   Widget _childBuilder(BuildContext context, TabContainerData data, Widget child) {
     final theme = VNLTheme.of(context);
-    child = TabButton(
+    child = VNLTabButton(
       enabled: data.onSelect != null,
       onPressed: () {
         data.onSelect?.call(data.index);

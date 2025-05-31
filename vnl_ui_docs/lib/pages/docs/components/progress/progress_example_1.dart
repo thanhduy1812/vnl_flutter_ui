@@ -34,7 +34,7 @@ class _ProgressExample1State extends State<ProgressExample1> {
               child: const Text('Reset'),
             ),
             const Gap(16),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 if (_progress > 0) {
                   setState(() {
@@ -45,7 +45,7 @@ class _ProgressExample1State extends State<ProgressExample1> {
               child: const Text('Decrease by 10'),
             ),
             const Gap(16),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 if (_progress < 100) {
                   setState(() {

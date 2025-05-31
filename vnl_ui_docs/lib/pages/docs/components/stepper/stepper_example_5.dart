@@ -25,10 +25,10 @@ class _StepperExample5State extends State<StepperExample5> {
           contentBuilder: (context) {
             return StepContainer(
               actions: [
-                const SecondaryButton(
+                const VNLSecondaryButton(
                   child: Text('Prev'),
                 ),
-                PrimaryButton(
+                VNLPrimaryButton(
                     child: const Text('Next'),
                     onPressed: () {
                       controller.nextStep();
@@ -49,13 +49,13 @@ class _StepperExample5State extends State<StepperExample5> {
           contentBuilder: (context) {
             return StepContainer(
               actions: [
-                SecondaryButton(
+                VNLSecondaryButton(
                   child: const Text('Prev'),
                   onPressed: () {
                     controller.previousStep();
                   },
                 ),
-                PrimaryButton(
+                VNLPrimaryButton(
                     child: const Text('Next'),
                     onPressed: () {
                       controller.nextStep();
@@ -76,13 +76,13 @@ class _StepperExample5State extends State<StepperExample5> {
           contentBuilder: (context) {
             return StepContainer(
               actions: [
-                SecondaryButton(
+                VNLSecondaryButton(
                   child: const Text('Prev'),
                   onPressed: () {
                     controller.previousStep();
                   },
                 ),
-                PrimaryButton(
+                VNLPrimaryButton(
                     child: const Text('Finish'),
                     onPressed: () {
                       controller.nextStep();

@@ -691,7 +691,7 @@ class _NavigationItemState extends _AbstractNavigationButtonState<NavigationItem
             labelType == NavigationLabelType.all ||
             labelType == NavigationLabelType.selected);
     return NavigationPadding(
-      child: SelectedButton(
+      child: VNLSelectedButton(
         value: isSelected,
         enabled: widget.enabled,
         onChanged:

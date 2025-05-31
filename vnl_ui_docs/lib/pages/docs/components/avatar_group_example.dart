@@ -12,10 +12,10 @@ class AvatarGroupExample extends StatelessWidget {
     return const ComponentPage(
       name: 'avatar_group',
       description: 'Show a group of avatars.',
-      displayName: 'Avatar Group',
+      displayName: 'VNLAvatar Group',
       children: [
         WidgetUsageExample(
-          title: 'Avatar Group Example 1',
+          title: 'VNLAvatar Group Example 1',
           path: 'lib/pages/docs/components/avatar_group/avatar_group_example_1.dart',
           child: AvatarGroupExample1(),
         ),

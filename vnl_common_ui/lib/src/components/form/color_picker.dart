@@ -1037,7 +1037,7 @@ class _ColorPickerSetState extends State<ColorPickerSet> {
                 ),
                 if (widget.onPickFromScreen != null) Gap(theme.scaling * 16),
                 if (widget.onPickFromScreen != null)
-                  IconButton.outline(onPressed: widget.onPickFromScreen, icon: const Icon(LucideIcons.pipette)),
+                  VNLIconButton.outline(onPressed: widget.onPickFromScreen, icon: const Icon(LucideIcons.pipette)),
               ],
             ),
           ),
@@ -1376,7 +1376,7 @@ class _MiniColorPickerSetState extends State<MiniColorPickerSet> {
             ),
           if (widget.onPickFromScreen != null) Gap(theme.scaling * 16),
           if (widget.onPickFromScreen != null)
-            IconButton.outline(onPressed: widget.onPickFromScreen, icon: const Icon(LucideIcons.pipette)),
+            VNLIconButton.outline(onPressed: widget.onPickFromScreen, icon: const Icon(LucideIcons.pipette)),
         ],
       ),
     );
@@ -1469,7 +1469,7 @@ class ColorInput extends StatelessWidget {
       dialogActions: (innerContext, handler) {
         return [
           if (allowPickFromScreen)
-            IconButton.outline(
+            VNLIconButton.outline(
               icon: Icon(LucideIcons.pipette, size: 16 * theme.scaling),
               onPressed: () async {
                 await handler.close();
@@ -1751,19 +1751,19 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
       ),
       actions: [
         if (widget.allowPickFromScreen)
-          IconButton.outline(
+          VNLIconButton.outline(
             onPressed: () {
               Navigator.of(context).pop(const _ColorPickerDialogResult(pickedFromScreen: true));
             },
             icon: Icon(LucideIcons.pipette, size: 16 * theme.scaling),
           ),
-        SecondaryButton(
+        VNLSecondaryButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
           child: Text(localizations.buttonCancel),
         ),
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             widget.onColorChanged?.call(_color);
             Navigator.of(context).pop(_ColorPickerDialogResult(color: _color));

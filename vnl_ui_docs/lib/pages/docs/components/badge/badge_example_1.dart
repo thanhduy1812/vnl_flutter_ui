@@ -5,7 +5,7 @@ class BadgeExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const PrimaryBadge(
+    return const VNLPrimaryBadge(
       child: Text('Primary'),
     );
   }

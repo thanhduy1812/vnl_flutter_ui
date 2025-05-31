@@ -13,7 +13,7 @@ class _ToastExample1State extends State<ToastExample1> {
       child: Basic(
         title: const Text('Event has been created'),
         subtitle: const Text('Sunday, July 07, 2024 at 12:00 PM'),
-        trailing: PrimaryButton(
+        trailing: VNLPrimaryButton(
             size: ButtonSize.small,
             onPressed: () {
               overlay.close();
@@ -30,7 +30,7 @@ class _ToastExample1State extends State<ToastExample1> {
       spacing: 8,
       runSpacing: 8,
       children: [
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             showToast(
               context: context,
@@ -40,7 +40,7 @@ class _ToastExample1State extends State<ToastExample1> {
           },
           child: const Text('Show Bottom Left Toast'),
         ),
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             showToast(
               context: context,
@@ -50,7 +50,7 @@ class _ToastExample1State extends State<ToastExample1> {
           },
           child: const Text('Show Bottom Right Toast'),
         ),
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             showToast(
               context: context,
@@ -60,7 +60,7 @@ class _ToastExample1State extends State<ToastExample1> {
           },
           child: const Text('Show Top Left Toast'),
         ),
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             showToast(
               context: context,
@@ -71,7 +71,7 @@ class _ToastExample1State extends State<ToastExample1> {
           child: const Text('Show Top Right Toast'),
         ),
         // bottom center
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             showToast(
               context: context,
@@ -82,7 +82,7 @@ class _ToastExample1State extends State<ToastExample1> {
           child: const Text('Show Bottom Center Toast'),
         ),
         // top center
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             showToast(
               context: context,

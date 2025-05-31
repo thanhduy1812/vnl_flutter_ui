@@ -1,10 +1,10 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-class ChipButton extends StatelessWidget {
+class VNLChipButton extends StatelessWidget {
   final Widget child;
   final VoidCallback? onPressed;
 
-  const ChipButton({super.key, required this.child, this.onPressed});
+  const VNLChipButton({super.key, required this.child, this.onPressed});
 
   @override
   Widget build(BuildContext context) {

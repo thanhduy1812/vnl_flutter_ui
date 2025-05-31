@@ -35,7 +35,7 @@ class _RepeatedAnimationBuilderExample3State extends State<RepeatedAnimationBuil
           },
         ),
         const Gap(24),
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             setState(() {
               play = !play;

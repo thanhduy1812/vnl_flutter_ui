@@ -7,7 +7,7 @@ abstract class AvatarWidget extends Widget {
   double? get borderRadius;
 }
 
-class Avatar extends StatefulWidget implements AvatarWidget {
+class VNLAvatar extends StatefulWidget implements AvatarWidget {
   static String getInitials(String name) {
     final List<String> parts = name.split(r'\s+');
     if (parts.isEmpty) {
@@ -44,7 +44,7 @@ class Avatar extends StatefulWidget implements AvatarWidget {
   final double? badgeGap;
   final ImageProvider? provider;
 
-  const Avatar({
+  const VNLAvatar({
     super.key,
     required this.initials,
     this.backgroundColor,
@@ -56,7 +56,7 @@ class Avatar extends StatefulWidget implements AvatarWidget {
     this.provider,
   });
 
-  Avatar.network({
+  VNLAvatar.network({
     super.key,
     required this.initials,
     this.backgroundColor,
@@ -74,7 +74,7 @@ class Avatar extends StatefulWidget implements AvatarWidget {
   _AvatarState createState() => _AvatarState();
 }
 
-class _AvatarState extends State<Avatar> {
+class _AvatarState extends State<VNLAvatar> {
   Widget _build(BuildContext context) {
     final theme = VNLTheme.of(context);
     double size = widget.size ?? (theme.scaling * 40);
@@ -128,7 +128,7 @@ class _AvatarState extends State<Avatar> {
     double badgeSize = widget.badge!.size ?? theme.scaling * 12;
     double offset = size / 2 - badgeSize / 2;
     offset = offset / size;
-    return AvatarGroup(
+    return VNLAvatarGroup(
       alignment: widget.badgeAlignment ?? AlignmentDirectional(offset, offset),
       gap: widget.badgeGap ?? theme.scaling * 4,
       children: [
@@ -143,7 +143,7 @@ class _AvatarState extends State<Avatar> {
   }
 }
 
-class AvatarBadge extends StatelessWidget implements AvatarWidget {
+class VNLAvatarBadge extends StatelessWidget implements AvatarWidget {
   @override
   final double? size;
   @override
@@ -151,7 +151,7 @@ class AvatarBadge extends StatelessWidget implements AvatarWidget {
   final Widget? child;
   final Color? color;
 
-  const AvatarBadge({super.key, this.child, this.size, this.borderRadius, this.color});
+  const VNLAvatarBadge({super.key, this.child, this.size, this.borderRadius, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -184,36 +184,36 @@ class _AvatarWidget extends StatelessWidget implements AvatarWidget {
   }
 }
 
-class AvatarGroup extends StatelessWidget {
+class VNLAvatarGroup extends StatelessWidget {
   final List<AvatarWidget> children;
   final AlignmentGeometry alignment;
   final double? gap;
   final Clip? clipBehavior;
 
-  const AvatarGroup({super.key, required this.alignment, required this.children, this.gap, this.clipBehavior});
+  const VNLAvatarGroup({super.key, required this.alignment, required this.children, this.gap, this.clipBehavior});
 
-  factory AvatarGroup.toLeft({Key? key, required List<AvatarWidget> children, double? gap, double offset = 0.5}) {
-    return AvatarGroup(key: key, alignment: Alignment(offset, 0), gap: gap, children: children);
+  factory VNLAvatarGroup.toLeft({Key? key, required List<AvatarWidget> children, double? gap, double offset = 0.5}) {
+    return VNLAvatarGroup(key: key, alignment: Alignment(offset, 0), gap: gap, children: children);
   }
 
-  factory AvatarGroup.toRight({Key? key, required List<AvatarWidget> children, double? gap, double offset = 0.5}) {
-    return AvatarGroup(key: key, alignment: Alignment(-offset, 0), gap: gap, children: children);
+  factory VNLAvatarGroup.toRight({Key? key, required List<AvatarWidget> children, double? gap, double offset = 0.5}) {
+    return VNLAvatarGroup(key: key, alignment: Alignment(-offset, 0), gap: gap, children: children);
   }
 
-  factory AvatarGroup.toStart({Key? key, required List<AvatarWidget> children, double? gap, double offset = 0.5}) {
-    return AvatarGroup(key: key, alignment: AlignmentDirectional(offset, 0), gap: gap, children: children);
+  factory VNLAvatarGroup.toStart({Key? key, required List<AvatarWidget> children, double? gap, double offset = 0.5}) {
+    return VNLAvatarGroup(key: key, alignment: AlignmentDirectional(offset, 0), gap: gap, children: children);
   }
 
-  factory AvatarGroup.toEnd({Key? key, required List<AvatarWidget> children, double? gap, double offset = 0.5}) {
-    return AvatarGroup(key: key, alignment: AlignmentDirectional(-offset, 0), gap: gap, children: children);
+  factory VNLAvatarGroup.toEnd({Key? key, required List<AvatarWidget> children, double? gap, double offset = 0.5}) {
+    return VNLAvatarGroup(key: key, alignment: AlignmentDirectional(-offset, 0), gap: gap, children: children);
   }
 
-  factory AvatarGroup.toTop({Key? key, required List<AvatarWidget> children, double? gap, double offset = 0.5}) {
-    return AvatarGroup(key: key, alignment: Alignment(0, offset), gap: gap, children: children);
+  factory VNLAvatarGroup.toTop({Key? key, required List<AvatarWidget> children, double? gap, double offset = 0.5}) {
+    return VNLAvatarGroup(key: key, alignment: Alignment(0, offset), gap: gap, children: children);
   }
 
-  factory AvatarGroup.toBottom({Key? key, required List<AvatarWidget> children, double? gap, double offset = 0.5}) {
-    return AvatarGroup(key: key, alignment: Alignment(0, -offset), gap: gap, children: children);
+  factory VNLAvatarGroup.toBottom({Key? key, required List<AvatarWidget> children, double? gap, double offset = 0.5}) {
+    return VNLAvatarGroup(key: key, alignment: Alignment(0, -offset), gap: gap, children: children);
   }
 
   @override
@@ -228,14 +228,14 @@ class AvatarGroup extends StatelessWidget {
     double currentBorderRadius = 0;
     Alignment resolved = alignment.optionallyResolve(context);
     for (int i = 0; i < this.children.length; i++) {
-      AvatarWidget avatar = this.children[i];
-      double size = avatar.size ?? theme.scaling * 40;
+      AvatarWidget VNLAvatar = this.children[i];
+      double size = VNLAvatar.size ?? theme.scaling * 40;
       if (i == 0) {
-        children.add(Positioned(left: currentX, top: currentY, child: avatar));
+        children.add(Positioned(left: currentX, top: currentY, child: VNLAvatar));
         rect = Rect.fromLTWH(currentX, currentY, size, size);
         currentWidth = size;
         currentHeight = size;
-        currentBorderRadius = avatar.borderRadius ?? VNLTheme.of(context).radius * size;
+        currentBorderRadius = VNLAvatar.borderRadius ?? VNLTheme.of(context).radius * size;
       } else {
         double width = size;
         double height = size;
@@ -264,7 +264,7 @@ class AvatarGroup extends StatelessWidget {
                 previousAvatarSize: currentWidth,
                 gap: gap ?? theme.scaling * 4,
               ),
-              child: avatar,
+              child: VNLAvatar,
             ),
           ),
         );
@@ -273,7 +273,7 @@ class AvatarGroup extends StatelessWidget {
         currentY = y;
         currentWidth = size;
         currentHeight = size;
-        currentBorderRadius = avatar.borderRadius ?? theme.radius * size;
+        currentBorderRadius = VNLAvatar.borderRadius ?? theme.radius * size;
 
         rect = rect.expandToInclude(Rect.fromLTWH(x, y, size, size));
       }
@@ -314,7 +314,7 @@ class AvatarGroupClipper extends CustomClipper<Path> {
 
   @override
   Path getClip(Size size) {
-    // cut the avatar by the previous avatar
+    // cut the VNLAvatar by the previous VNLAvatar
     // avatars are rounded rectangles
 
     var prevAvatarSize = previousAvatarSize;

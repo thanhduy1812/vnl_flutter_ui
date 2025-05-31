@@ -5,7 +5,7 @@ class DialogExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PrimaryButton(
+    return VNLPrimaryButton(
       onPressed: () {
         showDialog(
           context: context,
@@ -44,7 +44,7 @@ class DialogExample1 extends StatelessWidget {
                 ],
               ),
               actions: [
-                PrimaryButton(
+                VNLPrimaryButton(
                   child: const Text('Save changes'),
                   onPressed: () {
                     Navigator.of(context).pop(controller.values);

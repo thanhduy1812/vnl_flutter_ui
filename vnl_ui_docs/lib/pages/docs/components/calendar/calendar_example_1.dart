@@ -21,7 +21,7 @@ class _CalendarExample1State extends State<CalendarExample1> {
           children: [
             Row(
               children: [
-                OutlineButton(
+                VNLOutlineButton(
                   density: ButtonDensity.icon,
                   onPressed: () {
                     setState(() {
@@ -31,7 +31,7 @@ class _CalendarExample1State extends State<CalendarExample1> {
                   child: const Icon(Icons.arrow_back).iconXSmall(),
                 ),
                 Text('${localizations.getMonth(_view.month)} ${_view.year}').small().medium().center().expanded(),
-                OutlineButton(
+                VNLOutlineButton(
                   density: ButtonDensity.icon,
                   onPressed: () {
                     setState(() {

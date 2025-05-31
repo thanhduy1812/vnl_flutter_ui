@@ -94,7 +94,7 @@ class _ComponentPageState extends State<ComponentPage> {
       onThisPage: onThisPage,
       navigationItems: [
         if (widget.component)
-          TextButton(
+          VNLTextButton(
             density: ButtonDensity.compact,
             onPressed: () {
               context.pushNamed('components');

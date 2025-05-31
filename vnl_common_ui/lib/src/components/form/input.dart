@@ -42,7 +42,7 @@ class _InputHintFeatureState extends InputFeatureState<InputHintFeature> {
   @override
   Iterable<Widget> buildTrailing() sync* {
     if (feature.position == InputFeaturePosition.trailing) {
-      yield IconButton.text(
+      yield VNLIconButton.text(
         icon: feature.icon ?? const Icon(LucideIcons.info),
         onPressed: _showPopup,
         density: ButtonDensity.compact,
@@ -53,7 +53,7 @@ class _InputHintFeatureState extends InputFeatureState<InputHintFeature> {
   @override
   Iterable<Widget> buildLeading() sync* {
     if (feature.position == InputFeaturePosition.leading) {
-      yield IconButton.text(
+      yield VNLIconButton.text(
         icon: feature.icon ?? const Icon(LucideIcons.info),
         onPressed: _showPopup,
         density: ButtonDensity.compact,
@@ -143,7 +143,7 @@ class _InputPasswordToggleFeatureState extends InputFeatureState<InputPasswordTo
 
   Widget _buildIconButton() {
     if (feature.mode == PasswordPeekMode.hold) {
-      return IconButton.text(
+      return VNLIconButton.text(
         icon: _buildIcon(),
         onTapDown: (_) {
           setState(() {
@@ -159,7 +159,7 @@ class _InputPasswordToggleFeatureState extends InputFeatureState<InputPasswordTo
         density: ButtonDensity.compact,
       );
     }
-    return IconButton.text(icon: _buildIcon(), onPressed: _toggleObscureText, density: ButtonDensity.compact);
+    return VNLIconButton.text(icon: _buildIcon(), onPressed: _toggleObscureText, density: ButtonDensity.compact);
   }
 
   @override
@@ -185,7 +185,7 @@ class _InputClearFeatureState extends InputFeatureState<InputClearFeature> {
   @override
   Iterable<Widget> buildTrailing() sync* {
     if (feature.position == InputFeaturePosition.trailing) {
-      yield IconButton.text(
+      yield VNLIconButton.text(
         icon: feature.icon ?? const Icon(LucideIcons.x),
         onPressed: _clear,
         density: ButtonDensity.compact,
@@ -196,7 +196,7 @@ class _InputClearFeatureState extends InputFeatureState<InputClearFeature> {
   @override
   Iterable<Widget> buildLeading() sync* {
     if (feature.position == InputFeaturePosition.leading) {
-      yield IconButton.text(
+      yield VNLIconButton.text(
         icon: feature.icon ?? const Icon(LucideIcons.x),
         onPressed: _clear,
         density: ButtonDensity.compact,
@@ -226,7 +226,7 @@ class _InputRevalidateFeatureState extends InputFeatureState<InputRevalidateFeat
     return FormPendingBuilder(
       builder: (context, futures, _) {
         if (futures.isEmpty) {
-          return IconButton.text(
+          return VNLIconButton.text(
             icon: feature.icon ?? const Icon(LucideIcons.refreshCw),
             onPressed: _revalidate,
             density: ButtonDensity.compact,
@@ -238,7 +238,7 @@ class _InputRevalidateFeatureState extends InputFeatureState<InputRevalidateFeat
           future: futureAll,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return IconButton.text(
+              return VNLIconButton.text(
                 icon: RepeatedAnimationBuilder(
                   start: 0.0,
                   end: 360.0,
@@ -252,7 +252,7 @@ class _InputRevalidateFeatureState extends InputFeatureState<InputRevalidateFeat
                 density: ButtonDensity.compact,
               );
             }
-            return IconButton.text(
+            return VNLIconButton.text(
               icon: feature.icon ?? const Icon(LucideIcons.refreshCw),
               onPressed: _revalidate,
               density: ButtonDensity.compact,
@@ -432,7 +432,7 @@ class _InputSpinnerFeatureState extends InputFeatureState<InputSpinnerFeature> {
         return Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            IconButton.text(
+            VNLIconButton.text(
               icon: Transform.translate(
                 offset: Offset(0, -1 * theme.scaling),
                 child: Transform.scale(
@@ -445,7 +445,7 @@ class _InputSpinnerFeatureState extends InputFeatureState<InputSpinnerFeature> {
               density: ButtonDensity.compact,
               size: ButtonSize.xSmall,
             ),
-            IconButton.text(
+            VNLIconButton.text(
               icon: Transform.translate(
                 offset: Offset(0, 1 * theme.scaling),
                 child: Transform.scale(
@@ -491,7 +491,7 @@ class _InputCopyFeatureState extends InputFeatureState<InputCopyFeature> {
   @override
   Iterable<Widget> buildTrailing() sync* {
     if (feature.position == InputFeaturePosition.trailing) {
-      yield IconButton.text(
+      yield VNLIconButton.text(
         icon: feature.icon ?? const Icon(LucideIcons.copy),
         onPressed: _copy,
         density: ButtonDensity.compact,
@@ -502,7 +502,7 @@ class _InputCopyFeatureState extends InputFeatureState<InputCopyFeature> {
   @override
   Iterable<Widget> buildLeading() sync* {
     if (feature.position == InputFeaturePosition.leading) {
-      yield IconButton.text(
+      yield VNLIconButton.text(
         icon: feature.icon ?? const Icon(LucideIcons.copy),
         onPressed: _copy,
         density: ButtonDensity.compact,
@@ -566,7 +566,7 @@ class _InputPasteFeatureState extends InputFeatureState<InputPasteFeature> {
   @override
   Iterable<Widget> buildTrailing() sync* {
     if (feature.position == InputFeaturePosition.trailing) {
-      yield IconButton.text(
+      yield VNLIconButton.text(
         icon: feature.icon ?? const Icon(LucideIcons.clipboard),
         onPressed: _paste,
         density: ButtonDensity.compact,
@@ -577,7 +577,7 @@ class _InputPasteFeatureState extends InputFeatureState<InputPasteFeature> {
   @override
   Iterable<Widget> buildLeading() sync* {
     if (feature.position == InputFeaturePosition.leading) {
-      yield IconButton.text(
+      yield VNLIconButton.text(
         icon: feature.icon ?? const Icon(LucideIcons.clipboard),
         onPressed: _paste,
         density: ButtonDensity.compact,

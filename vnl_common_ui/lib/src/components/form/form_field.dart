@@ -159,7 +159,7 @@ class ObjectFormFieldState<T> extends State<ObjectFormField<T>> with FormValueSu
 
   @override
   Widget build(BuildContext context) {
-    return OutlineButton(
+    return VNLOutlineButton(
       trailing: widget.trailing?.iconMutedForeground().iconSmall(),
       leading: widget.leading?.iconMutedForeground().iconSmall(),
       size: widget.size,
@@ -249,13 +249,13 @@ class _ObjectFormFieldDialogState<T> extends State<_ObjectFormFieldDialog<T>> im
         content: Padding(padding: EdgeInsets.only(top: 8 * theme.scaling), child: widget.editorBuilder(context, this)),
         actions: [
           if (widget.dialogActions != null) ...widget.dialogActions!(context, this),
-          SecondaryButton(
+          VNLSecondaryButton(
             child: Text(localizations.buttonCancel),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
-          PrimaryButton(
+          VNLPrimaryButton(
             child: Text(localizations.buttonSave),
             onPressed: () {
               Navigator.of(context).pop(ObjectFormFieldDialogResult(_value));

@@ -38,14 +38,14 @@ class _CarouselExample3State extends State<CarouselExample3> {
             children: [
               CarouselDotIndicator(itemCount: 5, controller: controller),
               const Spacer(),
-              OutlineButton(
+              VNLOutlineButton(
                   shape: ButtonShape.circle,
                   onPressed: () {
                     controller.animatePrevious(const Duration(milliseconds: 500));
                   },
                   child: const Icon(Icons.arrow_back)),
               const Gap(8),
-              OutlineButton(
+              VNLOutlineButton(
                   shape: ButtonShape.circle,
                   onPressed: () {
                     controller.animateNext(const Duration(milliseconds: 500));

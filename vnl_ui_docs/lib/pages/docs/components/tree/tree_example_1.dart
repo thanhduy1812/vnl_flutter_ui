@@ -118,7 +118,7 @@ class _TreeExample1State extends State<TreeExample1> {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 setState(() {
                   treeItems = treeItems.expandAll();
@@ -127,7 +127,7 @@ class _TreeExample1State extends State<TreeExample1> {
               child: const Text('Expand All'),
             ),
             const Gap(8),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 setState(() {
                   treeItems = treeItems.collapseAll();

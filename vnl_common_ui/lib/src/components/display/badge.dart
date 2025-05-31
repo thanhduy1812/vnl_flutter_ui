@@ -1,20 +1,13 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-class PrimaryBadge extends StatelessWidget {
+class VNLPrimaryBadge extends StatelessWidget {
   final Widget child;
   final VoidCallback? onPressed;
   final Widget? leading;
   final Widget? trailing;
   final AbstractButtonStyle? style;
 
-  const PrimaryBadge({
-    super.key,
-    required this.child,
-    this.onPressed,
-    this.leading,
-    this.trailing,
-    this.style,
-  });
+  const VNLPrimaryBadge({super.key, required this.child, this.onPressed, this.leading, this.trailing, this.style});
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +17,15 @@ class PrimaryBadge extends StatelessWidget {
         trailing: trailing,
         onPressed: onPressed,
         enabled: true,
-        style: style ??
+        style:
+            style ??
             const ButtonStyle.primary(
               size: ButtonSize.small,
               density: ButtonDensity.dense,
               shape: ButtonShape.rectangle,
             ).copyWith(
               textStyle: (context, states, value) {
-                return value.copyWith(
-                  fontWeight: FontWeight.w500,
-                );
+                return value.copyWith(fontWeight: FontWeight.w500);
               },
             ),
         child: child,
@@ -42,21 +34,14 @@ class PrimaryBadge extends StatelessWidget {
   }
 }
 
-class SecondaryBadge extends StatelessWidget {
+class VNLSecondaryBadge extends StatelessWidget {
   final Widget child;
   final VoidCallback? onPressed;
   final Widget? leading;
   final Widget? trailing;
   final AbstractButtonStyle? style;
 
-  const SecondaryBadge({
-    super.key,
-    required this.child,
-    this.onPressed,
-    this.leading,
-    this.trailing,
-    this.style,
-  });
+  const VNLSecondaryBadge({super.key, required this.child, this.onPressed, this.leading, this.trailing, this.style});
 
   @override
   Widget build(BuildContext context) {
@@ -66,16 +51,15 @@ class SecondaryBadge extends StatelessWidget {
         trailing: trailing,
         onPressed: onPressed,
         enabled: true,
-        style: style ??
+        style:
+            style ??
             const ButtonStyle.secondary(
               size: ButtonSize.small,
               density: ButtonDensity.dense,
               shape: ButtonShape.rectangle,
             ).copyWith(
               textStyle: (context, states, value) {
-                return value.copyWith(
-                  fontWeight: FontWeight.w500,
-                );
+                return value.copyWith(fontWeight: FontWeight.w500);
               },
             ),
         child: child,
@@ -84,21 +68,14 @@ class SecondaryBadge extends StatelessWidget {
   }
 }
 
-class OutlineBadge extends StatelessWidget {
+class VNLOutlineBadge extends StatelessWidget {
   final Widget child;
   final VoidCallback? onPressed;
   final Widget? leading;
   final Widget? trailing;
   final AbstractButtonStyle? style;
 
-  const OutlineBadge({
-    super.key,
-    required this.child,
-    this.onPressed,
-    this.leading,
-    this.trailing,
-    this.style,
-  });
+  const VNLOutlineBadge({super.key, required this.child, this.onPressed, this.leading, this.trailing, this.style});
 
   @override
   Widget build(BuildContext context) {
@@ -108,16 +85,15 @@ class OutlineBadge extends StatelessWidget {
         trailing: trailing,
         onPressed: onPressed,
         enabled: true,
-        style: style ??
+        style:
+            style ??
             const ButtonStyle.outline(
               size: ButtonSize.small,
               density: ButtonDensity.dense,
               shape: ButtonShape.rectangle,
             ).copyWith(
               textStyle: (context, states, value) {
-                return value.copyWith(
-                  fontWeight: FontWeight.w500,
-                );
+                return value.copyWith(fontWeight: FontWeight.w500);
               },
             ),
         child: child,
@@ -133,14 +109,7 @@ class DestructiveBadge extends StatelessWidget {
   final Widget? trailing;
   final AbstractButtonStyle? style;
 
-  const DestructiveBadge({
-    super.key,
-    required this.child,
-    this.onPressed,
-    this.leading,
-    this.trailing,
-    this.style,
-  });
+  const DestructiveBadge({super.key, required this.child, this.onPressed, this.leading, this.trailing, this.style});
 
   @override
   Widget build(BuildContext context) {
@@ -150,16 +119,15 @@ class DestructiveBadge extends StatelessWidget {
         trailing: trailing,
         onPressed: onPressed,
         enabled: true,
-        style: style ??
+        style:
+            style ??
             const ButtonStyle.destructive(
               size: ButtonSize.small,
               density: ButtonDensity.dense,
               shape: ButtonShape.rectangle,
             ).copyWith(
               textStyle: (context, states, value) {
-                return value.copyWith(
-                  fontWeight: FontWeight.w500,
-                );
+                return value.copyWith(fontWeight: FontWeight.w500);
               },
             ),
         child: child,

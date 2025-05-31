@@ -33,7 +33,7 @@ class _NavigationSidebarExample1State extends State<NavigationSidebarExample1> {
             const NavigationLabel(child: Text('Discovery')),
             buildButton('Listen Now', BootstrapIcons.playCircle),
             buildButton('Browse', BootstrapIcons.grid),
-            buildButton('Radio', BootstrapIcons.broadcast),
+            buildButton('VNLRadio', BootstrapIcons.broadcast),
             const NavigationGap(24),
             const NavigationDivider(),
             const NavigationLabel(child: Text('Library')),

@@ -12,10 +12,10 @@ class TooltipExample extends StatelessWidget {
     return const ComponentPage(
       name: 'tooltip',
       description: 'A floating message that appears when a user interacts with a target.',
-      displayName: 'Tooltip',
+      displayName: 'VNLTooltip',
       children: [
         WidgetUsageExample(
-          title: 'Tooltip Example',
+          title: 'VNLTooltip Example',
           path: 'lib/pages/docs/components/tooltip/tooltip_example_1.dart',
           child: TooltipExample1(),
         ),

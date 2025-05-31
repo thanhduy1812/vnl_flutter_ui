@@ -145,12 +145,12 @@ class BasicLayout extends StatelessWidget {
   }
 }
 
-class Label extends StatelessWidget {
+class VNLLabel extends StatelessWidget {
   final Widget? leading;
   final Widget child;
   final Widget? trailing;
 
-  const Label({super.key, this.leading, required this.child, this.trailing});
+  const VNLLabel({super.key, this.leading, required this.child, this.trailing});
 
   @override
   Widget build(BuildContext context) {

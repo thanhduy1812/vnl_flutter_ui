@@ -53,7 +53,7 @@ class _ComponentsPageState extends State<ComponentsPage> {
       child: Basic(
         title: const Text('Event has been created'),
         subtitle: const Text('Sunday, July 07, 2024 at 12:00 PM'),
-        trailing: PrimaryButton(size: ButtonSize.small, onPressed: () {}, child: const Text('Undo')),
+        trailing: VNLPrimaryButton(size: ButtonSize.small, onPressed: () {}, child: const Text('Undo')),
         trailingAlignment: Alignment.center,
       ),
     );
@@ -84,7 +84,7 @@ class _ComponentsPageState extends State<ComponentsPage> {
             const Gap(16),
             const Align(
               alignment: AlignmentDirectional.centerStart,
-              child: PrimaryBadge(
+              child: VNLPrimaryBadge(
                 child: Text('Work in Progress'),
               ),
             ),
@@ -305,11 +305,11 @@ class _ComponentsPageState extends State<ComponentsPage> {
                   title: const Text('Alert Dialog'),
                   content: const Text('This is an alert dialog.'),
                   actions: [
-                    SecondaryButton(
+                    VNLSecondaryButton(
                       onPressed: () {},
                       child: const Text('Cancel'),
                     ),
-                    PrimaryButton(
+                    VNLPrimaryButton(
                       onPressed: () {},
                       child: const Text('OK'),
                     ),
@@ -343,30 +343,30 @@ class _ComponentsPageState extends State<ComponentsPage> {
                       Basic(
                         title: const Text('Skeleton Example 1'),
                         content: const Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
-                        leading: const Avatar(
+                        leading: const VNLAvatar(
                           initials: '',
                         ).asSkeleton(),
-                        // Note: Avatar and other Image related widget needs its own skeleton
+                        // Note: VNLAvatar and other Image related widget needs its own skeleton
                         trailing: const Icon(Icons.arrow_forward),
                       ).asSkeleton(),
                       const Gap(16),
                       Basic(
                         title: const Text('Skeleton Example 1'),
                         content: const Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
-                        leading: const Avatar(
+                        leading: const VNLAvatar(
                           initials: '',
                         ).asSkeleton(),
-                        // Note: Avatar and other Image related widget needs its own skeleton
+                        // Note: VNLAvatar and other Image related widget needs its own skeleton
                         trailing: const Icon(Icons.arrow_forward),
                       ).asSkeleton(),
                       const Gap(16),
                       Basic(
                         title: const Text('Skeleton Example 1'),
                         content: const Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
-                        leading: const Avatar(
+                        leading: const VNLAvatar(
                           initials: '',
                         ).asSkeleton(),
-                        // Note: Avatar and other Image related widget needs its own skeleton
+                        // Note: VNLAvatar and other Image related widget needs its own skeleton
                         trailing: const Icon(Icons.arrow_forward),
                       ).asSkeleton(),
                     ],
@@ -419,15 +419,15 @@ class _ComponentsPageState extends State<ComponentsPage> {
                       spacing: 16,
                       runSpacing: 16,
                       children: [
-                        PrimaryButton(
+                        VNLPrimaryButton(
                           onPressed: () {},
                           child: const Text('Primary'),
                         ),
-                        SecondaryButton(
+                        VNLSecondaryButton(
                           onPressed: () {},
                           child: const Text('Secondary'),
                         ),
-                        OutlineButton(
+                        VNLOutlineButton(
                           onPressed: () {},
                           child: const Text('Outline'),
                         ),
@@ -489,11 +489,11 @@ class _ComponentsPageState extends State<ComponentsPage> {
                               const Row(
                                 children: [
                                   VNLChip(
-                                    trailing: ChipButton(child: Icon(Icons.close)),
+                                    trailing: VNLChipButton(child: Icon(Icons.close)),
                                     child: Text('Chip 1'),
                                   ),
                                   VNLChip(
-                                    trailing: ChipButton(child: Icon(Icons.close)),
+                                    trailing: VNLChipButton(child: Icon(Icons.close)),
                                     child: Text('Chip 2'),
                                   ),
                                 ],
@@ -502,7 +502,7 @@ class _ComponentsPageState extends State<ComponentsPage> {
                               Row(
                                 children: [
                                   const VNLChip(
-                                    trailing: ChipButton(child: Icon(Icons.close)),
+                                    trailing: VNLChipButton(child: Icon(Icons.close)),
                                     child: Text('Cool Chip'),
                                   ),
                                   const Gap(4),
@@ -593,7 +593,7 @@ class _ComponentsPageState extends State<ComponentsPage> {
               ),
               ComponentCard(
                 name: 'radio_group',
-                title: 'Radio Group',
+                title: 'VNLRadio Group',
                 scale: 2,
                 example: VNLCard(
                   child: RadioGroup<int>(
@@ -880,7 +880,7 @@ class _ComponentsPageState extends State<ComponentsPage> {
                       Container(
                         width: 192,
                         margin: const EdgeInsets.only(left: 48),
-                        child: MenuPopup(children: [
+                        child: VNLMenuPopup(children: [
                           VNLButton(
                             style: const ButtonStyle.menu(),
                             onPressed: () {},
@@ -1002,7 +1002,7 @@ class _ComponentsPageState extends State<ComponentsPage> {
                 ),
               ),
               ComponentCard(
-                title: 'Pagination',
+                title: 'VNLPagination',
                 name: 'pagination',
                 reverse: true,
                 example: Column(
@@ -1105,7 +1105,7 @@ class _ComponentsPageState extends State<ComponentsPage> {
                       ),
                     ),
                     actions: [
-                      PrimaryButton(
+                      VNLPrimaryButton(
                         child: const Text('Save changes'),
                         onPressed: () {},
                       ),
@@ -1181,7 +1181,7 @@ class _ComponentsPageState extends State<ComponentsPage> {
               ),
               ComponentCard(
                 name: 'tooltip',
-                title: 'Tooltip',
+                title: 'VNLTooltip',
                 center: true,
                 scale: 1,
                 example: Stack(
@@ -1239,19 +1239,19 @@ class _ComponentsPageState extends State<ComponentsPage> {
             const Gap(16),
             wrap(children: [
               ComponentCard(
-                name: 'avatar',
-                title: 'Avatar',
+                name: 'VNLAvatar',
+                title: 'VNLAvatar',
                 scale: 1.5,
                 example: VNLCard(
                   child: Row(
                     children: [
-                      Avatar(
-                        initials: Avatar.getInitials('sunarya-thito'),
+                      VNLAvatar(
+                        initials: VNLAvatar.getInitials('sunarya-thito'),
                         provider: const NetworkImage('https://avatars.githubusercontent.com/u/64018564?v=4'),
                       ),
                       const Gap(16),
-                      Avatar(
-                        initials: Avatar.getInitials('sunarya-thito'),
+                      VNLAvatar(
+                        initials: VNLAvatar.getInitials('sunarya-thito'),
                       ),
                     ],
                   ),
@@ -1259,24 +1259,24 @@ class _ComponentsPageState extends State<ComponentsPage> {
               ),
               ComponentCard(
                 name: 'avatar_group',
-                title: 'Avatar Group',
+                title: 'VNLAvatar Group',
                 scale: 1.5,
                 center: true,
-                example: AvatarGroup.toLeft(children: [
-                  Avatar(
-                    initials: Avatar.getInitials('sunarya-thito'),
+                example: VNLAvatarGroup.toLeft(children: [
+                  VNLAvatar(
+                    initials: VNLAvatar.getInitials('sunarya-thito'),
                     backgroundColor: VNLColors.red,
                   ),
-                  Avatar(
-                    initials: Avatar.getInitials('sunarya-thito'),
+                  VNLAvatar(
+                    initials: VNLAvatar.getInitials('sunarya-thito'),
                     backgroundColor: VNLColors.green,
                   ),
-                  Avatar(
-                    initials: Avatar.getInitials('sunarya-thito'),
+                  VNLAvatar(
+                    initials: VNLAvatar.getInitials('sunarya-thito'),
                     backgroundColor: VNLColors.blue,
                   ),
-                  Avatar(
-                    initials: Avatar.getInitials('sunarya-thito'),
+                  VNLAvatar(
+                    initials: VNLAvatar.getInitials('sunarya-thito'),
                     backgroundColor: VNLColors.yellow,
                   ),
                 ]),
@@ -1309,8 +1309,8 @@ class _ComponentsPageState extends State<ComponentsPage> {
                 scale: 1.5,
                 example: const Column(
                   children: [
-                    PrimaryBadge(child: Text('Primary')),
-                    SecondaryBadge(child: Text('Secondary')),
+                    VNLPrimaryBadge(child: Text('Primary')),
+                    VNLSecondaryBadge(child: Text('Secondary')),
                     DestructiveBadge(child: Text('Destructive')),
                   ],
                 ).gap(8),
@@ -1340,7 +1340,7 @@ class _ComponentsPageState extends State<ComponentsPage> {
                     const Gap(24),
                     SizedBox(
                       width: 192,
-                      child: MenuPopup(children: [
+                      child: VNLMenuPopup(children: [
                         VNLButton(
                           style: const ButtonStyle.menu(),
                           onPressed: () {},
@@ -1397,14 +1397,14 @@ class _ComponentsPageState extends State<ComponentsPage> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          OutlineButton(
+                          VNLOutlineButton(
                             onPressed: () {},
                             child: const Text('Options'),
                           ),
                           const Gap(8),
                           SizedBox(
                             width: 192,
-                            child: MenuPopup(children: [
+                            child: VNLMenuPopup(children: [
                               VNLButton(
                                 style: const ButtonStyle.menu(),
                                 onPressed: () {},
@@ -1496,7 +1496,7 @@ class WIPComponentCard extends StatelessWidget implements IComponentPage {
         name: '-',
         title: title,
         center: true,
-        example: const PrimaryBadge(
+        example: const VNLPrimaryBadge(
           child: Text('Work in Progress'),
         ),
       ),

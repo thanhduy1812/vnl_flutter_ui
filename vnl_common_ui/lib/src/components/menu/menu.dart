@@ -357,7 +357,7 @@ class _MenuButtonState extends State<MenuButton> {
                   subMenuOffset: const Offset(8, -4 + -1) * scaling,
                   itemPadding: itemPadding,
                   builder: (context, children) {
-                    return MenuPopup(children: children);
+                    return VNLMenuPopup(children: children);
                   },
                   children: _children.value,
                 );

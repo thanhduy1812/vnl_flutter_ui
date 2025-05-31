@@ -31,7 +31,7 @@ class _AnimatedValueBuilderExample1State extends State<AnimatedValueBuilderExamp
           },
         ),
         const Gap(32),
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             setState(() {
               index = (index + 1) % colors.length;

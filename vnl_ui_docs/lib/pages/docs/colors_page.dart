@@ -82,7 +82,7 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
             ),
           ),
           actions: [
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -287,7 +287,7 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
                   Row(
                     children: [
                       Expanded(child: Text(color.key).medium().small()),
-                      OutlineButton(
+                      VNLOutlineButton(
                         onPressed: () {
                           setState(() {
                             _customColor = color.value[500].toHSL();
@@ -461,7 +461,7 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
                           title: const Text('Reset Options'),
                           content: const Text('Are you sure you want to reset the options?'),
                           actions: [
-                            PrimaryButton(
+                            VNLPrimaryButton(
                               onPressed: () {
                                 setState(() {
                                   _hueShift = _defaultHueShift;
@@ -474,7 +474,7 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
                               },
                               child: const Text('Reset'),
                             ),
-                            SecondaryButton(
+                            VNLSecondaryButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },

@@ -8,7 +8,7 @@ class ColorPickerExample3 extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             showColorPicker(
               context: context,
@@ -22,7 +22,7 @@ class ColorPickerExample3 extends StatelessWidget {
           child: const Text('Open Color Picker Popover'),
         ),
         const Gap(16),
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             showColorPickerDialog(
               context: context,

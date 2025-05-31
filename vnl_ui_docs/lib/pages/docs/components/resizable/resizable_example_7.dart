@@ -43,7 +43,7 @@ class _ResizableExample7State extends State<ResizableExample7> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          TextButton(
+                          VNLTextButton(
                             child: const Text('Insert Before'),
                             onPressed: () {
                               setState(() {
@@ -51,7 +51,7 @@ class _ResizableExample7State extends State<ResizableExample7> {
                               });
                             },
                           ),
-                          TextButton(
+                          VNLTextButton(
                             child: const Text('Remove'),
                             onPressed: () {
                               setState(() {
@@ -59,7 +59,7 @@ class _ResizableExample7State extends State<ResizableExample7> {
                               });
                             },
                           ),
-                          TextButton(
+                          VNLTextButton(
                             child: const Text('Insert After'),
                             onPressed: () {
                               setState(() {
@@ -74,7 +74,7 @@ class _ResizableExample7State extends State<ResizableExample7> {
                 ),
             ],
           ),
-          PrimaryButton(
+          VNLPrimaryButton(
             child: const Text('Add'),
             onPressed: () {
               setState(() {

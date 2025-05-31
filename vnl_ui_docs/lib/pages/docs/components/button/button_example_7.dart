@@ -9,19 +9,19 @@ class ButtonExample7 extends StatelessWidget {
       spacing: 8,
       runSpacing: 8,
       children: [
-        PrimaryButton(
+        VNLPrimaryButton(
           child: Text('Disabled'),
         ),
-        SecondaryButton(
+        VNLSecondaryButton(
           child: Text('Disabled'),
         ),
-        OutlineButton(
+        VNLOutlineButton(
           child: Text('Disabled'),
         ),
         GhostButton(
           child: Text('Disabled'),
         ),
-        TextButton(
+        VNLTextButton(
           child: Text('Disabled'),
         ),
         DestructiveButton(

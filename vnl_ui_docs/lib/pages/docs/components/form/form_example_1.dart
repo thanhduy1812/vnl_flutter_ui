@@ -43,7 +43,7 @@ class _FormExample1State extends State<FormExample1> {
                   ],
                 ),
                 actions: [
-                  PrimaryButton(
+                  VNLPrimaryButton(
                     onPressed: () => Navigator.of(context).pop(),
                     child: const Text('Close'),
                   ),
@@ -88,7 +88,7 @@ class _FormExample1State extends State<FormExample1> {
             const Gap(24),
             FormErrorBuilder(
               builder: (context, errors, child) {
-                return PrimaryButton(
+                return VNLPrimaryButton(
                   onPressed: errors.isEmpty ? () => context.submitForm() : null,
                   child: const Text('Submit'),
                 );

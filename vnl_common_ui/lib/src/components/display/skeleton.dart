@@ -38,7 +38,7 @@ extension SkeletonExtension on Widget {
     if (snapshot != null) {
       enabled = !snapshot.hasData;
     }
-    if (this is Avatar || this is Image) {
+    if (this is VNLAvatar || this is Image) {
       // https://github.com/Milad-Akarie/skeletonizer/issues/17
       return Skeleton.leaf(enabled: enabled, child: this);
     }

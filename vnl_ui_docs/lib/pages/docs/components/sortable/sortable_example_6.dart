@@ -41,7 +41,7 @@ class _SortableExample6State extends State<SortableExample6> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              PrimaryButton(
+              VNLPrimaryButton(
                 onPressed: () {
                   setState(() {
                     _reset();

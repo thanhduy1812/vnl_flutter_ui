@@ -27,36 +27,20 @@ class ItemPicker<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations = VNLookLocalizations.of(context);
     return ObjectFormField(
-        value: value,
-        placeholder: placeholder ?? const SizedBox.shrink(),
-        builder: builder,
-        dialogTitle: title,
-        onChanged: onChanged,
-        mode: mode,
-        decorate: false,
-        editorBuilder: (context, handler) {
-          if (mode == PromptMode.dialog) {
-            final theme = VNLTheme.of(context);
-            return ModalBackdrop(
+      value: value,
+      placeholder: placeholder ?? const SizedBox.shrink(),
+      builder: builder,
+      dialogTitle: title,
+      onChanged: onChanged,
+      mode: mode,
+      decorate: false,
+      editorBuilder: (context, handler) {
+        if (mode == PromptMode.dialog) {
+          final theme = VNLTheme.of(context);
+          return ModalBackdrop(
+            borderRadius: theme.borderRadiusXl,
+            child: ModalContainer(
               borderRadius: theme.borderRadiusXl,
-              child: ModalContainer(
-                borderRadius: theme.borderRadiusXl,
-                padding: EdgeInsets.zero,
-                child: _InternalItemPicker<T>(
-                  items: items,
-                  builder: builder,
-                  initialValue: handler.value,
-                  layout: layout,
-                  title: title,
-                  constraints: constraints,
-                  onChanged: (value) {
-                    closeOverlay(context, value);
-                  },
-                ),
-              ),
-            );
-          } else {
-            return SurfaceCard(
               padding: EdgeInsets.zero,
               child: _InternalItemPicker<T>(
                 items: items,
@@ -69,9 +53,26 @@ class ItemPicker<T> extends StatelessWidget {
                   closeOverlay(context, value);
                 },
               ),
-            );
-          }
-        });
+            ),
+          );
+        } else {
+          return SurfaceCard(
+            padding: EdgeInsets.zero,
+            child: _InternalItemPicker<T>(
+              items: items,
+              builder: builder,
+              initialValue: handler.value,
+              layout: layout,
+              title: title,
+              constraints: constraints,
+              onChanged: (value) {
+                closeOverlay(context, value);
+              },
+            ),
+          );
+        }
+      },
+    );
   }
 }
 
@@ -238,24 +239,18 @@ class _InternalItemPicker<T> extends StatelessWidget {
       children: [
         if (title != null)
           Padding(
-            padding: EdgeInsets.all(16.0 * theme.scaling) +
-                EdgeInsets.only(top: padding.top),
+            padding: EdgeInsets.all(16.0 * theme.scaling) + EdgeInsets.only(top: padding.top),
             child: title?.large.semiBold,
           ),
         ConstrainedBox(
-          constraints: constraints ??
-              BoxConstraints(
-                maxWidth: 320 * theme.scaling,
-                maxHeight: 320 * theme.scaling,
-              ),
+          constraints: constraints ?? BoxConstraints(maxWidth: 320 * theme.scaling, maxHeight: 320 * theme.scaling),
           child: MediaQuery(
             data: MediaQuery.of(context).copyWith(
-              padding: title != null
-                  ? padding.copyWith(top: 0) +
-                      const EdgeInsets.only(
-                              bottom: 8.0, left: 8.0, right: 8.0) *
-                          theme.scaling
-                  : padding + const EdgeInsets.all(8) * theme.scaling,
+              padding:
+                  title != null
+                      ? padding.copyWith(top: 0) +
+                          const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0) * theme.scaling
+                      : padding + const EdgeInsets.all(8) * theme.scaling,
             ),
             child: ItemPickerDialog<T>(
               items: items,
@@ -265,7 +260,7 @@ class _InternalItemPicker<T> extends StatelessWidget {
               onChanged: onChanged,
             ),
           ),
-        )
+        ),
       ],
     );
   }
@@ -338,11 +333,7 @@ class _ItemPickerDialogState<T> extends State<ItemPickerDialog<T>> {
   @override
   Widget build(BuildContext context) {
     return Data.inherit(
-      data: ItemPickerData(
-        value: widget.value,
-        onChanged: _onChanged,
-        layout: widget.layout,
-      ),
+      data: ItemPickerData(value: widget.value, onChanged: _onChanged, layout: widget.layout),
       child: widget.layout.build(context, widget.items, _buildItem),
     );
   }
@@ -392,24 +383,14 @@ class ItemPickerOption<T> extends StatelessWidget {
               fit: StackFit.passthrough,
               children: [
                 child,
-                if (label != null)
-                  Positioned(
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: Center(child: label),
-                  ),
+                if (label != null) Positioned(top: 0, left: 0, right: 0, bottom: 0, child: Center(child: label)),
               ],
             );
           }
           if (label == null) {
             return child;
           }
-          return BasicLayout(
-            leading: child,
-            content: label,
-          );
+          return BasicLayout(leading: child, content: label);
         },
       );
     }
@@ -428,19 +409,12 @@ class ItemPickerOption<T> extends StatelessWidget {
         child: label!,
       );
     }
-    return IconButton(
+    return VNLIconButton(
       icon: Stack(
         fit: StackFit.passthrough,
         children: [
           child,
-          if (label != null)
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: Center(child: label),
-            ),
+          if (label != null) Positioned(top: 0, left: 0, right: 0, bottom: 0, child: Center(child: label)),
         ],
       ),
       onPressed: data.onChanged == null ? null : () => data.onChanged!(value),

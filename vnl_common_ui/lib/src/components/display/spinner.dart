@@ -6,6 +6,6 @@ abstract class SpinnerElement {
   void paint(Canvas canvas, Size size, Matrix4 transform);
 }
 
-abstract class Spinner extends StatelessWidget {
-  const Spinner({super.key});
+abstract class VNLSpinner extends StatelessWidget {
+  const VNLSpinner({super.key});
 }

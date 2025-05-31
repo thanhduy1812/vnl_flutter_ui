@@ -12,7 +12,7 @@ class _SwiperExample1State extends State<SwiperExample1> {
   bool _typeDrawer = true;
 
   Widget _buildSelectPosition(OverlayPosition position, String label) {
-    return SelectedButton(
+    return VNLSelectedButton(
       value: _position == position,
       onChanged: (value) {
         if (value) {
@@ -42,7 +42,7 @@ class _SwiperExample1State extends State<SwiperExample1> {
             children: [
               const Text('Hello!'),
               const Gap(24),
-              PrimaryButton(
+              VNLPrimaryButton(
                 onPressed: () {
                   openDrawer(
                       context: context,
@@ -78,14 +78,14 @@ class _SwiperExample1State extends State<SwiperExample1> {
               children: [
                 const Text('Swipe me!'),
                 const Gap(24),
-                ButtonGroup(children: [
+                VNLButtonGroup(children: [
                   _buildSelectPosition(OverlayPosition.left, 'Left'),
                   _buildSelectPosition(OverlayPosition.right, 'Right'),
                   _buildSelectPosition(OverlayPosition.top, 'Top'),
                   _buildSelectPosition(OverlayPosition.bottom, 'Bottom'),
                 ]),
                 const Gap(24),
-                ButtonGroup(children: [
+                VNLButtonGroup(children: [
                   VNLToggle(
                     value: _typeDrawer,
                     onChanged: (value) {

@@ -47,7 +47,7 @@ class _AutoCompleteItem extends StatefulWidget {
 class _AutoCompleteItemState extends State<_AutoCompleteItem> {
   @override
   Widget build(BuildContext context) {
-    return SelectedButton(
+    return VNLSelectedButton(
       value: widget.selected,
       alignment: AlignmentDirectional.centerStart,
       onChanged: (value) {

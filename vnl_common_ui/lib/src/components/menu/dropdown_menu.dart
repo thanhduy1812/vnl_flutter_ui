@@ -89,9 +89,9 @@ class _DropdownMenuState extends State<VNLDropdownMenu> {
         },
         direction: Axis.vertical,
         builder: (context, children) {
-          return MenuPopup(
+          return VNLMenuPopup(
             // does not need to check for theme.surfaceOpacity and theme.surfaceBlur
-            // MenuPopup already has default values for these properties
+            // VNLMenuPopup already has default values for these properties
             surfaceOpacity: widget.surfaceOpacity,
             surfaceBlur: widget.surfaceBlur,
             children: children,

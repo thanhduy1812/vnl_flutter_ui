@@ -35,7 +35,7 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
     return TabItem(
       child: ConstrainedBox(
         constraints: const BoxConstraints(minWidth: 150),
-        child: Label(
+        child: VNLLabel(
           leading: OutlinedContainer(
             backgroundColor: VNLColors.white,
             width: 18,
@@ -48,7 +48,7 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
               ).xSmall().bold(),
             ),
           ),
-          trailing: IconButton.ghost(
+          trailing: VNLIconButton.ghost(
             shape: ButtonShape.circle,
             size: ButtonSize.xSmall,
             icon: const Icon(Icons.close),
@@ -84,7 +84,7 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
         });
       },
       leading: [
-        IconButton.secondary(
+        VNLIconButton.secondary(
           icon: const Icon(Icons.arrow_drop_down),
           size: ButtonSize.small,
           density: ButtonDensity.iconDense,
@@ -92,7 +92,7 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
         ),
       ],
       trailing: [
-        IconButton.ghost(
+        VNLIconButton.ghost(
           icon: const Icon(Icons.add),
           size: ButtonSize.small,
           density: ButtonDensity.iconDense,

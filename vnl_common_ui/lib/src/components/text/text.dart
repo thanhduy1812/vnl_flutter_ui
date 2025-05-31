@@ -1,5 +1,7 @@
 import 'package:flutter/rendering.dart';
-import 'package:flutter/material.dart' as m show SelectableText, TextButton, Colors, ButtonStyle, MaterialTapTargetSize;
+import 'package:flutter/material.dart'
+    as m
+    show SelectableText, VNLTextButton, Colors, ButtonStyle, MaterialTapTargetSize;
 
 import '../../../vnl_ui.dart';
 

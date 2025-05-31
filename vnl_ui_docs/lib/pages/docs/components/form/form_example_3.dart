@@ -36,7 +36,7 @@ class _FormExample3State extends State<FormExample3> {
                   },
                 ))),
                 actions: [
-                  PrimaryButton(
+                  VNLPrimaryButton(
                     onPressed: () => Navigator.of(context).pop(),
                     child: const Text('Close'),
                   ),

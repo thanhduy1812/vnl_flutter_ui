@@ -306,7 +306,7 @@ const Map<String, IconData> kRadixIcons = {
   'barChart': RadixIcons.barChart,
   'badge': RadixIcons.badge,
   'backpack': RadixIcons.backpack,
-  'avatar': RadixIcons.avatar,
+  'VNLAvatar': RadixIcons.VNLAvatar,
   'aspectRatio': RadixIcons.aspectRatio,
   'arrowUp': RadixIcons.arrowUp,
   'arrowTopRight': RadixIcons.arrowTopRight,

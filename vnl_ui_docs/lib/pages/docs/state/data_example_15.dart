@@ -25,7 +25,7 @@ class _DataExample15State extends State<DataExample15> {
         children: [
           const InnerWidget(),
           const Gap(8),
-          PrimaryButton(
+          VNLPrimaryButton(
             onPressed: () {
               setState(() {
                 firstCounter++;
@@ -34,7 +34,7 @@ class _DataExample15State extends State<DataExample15> {
             child: const Text('Increment First Counter'),
           ),
           const Gap(4),
-          PrimaryButton(
+          VNLPrimaryButton(
             onPressed: () {
               secondCounter.value++;
             },
@@ -99,7 +99,7 @@ class _LeafWidgetState extends State<LeafWidget> {
             children: [
               Text('Second Counter: ${model.value} (Rebuild Count: $rebuildCount)'),
               const Gap(24),
-              PrimaryButton(
+              VNLPrimaryButton(
                 onPressed: () {
                   model.value = model.value + 1;
                   // or model.data++ works too

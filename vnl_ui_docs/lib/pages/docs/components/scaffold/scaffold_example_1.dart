@@ -25,19 +25,19 @@ class _ScaffoldExample1State extends State<ScaffoldExample1> {
           title: const Text('Counter App'),
           subtitle: const Text('A simple counter app'),
           leading: [
-            OutlineButton(
+            VNLOutlineButton(
               onPressed: () {},
               density: ButtonDensity.icon,
               child: const Icon(Icons.menu),
             ),
           ],
           trailing: [
-            OutlineButton(
+            VNLOutlineButton(
               onPressed: () {},
               density: ButtonDensity.icon,
               child: const Icon(Icons.search),
             ),
-            OutlineButton(
+            VNLOutlineButton(
               onPressed: () {},
               density: ButtonDensity.icon,
               child: const Icon(Icons.add),
@@ -54,7 +54,7 @@ class _ScaffoldExample1State extends State<ScaffoldExample1> {
             Text(
               '$_counter',
             ).h1(),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: _incrementCounter,
               density: ButtonDensity.icon,
               child: const Icon(Icons.add),

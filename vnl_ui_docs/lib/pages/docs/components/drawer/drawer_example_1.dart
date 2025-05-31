@@ -32,14 +32,14 @@ class _DrawerExample1State extends State<DrawerExample1> {
               children: [
                 Text('Drawer ${count + 1} at ${positions[count % positions.length].name}'),
                 const Gap(16),
-                PrimaryButton(
+                VNLPrimaryButton(
                   onPressed: () {
                     open(context, count + 1);
                   },
                   child: const Text('Open Another Drawer'),
                 ),
                 const Gap(8),
-                SecondaryButton(
+                VNLSecondaryButton(
                   onPressed: () {
                     closeOverlay(context);
                   },
@@ -56,7 +56,7 @@ class _DrawerExample1State extends State<DrawerExample1> {
 
   @override
   Widget build(BuildContext context) {
-    return PrimaryButton(
+    return VNLPrimaryButton(
       onPressed: () {
         open(context, 0);
       },

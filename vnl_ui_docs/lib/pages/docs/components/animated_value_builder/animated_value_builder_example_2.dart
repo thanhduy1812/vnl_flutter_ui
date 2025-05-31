@@ -37,7 +37,7 @@ class _AnimatedValueBuilderExample2State extends State<AnimatedValueBuilderExamp
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 setState(() {
                   index = (index + 1) % colors.length;
@@ -46,7 +46,7 @@ class _AnimatedValueBuilderExample2State extends State<AnimatedValueBuilderExamp
               child: const Text('Change Color'),
             ),
             const Gap(24),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 setState(() {
                   rebuildCount++;

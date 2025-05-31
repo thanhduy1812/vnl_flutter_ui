@@ -5,7 +5,7 @@ class ButtonExample15 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PrimaryButton(
+    return VNLPrimaryButton(
       leading: const StatedWidget.map(
         states: {
           'disabled': Icon(Icons.close),

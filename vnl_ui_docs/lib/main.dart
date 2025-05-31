@@ -258,9 +258,9 @@ class MyAppState extends State<MyApp> {
             name: 'alert_dialog',
           ),
           GoRoute(
-            path: 'avatar',
+            path: 'VNLAvatar',
             builder: (context, state) => const AvatarExample(),
-            name: 'avatar',
+            name: 'VNLAvatar',
           ),
           GoRoute(
             path: 'badge',

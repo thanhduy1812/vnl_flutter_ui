@@ -9,32 +9,32 @@ class ButtonExample8 extends StatelessWidget {
       runSpacing: 8,
       spacing: 8,
       children: [
-        IconButton.primary(
+        VNLIconButton.primary(
           onPressed: () {},
           density: ButtonDensity.icon,
           icon: const Icon(Icons.add),
         ),
-        IconButton.secondary(
+        VNLIconButton.secondary(
           onPressed: () {},
           density: ButtonDensity.icon,
           icon: const Icon(Icons.add),
         ),
-        IconButton.outline(
+        VNLIconButton.outline(
           onPressed: () {},
           density: ButtonDensity.icon,
           icon: const Icon(Icons.add),
         ),
-        IconButton.ghost(
+        VNLIconButton.ghost(
           onPressed: () {},
           density: ButtonDensity.icon,
           icon: const Icon(Icons.add),
         ),
-        IconButton.text(
+        VNLIconButton.text(
           onPressed: () {},
           density: ButtonDensity.icon,
           icon: const Icon(Icons.add),
         ),
-        IconButton.destructive(
+        VNLIconButton.destructive(
           onPressed: () {},
           density: ButtonDensity.icon,
           icon: const Icon(Icons.add),

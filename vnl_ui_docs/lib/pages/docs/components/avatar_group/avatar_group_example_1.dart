@@ -10,20 +10,20 @@ class AvatarGroupExample1 extends StatefulWidget {
 class _AvatarGroupExample1State extends State<AvatarGroupExample1> {
   List<AvatarWidget> getAvatars() {
     return [
-      Avatar(
-        initials: Avatar.getInitials('sunarya-thito'),
+      VNLAvatar(
+        initials: VNLAvatar.getInitials('sunarya-thito'),
         backgroundColor: VNLColors.red,
       ),
-      Avatar(
-        initials: Avatar.getInitials('sunarya-thito'),
+      VNLAvatar(
+        initials: VNLAvatar.getInitials('sunarya-thito'),
         backgroundColor: VNLColors.green,
       ),
-      Avatar(
-        initials: Avatar.getInitials('sunarya-thito'),
+      VNLAvatar(
+        initials: VNLAvatar.getInitials('sunarya-thito'),
         backgroundColor: VNLColors.blue,
       ),
-      Avatar(
-        initials: Avatar.getInitials('sunarya-thito'),
+      VNLAvatar(
+        initials: VNLAvatar.getInitials('sunarya-thito'),
         backgroundColor: VNLColors.yellow,
       ),
     ];
@@ -35,10 +35,10 @@ class _AvatarGroupExample1State extends State<AvatarGroupExample1> {
       spacing: 16,
       runSpacing: 16,
       children: [
-        AvatarGroup.toLeft(children: getAvatars()),
-        AvatarGroup.toRight(children: getAvatars()),
-        AvatarGroup.toTop(children: getAvatars()),
-        AvatarGroup.toBottom(children: getAvatars()),
+        VNLAvatarGroup.toLeft(children: getAvatars()),
+        VNLAvatarGroup.toRight(children: getAvatars()),
+        VNLAvatarGroup.toTop(children: getAvatars()),
+        VNLAvatarGroup.toBottom(children: getAvatars()),
       ],
     );
   }

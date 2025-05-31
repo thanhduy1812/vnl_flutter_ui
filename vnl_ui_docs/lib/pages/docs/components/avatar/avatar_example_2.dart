@@ -5,8 +5,8 @@ class AvatarExample2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Avatar(
-      initials: Avatar.getInitials('sunarya-thito'),
+    return VNLAvatar(
+      initials: VNLAvatar.getInitials('sunarya-thito'),
       size: 64,
     );
   }
