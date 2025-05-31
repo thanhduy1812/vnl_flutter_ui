@@ -24,43 +24,43 @@
 - [DefaultRefreshIndicator](#defaultrefreshindicator)
 - [VNLSelectableText](#vnlselectabletext)
 - [ToastLayer](#toastlayer)
-- [ToastEntryLayout](#toastentrylayout)
+- [VNLToastEntryLayout](#vnltoastentrylayout)
 - [ControlledToggle](#controlledtoggle)
 - [VNLToggle](#vnltoggle)
-- [SelectedButton](#selectedbutton)
+- [VNLSelectedButton](#vnlselectedbutton)
 - [VNLButton](#vnlbutton)
 - [PrimaryButton](#primarybutton)
 - [SecondaryButton](#secondarybutton)
 - [OutlineButton](#outlinebutton)
 - [GhostButton](#ghostbutton)
 - [LinkButton](#linkbutton)
-- [TextButton](#textbutton)
+- [VNLTextButton](#vnltextbutton)
 - [DestructiveButton](#destructivebutton)
-- [TabButton](#tabbutton)
+- [VNLTabButton](#vnltabbutton)
 - [CardButton](#cardbutton)
-- [IconButton](#iconbutton)
-- [ButtonStyleOverride](#buttonstyleoverride)
-- [ButtonGroup](#buttongroup)
+- [VNLICONButton](#iconbutton)
+- [VNLButtonStyleOverride](#vnlbuttonstyleoverride)
+- [VNLButtonGroup](#vnlbuttongroup)
 - [CodeSnippet](#codesnippet)
 - [VNLDropdownMenu](#vnldropdownmenu)
 - [AvatarWidget](#avatarwidget)
-- [Avatar](#avatar)
-- [AvatarBadge](#avatarbadge)
+- [VNLAvatar](#avatar)
+- [VNLAvatarBadge](#vnlavatarbadge)
 - [_AvatarWidget](#_avatarwidget)
-- [AvatarGroup](#avatargroup)
+- [VNLAvatarGroup](#vnlavatargroup)
 - [AvatarGroupClipper](#avatargroupclipper)
 - [ModalBackdrop](#modalbackdrop)
 - [ModalContainer](#modalcontainer)
 - [VNLDivider](#vnldivider)
 - [VerticalDivider](#verticaldivider)
 - [CircularProgressIndicator](#circularprogressindicator)
-- [Spinner](#spinner)
+- [VNLSpinner](#vnlspinner)
 - [ChipButton](#chipbutton)
 - [VNLChip](#vnlchip)
-- [VNLDotIndicator](#vnldotindicator)
-- [DotItem](#dotitem)
-- [ActiveDotItem](#activedotitem)
-- [InactiveDotItem](#inactivedotitem)
+- [VNLDotItem](#vnldotitem)
+- [VNLHover](#vnlhover)
+- [VNLHoverActivity](#vnlhoveractivity)
+- [VNLLabel](#vnllabel)
 - [KeyboardShortcutDisplayMapper](#keyboardshortcutdisplaymapper)
 - [VNLKeyboardDisplay](#vnlkeyboarddisplay)
 - [KeyboardKeyDisplay](#keyboardkeydisplay)
@@ -76,7 +76,7 @@
 - [OutlineBadge](#outlinebadge)
 - [DestructiveBadge](#destructivebadge)
 - [FadeScroll](#fadescroll)
-- [MenuPopup](#menupopup)
+- [VNLMenuPopup](#vnlmenupopup)
 - [DesktopEditableTextContextMenu](#desktopeditabletextcontextmenu)
 - [MobileEditableTextContextMenu](#mobileeditabletextcontextmenu)
 - [VNLContextMenu](#vnlcontextmenu)
@@ -89,16 +89,20 @@
 - [VNLTextModifierImpl](#vnltextmodifierimpl)
 - [DatePickerDialog](#datepickerdialog)
 - [VNLCalendar](#vnlcalendar)
-- [MonthCalendar](#monthcalendar)
+- [VNLMonthCalendar](#vnlmonthcalendar)
 - [YearCalendar](#yearcalendar)
 - [CalendarItem](#calendaritem)
 - [CalendarGrid](#calendargrid)
 - [VNLMenubar](#vnlmenubar)
-- [HoverActivity](#hoveractivity)
-- [Hover](#hover)
-- [StatedWidget](#statedwidget)
+- [VNLStatedWidget](#vnlstatedwidget)
 - [WidgetStatesProvider](#widgetstatesprovider)
 - [Clickable](#clickable)
+- [VNLCardButton](#vnlcardbutton)
+- [VNLChipButton](#vnlchipbutton)
+- [VNLClickable](#vnlclickable)
+- [VNLContextMenuPopup](#vnlcontextmenupopup)
+- [VNLPagination](#vnlpagination)
+- [VNLPopoverOverlayWidget](#vnlpopoveroverlaywidget)
 
 ---
 
@@ -519,7 +523,7 @@ showDialog(
 - **Description:** Displays user avatar, group avatar.
 - **Usage:**
 ```dart
-Avatar(
+VNLAvatar(
   image: NetworkImage('https://...'),
   size: 40,
 )
@@ -818,14 +822,14 @@ ToastLayer(
 
 ---
 
-## ToastEntryLayout
+## VNLToastEntryLayout
 ![Toast](./docs_images/toast.png)
 
 **Description:** Layout for individual toast entries.
 
 **Usage:**
 ```dart
-ToastEntryLayout(
+VNLToastEntryLayout(
   ...
 )
 ```
@@ -865,14 +869,14 @@ VNLToggle(
 
 ---
 
-## SelectedButton
+## VNLSelectedButton
 ![Button](./docs_images/button.png)
 
 **Description:** Button widget with selected state.
 
 **Usage:**
 ```dart
-SelectedButton(
+VNLSelectedButton(
   selected: true,
   child: Text('Selected'),
 )
@@ -977,14 +981,14 @@ LinkButton(
 
 ---
 
-## TextButton
+## VNLTextButton
 ![Button](./docs_images/button.png)
 
 **Description:** Text style button for VNL UI.
 
 **Usage:**
 ```dart
-TextButton(
+VNLTextButton(
   onPressed: () {},
   child: Text('Text'),
 )
@@ -1009,14 +1013,14 @@ DestructiveButton(
 
 ---
 
-## TabButton
+## VNLTabButton
 ![Button](./docs_images/button.png)
 
 **Description:** Tab style button for VNL UI.
 
 **Usage:**
 ```dart
-TabButton(
+VNLTabButton(
   onPressed: () {},
   child: Text('Tab'),
 )
@@ -1025,30 +1029,14 @@ TabButton(
 
 ---
 
-## CardButton
-![Button](./docs_images/button.png)
-
-**Description:** Card style button for VNL UI.
-
-**Usage:**
-```dart
-CardButton(
-  onPressed: () {},
-  child: Text('Card'),
-)
-```
-**Note:** Not a Material 3 widget.
-
----
-
-## IconButton
+## VNLICONButton
 ![Button](./docs_images/button.png)
 
 **Description:** Icon button for VNL UI.
 
 **Usage:**
 ```dart
-IconButton(
+VNLICONButton(
   icon: Icon(Icons.star),
   onPressed: () {},
 )
@@ -1057,14 +1045,14 @@ IconButton(
 
 ---
 
-## ButtonStyleOverride
+## VNLButtonStyleOverride
 ![Button](./docs_images/button.png)
 
 **Description:** Widget to override button styles in VNL UI.
 
 **Usage:**
 ```dart
-ButtonStyleOverride(
+VNLButtonStyleOverride(
   style: ..., 
   child: ...,
 )
@@ -1073,14 +1061,14 @@ ButtonStyleOverride(
 
 ---
 
-## ButtonGroup
+## VNLButtonGroup
 ![Button](./docs_images/button.png)
 
 **Description:** Group of buttons for VNL UI.
 
 **Usage:**
 ```dart
-ButtonGroup(
+VNLButtonGroup(
   children: [...],
 )
 ```
@@ -1118,14 +1106,14 @@ VNLDropdownMenu(
 
 ---
 
-## AvatarWidget
+## VNLAvatarWidget
 ![Avatar](./docs_images/avatar.png)
 
 **Description:** Base widget for avatar display in VNL UI.
 
 **Usage:**
 ```dart
-AvatarWidget(
+VNLAvatarWidget(
   ...
 )
 ```
@@ -1133,14 +1121,14 @@ AvatarWidget(
 
 ---
 
-## Avatar
+## VNLAvatar
 ![Avatar](./docs_images/avatar.png)
 
 **Description:** Widget to display a user avatar.
 
 **Usage:**
 ```dart
-Avatar(
+VNLAvatar(
   image: NetworkImage('https://...'),
   size: 40,
 )
@@ -1149,14 +1137,14 @@ Avatar(
 
 ---
 
-## AvatarBadge
+## VNLAvatarBadge
 ![Avatar](./docs_images/avatar.png)
 
 **Description:** Badge for avatar widget.
 
 **Usage:**
 ```dart
-AvatarBadge(
+VNLAvatarBadge(
   ...
 )
 ```
@@ -1179,14 +1167,14 @@ _AvatarWidget(
 
 ---
 
-## AvatarGroup
+## VNLAvatarGroup
 ![AvatarGroup](./docs_images/avatar_group.png)
 
 **Description:** Widget to display a group of avatars.
 
 **Usage:**
 ```dart
-AvatarGroup(
+VNLAvatarGroup(
   avatars: [...],
 )
 ```
@@ -1278,14 +1266,14 @@ CircularProgressIndicator()
 
 ---
 
-## Spinner
+## VNLSpinner
 ![Spinner](./docs_images/spinner.png)
 
 **Description:** Spinner widget for loading states.
 
 **Usage:**
 ```dart
-Spinner()
+VNLSpinner()
 ```
 **Note:** Not a Material 3 widget.
 
@@ -1321,14 +1309,27 @@ VNLChip(
 
 ---
 
-## VNLDotIndicator
+## VNLDotItem
 ![DotIndicator](./docs_images/star_rating.png)
 
-**Description:** Dot indicator widget for VNL UI.
+**Description:** Single dot item for dot indicators.
 
 **Usage:**
 ```dart
-VNLDotIndicator(
+VNLDotItem()
+```
+**Note:** Not a Material 3 widget.
+
+---
+
+## VNLHover
+_No image available._
+
+**Description:** Widget for hover effects.
+
+**Usage:**
+```dart
+VNLHover(
   ...
 )
 ```
@@ -1336,40 +1337,31 @@ VNLDotIndicator(
 
 ---
 
-## DotItem
-![DotIndicator](./docs_images/star_rating.png)
+## VNLHoverActivity
+_No image available._
 
-**Description:** Single dot item for dot indicators.
+**Description:** Widget for hover activity effects.
 
 **Usage:**
 ```dart
-DotItem()
+VNLHoverActivity(
+  ...
+)
 ```
 **Note:** Not a Material 3 widget.
 
 ---
 
-## ActiveDotItem
-![DotIndicator](./docs_images/star_rating.png)
+## VNLLabel
+_No image available._
 
-**Description:** Active state dot item for dot indicators.
-
-**Usage:**
-```dart
-ActiveDotItem()
-```
-**Note:** Not a Material 3 widget.
-
----
-
-## InactiveDotItem
-![DotIndicator](./docs_images/star_rating.png)
-
-**Description:** Inactive state dot item for dot indicators.
+**Description:** Widget for label display.
 
 **Usage:**
 ```dart
-InactiveDotItem()
+VNLLabel(
+  ...
+)
 ```
 **Note:** Not a Material 3 widget.
 
@@ -1598,14 +1590,14 @@ FadeScroll(
 
 ---
 
-## MenuPopup
+## VNLMenuPopup
 ![ContextMenu](./docs_images/context_menu.png)
 
 **Description:** Popup menu widget for VNL UI.
 
 **Usage:**
 ```dart
-MenuPopup(
+VNLMenuPopup(
   items: [...],
 )
 ```
@@ -1793,14 +1785,14 @@ VNLCalendar(
 
 ---
 
-## MonthCalendar
+## VNLMonthCalendar
 ![Calendar](./docs_images/calendar.png)
 
 **Description:** Month view calendar widget.
 
 **Usage:**
 ```dart
-MonthCalendar(
+VNLMonthCalendar(
   ...
 )
 ```
@@ -1859,53 +1851,4 @@ CalendarGrid(
 **Description:** Menubar widget for VNL UI.
 
 **Usage:**
-```dart
-VNLMenubar(
-  ...
-)
-```
-**Note:** Not a Material 3 widget.
-
----
-
-## HoverActivity
-![HoverCard](./docs_images/hover_card.png)
-
-**Description:** Widget to handle hover activity.
-
-**Usage:**
-```dart
-HoverActivity(
-  ...
-)
-```
-**Note:** Not a Material 3 widget.
-
----
-
-## Hover
-![HoverCard](./docs_images/hover_card.png)
-
-**Description:** Widget to handle hover state.
-
-**Usage:**
-```dart
-Hover(
-  ...
-)
-```
-**Note:** Not a Material 3 widget.
-
----
-
-## StatedWidget
-_No image available._
-
-**Description:** Widget with state management for VNL UI.
-
-**Usage:**
-```dart
-StatedWidget(
-  ...
-)
 ```

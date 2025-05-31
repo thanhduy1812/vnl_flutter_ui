@@ -1,68 +1,68 @@
-ActiveDotItem
+ActiveDotItem -> VNLActiveDotItem
 AdaptiveScaler
 AnimatedValueBuilder
-Avatar
-AvatarBadge
-AvatarGroup
+Avatar -> VNLAvatar
+AvatarBadge -> VNLAvatarBadge
+AvatarGroup -> VNLAvatarGroup
 AvatarGroupClipper
-AvatarWidget
-ButtonGroup
-ButtonStyleOverride
-CalendarGrid
-CalendarItem
-CardButton
+AvatarWidget -> VNLAvatarWidget
+ButtonGroup -> VNLButtonGroup
+ButtonStyleOverride -> VNLButtonStyleOverride
+CalendarGrid -> VNLCalendarGrid
+CalendarItem -> VNLCalendarItem
+CardButton -> VNLCardButton
 CarouselDotIndicator
-ChipButton
-Clickable
+ChipButton -> VNLChipButton
+Clickable -> VNLClickable
 CodeSnippet
 CommandCategory
 CommandEmpty
 CommandItem
-ContextMenuPopup
+ContextMenuPopup -> VNLContextMenuPopup
 ControlledToggle
 CrossFadedTransition
 DatePickerDialog
 DefaultRefreshIndicator
 DestructiveBadge
 DestructiveButton
-DotItem
+DotItem -> VNLDotItem
 FadeScroll
 GhostButton
-Hover
-HoverActivity
-IconButton
-InactiveDotItem
+Hover -> VNLHover
+HoverActivity -> VNLHoverActivity
+IconButton -> VNLIconButton
+InactiveDotItem -> VNLInactiveDotItem
 KeyboardKeyDisplay
 KeyboardShortcutDisplayMapper
-Label
+Label -> VNLLabel
 LinearProgressIndicator
 LinkButton
-MenuPopup
+MenuPopup -> VNLMenuPopup
 MobileEditableTextContextMenu
 ModalBackdrop
 ModalContainer
-MonthCalendar
-NumberTicker
+MonthCalendar -> VNLMonthCalendar
+NumberTicker -> VNLNumberTicker
 OutlineBadge
 OutlineButton
-Pagination
-PopoverOverlayWidget
+Pagination -> VNLPagination
+PopoverOverlayWidget -> VNLPopoverOverlayWidget
 PrimaryBadge
 PrimaryButton
-Progress
+Progress -> VNLProgress
 Radio
 ScrollViewInterceptor
 SecondaryBadge
 SecondaryButton
-SelectedButton
-Spinner
-StatedWidget
-TabButton
-TextButton
-ToastEntryLayout
-ToastLayer
-Tooltip
-TooltipContainer
+SelectedButton -> VNLSelectedButton
+Spinner -> VNLSpinner
+StatedWidget -> VNLStatedWidget
+TabButton -> VNLTabButton
+TextButton -> VNLTextButton
+ToastEntryLayout -> VNLToastEntryLayout
+ToastLayer -> VNLToastLayer
+Tooltip -> VNLTooltip
+TooltipContainer -> VNLTooltipContainer
 VNLAlert
 VNLButton
 VNLCard
@@ -117,4 +117,4 @@ VNLookUI
 VNLMenubar
 VNLDotIndicator
 WidgetStatesProvider
-YearCalendar
+YearCalendar -> VNLYearCalendar
