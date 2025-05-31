@@ -102,6 +102,356 @@
 
 ---
 
+## Icon System in VNL UI
+
+VNL UI provides a flexible icon system with multiple icon sets and easy theming:
+
+- **Icon Sets:**
+  - `RadixIcons`, `LucideIcons`, `BootstrapIcons` (imported and used as `Icon(RadixIcons.someIcon)`)
+- **Sizing/Color Extensions:**
+  - Use `.iconSmall()`, `.iconMedium()`, `.iconLarge()`, `.iconPrimary()`, `.iconSecondary()`, etc. on any Icon widget for consistent theming.
+  - Example:
+    ```dart
+    Icon(RadixIcons.home).iconLarge().iconPrimary()
+    ```
+- **WrappedIcon:**
+  - Use `WrappedIcon` to apply custom theming or combine with your own widgets.
+
+---
+
+## VNLTextField
+_No image available._
+
+**Description:** The main text input field for VNL UI, supporting advanced features, decoration, and theming.
+
+**Usage:**
+```dart
+VNLTextField(
+  controller: TextEditingController(),
+  placeholder: Text('Enter text'),
+)
+```
+**Note:** Do not confuse with TextField from Material 3. Prefer VNLTextField for Shadcn UI consistency.
+
+---
+
+## VNLTextArea
+_No image available._
+
+**Description:** Multi-line text input for VNL UI, with auto-expanding and theming support.
+
+**Usage:**
+```dart
+VNLTextArea(
+  controller: TextEditingController(),
+  placeholder: Text('Enter multi-line text'),
+)
+```
+**Note:** Do not confuse with TextField/Material 3. Prefer VNLTextArea for Shadcn UI consistency.
+
+---
+
+## VNLNumberInput
+_No image available._
+
+**Description:** Numeric input field for VNL UI, supporting stepper buttons and formatting.
+
+**Usage:**
+```dart
+VNLNumberInput(
+  controller: TextEditingController(),
+  min: 0,
+  max: 100,
+  step: 1,
+)
+```
+**Note:** Prefer VNLNumberInput for numeric entry over Material 3 alternatives.
+
+---
+
+## VNLCheckbox
+_No image available._
+
+**Description:** Checkbox widget for VNL UI, supporting custom theming and states.
+
+**Usage:**
+```dart
+VNLCheckbox(
+  value: true,
+  onChanged: (val) {},
+)
+```
+**Note:** Do not confuse with Checkbox from Material 3.
+
+---
+
+## VNLRadio
+_No image available._
+
+**Description:** Radio button widget for VNL UI, supporting custom theming and states.
+
+**Usage:**
+```dart
+VNLRadio(
+  value: 'option1',
+  groupValue: selectedValue,
+  onChanged: (val) {},
+)
+```
+**Note:** Do not confuse with Radio from Material 3.
+
+---
+
+## VNLSlider
+_No image available._
+
+**Description:** Slider widget for VNL UI, supporting custom theming and value formatting.
+
+**Usage:**
+```dart
+VNLSlider(
+  value: 50,
+  min: 0,
+  max: 100,
+  onChanged: (val) {},
+)
+```
+**Note:** Do not confuse with Slider from Material 3.
+
+---
+
+## VNLDatePicker
+_No image available._
+
+**Description:** Date picker widget for VNL UI, supporting custom theming and formats.
+
+**Usage:**
+```dart
+VNLDatePicker(
+  initialDate: DateTime.now(),
+  onDateChanged: (date) {},
+)
+```
+**Note:** Do not confuse with showDatePicker from Material 3.
+
+---
+
+## VNLForm
+_No image available._
+
+**Description:** Form container for VNL UI, supporting validation and advanced form features.
+
+**Usage:**
+```dart
+VNLForm(
+  child: Column(
+    children: [VNLTextField(), VNLCheckbox()],
+  ),
+)
+```
+**Note:** Prefer VNLForm for form logic over Material 3 alternatives.
+
+---
+
+## VNLTooltip
+_No image available._
+
+**Description:** Tooltip widget for VNL UI, supporting custom theming and placement.
+
+**Usage:**
+```dart
+VNLTooltip(
+  message: 'Tooltip text',
+  child: Icon(Icons.info),
+)
+```
+**Note:** Do not confuse with Tooltip from Material 3.
+
+---
+
+## VNLSwiper
+_No image available._
+
+**Description:** Swiper/carousel widget for VNL UI, supporting swipe gestures and custom content.
+
+**Usage:**
+```dart
+VNLSwiper(
+  items: [...],
+)
+```
+**Note:** Not a Material 3 widget.
+
+---
+
+## VNLPopover
+_No image available._
+
+**Description:** Popover widget for VNL UI, supporting custom content and placement.
+
+**Usage:**
+```dart
+VNLPopover(
+  child: Text('Popover'),
+)
+```
+**Note:** Not a Material 3 widget.
+
+---
+
+## VNLAlert
+_No image available._
+
+**Description:** Alert widget for VNL UI, supporting custom theming and content.
+
+**Usage:**
+```dart
+VNLAlert(
+  title: Text('Alert'),
+  content: Text('This is an alert.'),
+)
+```
+**Note:** Do not confuse with AlertDialog from Material 3.
+
+---
+
+## VNLPagination
+_No image available._
+
+**Description:** Pagination widget for VNL UI, supporting custom theming and navigation.
+
+**Usage:**
+```dart
+VNLPagination(
+  pageCount: 10,
+  onPageChanged: (page) {},
+)
+```
+**Note:** Not a Material 3 widget.
+
+---
+
+## VNLCard
+_No image available._
+
+**Description:** Card widget for VNL UI, supporting custom theming and content.
+
+**Usage:**
+```dart
+VNLCard(
+  child: Text('Card content'),
+)
+```
+**Note:** Do not confuse with Card from Material 3.
+
+---
+
+## VNLSteps
+_No image available._
+
+**Description:** Steps widget for VNL UI, supporting multi-step flows.
+
+**Usage:**
+```dart
+VNLSteps(
+  steps: [...],
+)
+```
+**Note:** Not a Material 3 widget.
+
+---
+
+## VNLStepper
+_No image available._
+
+**Description:** Stepper widget for VNL UI, supporting multi-step flows and navigation.
+
+**Usage:**
+```dart
+VNLStepper(
+  steps: [...],
+)
+```
+**Note:** Do not confuse with Stepper from Material 3.
+
+---
+
+## VNLTabList
+_No image available._
+
+**Description:** Tab list widget for VNL UI, supporting tab navigation.
+
+**Usage:**
+```dart
+VNLTabList(
+  tabs: [...],
+)
+```
+**Note:** Not a Material 3 widget.
+
+---
+
+## VNLTabs
+_No image available._
+
+**Description:** Tabs widget for VNL UI, supporting tab navigation and content switching.
+
+**Usage:**
+```dart
+VNLTabs(
+  tabs: [...],
+  children: [...],
+)
+```
+**Note:** Do not confuse with TabBar/TabView from Material 3.
+
+---
+
+## VNLNavigationBar
+_No image available._
+
+**Description:** Navigation bar widget for VNL UI, supporting custom theming and navigation.
+
+**Usage:**
+```dart
+VNLNavigationBar(
+  items: [...],
+)
+```
+**Note:** Do not confuse with NavigationBar from Material 3.
+
+---
+
+## VNLNavigationRail
+_No image available._
+
+**Description:** Navigation rail widget for VNL UI, supporting custom theming and navigation.
+
+**Usage:**
+```dart
+VNLNavigationRail(
+  items: [...],
+)
+```
+**Note:** Do not confuse with NavigationRail from Material 3.
+
+---
+
+## VNLNavigationSidebar
+_No image available._
+
+**Description:** Navigation sidebar widget for VNL UI, supporting custom theming and navigation.
+
+**Usage:**
+```dart
+VNLNavigationSidebar(
+  items: [...],
+)
+```
+**Note:** Not a Material 3 widget.
+
+---
+
 <!-- AUTO-GENERATED COMPONENT SECTIONS BELOW -->
 
 ## Button
@@ -1559,37 +1909,3 @@ StatedWidget(
   ...
 )
 ```
-**Note:** Not a Material 3 widget.
-
----
-
-## WidgetStatesProvider
-_No image available._
-
-**Description:** Provider for widget states in VNL UI.
-
-**Usage:**
-```dart
-WidgetStatesProvider(
-  ...
-)
-```
-**Note:** Not a Material 3 widget.
-
----
-
-## Clickable
-_No image available._
-
-**Description:** Widget to make any child clickable.
-
-**Usage:**
-```dart
-Clickable(
-  child: ...,
-  onTap: () {},
-)
-```
-**Note:** Not a Material 3 widget.
-
---- 
