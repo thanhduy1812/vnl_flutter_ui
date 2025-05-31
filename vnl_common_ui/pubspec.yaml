@@ -4,14 +4,14 @@ version: 0.0.1
 homepage:
 
 environment:
-  sdk: ^3.7.0
-  flutter: ">=1.17.0"
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=3.32.0"
 
 dependencies:
   flutter:
     sdk: flutter
   email_validator: ^3.0.0
-  skeletonizer: ^1.4.2
+  skeletonizer: ^2.0.0-pre
   syntax_highlight: ^0.4.0
   country_flags: ^3.0.0
   phonecodes: ^0.0.3
@@ -27,6 +27,7 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^5.0.0
   icon_font_generator: ^4.0.0
+  archive: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

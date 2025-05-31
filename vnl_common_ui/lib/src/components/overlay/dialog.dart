@@ -141,26 +141,24 @@ class SurfaceBarrierPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final Paint paint =
-        Paint()
-          ..color = barrierColor
-          ..blendMode = BlendMode.srcOver
-          ..style = PaintingStyle.fill;
+    final Paint paint = Paint()
+      ..color = barrierColor
+      ..blendMode = BlendMode.srcOver
+      ..style = PaintingStyle.fill;
     if (clip) {
       var rect = (Offset.zero & size);
       rect = _padRect(rect);
-      Path path =
-          Path()
-            ..addRect(bigOffset & bigScreen)
-            ..addRRect(
-              RRect.fromRectAndCorners(
-                rect,
-                topLeft: borderRadius.topLeft,
-                topRight: borderRadius.topRight,
-                bottomLeft: borderRadius.bottomLeft,
-                bottomRight: borderRadius.bottomRight,
-              ),
-            );
+      Path path = Path()
+        ..addRect(bigOffset & bigScreen)
+        ..addRRect(
+          RRect.fromRectAndCorners(
+            rect,
+            topLeft: borderRadius.topLeft,
+            topRight: borderRadius.topRight,
+            bottomLeft: borderRadius.bottomLeft,
+            bottomRight: borderRadius.bottomRight,
+          ),
+        );
       path.fillType = PathFillType.evenOdd;
       canvas.clipPath(path);
     }
@@ -196,29 +194,29 @@ class DialogRoute<T> extends RawDialogRoute<T> {
     this.fullScreen = false,
     this.data,
   }) : super(
-         pageBuilder: (BuildContext buildContext, Animation<double> animation, Animation<double> secondaryAnimation) {
-           final Widget pageChild = Builder(
-             builder: (context) {
-               final theme = VNLTheme.of(context);
-               final scaling = theme.scaling;
-               return Padding(
-                 padding: fullScreen ? EdgeInsets.zero : const EdgeInsets.all(16) * scaling,
-                 child: builder(context),
-               );
-             },
-           );
-           Widget dialog = themes?.wrap(pageChild) ?? pageChild;
-           if (data != null) {
-             dialog = data.wrap(dialog);
-           }
-           if (useSafeArea) {
-             dialog = SafeArea(child: dialog);
-           }
-           return dialog;
-         },
-         barrierLabel: barrierLabel ?? 'Dismiss',
-         transitionDuration: const Duration(milliseconds: 150),
-       );
+          pageBuilder: (BuildContext buildContext, Animation<double> animation, Animation<double> secondaryAnimation) {
+            final Widget pageChild = Builder(
+              builder: (context) {
+                final theme = VNLTheme.of(context);
+                final scaling = theme.scaling;
+                return Padding(
+                  padding: fullScreen ? EdgeInsets.zero : const EdgeInsets.all(16) * scaling,
+                  child: builder(context),
+                );
+              },
+            );
+            Widget dialog = themes?.wrap(pageChild) ?? pageChild;
+            if (data != null) {
+              dialog = data.wrap(dialog);
+            }
+            if (useSafeArea) {
+              dialog = SafeArea(child: dialog);
+            }
+            return dialog;
+          },
+          barrierLabel: barrierLabel ?? 'Dismiss',
+          transitionDuration: const Duration(milliseconds: 150),
+        );
 }
 
 Widget _buildShadcnDialogTransitions(
@@ -240,10 +238,9 @@ Widget _buildShadcnDialogTransitions(
   );
   return FocusScope(
     canRequestFocus: animation.value == 1, // Only focus when fully visible
-    child:
-        fullScreen
-            ? MultiModel(data: const [Model(ModalContainer.kFullScreenMode, true)], child: scaleTransition)
-            : Align(alignment: alignment, child: scaleTransition),
+    child: fullScreen
+        ? MultiModel(data: const [Model(ModalContainer.kFullScreenMode, true)], child: scaleTransition)
+        : Align(alignment: alignment, child: scaleTransition),
   );
 }
 
@@ -266,7 +263,14 @@ Future<T?> showDialog<T>({
   final CapturedData data = Data.capture(from: context, to: navigatorState.context);
   var dialogRoute = DialogRoute<T>(
     context: context,
-    builder: builder,
+    builder: (context) {
+      return _DialogOverlayWrapper(
+        route: ModalRoute.of(context) as DialogRoute<T>,
+        child: Builder(builder: (context) {
+          return builder(context);
+        }),
+      );
+    },
     themes: themes,
     barrierDismissible: barrierDismissible,
     barrierColor: barrierColor ?? const Color.fromRGBO(0, 0, 0, 0),
@@ -538,9 +542,9 @@ class DialogOverlayCompleter<T> extends OverlayCompleter<T> {
 
   @override
   Future<T> get future => route.popped.then((value) {
-    assert(value is T, 'Dialog route was closed without returning a value');
-    return value as T;
-  });
+        assert(value is T, 'Dialog route was closed without returning a value');
+        return value as T;
+      });
 
   @override
   bool get isAnimationCompleted => route.animation?.isCompleted ?? true;

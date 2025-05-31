@@ -1,9 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-enum CalendarViewType { date, month, year }
+enum CalendarViewType {
+  date,
+  month,
+  year,
+}
 
-enum DateState { disabled, enabled }
+enum DateState {
+  disabled,
+  enabled,
+}
 
 typedef DateStateBuilder = DateState Function(DateTime date);
 
@@ -98,7 +105,9 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
                         },
                         child: const Icon(LucideIcons.arrowLeft).iconXSmall(),
                       ),
-                      SizedBox(width: theme.scaling * 16),
+                      SizedBox(
+                        width: theme.scaling * 16,
+                      ),
                       Expanded(
                         child: GhostButton(
                           enabled: _viewType != CalendarViewType.year,
@@ -119,15 +128,20 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
                                 break;
                             }
                           },
-                          child:
-                              Text(
-                                getHeaderText(localizations, _view, _viewType),
-                              ).foreground().small().medium().center(),
+                          child: Text(getHeaderText(localizations, _view, _viewType))
+                              .foreground()
+                              .small()
+                              .medium()
+                              .center(),
                         ).sized(height: theme.scaling * 32),
                       ),
                       if (_viewType == CalendarViewType.date && viewMode == CalendarSelectionMode.range)
-                        SizedBox(width: theme.scaling * 32),
-                      SizedBox(width: theme.scaling * 16),
+                        SizedBox(
+                          width: theme.scaling * 32,
+                        ),
+                      SizedBox(
+                        width: theme.scaling * 16,
+                      ),
                       if (_viewType != CalendarViewType.date || viewMode != CalendarSelectionMode.range)
                         OutlineButton(
                           density: ButtonDensity.icon,
@@ -158,7 +172,9 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        SizedBox(width: theme.scaling * (32 + 16)),
+                        SizedBox(
+                          width: theme.scaling * (32 + 16),
+                        ),
                         Expanded(
                           child: GhostButton(
                             onPressed: () {
@@ -178,13 +194,16 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
                                   break;
                               }
                             },
-                            child:
-                                Text(
-                                  getHeaderText(localizations, _alternateView, _viewType),
-                                ).foreground().small().medium().center(),
+                            child: Text(getHeaderText(localizations, _alternateView, _viewType))
+                                .foreground()
+                                .small()
+                                .medium()
+                                .center(),
                           ).sized(height: theme.scaling * 32),
                         ),
-                        SizedBox(width: theme.scaling * 16),
+                        SizedBox(
+                          width: theme.scaling * 16,
+                        ),
                         OutlineButton(
                           density: ButtonDensity.icon,
                           onPressed: () {
@@ -216,31 +235,45 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
               mainAxisAlignment:
                   viewMode == CalendarSelectionMode.range ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
               children: [
-                buildView(context, _yearSelectStart, _view, _viewType, widget.selectionMode, (value) {
-                  setState(() {
-                    if (!_alternate) {
-                      _view = value;
-                      _alternateView = value.next;
-                    } else {
-                      _view = value.previous;
-                      _alternateView = value;
-                    }
-                    switch (_viewType) {
-                      case CalendarViewType.date:
-                        break;
-                      case CalendarViewType.month:
-                        _viewType = CalendarViewType.date;
-                        break;
-                      case CalendarViewType.year:
-                        _viewType = CalendarViewType.month;
-                        break;
-                    }
-                  });
-                }),
+                buildView(
+                  context,
+                  _yearSelectStart,
+                  _view,
+                  _viewType,
+                  widget.selectionMode,
+                  (value) {
+                    setState(() {
+                      if (!_alternate) {
+                        _view = value;
+                        _alternateView = value.next;
+                      } else {
+                        _view = value.previous;
+                        _alternateView = value;
+                      }
+                      switch (_viewType) {
+                        case CalendarViewType.date:
+                          break;
+                        case CalendarViewType.month:
+                          _viewType = CalendarViewType.date;
+                          break;
+                        case CalendarViewType.year:
+                          _viewType = CalendarViewType.month;
+                          break;
+                      }
+                    });
+                  },
+                ),
                 if (_viewType == CalendarViewType.date && viewMode == CalendarSelectionMode.range)
                   Gap(theme.scaling * 16),
                 if (_viewType == CalendarViewType.date && viewMode == CalendarSelectionMode.range)
-                  buildView(context, _yearSelectStart, _alternateView, _viewType, widget.selectionMode, (value) {}),
+                  buildView(
+                    context,
+                    _yearSelectStart,
+                    _alternateView,
+                    _viewType,
+                    widget.selectionMode,
+                    (value) {},
+                  ),
               ],
             ),
           ],
@@ -273,7 +306,9 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
                 },
                 child: const Icon(LucideIcons.arrowLeft).iconXSmall(),
               ),
-              SizedBox(width: theme.scaling * 16),
+              SizedBox(
+                width: theme.scaling * 16,
+              ),
               Expanded(
                 child: GhostButton(
                   enabled: _viewType != CalendarViewType.year,
@@ -296,7 +331,9 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
                   child: Text(getHeaderText(localizations, _view, _viewType)).foreground().small().medium().center(),
                 ).sized(height: theme.scaling * 32),
               ),
-              SizedBox(width: theme.scaling * 16),
+              SizedBox(
+                width: theme.scaling * 16,
+              ),
               OutlineButton(
                 density: ButtonDensity.icon,
                 onPressed: () {
@@ -319,34 +356,35 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
             ],
           ),
           Gap(theme.scaling * 16),
-          buildView(context, _yearSelectStart, _view, _viewType, widget.selectionMode, (value) {
-            setState(() {
-              _view = value;
-              switch (_viewType) {
-                case CalendarViewType.date:
-                  break;
-                case CalendarViewType.month:
-                  _viewType = CalendarViewType.date;
-                  break;
-                case CalendarViewType.year:
-                  _viewType = CalendarViewType.month;
-                  break;
-              }
-            });
-          }),
+          buildView(
+            context,
+            _yearSelectStart,
+            _view,
+            _viewType,
+            widget.selectionMode,
+            (value) {
+              setState(() {
+                _view = value;
+                switch (_viewType) {
+                  case CalendarViewType.date:
+                    break;
+                  case CalendarViewType.month:
+                    _viewType = CalendarViewType.date;
+                    break;
+                  case CalendarViewType.year:
+                    _viewType = CalendarViewType.month;
+                    break;
+                }
+              });
+            },
+          ),
         ],
       ),
     );
   }
 
-  Widget buildView(
-    BuildContext context,
-    int yearSelectStart,
-    CalendarView view,
-    CalendarViewType viewType,
-    CalendarSelectionMode selectionMode,
-    ValueChanged<CalendarView> onViewChanged,
-  ) {
+  Widget buildView(BuildContext context, int yearSelectStart, CalendarView view, CalendarViewType viewType,
+      CalendarSelectionMode selectionMode, ValueChanged<CalendarView> onViewChanged) {
     if (viewType == CalendarViewType.year) {
       return YearCalendar(
         value: view.year,
@@ -468,8 +506,8 @@ class RangeCalendarValue extends CalendarValue {
   final DateTime end;
 
   RangeCalendarValue(DateTime start, DateTime end)
-    : start = start.isBefore(end) ? start : end,
-      end = start.isBefore(end) ? end : start;
+      : start = start.isBefore(end) ? start : end,
+        end = start.isBefore(end) ? end : start;
 
   @override
   CalendarValueLookup lookup(int year, [int? month, int? day]) {
@@ -635,8 +673,14 @@ class CalendarView {
   @override
   int get hashCode => year.hashCode ^ month.hashCode;
 
-  CalendarView copyWith({int? year, int? month}) {
-    return CalendarView(year ?? this.year, month ?? this.month);
+  CalendarView copyWith({
+    int? year,
+    int? month,
+  }) {
+    return CalendarView(
+      year ?? this.year,
+      month ?? this.month,
+    );
   }
 }
 
@@ -650,7 +694,12 @@ extension CalendarDateTime on DateTime {
   }
 }
 
-enum CalendarSelectionMode { none, single, range, multi }
+enum CalendarSelectionMode {
+  none,
+  single,
+  range,
+  multi,
+}
 
 class VNLCalendar extends StatefulWidget {
   final DateTime? now;
@@ -807,7 +856,10 @@ class _CalendarState extends State<VNLCalendar> {
           child: Text('${date.day}'),
         );
         if (item.fromAnotherMonth) {
-          return Opacity(opacity: 0.5, child: calendarItem);
+          return Opacity(
+            opacity: 0.5,
+            child: calendarItem,
+          );
         }
         return calendarItem;
       },
@@ -885,9 +937,14 @@ class MonthCalendar extends StatelessWidget {
     }
     for (int i = 0; i < months.length; i += 4) {
       rows.add(Gap(theme.scaling * 8));
-      rows.add(Row(children: months.sublist(i, i + 4)));
+      rows.add(Row(
+        children: months.sublist(i, i + 4),
+      ));
     }
-    return Column(mainAxisSize: MainAxisSize.min, children: rows);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: rows,
+    );
   }
 }
 
@@ -962,9 +1019,14 @@ class YearCalendar extends StatelessWidget {
     }
     for (int i = 0; i < years.length; i += 4) {
       rows.add(Gap(theme.scaling * 8));
-      rows.add(Row(children: years.sublist(i, i + 4)));
+      rows.add(Row(
+        children: years.sublist(i, i + 4),
+      ));
     }
-    return Column(mainAxisSize: MainAxisSize.min, children: rows);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: rows,
+    );
   }
 }
 
@@ -1061,20 +1123,22 @@ class CalendarItem extends StatelessWidget {
             alignment: Alignment.center,
             onPressed: onTap,
             enabled: state == DateState.enabled,
-            style: const ButtonStyle(variance: ButtonVariance.secondary, density: ButtonDensity.compact).copyWith(
+            style: const ButtonStyle(
+              variance: ButtonVariance.secondary,
+              density: ButtonDensity.compact,
+            ).copyWith(
               decoration: (context, states, value) {
                 return (value as BoxDecoration).copyWith(
-                  borderRadius:
-                      indexAtRow == 0
+                  borderRadius: indexAtRow == 0
+                      ? BorderRadius.only(
+                          topLeft: Radius.circular(theme.radiusMd),
+                          bottomLeft: Radius.circular(theme.radiusMd),
+                        )
+                      : indexAtRow == rowCount - 1
                           ? BorderRadius.only(
-                            topLeft: Radius.circular(theme.radiusMd),
-                            bottomLeft: Radius.circular(theme.radiusMd),
-                          )
-                          : indexAtRow == rowCount - 1
-                          ? BorderRadius.only(
-                            topRight: Radius.circular(theme.radiusMd),
-                            bottomRight: Radius.circular(theme.radiusMd),
-                          )
+                              topRight: Radius.circular(theme.radiusMd),
+                              bottomRight: Radius.circular(theme.radiusMd),
+                            )
                           : BorderRadius.zero,
                 );
               },
@@ -1090,7 +1154,10 @@ class CalendarItem extends StatelessWidget {
             alignment: Alignment.center,
             onPressed: onTap,
             enabled: state == DateState.enabled,
-            style: const ButtonStyle(variance: ButtonVariance.secondary, density: ButtonDensity.compact).copyWith(
+            style: const ButtonStyle(
+              variance: ButtonVariance.secondary,
+              density: ButtonDensity.compact,
+            ).copyWith(
               decoration: (context, states, value) {
                 return (value as BoxDecoration).copyWith(
                   borderRadius: BorderRadius.only(
@@ -1111,7 +1178,10 @@ class CalendarItem extends StatelessWidget {
             alignment: Alignment.center,
             onPressed: onTap,
             enabled: state == DateState.enabled,
-            style: const ButtonStyle(variance: ButtonVariance.secondary, density: ButtonDensity.compact).copyWith(
+            style: const ButtonStyle(
+              variance: ButtonVariance.secondary,
+              density: ButtonDensity.compact,
+            ).copyWith(
               decoration: (context, states, value) {
                 return (value as BoxDecoration).copyWith(
                   borderRadius: BorderRadius.only(
@@ -1188,7 +1258,10 @@ class CalendarItem extends StatelessWidget {
             alignment: Alignment.center,
             onPressed: onTap,
             enabled: state == DateState.enabled,
-            style: const ButtonStyle(variance: ButtonVariance.primary, density: ButtonDensity.compact).copyWith(
+            style: const ButtonStyle(
+              variance: ButtonVariance.primary,
+              density: ButtonDensity.compact,
+            ).copyWith(
               decoration: (context, states, value) {
                 return (value as BoxDecoration).copyWith(
                   borderRadius: BorderRadius.only(
@@ -1209,7 +1282,10 @@ class CalendarItem extends StatelessWidget {
             alignment: Alignment.center,
             onPressed: onTap,
             enabled: state == DateState.enabled,
-            style: const ButtonStyle(variance: ButtonVariance.primary, density: ButtonDensity.compact).copyWith(
+            style: const ButtonStyle(
+              variance: ButtonVariance.primary,
+              density: ButtonDensity.compact,
+            ).copyWith(
               decoration: (context, states, value) {
                 return (value as BoxDecoration).copyWith(
                   borderRadius: BorderRadius.only(
@@ -1230,9 +1306,14 @@ class CalendarItem extends StatelessWidget {
             alignment: Alignment.center,
             enabled: state == DateState.enabled,
             onPressed: onTap,
-            style: const ButtonStyle(variance: ButtonVariance.primary, density: ButtonDensity.compact).copyWith(
+            style: const ButtonStyle(
+              variance: ButtonVariance.primary,
+              density: ButtonDensity.compact,
+            ).copyWith(
               decoration: (context, states, value) {
-                return (value as BoxDecoration).copyWith(borderRadius: BorderRadius.zero);
+                return (value as BoxDecoration).copyWith(
+                  borderRadius: BorderRadius.zero,
+                );
               },
             ),
             child: child,
@@ -1249,37 +1330,51 @@ class CalendarGridData {
 
   factory CalendarGridData({required int month, required int year}) {
     DateTime firstDayOfMonth = DateTime(year, month, 1);
-    int firstWeekday = firstDayOfMonth.weekday;
-    int daysInMonth = DateTime(year, month + 1, 0).day;
+    int daysInMonth = DateTime(year, month == 12 ? 1 : month + 1, 0).day;
 
-    int prevMonthDays = firstWeekday - 1;
+    int prevMonthDays = firstDayOfMonth.weekday;
     DateTime prevMonthLastDay = firstDayOfMonth.subtract(Duration(days: prevMonthDays));
 
     List<CalendarGridItem> items = [];
 
     int itemCount = 0;
 
-    for (int i = 0; i < prevMonthDays; i++) {
-      int currentItemIndex = itemCount++;
-      items.add(
-        CalendarGridItem(prevMonthLastDay.add(Duration(days: i)), currentItemIndex % 7, true, currentItemIndex ~/ 7),
-      );
+    if (prevMonthDays < 7) {
+      for (int i = 0; i < prevMonthDays; i++) {
+        int currentItemIndex = itemCount++;
+        items.add(CalendarGridItem(
+          prevMonthLastDay.add(Duration(days: i)),
+          currentItemIndex % 7,
+          true,
+          currentItemIndex ~/ 7,
+        ));
+      }
     }
 
     for (int i = 0; i < daysInMonth; i++) {
       int currentItemIndex = itemCount++;
       DateTime currentDay = DateTime(year, month, i + 1);
-      items.add(CalendarGridItem(currentDay, currentItemIndex % 7, false, currentItemIndex ~/ 7));
+      items.add(CalendarGridItem(
+        currentDay,
+        currentItemIndex % 7,
+        false,
+        currentItemIndex ~/ 7,
+      ));
     }
 
     int remainingDays = (7 - (items.length % 7)) % 7;
     DateTime nextMonthFirstDay = DateTime(year, month + 1, 1);
 
-    for (int i = 0; i < remainingDays; i++) {
-      int currentItemIndex = itemCount++;
-      items.add(
-        CalendarGridItem(nextMonthFirstDay.add(Duration(days: i)), currentItemIndex % 7, true, currentItemIndex ~/ 7),
-      );
+    if (remainingDays < 7) {
+      for (int i = 0; i < remainingDays; i++) {
+        int currentItemIndex = itemCount++;
+        items.add(CalendarGridItem(
+          nextMonthFirstDay.add(Duration(days: i)),
+          currentItemIndex % 7,
+          true,
+          currentItemIndex ~/ 7,
+        ));
+      }
     }
 
     return CalendarGridData._(month, year, items);
@@ -1306,7 +1401,10 @@ class CalendarGridItem {
 
   CalendarGridItem(this.date, this.indexInRow, this.fromAnotherMonth, this.rowIndex);
 
-  bool get isToday => date.isAtSameMomentAs(DateTime.now());
+  bool get isToday {
+    DateTime now = DateTime.now();
+    return date.year == now.year && date.month == now.month && date.day == now.day;
+  }
 
   @override
   bool operator ==(Object other) {
@@ -1327,7 +1425,11 @@ class CalendarGrid extends StatelessWidget {
   final CalendarGridData data;
   final Widget Function(CalendarGridItem item) itemBuilder;
 
-  const CalendarGrid({super.key, required this.data, required this.itemBuilder});
+  const CalendarGrid({
+    super.key,
+    required this.data,
+    required this.itemBuilder,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -1363,17 +1465,25 @@ class CalendarGrid extends StatelessWidget {
         ),
       );
     }
-    rows.add(Row(mainAxisSize: MainAxisSize.min, children: weekDays));
+    rows.add(Row(
+      mainAxisSize: MainAxisSize.min,
+      children: weekDays,
+    ));
     for (int i = 0; i < data.items.length; i += 7) {
-      rows.add(
-        Row(
-          children:
-              data.items.sublist(i, i + 7).map((e) {
-                return SizedBox(width: theme.scaling * 32, height: theme.scaling * 32, child: itemBuilder(e));
-              }).toList(),
-        ),
-      );
+      rows.add(Row(
+        children: data.items.sublist(i, i + 7).map((e) {
+          return SizedBox(
+            width: theme.scaling * 32,
+            height: theme.scaling * 32,
+            child: itemBuilder(e),
+          );
+        }).toList(),
+      ));
     }
-    return Column(mainAxisSize: MainAxisSize.min, spacing: theme.scaling * 8, children: rows);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      spacing: theme.scaling * 8,
+      children: rows,
+    );
   }
 }

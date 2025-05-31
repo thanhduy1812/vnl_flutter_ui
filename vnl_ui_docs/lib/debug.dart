@@ -1,7 +1,7 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
 class RebuildCounter extends StatefulWidget {
-  const RebuildCounter({Key? key}) : super(key: key);
+  const RebuildCounter({super.key});
 
   @override
   State<RebuildCounter> createState() => _RebuildCounterState();

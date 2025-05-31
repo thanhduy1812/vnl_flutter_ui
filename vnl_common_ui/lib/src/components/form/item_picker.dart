@@ -7,7 +7,7 @@ class ItemPicker<T> extends StatelessWidget {
   final ValueChanged<T?>? onChanged;
   final ItemPickerLayout layout;
   final Widget? placeholder;
-  final Widget? dialogTitle;
+  final Widget? title;
   final PromptMode mode;
   final BoxConstraints? constraints;
   const ItemPicker({
@@ -18,7 +18,7 @@ class ItemPicker<T> extends StatelessWidget {
     this.onChanged,
     this.layout = ItemPickerLayout.grid,
     this.placeholder,
-    this.dialogTitle,
+    this.title,
     this.mode = PromptMode.dialog,
     this.constraints,
   });
@@ -27,104 +27,51 @@ class ItemPicker<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations = VNLookLocalizations.of(context);
     return ObjectFormField(
-      value: value,
-      placeholder: placeholder ?? const SizedBox.shrink(),
-      builder: builder,
-      dialogTitle: dialogTitle,
-      onChanged: onChanged,
-      mode: mode,
-      decorate: false,
-      editorBuilder: (context, handler) {
-        if (mode == PromptMode.dialog) {
-          final theme = VNLTheme.of(context);
-          final padding = MediaQuery.paddingOf(context);
-          return ModalBackdrop(
-            borderRadius: theme.borderRadiusXl,
-            child: ModalContainer(
+        value: value,
+        placeholder: placeholder ?? const SizedBox.shrink(),
+        builder: builder,
+        dialogTitle: title,
+        onChanged: onChanged,
+        mode: mode,
+        decorate: false,
+        editorBuilder: (context, handler) {
+          if (mode == PromptMode.dialog) {
+            final theme = VNLTheme.of(context);
+            return ModalBackdrop(
               borderRadius: theme.borderRadiusXl,
-              padding: EdgeInsets.zero,
-              child: IntrinsicWidth(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (dialogTitle != null || placeholder != null)
-                      Padding(
-                        padding: EdgeInsets.all(16.0 * theme.scaling) + EdgeInsets.only(top: padding.top),
-                        child: dialogTitle ?? placeholder,
-                      ),
-                    ConstrainedBox(
-                      constraints:
-                          constraints ??
-                          BoxConstraints.tightFor(width: 320 * theme.scaling, height: 320 * theme.scaling),
-                      child: MediaQuery(
-                        data: MediaQuery.of(context).copyWith(
-                          padding:
-                              padding.copyWith(top: 0) +
-                              const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0) * theme.scaling,
-                        ),
-                        child: ItemPickerDialog<T>(
-                          items: items,
-                          builder: builder,
-                          layout: layout,
-                          value: handler.value,
-                          onChanged: (value) {
-                            handler.value = value;
-                          },
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(16.0 * theme.scaling),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          VNLButton.secondary(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(localizations.buttonCancel),
-                          ),
-                          if (onChanged != null)
-                            VNLButton.primary(
-                              onPressed: () {
-                                Navigator.of(context).pop(ObjectFormFieldDialogResult(handler.value));
-                              },
-                              child: Text(localizations.buttonSave),
-                            ),
-                        ].joinSeparator(SizedBox(width: 8.0 * theme.scaling)),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        } else {
-          final theme = VNLTheme.of(context);
-          final mediaQuery = MediaQuery.of(context);
-          return SurfaceCard(
-            padding: EdgeInsets.zero,
-            child: ConstrainedBox(
-              constraints: constraints ?? BoxConstraints(maxWidth: 320 * theme.scaling, maxHeight: 320 * theme.scaling),
-              child: MediaQuery(
-                data: mediaQuery.copyWith(padding: mediaQuery.padding + EdgeInsets.all(8.0 * theme.scaling)),
-                child: ItemPickerDialog<T>(
+              child: ModalContainer(
+                borderRadius: theme.borderRadiusXl,
+                padding: EdgeInsets.zero,
+                child: _InternalItemPicker<T>(
                   items: items,
                   builder: builder,
-                  value: handler.value,
+                  initialValue: handler.value,
                   layout: layout,
+                  title: title,
+                  constraints: constraints,
                   onChanged: (value) {
-                    handler.value = value;
+                    closeOverlay(context, value);
                   },
                 ),
               ),
-            ),
-          );
-        }
-      },
-    );
+            );
+          } else {
+            return SurfaceCard(
+              padding: EdgeInsets.zero,
+              child: _InternalItemPicker<T>(
+                items: items,
+                builder: builder,
+                initialValue: handler.value,
+                layout: layout,
+                title: title,
+                constraints: constraints,
+                onChanged: (value) {
+                  closeOverlay(context, value);
+                },
+              ),
+            );
+          }
+        });
   }
 }
 
@@ -236,6 +183,7 @@ Future<T?> showItemPicker<T>(
   AlignmentGeometry? anchorAlignment,
   BoxConstraints? constraints,
   Offset? offset,
+  Widget? title,
 }) {
   final theme = VNLTheme.of(context);
   return showPopover<T>(
@@ -244,28 +192,83 @@ Future<T?> showItemPicker<T>(
     anchorAlignment: anchorAlignment ?? AlignmentDirectional.bottomStart,
     offset: offset ?? Offset(0, 8.0 * theme.scaling),
     builder: (context) {
-      final theme = VNLTheme.of(context);
-      final mediaQuery = MediaQuery.of(context);
       return SurfaceCard(
         padding: EdgeInsets.zero,
-        child: ConstrainedBox(
-          constraints: constraints ?? BoxConstraints(maxWidth: 320 * theme.scaling, maxHeight: 320 * theme.scaling),
-          child: MediaQuery(
-            data: mediaQuery.copyWith(padding: mediaQuery.padding + EdgeInsets.all(8.0 * theme.scaling)),
-            child: ItemPickerDialog<T>(
-              items: items,
-              builder: builder,
-              value: initialValue,
-              layout: layout,
-              onChanged: (value) {
-                closeOverlay<T>(context, value);
-              },
-            ),
-          ),
+        child: _InternalItemPicker<T>(
+          items: items,
+          builder: builder,
+          initialValue: initialValue,
+          layout: layout,
+          title: title,
+          constraints: constraints,
+          onChanged: (value) {
+            closeOverlay(context, value);
+          },
         ),
       );
     },
   ).future;
+}
+
+class _InternalItemPicker<T> extends StatelessWidget {
+  final ItemChildDelegate<T> items;
+  final ItemPickerBuilder<T> builder;
+  final T? initialValue;
+  final ItemPickerLayout layout;
+  final Widget? title;
+  final BoxConstraints? constraints;
+  final ValueChanged<T?> onChanged;
+  const _InternalItemPicker({
+    super.key,
+    required this.items,
+    required this.builder,
+    required this.initialValue,
+    required this.layout,
+    this.title,
+    this.constraints,
+    required this.onChanged,
+  });
+  @override
+  Widget build(BuildContext context) {
+    final theme = VNLTheme.of(context);
+    final padding = MediaQuery.paddingOf(context);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (title != null)
+          Padding(
+            padding: EdgeInsets.all(16.0 * theme.scaling) +
+                EdgeInsets.only(top: padding.top),
+            child: title?.large.semiBold,
+          ),
+        ConstrainedBox(
+          constraints: constraints ??
+              BoxConstraints(
+                maxWidth: 320 * theme.scaling,
+                maxHeight: 320 * theme.scaling,
+              ),
+          child: MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              padding: title != null
+                  ? padding.copyWith(top: 0) +
+                      const EdgeInsets.only(
+                              bottom: 8.0, left: 8.0, right: 8.0) *
+                          theme.scaling
+                  : padding + const EdgeInsets.all(8) * theme.scaling,
+            ),
+            child: ItemPickerDialog<T>(
+              items: items,
+              builder: builder,
+              layout: layout,
+              value: initialValue,
+              onChanged: onChanged,
+            ),
+          ),
+        )
+      ],
+    );
+  }
 }
 
 Future<T?> showItemPickerDialog<T>(
@@ -281,37 +284,21 @@ Future<T?> showItemPickerDialog<T>(
     context: context,
     builder: (context) {
       final theme = VNLTheme.of(context);
-      final padding = MediaQuery.paddingOf(context);
       return ModalBackdrop(
         borderRadius: theme.borderRadiusXl,
         child: ModalContainer(
           borderRadius: theme.borderRadiusXl,
           padding: EdgeInsets.zero,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(padding: EdgeInsets.all(16.0 * theme.scaling) + EdgeInsets.only(top: padding.top), child: title),
-              ConstrainedBox(
-                constraints:
-                    constraints ?? BoxConstraints(maxWidth: 320 * theme.scaling, maxHeight: 320 * theme.scaling),
-                child: MediaQuery(
-                  data: MediaQuery.of(context).copyWith(
-                    padding:
-                        padding.copyWith(top: 0) +
-                        const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0) * theme.scaling,
-                  ),
-                  child: ItemPickerDialog<T>(
-                    items: items,
-                    builder: builder,
-                    layout: layout,
-                    value: initialValue,
-                    onChanged: (value) {
-                      Navigator.of(context).pop(value);
-                    },
-                  ),
-                ),
-              ),
-            ],
+          child: _InternalItemPicker<T>(
+            items: items,
+            builder: builder,
+            initialValue: initialValue,
+            layout: layout,
+            title: title,
+            constraints: constraints,
+            onChanged: (value) {
+              closeOverlay(context, value);
+            },
           ),
         ),
       );
@@ -351,7 +338,11 @@ class _ItemPickerDialogState<T> extends State<ItemPickerDialog<T>> {
   @override
   Widget build(BuildContext context) {
     return Data.inherit(
-      data: ItemPickerData(value: widget.value, onChanged: _onChanged, layout: widget.layout),
+      data: ItemPickerData(
+        value: widget.value,
+        onChanged: _onChanged,
+        layout: widget.layout,
+      ),
       child: widget.layout.build(context, widget.items, _buildItem),
     );
   }
@@ -401,14 +392,24 @@ class ItemPickerOption<T> extends StatelessWidget {
               fit: StackFit.passthrough,
               children: [
                 child,
-                if (label != null) Positioned(top: 0, left: 0, right: 0, bottom: 0, child: Center(child: label)),
+                if (label != null)
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: Center(child: label),
+                  ),
               ],
             );
           }
           if (label == null) {
             return child;
           }
-          return BasicLayout(leading: child, content: label);
+          return BasicLayout(
+            leading: child,
+            content: label,
+          );
         },
       );
     }
@@ -432,7 +433,14 @@ class ItemPickerOption<T> extends StatelessWidget {
         fit: StackFit.passthrough,
         children: [
           child,
-          if (label != null) Positioned(top: 0, left: 0, right: 0, bottom: 0, child: Center(child: label)),
+          if (label != null)
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: Center(child: label),
+            ),
         ],
       ),
       onPressed: data.onChanged == null ? null : () => data.onChanged!(value),

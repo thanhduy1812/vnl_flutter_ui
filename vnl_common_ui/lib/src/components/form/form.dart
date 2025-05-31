@@ -37,16 +37,18 @@ abstract class Validator<T> {
   bool shouldRevalidate(FormKey<dynamic> source) => false;
 }
 
-enum FormValidationMode { initial, changed, submitted, waiting }
+enum FormValidationMode {
+  initial,
+  changed,
+  submitted,
+}
 
 class ValidationMode<T> extends Validator<T> {
   final Validator<T> validator;
   final Set<FormValidationMode> mode;
 
-  const ValidationMode(
-    this.validator, {
-    this.mode = const {FormValidationMode.changed, FormValidationMode.submitted, FormValidationMode.initial},
-  });
+  const ValidationMode(this.validator,
+      {this.mode = const {FormValidationMode.changed, FormValidationMode.submitted, FormValidationMode.initial}});
 
   @override
   FutureOr<ValidationResult?> validate(BuildContext context, T? value, FormValidationMode lifecycle) {
@@ -77,7 +79,12 @@ class IgnoreForm<T> extends StatelessWidget {
   @override
   widgets.Widget build(widgets.BuildContext context) {
     return MultiData(
-      data: ignoring ? const [Data<FormFieldHandle>.boundary(), Data<FormController>.boundary()] : const [],
+      data: ignoring
+          ? const [
+              Data<FormFieldHandle>.boundary(),
+              Data<FormController>.boundary(),
+            ]
+          : const [],
       child: child,
     );
   }
@@ -292,6 +299,10 @@ class LengthValidator extends Validator<String> {
   @override
   FutureOr<ValidationResult?> validate(BuildContext context, String? value, FormValidationMode state) {
     if (value == null) {
+      if (min != null) {
+        return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formLengthLessThan(min!),
+            state: state);
+      }
       return null;
     }
     VNLookLocalizations localizations = Localizations.of(context, VNLookLocalizations);
@@ -399,13 +410,12 @@ class SafePasswordValidator extends Validator<String> {
   final bool requireUppercase;
   final bool requireSpecialChar;
 
-  const SafePasswordValidator({
-    this.requireDigit = true,
-    this.requireLowercase = true,
-    this.requireUppercase = true,
-    this.requireSpecialChar = true,
-    this.message,
-  });
+  const SafePasswordValidator(
+      {this.requireDigit = true,
+      this.requireLowercase = true,
+      this.requireUppercase = true,
+      this.requireSpecialChar = true,
+      this.message});
 
   @override
   FutureOr<ValidationResult?> validate(BuildContext context, String? value, FormValidationMode state) {
@@ -416,16 +426,12 @@ class SafePasswordValidator extends Validator<String> {
       return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formPasswordDigits, state: state);
     }
     if (requireLowercase && !RegExp(r'[a-z]').hasMatch(value)) {
-      return InvalidResult(
-        message ?? Localizations.of(context, VNLookLocalizations).formPasswordLowercase,
-        state: state,
-      );
+      return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formPasswordLowercase,
+          state: state);
     }
     if (requireUppercase && !RegExp(r'[A-Z]').hasMatch(value)) {
-      return InvalidResult(
-        message ?? Localizations.of(context, VNLookLocalizations).formPasswordUppercase,
-        state: state,
-      );
+      return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formPasswordUppercase,
+          state: state);
     }
     if (requireSpecialChar && !RegExp(r'[\W_]').hasMatch(value)) {
       return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formPasswordSpecial, state: state);
@@ -461,17 +467,13 @@ class MinValidator<T extends num> extends Validator<T> {
     }
     if (inclusive) {
       if (value < min) {
-        return InvalidResult(
-          message ?? Localizations.of(context, VNLookLocalizations).formGreaterThanOrEqualTo(min),
-          state: state,
-        );
+        return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formGreaterThanOrEqualTo(min),
+            state: state);
       }
     } else {
       if (value <= min) {
-        return InvalidResult(
-          message ?? Localizations.of(context, VNLookLocalizations).formGreaterThan(min),
-          state: state,
-        );
+        return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formGreaterThan(min),
+            state: state);
       }
     }
     return null;
@@ -500,10 +502,8 @@ class MaxValidator<T extends num> extends Validator<T> {
     }
     if (inclusive) {
       if (value > max) {
-        return InvalidResult(
-          message ?? Localizations.of(context, VNLookLocalizations).formLessThanOrEqualTo(max),
-          state: state,
-        );
+        return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formLessThanOrEqualTo(max),
+            state: state);
       }
     } else {
       if (value >= max) {
@@ -537,17 +537,13 @@ class RangeValidator<T extends num> extends Validator<T> {
     }
     if (inclusive) {
       if (value < min || value > max) {
-        return InvalidResult(
-          message ?? Localizations.of(context, VNLookLocalizations).formBetweenInclusively(min, max),
-          state: state,
-        );
+        return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formBetweenInclusively(min, max),
+            state: state);
       }
     } else {
       if (value <= min || value >= max) {
-        return InvalidResult(
-          message ?? Localizations.of(context, VNLookLocalizations).formBetweenExclusively(min, max),
-          state: state,
-        );
+        return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formBetweenExclusively(min, max),
+            state: state);
       }
     }
     return null;
@@ -770,18 +766,47 @@ class CompositeValidator<T> extends Validator<T> {
 abstract class ValidationResult {
   final FormValidationMode state;
   const ValidationResult({required this.state});
+  FormKey get key;
+  ValidationResult attach(FormKey key);
 }
 
 class ReplaceResult<T> extends ValidationResult {
   final T value;
+  final FormKey? _key;
 
-  const ReplaceResult(this.value, {required super.state});
+  const ReplaceResult(this.value, {required super.state}) : _key = null;
+
+  const ReplaceResult.attached(this.value, {required FormKey key, required super.state}) : _key = key;
+
+  @override
+  FormKey get key {
+    assert(_key != null, 'The result has not been attached to a key');
+    return _key!;
+  }
+
+  @override
+  ReplaceResult<T> attach(FormKey key) {
+    return ReplaceResult.attached(value, key: key, state: state);
+  }
 }
 
 class InvalidResult extends ValidationResult {
   final String message;
+  final FormKey? _key;
 
-  const InvalidResult(this.message, {required super.state});
+  const InvalidResult(this.message, {required super.state}) : _key = null;
+  const InvalidResult.attached(this.message, {required FormKey key, required super.state}) : _key = key;
+
+  @override
+  FormKey get key {
+    assert(_key != null, 'The result has not been attached to a key');
+    return _key!;
+  }
+
+  @override
+  InvalidResult attach(FormKey key) {
+    return InvalidResult.attached(message, key: key, state: state);
+  }
 }
 
 class FormValidityNotification extends Notification {
@@ -800,6 +825,14 @@ class FormKey<T> extends LocalKey {
 
   bool isInstanceOf(dynamic value) {
     return value is T;
+  }
+
+  T? getValue(FormMapValues values) {
+    return values.getValue(this);
+  }
+
+  T? operator [](FormMapValues values) {
+    return values.getValue(this);
   }
 
   @override
@@ -855,14 +888,20 @@ class FormEntry<T> extends StatefulWidget {
 }
 
 mixin FormFieldHandle {
-  FutureOr<ValidationResult?> reportNewFormValue(Object? value);
+  FutureOr<ValidationResult?> reportNewFormValue<T>(T? value);
   FutureOr<ValidationResult?> revalidate();
   ValueListenable<ValidationResult?>? get validity;
 }
 
+class _FormEntryCachedValue {
+  Object? value;
+
+  _FormEntryCachedValue(this.value);
+}
+
 class FormEntryState extends State<FormEntry> with FormFieldHandle {
   FormController? _controller;
-  Object? _cachedValue;
+  _FormEntryCachedValue? _cachedValue;
   final ValueNotifier<ValidationResult?> _validity = ValueNotifier(null);
 
   @override
@@ -915,27 +954,24 @@ class FormEntryState extends State<FormEntry> with FormFieldHandle {
 
   @override
   Widget build(BuildContext context) {
-    return Data<FormFieldHandle>.inherit(data: this, child: widget.child);
+    return Data<FormFieldHandle>.inherit(
+      data: this,
+      child: widget.child,
+    );
   }
 
   @override
-  FutureOr<ValidationResult?> reportNewFormValue(Object? value) {
-    bool isSameType = widget.key.isInstanceOf(value);
-    assert(isSameType, () {
-      throw FlutterError.fromParts([
-        ErrorSummary('Invalid value type'),
-        ErrorDescription('Expecting ${widget.key.type} but received ${value.runtimeType}'),
-        ErrorHint('Make sure the value type matches the key type'),
-        ErrorHint('Key: FormKey<${widget.key.type}>'),
-      ]);
-    });
+  FutureOr<ValidationResult?> reportNewFormValue<T>(T? value) {
+    bool isSameType = widget.key.type == T;
     if (!isSameType) {
+      var parentLookup = Data.maybeFind<FormFieldHandle>(context);
+      return parentLookup?.reportNewFormValue<T>(value);
+    }
+    var cachedValue = _cachedValue;
+    if (cachedValue != null && cachedValue.value == value) {
       return null;
     }
-    if (_cachedValue == value) {
-      return null;
-    }
-    _cachedValue = value;
+    _cachedValue = _FormEntryCachedValue(value);
     return _controller?.attach(context, widget.key, value, widget.validator);
   }
 
@@ -987,8 +1023,8 @@ class _FormEntryHandleInterceptor with FormFieldHandle {
   const _FormEntryHandleInterceptor(this.handle, this.onValueReported);
 
   @override
-  FutureOr<ValidationResult?> reportNewFormValue(Object? value) {
-    return handle?.reportNewFormValue(value);
+  FutureOr<ValidationResult?> reportNewFormValue<T>(T? value) {
+    return handle?.reportNewFormValue<T>(value);
   }
 
   @override
@@ -1033,7 +1069,20 @@ class FormValueState<T> {
   int get hashCode => Object.hash(value, validator);
 }
 
-typedef FormSubmitCallback = void Function(BuildContext context, Map<FormKey, dynamic> values);
+typedef FormMapValues = Map<FormKey, dynamic>;
+
+typedef FormSubmitCallback = void Function(BuildContext context, FormMapValues values);
+
+extension FormMapValuesExtension on FormMapValues {
+  T? getValue<T>(FormKey<T> key) {
+    Object? value = this[key];
+    if (value == null) {
+      return null;
+    }
+    assert(key.isInstanceOf(value), 'The value for key $key is not of type ${key.type}');
+    return value as T?;
+  }
+}
 
 class VNLForm extends StatefulWidget {
   final FormController? controller;
@@ -1045,9 +1094,16 @@ class VNLForm extends StatefulWidget {
   State<VNLForm> createState() => FormState();
 }
 
+class _ValidatorResultStash {
+  final FutureOr<ValidationResult?> result;
+  final FormValidationMode state;
+
+  const _ValidatorResultStash(this.result, this.state);
+}
+
 class FormController extends ChangeNotifier {
   final Map<FormKey, FormValueState> _attachedInputs = {};
-  final Map<FormKey, FutureOr<ValidationResult?>> _validity = {};
+  final Map<FormKey, _ValidatorResultStash> _validity = {};
 
   bool _disposed = false;
 
@@ -1062,11 +1118,34 @@ class FormController extends ChangeNotifier {
   }
 
   Map<FormKey, FutureOr<ValidationResult?>> get validities {
-    return Map.unmodifiable(_validity);
+    return Map.unmodifiable(_validity.map((key, value) {
+      return MapEntry(key, value.result);
+    }));
+  }
+
+  Map<FormKey, ValidationResult> get errors {
+    final errors = <FormKey, ValidationResult>{};
+    for (var entry in _validity.entries) {
+      var result = entry.value.result;
+      if (result is Future<ValidationResult?>) {
+        errors[entry.key] = WaitingResult.attached(state: entry.value.state, key: entry.key);
+      } else if (result != null) {
+        errors[entry.key] = result;
+      }
+    }
+    return errors;
   }
 
   FutureOr<ValidationResult?>? getError(FormKey key) {
-    return _validity[key];
+    return _validity[key]?.result;
+  }
+
+  ValidationResult? getSyncError(FormKey key) {
+    var result = _validity[key]?.result;
+    if (result is Future<ValidationResult?>) {
+      return WaitingResult.attached(state: _validity[key]!.state, key: key);
+    }
+    return result;
   }
 
   FormValueState? getState(FormKey key) {
@@ -1080,12 +1159,12 @@ class FormController extends ChangeNotifier {
       var value = entry.value;
       if (value.validator != null) {
         var future = value.validator!.validate(context, value.value, state);
-        if (_validity[key] != future) {
-          _validity[key] = future;
+        if (_validity[key]?.result != future) {
           if (future is Future<ValidationResult?>) {
+            _validity[key] = _ValidatorResultStash(future, state);
             future.then((value) {
-              if (_validity[key] == future) {
-                _validity[key] = value;
+              if (_validity[key]?.result == future) {
+                _validity[key] = _ValidatorResultStash(value?.attach(key), state);
                 WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                   if (_disposed) {
                     return;
@@ -1094,6 +1173,8 @@ class FormController extends ChangeNotifier {
                 });
               }
             });
+          } else {
+            _validity[key] = _ValidatorResultStash(future, state);
           }
           changed = true;
         }
@@ -1109,13 +1190,8 @@ class FormController extends ChangeNotifier {
     }
   }
 
-  FutureOr<ValidationResult?> attach(
-    BuildContext context,
-    FormKey key,
-    Object? value,
-    Validator? validator, [
-    bool forceRevalidate = false,
-  ]) {
+  FutureOr<ValidationResult?> attach(BuildContext context, FormKey key, Object? value, Validator? validator,
+      [bool forceRevalidate = false]) {
     final oldState = _attachedInputs[key];
     var state = FormValueState(value: value, validator: validator);
     if (oldState == state && !forceRevalidate) {
@@ -1125,12 +1201,12 @@ class FormController extends ChangeNotifier {
     _attachedInputs[key] = state;
     // validate
     var future = validator?.validate(context, value, lifecycle);
-    _validity[key] = future;
     if (future is Future<ValidationResult?>) {
+      _validity[key] = _ValidatorResultStash(future, lifecycle);
       future.then((value) {
         // resolve the future and store synchronous value
-        if (_validity[key] == future) {
-          _validity[key] = value;
+        if (_validity[key]?.result == future) {
+          _validity[key] = _ValidatorResultStash(value?.attach(key), lifecycle);
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
             if (_disposed) {
               return;
@@ -1139,6 +1215,8 @@ class FormController extends ChangeNotifier {
           });
         }
       });
+    } else {
+      _validity[key] = _ValidatorResultStash(future, lifecycle);
     }
     // check for revalidation
     Map<FormKey, FutureOr<ValidationResult?>> revalidate = {};
@@ -1159,11 +1237,11 @@ class FormController extends ChangeNotifier {
       var attachedInput = _attachedInputs[k]!;
       attachedInput = FormValueState(value: attachedInput.value, validator: attachedInput.validator);
       _attachedInputs[k] = attachedInput;
-      _validity[k] = future;
       if (future is Future<ValidationResult?>) {
+        _validity[k] = _ValidatorResultStash(future, lifecycle);
         future.then((value) {
-          if (_validity[k] == future) {
-            _validity[k] = value;
+          if (_validity[k]?.result == future) {
+            _validity[k] = _ValidatorResultStash(value?.attach(k), lifecycle);
             WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
               if (_disposed) {
                 return;
@@ -1172,6 +1250,8 @@ class FormController extends ChangeNotifier {
             });
           }
         });
+      } else {
+        _validity[k] = _ValidatorResultStash(future, lifecycle);
       }
     }
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -1216,7 +1296,13 @@ class FormState extends State<VNLForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Data.inherit(data: this, child: Data.inherit(data: _controller, child: widget.child));
+    return Data.inherit(
+      data: this,
+      child: Data.inherit(
+        data: _controller,
+        child: widget.child,
+      ),
+    );
   }
 }
 
@@ -1233,23 +1319,36 @@ class FormEntryErrorBuilder extends StatelessWidget {
     if (formController != null) {
       var validityListenable = formController.validity;
       return ListenableBuilder(
-        listenable: Listenable.merge([if (validityListenable != null) validityListenable]),
-        builder: (context, child) {
-          var validity = validityListenable?.value;
-          if (modes != null && !modes!.contains(validity?.state)) {
-            return builder(context, null, child);
-          }
-          return builder(context, validity, child);
-        },
-        child: child,
-      );
+          listenable: Listenable.merge([
+            if (validityListenable != null) validityListenable,
+          ]),
+          builder: (context, child) {
+            var validity = validityListenable?.value;
+            if (modes != null && !modes!.contains(validity?.state)) {
+              return builder(context, null, child);
+            }
+            return builder(context, validity, child);
+          },
+          child: child);
     }
     return builder(context, null, child);
   }
 }
 
 class WaitingResult extends ValidationResult {
-  const WaitingResult({required super.state});
+  final FormKey? _key;
+  const WaitingResult.attached({required FormKey key, required super.state}) : _key = key;
+
+  @override
+  FormKey get key {
+    assert(_key != null, 'The result has not been attached to a key');
+    return _key!;
+  }
+
+  @override
+  WaitingResult attach(FormKey key) {
+    return WaitingResult.attached(key: key, state: state);
+  }
 }
 
 class FormErrorBuilder extends StatelessWidget {
@@ -1262,44 +1361,11 @@ class FormErrorBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final formController = Data.maybeOf<FormController>(context);
     if (formController != null) {
-      return AnimatedBuilder(
-        animation: formController,
+      return ListenableBuilder(
+        listenable: formController,
         child: child,
         builder: (context, child) {
-          final errors = formController.validities;
-          // future builder
-          return FutureBuilder<List<MapEntry<FormKey, ValidationResult?>>>(
-            future: Future.wait(
-              errors.entries.map((entry) {
-                var key = entry.key;
-                var value = entry.value;
-                if (value is Future<ValidationResult?>) {
-                  return value.then((value) => MapEntry(key, value));
-                }
-                return Future.value(MapEntry(key, value));
-              }),
-            ),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return builder(context, {
-                  for (var entry in formController._attachedInputs.entries)
-                    entry.key: const WaitingResult(state: FormValidationMode.waiting),
-                }, child);
-              }
-              if (snapshot.hasData) {
-                final errors = <FormKey, ValidationResult>{};
-                for (var entry in snapshot.data!) {
-                  var key = entry.key;
-                  var value = entry.value;
-                  if (value != null) {
-                    errors[key] = value;
-                  }
-                }
-                return builder(context, errors, child);
-              }
-              return builder(context, {}, child);
-            },
-          );
+          return builder(context, formController.errors, child);
         },
       );
     }
@@ -1307,8 +1373,8 @@ class FormErrorBuilder extends StatelessWidget {
   }
 }
 
-typedef FormPendingWidgetBuilder =
-    Widget Function(BuildContext context, Map<FormKey, Future<ValidationResult?>> errors, Widget? child);
+typedef FormPendingWidgetBuilder = Widget Function(
+    BuildContext context, Map<FormKey, Future<ValidationResult?>> errors, Widget? child);
 
 class FormPendingBuilder extends StatelessWidget {
   final Widget? child;
@@ -1384,16 +1450,13 @@ extension FormExtension on BuildContext {
     return result;
   }
 
-  FutureOr<SubmissionResult> _chainedSubmitForm(
-    Map<FormKey, Object?> values,
-    Map<FormKey, ValidationResult> errors,
-    Iterator<MapEntry<FormKey, FutureOr<ValidationResult?>>> iterator,
-  ) {
+  FutureOr<SubmissionResult> _chainedSubmitForm(Map<FormKey, Object?> values, Map<FormKey, ValidationResult> errors,
+      Iterator<MapEntry<FormKey, _ValidatorResultStash>> iterator) {
     if (!iterator.moveNext()) {
       return SubmissionResult(values, errors);
     }
     var entry = iterator.current;
-    var value = entry.value;
+    var value = entry.value.result;
     if (value is Future<ValidationResult?>) {
       return value.then((value) {
         if (value != null) {
@@ -1439,7 +1502,7 @@ mixin FormValueSupplier<T, X extends StatefulWidget> on State<X> {
       return;
     }
     final currentCounter = ++_futureCounter;
-    var validationResult = state.reportNewFormValue(value);
+    var validationResult = state.reportNewFormValue<T>(value);
     if (validationResult is Future<ValidationResult?>) {
       validationResult.then((value) {
         if (_futureCounter == currentCounter) {
@@ -1542,7 +1605,10 @@ class FormField<T> extends StatelessWidget {
               ),
               Gap(theme.scaling * 8),
               child!,
-              if (hint != null) ...[Gap(theme.scaling * 8), hint!.xSmall().muted()],
+              if (hint != null) ...[
+                Gap(theme.scaling * 8),
+                hint!.xSmall().muted(),
+              ],
               if (error is InvalidResult) ...[
                 Gap(theme.scaling * 8),
                 DefaultTextStyle.merge(
@@ -1604,7 +1670,10 @@ class FormInline<T> extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (hint != null) ...[const Gap(8), hint!.xSmall().muted()],
+                if (hint != null) ...[
+                  const Gap(8),
+                  hint!.xSmall().muted(),
+                ],
                 if (error is InvalidResult) ...[
                   const Gap(8),
                   DefaultTextStyle.merge(
@@ -1636,17 +1705,24 @@ class FormTableLayout extends StatelessWidget {
     return DefaultTextStyle.merge(
       style: TextStyle(color: VNLTheme.of(context).colorScheme.foreground),
       child: widgets.Table(
-        columnWidths: const {0: IntrinsicColumnWidth(), 1: FlexColumnWidth()},
+        columnWidths: const {
+          0: IntrinsicColumnWidth(),
+          1: FlexColumnWidth(),
+        },
         children: [
           for (int i = 0; i < rows.length; i++)
             widgets.TableRow(
               children: [
-                rows[i].label
+                rows[i]
+                    .label
                     .textSmall()
                     .withAlign(AlignmentDirectional.centerEnd)
                     .withMargin(right: 16 * scaling)
                     .sized(height: 32 * scaling)
-                    .withPadding(top: i == 0 ? 0 : spacing, left: 16 * scaling),
+                    .withPadding(
+                      top: i == 0 ? 0 : spacing,
+                      left: 16 * scaling,
+                    ),
                 FormEntry(
                   key: rows[i].key,
                   validator: rows[i].validator,
@@ -1658,7 +1734,10 @@ class FormTableLayout extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             child!,
-                            if (rows[i].hint != null) ...[Gap(8 * scaling), rows[i].hint!.xSmall().muted()],
+                            if (rows[i].hint != null) ...[
+                              Gap(8 * scaling),
+                              rows[i].hint!.xSmall().muted(),
+                            ],
                             if (error is InvalidResult) ...[
                               Gap(8 * scaling),
                               DefaultTextStyle.merge(
@@ -1672,7 +1751,9 @@ class FormTableLayout extends StatelessWidget {
                     },
                     child: rows[i].child,
                   ),
-                ).withPadding(top: i == 0 ? 0 : spacing),
+                ).withPadding(
+                  top: i == 0 ? 0 : spacing,
+                ),
               ],
             ),
         ],
@@ -1681,7 +1762,7 @@ class FormTableLayout extends StatelessWidget {
   }
 }
 
-class SubmitButton extends StatefulWidget {
+class SubmitButton extends StatelessWidget {
   final AbstractButtonStyle? style;
   final Widget child;
   final Widget? loading;
@@ -1720,121 +1801,60 @@ class SubmitButton extends StatefulWidget {
   });
 
   @override
-  widgets.State<SubmitButton> createState() => _SubmitButtonState();
-}
-
-class _SubmitButtonState extends widgets.State<SubmitButton> {
-  FutureOr<bool>? _future;
-  FormController? _controller;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    var oldController = _controller;
-    var newController = Data.maybeOf<FormController>(context);
-    if (oldController != newController) {
-      oldController?.removeListener(_onControllerChanged);
-      newController?.addListener(_onControllerChanged);
-      _controller = newController;
-      if (_controller != null) {
-        _onControllerChanged();
-      }
-    }
-  }
-
-  void _onControllerChanged() {
-    if (!mounted) {
-      return;
-    }
-    setState(() {
-      _future = _hasError();
-    });
-  }
-
-  int count = 0;
-
-  FutureOr<bool> _hasError() {
-    if (_controller == null) {
-      return false;
-    }
-    return _chainedHasError(_controller!._validity.entries.iterator);
-  }
-
-  FutureOr<bool> _chainedHasError(Iterator<MapEntry<FormKey, FutureOr<ValidationResult?>>> iterator) {
-    if (!iterator.moveNext()) {
-      return false;
-    }
-    var entry = iterator.current;
-    var value = entry.value;
-    if (value is Future<ValidationResult?>) {
-      return value.then((value) {
-        if (value != null) {
-          return true;
-        }
-        return _chainedHasError(iterator);
-      });
-    }
-    if (value != null) {
-      return true;
-    }
-    return _chainedHasError(iterator);
-  }
-
-  @override
-  Widget build(widgets.BuildContext context) {
-    var hasError = _future;
-    if (hasError is Future) {
-      // loading
-      return VNLButton(
-        leading: widget.loadingLeading ?? widget.leading,
-        trailing: widget.loadingTrailing ?? widget.trailing,
-        alignment: widget.alignment,
-        disableHoverEffect: widget.disableHoverEffect,
-        enabled: false,
-        enableFeedback: false,
-        disableTransition: widget.disableTransition,
-        focusNode: widget.focusNode,
-        style: widget.style ?? const ButtonStyle.primary(),
-        child: widget.loading ?? widget.child,
-      );
-    }
-    if (hasError == true) {
-      return VNLButton(
-        leading: widget.errorLeading ?? widget.leading,
-        trailing: widget.errorTrailing ?? widget.trailing,
-        alignment: widget.alignment,
-        disableHoverEffect: widget.disableHoverEffect,
-        enabled: false,
-        enableFeedback: true,
-        disableTransition: widget.disableTransition,
-        focusNode: widget.focusNode,
-        style: widget.style ?? const ButtonStyle.primary(),
-        child: widget.error ?? widget.child,
-      );
-    }
-    return VNLButton(
-      trailing: widget.trailing,
-      leading: widget.leading,
-      alignment: widget.alignment,
-      disableHoverEffect: widget.disableHoverEffect,
-      enabled: widget.enabled,
-      enableFeedback: widget.enableFeedback,
-      onPressed: () {
-        setState(() {
-          var submissionResult = context.submitForm();
-          if (submissionResult is Future<SubmissionResult>) {
-            _future = submissionResult.then((value) {
-              return value.errors.isNotEmpty;
-            });
-          } else {
-            _future = submissionResult.errors.isNotEmpty;
-          }
+  widgets.Widget build(widgets.BuildContext context) {
+    return FormErrorBuilder(
+      builder: (context, errors, child) {
+        var hasWaitingError = errors.values.any((element) {
+          return element is WaitingResult;
         });
+        var hasError = errors.values.any((element) {
+          return element is InvalidResult;
+        });
+        if (hasWaitingError) {
+          return VNLButton(
+            leading: loadingLeading ?? leading,
+            trailing: loadingTrailing ?? trailing,
+            alignment: alignment,
+            disableHoverEffect: disableHoverEffect,
+            enabled: false,
+            enableFeedback: false,
+            disableTransition: disableTransition,
+            focusNode: focusNode,
+            style: style ?? const ButtonStyle.primary(),
+            child: loading ?? child!,
+          );
+        }
+        if (hasError) {
+          return VNLButton(
+            leading: errorLeading ?? leading,
+            trailing: errorTrailing ?? trailing,
+            alignment: alignment,
+            disableHoverEffect: disableHoverEffect,
+            enabled: false,
+            enableFeedback: true,
+            disableTransition: disableTransition,
+            focusNode: focusNode,
+            style: style ?? const ButtonStyle.primary(),
+            child: error ?? child!,
+          );
+        }
+        return VNLButton(
+          leading: leading,
+          trailing: trailing,
+          alignment: alignment,
+          disableHoverEffect: disableHoverEffect,
+          enabled: enabled ?? true,
+          enableFeedback: enableFeedback ?? true,
+          onPressed: () {
+            context.submitForm();
+          },
+          disableTransition: disableTransition,
+          focusNode: focusNode,
+          style: style ?? const ButtonStyle.primary(),
+          child: child!,
+        );
       },
-      disableTransition: widget.disableTransition,
-      focusNode: widget.focusNode,
-      style: widget.style ?? const ButtonStyle.primary(),
-      child: widget.child,
+      child: child,
     );
   }
 }

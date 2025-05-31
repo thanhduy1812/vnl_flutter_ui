@@ -1,5 +1,5 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
-
+import 'dart:convert';
 class FormExample2 extends StatefulWidget {
   const FormExample2({super.key});
 
@@ -19,12 +19,31 @@ class _FormExample2State extends State<FormExample2> {
       width: 480,
       child: VNLForm(
         onSubmit: (context, values) {
+          // Get the values individually
+          String? username = _usernameKey[values];
+          String? password = _passwordKey[values];
+          String? confirmPassword = _confirmPasswordKey[values];
+          CheckboxState? agree = _agreeKey[values];
+          // or just encode the whole map to JSON directly
+          String json = jsonEncode(values.map((key, value) {
+            return MapEntry(key.key, value);
+          }));
           showDialog(
             context: context,
             builder: (context) {
               return VNLAlertDialog(
                 title: const Text('Form Values'),
-                content: Text(values.toString()),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Username: $username'),
+                    Text('Password: $password'),
+                    Text('Confirm Password: $confirmPassword'),
+                    Text('Agree: $agree'),
+                    Text('JSON: $json'),
+                  ],
+                ),
                 actions: [
                   PrimaryButton(
                     onPressed: () => Navigator.of(context).pop(),
