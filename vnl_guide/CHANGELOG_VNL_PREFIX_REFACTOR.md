@@ -9,40 +9,30 @@ All ambiguous widget/component names that could conflict with Material 3 have be
 
 | Old Name            | New Name              |
 |---------------------|----------------------|
-| ActiveDotItem       | VNLActiveDotItem     |
 | Avatar              | VNLAvatar            |
 | AvatarBadge         | VNLAvatarBadge       |
 | AvatarGroup         | VNLAvatarGroup       |
-| AvatarWidget        | VNLAvatarWidget      |
 | ButtonGroup         | VNLButtonGroup       |
-| ButtonStyleOverride | VNLButtonStyleOverride |
-| CalendarGrid        | VNLCalendarGrid      |
-| CalendarItem        | VNLCalendarItem      |
+| Card                | VNLCard              |
 | CardButton          | VNLCardButton        |
+| CardImage           | VNLCardImage         |
 | ChipButton          | VNLChipButton        |
-| Clickable           | VNLClickable         |
-| ContextMenuPopup    | VNLContextMenuPopup  |
-| DotItem             | VNLDotItem           |
-| Hover               | VNLHover             |
-| HoverActivity       | VNLHoverActivity     |
 | IconButton          | VNLIconButton        |
-| InactiveDotItem     | VNLInactiveDotItem   |
 | Label               | VNLLabel             |
 | MenuPopup           | VNLMenuPopup         |
-| MonthCalendar       | VNLMonthCalendar     |
-| NumberTicker        | VNLNumberTicker      |
+| OutlineBadge        | VNLOutlineBadge      |
+| OutlineButton       | VNLOutlineButton     |
 | Pagination          | VNLPagination        |
-| PopoverOverlayWidget| VNLPopoverOverlayWidget |
+| PrimaryBadge        | VNLPrimaryBadge      |
+| PrimaryButton       | VNLPrimaryButton     |
 | Progress            | VNLProgress          |
+| Radio               | VNLRadio             |
+| SecondaryBadge      | VNLSecondaryBadge    |
+| SecondaryButton     | VNLSecondaryButton   |
 | SelectedButton      | VNLSelectedButton    |
 | Spinner             | VNLSpinner           |
-| StatedWidget        | VNLStatedWidget      |
 | TabButton           | VNLTabButton         |
 | TextButton          | VNLTextButton        |
-| ToastEntryLayout    | VNLToastEntryLayout  |
-| ToastLayer          | VNLToastLayer        |
 | Tooltip             | VNLTooltip           |
-| TooltipContainer    | VNLTooltipContainer  |
-| YearCalendar        | VNLYearCalendar      |
 
-> **Note:** All references, imports, and documentation have been updated to use the new names. Please use the VNL-prefixed versions for all future development to ensure consistency and avoid confusion with Material 3 widgets. 
+> **Note:** Only ambiguous UI/control widgets that could conflict with Material or require clarity are listed here. All references, imports, and documentation have been updated to use the new names. Please use the VNL-prefixed versions for all future development to ensure consistency and avoid confusion with Material 3 widgets. 
