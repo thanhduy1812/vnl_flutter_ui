@@ -16,7 +16,7 @@ class HoverCardExample1 extends StatelessWidget {
           ),
         ).sized(width: 300);
       },
-      child: LinkButton(
+      child: VNLLinkButton(
         onPressed: () {},
         child: const Text('@flutter'),
       ),

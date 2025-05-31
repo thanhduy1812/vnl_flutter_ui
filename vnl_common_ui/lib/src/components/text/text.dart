@@ -238,7 +238,7 @@ extension TextExtension on Widget {
         child: Builder(
           builder: (context) {
             final defaultTextStyle = DefaultTextStyle.of(context);
-            return LinkButton(
+            return VNLLinkButton(
               onPressed: onPressed,
               child: Builder(
                 builder: (context) {

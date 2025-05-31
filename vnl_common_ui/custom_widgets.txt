@@ -40,7 +40,7 @@ KeyboardKeyDisplay
 KeyboardShortcutDisplayMapper
 VNLLabel -> VNLLabel
 LinearProgressIndicator
-LinkButton
+VNLLinkButton
 VNLMenuPopup -> VNLMenuPopup
 MobileEditableTextContextMenu
 ModalBackdrop

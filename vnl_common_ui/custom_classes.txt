@@ -107,7 +107,7 @@ VNLPrimaryButton
 VNLSecondaryButton
 VNLOutlineButton
 VNLGhostButton
-LinkButton
+VNLLinkButton
 VNLTextButton
 VNLDestructiveButton
 VNLTabButton

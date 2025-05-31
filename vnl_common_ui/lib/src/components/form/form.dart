@@ -37,18 +37,16 @@ abstract class Validator<T> {
   bool shouldRevalidate(FormKey<dynamic> source) => false;
 }
 
-enum FormValidationMode {
-  initial,
-  changed,
-  submitted,
-}
+enum FormValidationMode { initial, changed, submitted }
 
 class ValidationMode<T> extends Validator<T> {
   final Validator<T> validator;
   final Set<FormValidationMode> mode;
 
-  const ValidationMode(this.validator,
-      {this.mode = const {FormValidationMode.changed, FormValidationMode.submitted, FormValidationMode.initial}});
+  const ValidationMode(
+    this.validator, {
+    this.mode = const {FormValidationMode.changed, FormValidationMode.submitted, FormValidationMode.initial},
+  });
 
   @override
   FutureOr<ValidationResult?> validate(BuildContext context, T? value, FormValidationMode lifecycle) {
@@ -79,12 +77,7 @@ class IgnoreForm<T> extends StatelessWidget {
   @override
   widgets.Widget build(widgets.BuildContext context) {
     return MultiData(
-      data: ignoring
-          ? const [
-              Data<FormFieldHandle>.boundary(),
-              Data<FormController>.boundary(),
-            ]
-          : const [],
+      data: ignoring ? const [Data<FormFieldHandle>.boundary(), Data<FormController>.boundary()] : const [],
       child: child,
     );
   }
@@ -300,8 +293,10 @@ class LengthValidator extends Validator<String> {
   FutureOr<ValidationResult?> validate(BuildContext context, String? value, FormValidationMode state) {
     if (value == null) {
       if (min != null) {
-        return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formLengthLessThan(min!),
-            state: state);
+        return InvalidResult(
+          message ?? Localizations.of(context, VNLookLocalizations).formLengthLessThan(min!),
+          state: state,
+        );
       }
       return null;
     }
@@ -410,12 +405,13 @@ class SafePasswordValidator extends Validator<String> {
   final bool requireUppercase;
   final bool requireSpecialChar;
 
-  const SafePasswordValidator(
-      {this.requireDigit = true,
-      this.requireLowercase = true,
-      this.requireUppercase = true,
-      this.requireSpecialChar = true,
-      this.message});
+  const SafePasswordValidator({
+    this.requireDigit = true,
+    this.requireLowercase = true,
+    this.requireUppercase = true,
+    this.requireSpecialChar = true,
+    this.message,
+  });
 
   @override
   FutureOr<ValidationResult?> validate(BuildContext context, String? value, FormValidationMode state) {
@@ -426,12 +422,16 @@ class SafePasswordValidator extends Validator<String> {
       return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formPasswordDigits, state: state);
     }
     if (requireLowercase && !RegExp(r'[a-z]').hasMatch(value)) {
-      return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formPasswordLowercase,
-          state: state);
+      return InvalidResult(
+        message ?? Localizations.of(context, VNLookLocalizations).formPasswordLowercase,
+        state: state,
+      );
     }
     if (requireUppercase && !RegExp(r'[A-Z]').hasMatch(value)) {
-      return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formPasswordUppercase,
-          state: state);
+      return InvalidResult(
+        message ?? Localizations.of(context, VNLookLocalizations).formPasswordUppercase,
+        state: state,
+      );
     }
     if (requireSpecialChar && !RegExp(r'[\W_]').hasMatch(value)) {
       return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formPasswordSpecial, state: state);
@@ -467,13 +467,17 @@ class MinValidator<T extends num> extends Validator<T> {
     }
     if (inclusive) {
       if (value < min) {
-        return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formGreaterThanOrEqualTo(min),
-            state: state);
+        return InvalidResult(
+          message ?? Localizations.of(context, VNLookLocalizations).formGreaterThanOrEqualTo(min),
+          state: state,
+        );
       }
     } else {
       if (value <= min) {
-        return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formGreaterThan(min),
-            state: state);
+        return InvalidResult(
+          message ?? Localizations.of(context, VNLookLocalizations).formGreaterThan(min),
+          state: state,
+        );
       }
     }
     return null;
@@ -502,8 +506,10 @@ class MaxValidator<T extends num> extends Validator<T> {
     }
     if (inclusive) {
       if (value > max) {
-        return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formLessThanOrEqualTo(max),
-            state: state);
+        return InvalidResult(
+          message ?? Localizations.of(context, VNLookLocalizations).formLessThanOrEqualTo(max),
+          state: state,
+        );
       }
     } else {
       if (value >= max) {
@@ -537,13 +543,17 @@ class RangeValidator<T extends num> extends Validator<T> {
     }
     if (inclusive) {
       if (value < min || value > max) {
-        return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formBetweenInclusively(min, max),
-            state: state);
+        return InvalidResult(
+          message ?? Localizations.of(context, VNLookLocalizations).formBetweenInclusively(min, max),
+          state: state,
+        );
       }
     } else {
       if (value <= min || value >= max) {
-        return InvalidResult(message ?? Localizations.of(context, VNLookLocalizations).formBetweenExclusively(min, max),
-            state: state);
+        return InvalidResult(
+          message ?? Localizations.of(context, VNLookLocalizations).formBetweenExclusively(min, max),
+          state: state,
+        );
       }
     }
     return null;
@@ -954,10 +964,7 @@ class FormEntryState extends State<FormEntry> with FormFieldHandle {
 
   @override
   Widget build(BuildContext context) {
-    return Data<FormFieldHandle>.inherit(
-      data: this,
-      child: widget.child,
-    );
+    return Data<FormFieldHandle>.inherit(data: this, child: widget.child);
   }
 
   @override
@@ -1118,9 +1125,11 @@ class FormController extends ChangeNotifier {
   }
 
   Map<FormKey, FutureOr<ValidationResult?>> get validities {
-    return Map.unmodifiable(_validity.map((key, value) {
-      return MapEntry(key, value.result);
-    }));
+    return Map.unmodifiable(
+      _validity.map((key, value) {
+        return MapEntry(key, value.result);
+      }),
+    );
   }
 
   Map<FormKey, ValidationResult> get errors {
@@ -1190,8 +1199,13 @@ class FormController extends ChangeNotifier {
     }
   }
 
-  FutureOr<ValidationResult?> attach(BuildContext context, FormKey key, Object? value, Validator? validator,
-      [bool forceRevalidate = false]) {
+  FutureOr<ValidationResult?> attach(
+    BuildContext context,
+    FormKey key,
+    Object? value,
+    Validator? validator, [
+    bool forceRevalidate = false,
+  ]) {
     final oldState = _attachedInputs[key];
     var state = FormValueState(value: value, validator: validator);
     if (oldState == state && !forceRevalidate) {
@@ -1296,13 +1310,7 @@ class FormState extends State<VNLForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Data.inherit(
-      data: this,
-      child: Data.inherit(
-        data: _controller,
-        child: widget.child,
-      ),
-    );
+    return Data.inherit(data: this, child: Data.inherit(data: _controller, child: widget.child));
   }
 }
 
@@ -1319,17 +1327,16 @@ class FormEntryErrorBuilder extends StatelessWidget {
     if (formController != null) {
       var validityListenable = formController.validity;
       return ListenableBuilder(
-          listenable: Listenable.merge([
-            if (validityListenable != null) validityListenable,
-          ]),
-          builder: (context, child) {
-            var validity = validityListenable?.value;
-            if (modes != null && !modes!.contains(validity?.state)) {
-              return builder(context, null, child);
-            }
-            return builder(context, validity, child);
-          },
-          child: child);
+        listenable: Listenable.merge([if (validityListenable != null) validityListenable]),
+        builder: (context, child) {
+          var validity = validityListenable?.value;
+          if (modes != null && !modes!.contains(validity?.state)) {
+            return builder(context, null, child);
+          }
+          return builder(context, validity, child);
+        },
+        child: child,
+      );
     }
     return builder(context, null, child);
   }
@@ -1373,8 +1380,8 @@ class FormErrorBuilder extends StatelessWidget {
   }
 }
 
-typedef FormPendingWidgetBuilder = Widget Function(
-    BuildContext context, Map<FormKey, Future<ValidationResult?>> errors, Widget? child);
+typedef FormPendingWidgetBuilder =
+    Widget Function(BuildContext context, Map<FormKey, Future<ValidationResult?>> errors, Widget? child);
 
 class FormPendingBuilder extends StatelessWidget {
   final Widget? child;
@@ -1450,8 +1457,11 @@ extension FormExtension on BuildContext {
     return result;
   }
 
-  FutureOr<SubmissionResult> _chainedSubmitForm(Map<FormKey, Object?> values, Map<FormKey, ValidationResult> errors,
-      Iterator<MapEntry<FormKey, _ValidatorResultStash>> iterator) {
+  FutureOr<SubmissionResult> _chainedSubmitForm(
+    Map<FormKey, Object?> values,
+    Map<FormKey, ValidationResult> errors,
+    Iterator<MapEntry<FormKey, _ValidatorResultStash>> iterator,
+  ) {
     if (!iterator.moveNext()) {
       return SubmissionResult(values, errors);
     }
@@ -1605,10 +1615,7 @@ class FormField<T> extends StatelessWidget {
               ),
               Gap(theme.scaling * 8),
               child!,
-              if (hint != null) ...[
-                Gap(theme.scaling * 8),
-                hint!.xSmall().muted(),
-              ],
+              if (hint != null) ...[Gap(theme.scaling * 8), hint!.xSmall().muted()],
               if (error is InvalidResult) ...[
                 Gap(theme.scaling * 8),
                 DefaultTextStyle.merge(
@@ -1670,10 +1677,7 @@ class FormInline<T> extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (hint != null) ...[
-                  const Gap(8),
-                  hint!.xSmall().muted(),
-                ],
+                if (hint != null) ...[const Gap(8), hint!.xSmall().muted()],
                 if (error is InvalidResult) ...[
                   const Gap(8),
                   DefaultTextStyle.merge(
@@ -1705,24 +1709,17 @@ class FormTableLayout extends StatelessWidget {
     return DefaultTextStyle.merge(
       style: TextStyle(color: VNLTheme.of(context).colorScheme.foreground),
       child: widgets.Table(
-        columnWidths: const {
-          0: IntrinsicColumnWidth(),
-          1: FlexColumnWidth(),
-        },
+        columnWidths: const {0: IntrinsicColumnWidth(), 1: FlexColumnWidth()},
         children: [
           for (int i = 0; i < rows.length; i++)
             widgets.TableRow(
               children: [
-                rows[i]
-                    .label
+                rows[i].label
                     .textSmall()
                     .withAlign(AlignmentDirectional.centerEnd)
                     .withMargin(right: 16 * scaling)
                     .sized(height: 32 * scaling)
-                    .withPadding(
-                      top: i == 0 ? 0 : spacing,
-                      left: 16 * scaling,
-                    ),
+                    .withPadding(top: i == 0 ? 0 : spacing, left: 16 * scaling),
                 FormEntry(
                   key: rows[i].key,
                   validator: rows[i].validator,
@@ -1734,10 +1731,7 @@ class FormTableLayout extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             child!,
-                            if (rows[i].hint != null) ...[
-                              Gap(8 * scaling),
-                              rows[i].hint!.xSmall().muted(),
-                            ],
+                            if (rows[i].hint != null) ...[Gap(8 * scaling), rows[i].hint!.xSmall().muted()],
                             if (error is InvalidResult) ...[
                               Gap(8 * scaling),
                               DefaultTextStyle.merge(
@@ -1751,9 +1745,7 @@ class FormTableLayout extends StatelessWidget {
                     },
                     child: rows[i].child,
                   ),
-                ).withPadding(
-                  top: i == 0 ? 0 : spacing,
-                ),
+                ).withPadding(top: i == 0 ? 0 : spacing),
               ],
             ),
         ],

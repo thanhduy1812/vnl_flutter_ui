@@ -10,10 +10,10 @@ class TableExample3 extends StatefulWidget {
 }
 
 class _TableExample3State extends State<TableExample3> {
-  TableCell buildCell(String text, [bool alignRight = false]) {
+  VNLTableCell buildCell(String text, [bool alignRight = false]) {
     final theme = VNLTheme.of(context);
-    return TableCell(
-      theme: TableCellTheme(
+    return VNLTableCell(
+      theme: VNLTableCellTheme(
         border: WidgetStatePropertyAll(
           Border.all(
             color: theme.colorScheme.border,
@@ -45,7 +45,7 @@ class _TableExample3State extends State<TableExample3> {
           child: ScrollableClient(
               diagonalDragBehavior: DiagonalDragBehavior.free,
               builder: (context, offset, viewportSize, child) {
-                return Table(
+                return VNLTable(
                   horizontalOffset: offset.dx,
                   verticalOffset: offset.dy,
                   viewportSize: viewportSize,
@@ -62,7 +62,7 @@ class _TableExample3State extends State<TableExample3> {
                     ],
                   ),
                   rows: [
-                    TableHeader(
+                    VNLTableHeader(
                       cells: [
                         buildCell('Invoice'),
                         buildCell('Status'),
@@ -72,7 +72,7 @@ class _TableExample3State extends State<TableExample3> {
                         buildCell('Last Updated'),
                       ],
                     ),
-                    TableRow(
+                    VNLTableRow(
                       cells: [
                         buildCell('INV001'),
                         buildCell('Paid'),
@@ -82,7 +82,7 @@ class _TableExample3State extends State<TableExample3> {
                         buildCell('2 hours ago'),
                       ],
                     ),
-                    TableRow(
+                    VNLTableRow(
                       cells: [
                         buildCell('INV002'),
                         buildCell('Pending'),
@@ -92,7 +92,7 @@ class _TableExample3State extends State<TableExample3> {
                         buildCell('1 day ago'),
                       ],
                     ),
-                    TableRow(
+                    VNLTableRow(
                       cells: [
                         buildCell('INV003'),
                         buildCell('Unpaid'),
@@ -102,7 +102,7 @@ class _TableExample3State extends State<TableExample3> {
                         buildCell('1 week ago'),
                       ],
                     ),
-                    TableRow(
+                    VNLTableRow(
                       cells: [
                         buildCell('INV004'),
                         buildCell('Paid'),
@@ -112,7 +112,7 @@ class _TableExample3State extends State<TableExample3> {
                         buildCell('2 weeks ago'),
                       ],
                     ),
-                    TableRow(
+                    VNLTableRow(
                       cells: [
                         buildCell('INV005'),
                         buildCell('Paid'),
@@ -122,7 +122,7 @@ class _TableExample3State extends State<TableExample3> {
                         buildCell('3 weeks ago'),
                       ],
                     ),
-                    TableRow(
+                    VNLTableRow(
                       cells: [
                         buildCell('INV006'),
                         buildCell('Pending'),
@@ -132,7 +132,7 @@ class _TableExample3State extends State<TableExample3> {
                         buildCell('1 month ago'),
                       ],
                     ),
-                    TableRow(
+                    VNLTableRow(
                       cells: [
                         buildCell('INV007'),
                         buildCell('Unpaid'),
@@ -142,7 +142,7 @@ class _TableExample3State extends State<TableExample3> {
                         buildCell('1 year ago'),
                       ],
                     ),
-                    TableRow(
+                    VNLTableRow(
                       cells: [
                         buildCell('INV008'),
                         buildCell('Paid'),
@@ -152,7 +152,7 @@ class _TableExample3State extends State<TableExample3> {
                         buildCell('2 hours ago'),
                       ],
                     ),
-                    TableRow(
+                    VNLTableRow(
                       cells: [
                         buildCell('INV009'),
                         buildCell('Pending'),
@@ -162,7 +162,7 @@ class _TableExample3State extends State<TableExample3> {
                         buildCell('1 day ago'),
                       ],
                     ),
-                    TableRow(
+                    VNLTableRow(
                       cells: [
                         buildCell('INV010'),
                         buildCell('Unpaid'),
@@ -172,7 +172,7 @@ class _TableExample3State extends State<TableExample3> {
                         buildCell('1 week ago'),
                       ],
                     ),
-                    TableRow(
+                    VNLTableRow(
                       cells: [
                         buildCell('INV011'),
                         buildCell('Paid'),
@@ -182,7 +182,7 @@ class _TableExample3State extends State<TableExample3> {
                         buildCell('2 weeks ago'),
                       ],
                     ),
-                    TableRow(
+                    VNLTableRow(
                       cells: [
                         buildCell('INV012'),
                         buildCell('Paid'),
@@ -192,7 +192,7 @@ class _TableExample3State extends State<TableExample3> {
                         buildCell('3 weeks ago'),
                       ],
                     ),
-                    TableRow(
+                    VNLTableRow(
                       cells: [
                         buildCell('INV013'),
                         buildCell('Pending'),
@@ -202,7 +202,7 @@ class _TableExample3State extends State<TableExample3> {
                         buildCell('1 month ago'),
                       ],
                     ),
-                    TableRow(
+                    VNLTableRow(
                       cells: [
                         buildCell('INV014'),
                         buildCell('Unpaid'),

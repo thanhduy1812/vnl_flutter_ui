@@ -2820,7 +2820,7 @@ class VNLGhostButton extends StatelessWidget {
   }
 }
 
-class LinkButton extends StatelessWidget {
+class VNLLinkButton extends StatelessWidget {
   final Widget child;
   final VoidCallback? onPressed;
   final bool? enabled;
@@ -2852,7 +2852,7 @@ class LinkButton extends StatelessWidget {
   final GestureLongPressUpCallback? onSecondaryLongPress;
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
-  const LinkButton({
+  const VNLLinkButton({
     super.key,
     required this.child,
     this.onPressed,

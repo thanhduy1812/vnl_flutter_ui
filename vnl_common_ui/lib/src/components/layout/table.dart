@@ -10,7 +10,7 @@ class TableTheme {
   final Border? border;
   final BorderRadiusGeometry? borderRadius;
   final Color? backgroundColor;
-  final TableCellTheme? cellTheme;
+  final VNLTableCellTheme? cellTheme;
 
   const TableTheme({this.border, this.backgroundColor, this.borderRadius, this.cellTheme});
 
@@ -29,7 +29,7 @@ class TableTheme {
     return Object.hash(border, backgroundColor, cellTheme);
   }
 
-  TableTheme copyWith({Border? border, Color? backgroundColor, TableCellTheme? cellTheme}) {
+  TableTheme copyWith({Border? border, Color? backgroundColor, VNLTableCellTheme? cellTheme}) {
     return TableTheme(
       border: border ?? this.border,
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -45,18 +45,18 @@ class ConstrainedTableSize {
   const ConstrainedTableSize({this.min = double.negativeInfinity, this.max = double.infinity});
 }
 
-class TableCellTheme {
+class VNLTableCellTheme {
   final WidgetStateProperty<Border?>? border;
   final WidgetStateProperty<Color?>? backgroundColor;
   final WidgetStateProperty<TextStyle?>? textStyle;
 
-  const TableCellTheme({this.border, this.backgroundColor, this.textStyle});
+  const VNLTableCellTheme({this.border, this.backgroundColor, this.textStyle});
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is TableCellTheme &&
+    return other is VNLTableCellTheme &&
         other.border == border &&
         other.backgroundColor == backgroundColor &&
         other.textStyle == textStyle;
@@ -67,12 +67,12 @@ class TableCellTheme {
     return Object.hash(border, backgroundColor, textStyle);
   }
 
-  TableCellTheme copyWith({
+  VNLTableCellTheme copyWith({
     WidgetStateProperty<Border>? border,
     WidgetStateProperty<Color>? backgroundColor,
     WidgetStateProperty<TextStyle>? textStyle,
   }) {
-    return TableCellTheme(
+    return VNLTableCellTheme(
       border: border ?? this.border,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       textStyle: textStyle ?? this.textStyle,
@@ -300,8 +300,8 @@ enum TableCellResizeMode {
   none,
 }
 
-class ResizableTable extends StatefulWidget {
-  final List<TableRow> rows;
+class VNLResizableTable extends StatefulWidget {
+  final List<VNLTableRow> rows;
   final ResizableTableController controller;
   final ResizableTableTheme? theme;
   final Clip clipBehavior;
@@ -312,7 +312,7 @@ class ResizableTable extends StatefulWidget {
   final double? verticalOffset;
   final Size? viewportSize;
 
-  const ResizableTable({
+  const VNLResizableTable({
     super.key,
     required this.rows,
     required this.controller,
@@ -327,10 +327,10 @@ class ResizableTable extends StatefulWidget {
   });
 
   @override
-  State<ResizableTable> createState() => _ResizableTableState();
+  State<VNLResizableTable> createState() => _ResizableTableState();
 }
 
-class _ResizableTableState extends State<ResizableTable> {
+class _ResizableTableState extends State<VNLResizableTable> {
   late List<_FlattenedTableCell> _cells;
   late int _maxColumn;
   late int _maxRow;
@@ -345,7 +345,7 @@ class _ResizableTableState extends State<ResizableTable> {
   }
 
   @override
-  void didUpdateWidget(covariant ResizableTable oldWidget) {
+  void didUpdateWidget(covariant VNLResizableTable oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (!listEquals(widget.rows, oldWidget.rows)) {
       _initResizerRows();
@@ -931,17 +931,17 @@ class _HoveredCell {
   }
 }
 
-class TableCell {
+class VNLTableCell {
   final int columnSpan;
   final int rowSpan;
   final Widget child;
   final bool columnHover;
   final bool rowHover;
   final Color? backgroundColor;
-  final TableCellTheme? theme;
+  final VNLTableCellTheme? theme;
   final bool enabled;
 
-  const TableCell({
+  const VNLTableCell({
     this.columnSpan = 1,
     this.rowSpan = 1,
     required this.child,
@@ -1038,7 +1038,7 @@ class TableCell {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is TableCell &&
+    return other is VNLTableCell &&
         other.columnSpan == columnSpan &&
         other.rowSpan == rowSpan &&
         other.child == child &&
@@ -1055,21 +1055,21 @@ class TableCell {
   }
 }
 
-typedef TableCellThemeBuilder = TableCellTheme Function(BuildContext context);
+typedef TableCellThemeBuilder = VNLTableCellTheme Function(BuildContext context);
 
-class TableRow {
-  final List<TableCell> cells;
-  final TableCellTheme? cellTheme;
+class VNLTableRow {
+  final List<VNLTableCell> cells;
+  final VNLTableCellTheme? cellTheme;
   final bool selected;
 
-  const TableRow({required this.cells, this.cellTheme, this.selected = false});
+  const VNLTableRow({required this.cells, this.cellTheme, this.selected = false});
 
-  TableCellTheme buildDefaultTheme(BuildContext context) {
+  VNLTableCellTheme buildDefaultTheme(BuildContext context) {
     if (cellTheme != null) {
       return cellTheme!;
     }
     final theme = VNLTheme.of(context);
-    return TableCellTheme(
+    return VNLTableCellTheme(
       border: WidgetStateProperty.resolveWith((states) {
         return Border(bottom: BorderSide(color: theme.colorScheme.border, width: 1));
       }),
@@ -1086,7 +1086,7 @@ class TableRow {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is TableRow &&
+    return other is VNLTableRow &&
         listEquals(other.cells, cells) &&
         other.cellTheme == cellTheme &&
         other.selected == selected;
@@ -1098,16 +1098,16 @@ class TableRow {
   }
 }
 
-class TableFooter extends TableRow {
+class TableFooter extends VNLTableRow {
   const TableFooter({required super.cells, super.cellTheme});
 
   @override
-  TableCellTheme buildDefaultTheme(BuildContext context) {
+  VNLTableCellTheme buildDefaultTheme(BuildContext context) {
     if (cellTheme != null) {
       return cellTheme!;
     }
     final theme = VNLTheme.of(context);
-    return TableCellTheme(
+    return VNLTableCellTheme(
       border: const WidgetStatePropertyAll(null),
       backgroundColor: WidgetStateProperty.resolveWith((states) {
         return states.contains(WidgetState.hovered)
@@ -1121,16 +1121,16 @@ class TableFooter extends TableRow {
   }
 }
 
-class TableHeader extends TableRow {
-  const TableHeader({required cells, cellTheme}) : super(cells: cells, cellTheme: cellTheme);
+class VNLTableHeader extends VNLTableRow {
+  const VNLTableHeader({required cells, cellTheme}) : super(cells: cells, cellTheme: cellTheme);
 
   @override
-  TableCellTheme buildDefaultTheme(BuildContext context) {
+  VNLTableCellTheme buildDefaultTheme(BuildContext context) {
     if (cellTheme != null) {
       return cellTheme!;
     }
     final theme = VNLTheme.of(context);
-    return TableCellTheme(
+    return VNLTableCellTheme(
       border: WidgetStateProperty.resolveWith((states) {
         return Border(bottom: BorderSide(color: theme.colorScheme.border, width: 1));
       }),
@@ -1227,8 +1227,8 @@ class _FlattenedTableCell extends _TableCellData {
   }
 }
 
-class Table extends StatefulWidget {
-  final List<TableRow> rows;
+class VNLTable extends StatefulWidget {
+  final List<VNLTableRow> rows;
   final TableSize defaultColumnWidth;
   final TableSize defaultRowHeight;
   final Map<int, TableSize>? columnWidths;
@@ -1239,7 +1239,7 @@ class Table extends StatefulWidget {
   final double? horizontalOffset;
   final double? verticalOffset;
   final Size? viewportSize;
-  const Table({
+  const VNLTable({
     super.key,
     required this.rows,
     this.defaultColumnWidth = const FlexTableSize(),
@@ -1255,10 +1255,10 @@ class Table extends StatefulWidget {
   });
 
   @override
-  State<Table> createState() => _TableState();
+  State<VNLTable> createState() => _TableState();
 }
 
-class _TableState extends State<Table> {
+class _TableState extends State<VNLTable> {
   late List<_FlattenedTableCell> _cells;
   final ValueNotifier<_HoveredCell?> _hoveredCellNotifier = ValueNotifier(null);
 
@@ -1269,7 +1269,7 @@ class _TableState extends State<Table> {
   }
 
   @override
-  void didUpdateWidget(covariant Table oldWidget) {
+  void didUpdateWidget(covariant VNLTable oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (!listEquals(widget.rows, oldWidget.rows)) {
       _initCells();

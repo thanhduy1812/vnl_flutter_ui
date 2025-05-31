@@ -8,8 +8,8 @@ class TableExample1 extends StatefulWidget {
 }
 
 class _TableExample1State extends State<TableExample1> {
-  TableCell buildHeaderCell(String text, [bool alignRight = false]) {
-    return TableCell(
+  VNLTableCell buildHeaderCell(String text, [bool alignRight = false]) {
+    return VNLTableCell(
       child: Container(
         padding: const EdgeInsets.all(8),
         alignment: alignRight ? Alignment.centerRight : null,
@@ -18,8 +18,8 @@ class _TableExample1State extends State<TableExample1> {
     );
   }
 
-  TableCell buildCell(String text, [bool alignRight = false]) {
-    return TableCell(
+  VNLTableCell buildCell(String text, [bool alignRight = false]) {
+    return VNLTableCell(
       child: Container(
         padding: const EdgeInsets.all(8),
         alignment: alignRight ? Alignment.centerRight : null,
@@ -30,9 +30,9 @@ class _TableExample1State extends State<TableExample1> {
 
   @override
   Widget build(BuildContext context) {
-    return Table(
+    return VNLTable(
       rows: [
-        TableRow(
+        VNLTableRow(
           cells: [
             buildHeaderCell('Invoice'),
             buildHeaderCell('Status'),
@@ -40,7 +40,7 @@ class _TableExample1State extends State<TableExample1> {
             buildHeaderCell('Amount', true),
           ],
         ),
-        TableRow(
+        VNLTableRow(
           cells: [
             buildCell('INV001'),
             buildCell('Paid'),
@@ -48,7 +48,7 @@ class _TableExample1State extends State<TableExample1> {
             buildCell('\$250.00', true),
           ],
         ),
-        TableRow(
+        VNLTableRow(
           cells: [
             buildCell('INV002'),
             buildCell('Pending'),
@@ -56,7 +56,7 @@ class _TableExample1State extends State<TableExample1> {
             buildCell('\$150.00', true),
           ],
         ),
-        TableRow(
+        VNLTableRow(
           cells: [
             buildCell('INV003'),
             buildCell('Unpaid'),
@@ -64,7 +64,7 @@ class _TableExample1State extends State<TableExample1> {
             buildCell('\$350.00', true),
           ],
         ),
-        TableRow(
+        VNLTableRow(
           cells: [
             buildCell('INV004'),
             buildCell('Paid'),
@@ -72,7 +72,7 @@ class _TableExample1State extends State<TableExample1> {
             buildCell('\$450.00', true),
           ],
         ),
-        TableRow(
+        VNLTableRow(
           cells: [
             buildCell('INV005'),
             buildCell('Paid'),
@@ -80,7 +80,7 @@ class _TableExample1State extends State<TableExample1> {
             buildCell('\$550.00', true),
           ],
         ),
-        TableRow(
+        VNLTableRow(
           cells: [
             buildCell('INV006'),
             buildCell('Pending'),
@@ -88,7 +88,7 @@ class _TableExample1State extends State<TableExample1> {
             buildCell('\$200.00', true),
           ],
         ),
-        TableRow(
+        VNLTableRow(
           cells: [
             buildCell('INV007'),
             buildCell('Unpaid'),
@@ -98,7 +98,7 @@ class _TableExample1State extends State<TableExample1> {
         ),
         TableFooter(
           cells: [
-            TableCell(
+            VNLTableCell(
               columnSpan: 4,
               child: Container(
                 padding: const EdgeInsets.all(8),

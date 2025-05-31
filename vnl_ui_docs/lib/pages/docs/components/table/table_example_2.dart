@@ -8,10 +8,10 @@ class TableExample2 extends StatefulWidget {
 }
 
 class _TableExample2State extends State<TableExample2> {
-  TableCell buildCell(String text, [bool alignRight = false]) {
+  VNLTableCell buildCell(String text, [bool alignRight = false]) {
     final theme = VNLTheme.of(context);
-    return TableCell(
-      theme: TableCellTheme(
+    return VNLTableCell(
+      theme: VNLTableCellTheme(
         border: WidgetStatePropertyAll(
           Border.all(
             color: theme.colorScheme.border,
@@ -37,10 +37,10 @@ class _TableExample2State extends State<TableExample2> {
   @override
   Widget build(BuildContext context) {
     return OutlinedContainer(
-      child: ResizableTable(
+      child: VNLResizableTable(
         controller: controller,
         rows: [
-          TableHeader(
+          VNLTableHeader(
             cells: [
               buildCell('Invoice'),
               buildCell('Status'),
@@ -48,7 +48,7 @@ class _TableExample2State extends State<TableExample2> {
               buildCell('Amount', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV001'),
               buildCell('Paid'),
@@ -56,7 +56,7 @@ class _TableExample2State extends State<TableExample2> {
               buildCell('\$250.00', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV002'),
               buildCell('Pending'),
@@ -64,7 +64,7 @@ class _TableExample2State extends State<TableExample2> {
               buildCell('\$150.00', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV003'),
               buildCell('Unpaid'),
@@ -72,7 +72,7 @@ class _TableExample2State extends State<TableExample2> {
               buildCell('\$350.00', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV004'),
               buildCell('Paid'),
@@ -80,7 +80,7 @@ class _TableExample2State extends State<TableExample2> {
               buildCell('\$450.00', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV005'),
               buildCell('Paid'),
@@ -88,7 +88,7 @@ class _TableExample2State extends State<TableExample2> {
               buildCell('\$550.00', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV006'),
               buildCell('Pending'),
@@ -96,7 +96,7 @@ class _TableExample2State extends State<TableExample2> {
               buildCell('\$200.00', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV007'),
               buildCell('Unpaid'),
@@ -104,7 +104,7 @@ class _TableExample2State extends State<TableExample2> {
               buildCell('\$300.00', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV008'),
               buildCell('Paid'),
@@ -112,7 +112,7 @@ class _TableExample2State extends State<TableExample2> {
               buildCell('\$250.00', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV009'),
               buildCell('Pending'),
@@ -120,7 +120,7 @@ class _TableExample2State extends State<TableExample2> {
               buildCell('\$150.00', true),
             ],
           ),
-          TableRow(
+          VNLTableRow(
             cells: [
               buildCell('INV010'),
               buildCell('Unpaid'),

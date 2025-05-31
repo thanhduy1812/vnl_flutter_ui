@@ -5,7 +5,7 @@ class ButtonExample6 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LinkButton(
+    return VNLLinkButton(
       onPressed: () {},
       child: const Text('Link'),
     );

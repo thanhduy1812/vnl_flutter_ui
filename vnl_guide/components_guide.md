@@ -4,7 +4,7 @@
 >
 > This is the official documentation for all VNL Common UI components. Do not confuse these with Material 3 widgets.
 
-## Table of Contents
+## VNLTable of Contents
 
 - [VNLookApp](#vnlookapp)
 - [VNLookLayer](#vnlooklayer)
@@ -33,7 +33,7 @@
 - [VNLSecondaryButton](#secondarybutton)
 - [VNLOutlineButton](#outlinebutton)
 - [VNLGhostButton](#ghostbutton)
-- [LinkButton](#linkbutton)
+- [VNLLinkButton](#linkbutton)
 - [VNLTextButton](#vnltextbutton)
 - [VNLDestructiveButton](#destructivebutton)
 - [VNLTabButton](#vnltabbutton)
@@ -1124,7 +1124,7 @@ VNLGhostButton(
 
 ---
 
-## LinkButton
+## VNLLinkButton
 
 ![Button](./docs_images/button.png)
 
@@ -1133,7 +1133,7 @@ VNLGhostButton(
 **Usage:**
 
 ```dart
-LinkButton(
+VNLLinkButton(
   onPressed: () {},
   child: Text('Link'),
 )
