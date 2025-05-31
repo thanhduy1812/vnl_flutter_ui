@@ -2721,7 +2721,7 @@ class VNLOutlineButton extends StatelessWidget {
   }
 }
 
-class GhostButton extends StatelessWidget {
+class VNLGhostButton extends StatelessWidget {
   final Widget child;
   final VoidCallback? onPressed;
   final bool? enabled;
@@ -2753,7 +2753,7 @@ class GhostButton extends StatelessWidget {
   final GestureLongPressUpCallback? onSecondaryLongPress;
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
-  const GhostButton({
+  const VNLGhostButton({
     super.key,
     required this.child,
     this.onPressed,
@@ -2999,7 +2999,7 @@ class VNLTextButton extends StatelessWidget {
   }
 }
 
-class DestructiveButton extends StatelessWidget {
+class VNLDestructiveButton extends StatelessWidget {
   final Widget child;
   final VoidCallback? onPressed;
   final bool? enabled;
@@ -3031,7 +3031,7 @@ class DestructiveButton extends StatelessWidget {
   final GestureLongPressUpCallback? onSecondaryLongPress;
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
-  const DestructiveButton({
+  const VNLDestructiveButton({
     super.key,
     required this.child,
     this.onPressed,

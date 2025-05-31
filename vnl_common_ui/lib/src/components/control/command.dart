@@ -142,7 +142,7 @@ class _CommandState extends State<VNLCommand> {
                     ),
                   ),
                   if (canPop)
-                    GhostButton(
+                    VNLGhostButton(
                       density: ButtonDensity.iconDense,
                       onPressed: () {
                         Navigator.of(context).pop();

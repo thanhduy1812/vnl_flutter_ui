@@ -133,7 +133,7 @@ class _CodeSnippetState extends State<CodeSnippet> {
             child: Row(
               children: [
                 ...widget.actions,
-                GhostButton(
+                VNLGhostButton(
                   density: ButtonDensity.icon,
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: widget.code)).then((value) {

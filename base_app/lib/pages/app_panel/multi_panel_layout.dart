@@ -38,7 +38,7 @@ class _MultiPanelLayoutState extends State<MultiPanelLayout> {
                     alternateChild: VNLAppBar(
                       padding: EdgeInsets.symmetric(vertical: 12 * theme.scaling, horizontal: 18 * theme.scaling),
                       leading: [
-                        GhostButton(
+                        VNLGhostButton(
                           density: ButtonDensity.icon,
                           onPressed: () {
                             _openDrawer(context);
@@ -123,7 +123,7 @@ class _MultiPanelLayoutState extends State<MultiPanelLayout> {
                 children: [
                   const Text('Menu').textLarge(),
                   const Spacer(),
-                  GhostButton(
+                  VNLGhostButton(
                     density: ButtonDensity.icon,
                     onPressed: () {
                       closeDrawer(context);

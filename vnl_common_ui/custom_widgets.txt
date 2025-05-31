@@ -28,10 +28,10 @@ CrossFadedTransition
 DatePickerDialog
 DefaultRefreshIndicator
 DestructiveBadge
-DestructiveButton
+VNLDestructiveButton
 DotItem
 FadeScroll
-GhostButton
+VNLGhostButton
 Hover
 HoverActivity
 VNLIconButton -> VNLIconButton

@@ -21,7 +21,7 @@ class _CircularProgressExample2State extends State<CircularProgressExample2> {
         const Gap(48),
         Row(
           children: [
-            DestructiveButton(
+            VNLDestructiveButton(
               onPressed: () {
                 setState(() {
                   _progress = 0;

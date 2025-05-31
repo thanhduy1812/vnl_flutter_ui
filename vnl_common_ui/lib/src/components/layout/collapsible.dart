@@ -160,7 +160,7 @@ class CollapsibleTrigger extends StatelessWidget {
       children: [
         Expanded(child: child.small().semiBold()),
         Gap(compTheme?.iconGap ?? 16 * scaling),
-        GhostButton(
+        VNLGhostButton(
           onPressed: state.handleTap,
           child:
               Icon(

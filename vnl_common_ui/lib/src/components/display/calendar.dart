@@ -100,7 +100,7 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
                       ),
                       SizedBox(width: theme.scaling * 16),
                       Expanded(
-                        child: GhostButton(
+                        child: VNLGhostButton(
                           enabled: _viewType != CalendarViewType.year,
                           onPressed: () {
                             _alternate = false;
@@ -160,7 +160,7 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
                       children: [
                         SizedBox(width: theme.scaling * (32 + 16)),
                         Expanded(
-                          child: GhostButton(
+                          child: VNLGhostButton(
                             onPressed: () {
                               _alternate = true;
                               switch (_viewType) {
@@ -275,7 +275,7 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
               ),
               SizedBox(width: theme.scaling * 16),
               Expanded(
-                child: GhostButton(
+                child: VNLGhostButton(
                   enabled: _viewType != CalendarViewType.year,
                   onPressed: () {
                     switch (_viewType) {
@@ -1021,7 +1021,7 @@ class CalendarItem extends StatelessWidget {
         return SizedBox(
           width: width ?? theme.scaling * 32,
           height: height ?? theme.scaling * 32,
-          child: GhostButton(
+          child: VNLGhostButton(
             density: ButtonDensity.compact,
             alignment: Alignment.center,
             enabled: state == DateState.enabled,

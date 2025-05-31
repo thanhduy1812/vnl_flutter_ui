@@ -106,10 +106,10 @@ VNLButton
 VNLPrimaryButton
 VNLSecondaryButton
 VNLOutlineButton
-GhostButton
+VNLGhostButton
 LinkButton
 VNLTextButton
-DestructiveButton
+VNLDestructiveButton
 VNLTabButton
 VNLCardButton
 VNLIconButton

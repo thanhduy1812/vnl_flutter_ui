@@ -25,7 +25,7 @@ class _ProgressExample1State extends State<ProgressExample1> {
         const Gap(16),
         Row(
           children: [
-            DestructiveButton(
+            VNLDestructiveButton(
               onPressed: () {
                 setState(() {
                   _progress = 0;

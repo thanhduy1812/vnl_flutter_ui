@@ -431,11 +431,11 @@ class _ComponentsPageState extends State<ComponentsPage> {
                           onPressed: () {},
                           child: const Text('Outline'),
                         ),
-                        GhostButton(
+                        VNLGhostButton(
                           onPressed: () {},
                           child: const Text('Ghost'),
                         ),
-                        DestructiveButton(
+                        VNLDestructiveButton(
                           child: const Text('Destructive'),
                           onPressed: () {},
                         ),
@@ -1188,7 +1188,7 @@ class _ComponentsPageState extends State<ComponentsPage> {
                   children: [
                     Column(
                       children: [
-                        DestructiveButton(
+                        VNLDestructiveButton(
                           leading: const Icon(Icons.delete),
                           child: const Text('Delete'),
                           onPressed: () {},

@@ -67,13 +67,13 @@ class VNLPagination extends StatelessWidget {
 
   Widget _buildPreviousLabel(VNLookLocalizations localizations) {
     if (showLabel) {
-      return GhostButton(
+      return VNLGhostButton(
         onPressed: hasPrevious ? () => onPageChanged(page - 1) : null,
         leading: const Icon(RadixIcons.chevronLeft).iconXSmall(),
         child: Text(localizations.buttonPrevious),
       );
     }
-    return GhostButton(
+    return VNLGhostButton(
       onPressed: hasPrevious ? () => onPageChanged(page - 1) : null,
       child: const Icon(RadixIcons.chevronLeft).iconXSmall(),
     );
@@ -81,13 +81,13 @@ class VNLPagination extends StatelessWidget {
 
   Widget _buildNextLabel(VNLookLocalizations localizations) {
     if (showLabel) {
-      return GhostButton(
+      return VNLGhostButton(
         onPressed: hasNext ? () => onPageChanged(page + 1) : null,
         trailing: const Icon(RadixIcons.chevronRight).iconXSmall(),
         child: Text(localizations.buttonNext),
       );
     }
-    return GhostButton(
+    return VNLGhostButton(
       onPressed: hasNext ? () => onPageChanged(page + 1) : null,
       child: const Icon(RadixIcons.chevronRight).iconXSmall(),
     );
@@ -106,18 +106,18 @@ class VNLPagination extends StatelessWidget {
           if (!hidePreviousOnFirstPage || hasPrevious) _buildPreviousLabel(localizations),
           if (hasMorePreviousPages) ...[
             if (showSkipToFirstPage && firstShownPage - 1 > 1)
-              GhostButton(onPressed: () => onPageChanged(1), child: const Text('1')),
-            GhostButton(onPressed: () => onPageChanged(firstShownPage - 1), child: const MoreDots()),
+              VNLGhostButton(onPressed: () => onPageChanged(1), child: const Text('1')),
+            VNLGhostButton(onPressed: () => onPageChanged(firstShownPage - 1), child: const MoreDots()),
           ],
           for (final p in pages)
             if (p == page)
               VNLOutlineButton(onPressed: () => onPageChanged(p), child: Text('$p'))
             else
-              GhostButton(onPressed: () => onPageChanged(p), child: Text('$p')),
+              VNLGhostButton(onPressed: () => onPageChanged(p), child: Text('$p')),
           if (hasMoreNextPages) ...[
-            GhostButton(onPressed: () => onPageChanged(lastShownPage + 1), child: const MoreDots()),
+            VNLGhostButton(onPressed: () => onPageChanged(lastShownPage + 1), child: const MoreDots()),
             if (showSkipToLastPage && lastShownPage + 1 < totalPages)
-              GhostButton(onPressed: () => onPageChanged(totalPages), child: Text('$totalPages')),
+              VNLGhostButton(onPressed: () => onPageChanged(totalPages), child: Text('$totalPages')),
           ],
           if (!hideNextOnLastPage || hasNext) _buildNextLabel(localizations),
         ],

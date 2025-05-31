@@ -24,7 +24,7 @@ class ButtonExample9 extends StatelessWidget {
           trailing: const Icon(Icons.add),
           child: const Text('Add'),
         ),
-        GhostButton(
+        VNLGhostButton(
           onPressed: () {},
           trailing: const Icon(Icons.add),
           child: const Text('Add'),
@@ -34,7 +34,7 @@ class ButtonExample9 extends StatelessWidget {
           trailing: const Icon(Icons.add),
           child: const Text('Add'),
         ),
-        DestructiveButton(
+        VNLDestructiveButton(
           onPressed: () {},
           trailing: const Icon(Icons.add),
           child: const Text('Add'),

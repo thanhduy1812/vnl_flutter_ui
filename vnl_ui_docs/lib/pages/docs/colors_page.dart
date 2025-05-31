@@ -452,7 +452,7 @@ class _VNLColorsPageState extends State<VNLColorsPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                DestructiveButton(
+                VNLDestructiveButton(
                   onPressed: () {
                     showDialog(
                       context: context,

@@ -5,7 +5,7 @@ class ButtonExample4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GhostButton(
+    return VNLGhostButton(
       onPressed: () {},
       child: const Text('Ghost'),
     );

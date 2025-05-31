@@ -5,7 +5,7 @@ class ButtonExample5 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DestructiveButton(
+    return VNLDestructiveButton(
       onPressed: () {},
       child: const Text('Destructive'),
     );

@@ -32,10 +32,10 @@
 - [VNLPrimaryButton](#primarybutton)
 - [VNLSecondaryButton](#secondarybutton)
 - [VNLOutlineButton](#outlinebutton)
-- [GhostButton](#ghostbutton)
+- [VNLGhostButton](#ghostbutton)
 - [LinkButton](#linkbutton)
 - [VNLTextButton](#vnltextbutton)
-- [DestructiveButton](#destructivebutton)
+- [VNLDestructiveButton](#destructivebutton)
 - [VNLTabButton](#vnltabbutton)
 - [VNLCardButton](#cardbutton)
 - [VNLICONButton](#iconbutton)
@@ -1105,7 +1105,7 @@ VNLOutlineButton(
 
 ---
 
-## GhostButton
+## VNLGhostButton
 
 ![Button](./docs_images/button.png)
 
@@ -1114,7 +1114,7 @@ VNLOutlineButton(
 **Usage:**
 
 ```dart
-GhostButton(
+VNLGhostButton(
   onPressed: () {},
   child: Text('Ghost'),
 )
@@ -1162,7 +1162,7 @@ VNLTextButton(
 
 ---
 
-## DestructiveButton
+## VNLDestructiveButton
 
 ![Button](./docs_images/button.png)
 
@@ -1171,7 +1171,7 @@ VNLTextButton(
 **Usage:**
 
 ```dart
-DestructiveButton(
+VNLDestructiveButton(
   onPressed: () {},
   child: Text('Delete'),
 )

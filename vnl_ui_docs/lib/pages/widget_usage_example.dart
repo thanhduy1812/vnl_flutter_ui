@@ -137,7 +137,7 @@ class _CodeSnippetFutureBuilderState extends State<CodeSnippetFutureBuilder> {
             code: 'Error loading code\n${snapshot.error}\n${snapshot.stackTrace}',
             mode: widget.mode,
             actions: [
-              GhostButton(
+              VNLGhostButton(
                 density: ButtonDensity.icon,
                 onPressed: _refresh,
                 child: const Icon(
@@ -154,12 +154,11 @@ class _CodeSnippetFutureBuilderState extends State<CodeSnippetFutureBuilder> {
               code: 'No code found',
               mode: widget.mode,
               actions: [
-                GhostButton(
+                VNLGhostButton(
                   density: ButtonDensity.icon,
                   onPressed: () {
                     // open in new tab
-                    String url =
-                        'https://github.com/vnlook/vnl_flutter_ui/tree/master/vnl_ui_docs/${widget.path}';
+                    String url = 'https://github.com/vnlook/vnl_flutter_ui/tree/master/vnl_ui_docs/${widget.path}';
                     // html.window.open(url, 'blank');
                     launchUrlString(url);
                   },
@@ -175,7 +174,7 @@ class _CodeSnippetFutureBuilderState extends State<CodeSnippetFutureBuilder> {
             code: snapshot.data!,
             mode: widget.mode,
             actions: [
-              GhostButton(
+              VNLGhostButton(
                 density: ButtonDensity.icon,
                 onPressed: () {
                   // open in new tab

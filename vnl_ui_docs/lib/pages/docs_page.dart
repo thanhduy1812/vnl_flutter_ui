@@ -529,7 +529,7 @@ class DocsPageState extends State<DocsPage> {
                               horizontal: 18 * theme.scaling,
                             ),
                             leading: [
-                              GhostButton(
+                              VNLGhostButton(
                                 density: ButtonDensity.icon,
                                 onPressed: () {
                                   _openDrawer(context);
@@ -538,7 +538,7 @@ class DocsPageState extends State<DocsPage> {
                               ),
                             ],
                             trailing: [
-                              GhostButton(
+                              VNLGhostButton(
                                 density: ButtonDensity.icon,
                                 onPressed: () {
                                   openInNewTab('https://github.com/sunarya-thito/vnl_ui');
@@ -549,7 +549,7 @@ class DocsPageState extends State<DocsPage> {
                                 ).iconLarge(),
                               ),
                               // pub.dev icon
-                              GhostButton(
+                              VNLGhostButton(
                                   density: ButtonDensity.icon,
                                   onPressed: () {
                                     openInNewTab('https://pub.dev/packages/vnl_ui');
@@ -777,7 +777,7 @@ class DocsPageState extends State<DocsPage> {
           ),
         ),
         Gap(8 * theme.scaling),
-        GhostButton(
+        VNLGhostButton(
           density: ButtonDensity.icon,
           onPressed: () {
             openInNewTab('https://github.com/vnlook');
@@ -785,7 +785,7 @@ class DocsPageState extends State<DocsPage> {
           child: FaIcon(FontAwesomeIcons.github, color: theme.colorScheme.secondaryForeground).iconLarge(),
         ),
         // pub.dev icon
-        GhostButton(
+        VNLGhostButton(
             density: ButtonDensity.icon,
             onPressed: () {
               openInNewTab('https://vnlook.com/');

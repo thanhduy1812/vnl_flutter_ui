@@ -15,7 +15,7 @@ class ButtonExample14 extends StatelessWidget {
           child: const Text('Secondary'),
           onPressed: () {},
         ),
-        DestructiveButton(
+        VNLDestructiveButton(
           child: const Text('Destructive'),
           onPressed: () {},
         ),
@@ -23,7 +23,7 @@ class ButtonExample14 extends StatelessWidget {
           child: const Text('Outlined'),
           onPressed: () {},
         ),
-        GhostButton(
+        VNLGhostButton(
           child: const Text('Ghost'),
           onPressed: () {},
         ),
