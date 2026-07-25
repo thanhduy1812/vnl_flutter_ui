@@ -1,0 +1,20 @@
+version: "1.0"
+statuses:
+    - icebox
+    - backlog
+    - in_progress
+    - in_review
+    - blocked
+    - done
+workflow:
+    on_create: icebox
+    on_review: in_review
+    on_done: done
+    blocked: blocked
+    terminal:
+        - done
+priorities:
+    - low
+    - medium
+    - high
+labels: []

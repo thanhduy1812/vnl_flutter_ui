@@ -1,0 +1,25 @@
+{
+	"name": "vnl_flutter_ui",
+	"version": "1.0.0",
+	"createdAt": "2026-07-25T16:14:22.858439+07:00",
+	"settings": {
+		"defaultPriority": "medium",
+		"defaultLabels": [],
+		"timeFormat": "24h",
+		"gitTrackingMode": "git-tracked",
+		"statuses": [
+			"icebox",
+			"backlog",
+			"in_progress",
+			"in_review",
+			"done",
+			"blocked",
+			"on_hold",
+			"urgent"
+		],
+		"semanticSearch": {
+			"enabled": true,
+			"model": "gte-small"
+		}
+	}
+}

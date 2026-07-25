@@ -1,0 +1,23 @@
+name: vnl_flutter_ui
+version: 0.1.0
+settings:
+    default_priority: medium
+    time_format: 24h
+    git_tracking: git-tracked
+semantic_search:
+    enabled: true
+    model: gte-small
+    provider: onnx
+    dimensions: 384
+platforms:
+    - gemini
+    - cursor
+    - claude
+    - codex
+    - pi
+tech_stacks:
+    - common
+    - mobile
+mcp:
+    transport: stdio
+    binary: verus

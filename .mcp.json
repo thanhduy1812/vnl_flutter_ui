@@ -1,0 +1,10 @@
+{
+	"mcpServers": {
+		"verus": {
+			"args": [
+				"mcp"
+			],
+			"command": "verus"
+		}
+	}
+}
