@@ -1,10 +1,10 @@
 name: vnl_common_ui
 description: "Beautifully designed components from Shadcn/UI is now available for Flutter"
 version: 0.0.51
-homepage: "https://github.com/sunarya-thito/shadcn_flutter"
-documentation: "https://sunarya-thito.github.io/shadcn_flutter/"
-repository: "https://github.com/sunarya-thito/shadcn_flutter"
-issue_tracker: "https://github.com/sunarya-thito/shadcn_flutter/issues"
+homepage: "https://github.com/thanhduy1812/vnl_flutter_ui"
+documentation: "https://thanhduy1812.github.io/vnl_flutter_ui/"
+repository: "https://github.com/thanhduy1812/vnl_flutter_ui"
+issue_tracker: "https://github.com/thanhduy1812/vnl_flutter_ui/issues"
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
