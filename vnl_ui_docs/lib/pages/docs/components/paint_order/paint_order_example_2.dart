@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class PaintOrderExample2 extends StatefulWidget {
   const PaintOrderExample2({super.key});

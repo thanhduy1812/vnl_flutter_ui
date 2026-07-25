@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 // Demonstrates an "expandable" navigation rail that can collapse/expand labels
 // while keeping the same selection model. The left rail hosts sections and items;
@@ -110,7 +110,7 @@ class _ExpandableSidebarExample1State extends State<ExpandableSidebarExample1> {
                   initials: 'SU',
                   backgroundColor: VNLColors.green.shade800,
                 ),
-                title: const Text('sunarya-thito').medium.small,
+                title: const Text('thanhduy1812').medium.small,
                 subtitle: const Text('m@gmail.com').xSmall.normal,
                 trailing: const Icon(LucideIcons.chevronsUpDown).iconSmall,
                 onPressed: () {},

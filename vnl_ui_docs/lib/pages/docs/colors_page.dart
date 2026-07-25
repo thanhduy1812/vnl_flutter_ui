@@ -1,6 +1,6 @@
 import 'package:docs/code_highlighter.dart';
 import 'package:docs/pages/docs_page.dart';
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class ColorsPage extends StatefulWidget {
   const ColorsPage({super.key});

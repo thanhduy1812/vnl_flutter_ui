@@ -17,19 +17,19 @@ class _AvatarGroupExample1State extends State<AvatarGroupExample1> {
   List<VNLAvatarWidget> getAvatars() {
     return [
       VNLAvatar(
-        initials: VNLAvatar.getInitials('sunarya-thito'),
+        initials: VNLAvatar.getInitials('thanhduy1812'),
         backgroundColor: VNLColors.red,
       ),
       VNLAvatar(
-        initials: VNLAvatar.getInitials('sunarya-thito'),
+        initials: VNLAvatar.getInitials('thanhduy1812'),
         backgroundColor: VNLColors.green,
       ),
       VNLAvatar(
-        initials: VNLAvatar.getInitials('sunarya-thito'),
+        initials: VNLAvatar.getInitials('thanhduy1812'),
         backgroundColor: VNLColors.blue,
       ),
       VNLAvatar(
-        initials: VNLAvatar.getInitials('sunarya-thito'),
+        initials: VNLAvatar.getInitials('thanhduy1812'),
         backgroundColor: VNLColors.yellow,
       ),
     ];

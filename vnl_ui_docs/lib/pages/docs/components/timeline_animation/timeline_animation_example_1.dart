@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 // Demonstrates TimelineAnimation by composing offset and rotation keyframes
 // sampled by a shared controller.

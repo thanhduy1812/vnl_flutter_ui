@@ -1,5 +1,5 @@
 import 'package:docs/pages/docs/components_page.dart';
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class StepsTile extends StatelessWidget implements IComponentPage {
   const StepsTile({super.key});

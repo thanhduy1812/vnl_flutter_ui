@@ -10,7 +10,7 @@ class AvatarExample3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VNLAvatar(
-      initials: VNLAvatar.getInitials('sunarya-thito'),
+      initials: VNLAvatar.getInitials('thanhduy1812'),
       size: 64,
       badge: const VNLAvatarBadge(
         size: 20,

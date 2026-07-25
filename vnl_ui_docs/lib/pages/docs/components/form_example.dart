@@ -7,7 +7,7 @@ import 'package:docs/pages/docs/components/form/form_example_8.dart';
 import 'package:docs/pages/docs/components/form/form_example_9.dart';
 import 'package:docs/pages/docs_page.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import 'form/form_example_1.dart';

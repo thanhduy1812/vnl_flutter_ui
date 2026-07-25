@@ -11,7 +11,7 @@ class AvatarExample2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return VNLAvatar(
       // Use initials when you don't have an image.
-      initials: VNLAvatar.getInitials('sunarya-thito'),
+      initials: VNLAvatar.getInitials('thanhduy1812'),
       size: 64,
     );
   }

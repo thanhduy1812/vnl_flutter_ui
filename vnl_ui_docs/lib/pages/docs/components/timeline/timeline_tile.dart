@@ -1,6 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:docs/pages/docs/components/timeline/timeline_example_1.dart';
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class TimelineTile extends StatelessWidget implements IComponentPage {
   const TimelineTile({super.key});

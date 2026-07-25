@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 // Minimal VNLookApp usage: provides theming and routing scaffolding similar to
 // MaterialApp/CupertinoApp, then renders a basic VNLScaffold with an VNLAppBar.

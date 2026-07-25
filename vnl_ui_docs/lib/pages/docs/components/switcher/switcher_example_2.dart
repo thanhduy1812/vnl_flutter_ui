@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class SwitcherExample2 extends StatefulWidget {
   const SwitcherExample2({super.key});

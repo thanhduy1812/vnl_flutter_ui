@@ -11,7 +11,7 @@ class FormExample3 extends StatefulWidget {
 
 class _FormExample3State extends State<FormExample3> {
   final _dummyData = [
-    'sunarya-thito',
+    'thanhduy1812',
     'septogeddon',
     'vnl',
   ];
@@ -68,7 +68,7 @@ class _FormExample3State extends State<FormExample3> {
                         mode: {VNLFormValidationMode.submitted},
                       ),
                   child: const VNLTextField(
-                    initialValue: 'sunarya-thito',
+                    initialValue: 'thanhduy1812',
                   ),
                 ),
                 FormField(

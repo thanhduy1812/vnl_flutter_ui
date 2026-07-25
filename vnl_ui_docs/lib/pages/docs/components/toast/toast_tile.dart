@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 import 'package:docs/pages/docs/components_page.dart';
 
 class ToastTile extends StatelessWidget implements IComponentPage {

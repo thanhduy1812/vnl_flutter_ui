@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' as material;
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 import 'package:docs/pages/docs/components_page.dart';
 
 class ColorPickerTile extends StatelessWidget implements IComponentPage {

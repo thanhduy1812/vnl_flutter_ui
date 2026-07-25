@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 // Demonstrates VNLNumberTicker animating from its previous value to a new value.
 // The VNLTextField lets you enter a target integer; committing the edit triggers

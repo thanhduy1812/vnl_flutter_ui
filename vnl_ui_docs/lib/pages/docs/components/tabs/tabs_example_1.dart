@@ -1,5 +1,5 @@
 import 'package:docs/pages/docs/components/carousel_example.dart';
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 // Demonstrates VNLTabs as a header paired with an IndexedStack body.
 // VNLTabs manages the active index; the stack swaps content without unmounting.

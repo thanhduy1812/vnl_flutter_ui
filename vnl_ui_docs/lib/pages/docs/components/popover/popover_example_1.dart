@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 // Shows how to open a contextual popover anchored to a button, with a custom
 // overlay barrier and a simple form inside. The popover closes via

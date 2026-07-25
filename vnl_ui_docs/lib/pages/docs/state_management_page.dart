@@ -16,7 +16,7 @@ import 'package:docs/pages/docs/state/data_example_8.dart';
 import 'package:docs/pages/docs/state/data_example_9.dart';
 import 'package:docs/pages/docs_page.dart';
 import 'package:docs/pages/widget_usage_example.dart';
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class StateManagementPage extends StatefulWidget {
   const StateManagementPage({super.key});

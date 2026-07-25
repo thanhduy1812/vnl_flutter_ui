@@ -67,7 +67,7 @@ import 'package:docs/pages/docs/components/tree/tree_tile.dart';
 import 'package:docs/pages/docs_page.dart';
 import 'package:flutter/rendering.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 // Missing component tiles

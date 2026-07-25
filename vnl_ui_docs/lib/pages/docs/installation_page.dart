@@ -1,5 +1,5 @@
 import 'package:docs/code_highlighter.dart';
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../docs_page.dart';
@@ -110,7 +110,7 @@ void main() {
           const CodeBlock(
             // code: 'shadcn_flutter:\n'
             //     '  git:\n'
-            //     '    url: "https://github.com/sunarya-thito/shadcn_flutter.git"',
+            //     '    url: "https://github.com/thanhduy1812/vnl_flutter_ui.git"',
             code: 'dependencies:\n'
                 '  vnl_common_ui:\n'
                 '    git:\n'

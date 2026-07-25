@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 /// AnimatedValueBuilder example with an initial value and manual rebuild key.
 ///

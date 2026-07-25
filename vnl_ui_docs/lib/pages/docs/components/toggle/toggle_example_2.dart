@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 // Demonstrates a group of mutually exclusive Toggles (B/I/U) where exactly
 // one formatting option can be active at a time.

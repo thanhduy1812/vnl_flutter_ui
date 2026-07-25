@@ -77,7 +77,7 @@ class _SheetExample1State extends State<SheetExample1> {
                   label: const Text('Username'),
                   validator: const VNLNotEmptyValidator() & const VNLLengthValidator(min: 4),
                   child: const VNLTextField(
-                    initialValue: '@sunarya-thito',
+                    initialValue: '@sunarya',
                     placeholder: Text('Your username'),
                   ),
                 ),

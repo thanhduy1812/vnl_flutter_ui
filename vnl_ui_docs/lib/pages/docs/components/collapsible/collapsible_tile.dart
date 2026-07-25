@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 import 'package:docs/pages/docs/components_page.dart';
 
 class CollapsibleTile extends StatelessWidget implements IComponentPage {
@@ -17,10 +17,10 @@ class CollapsibleTile extends StatelessWidget implements IComponentPage {
         child: VNLCollapsible(
           children: [
             const VNLCollapsibleTrigger(
-              child: Text('@sunarya-thito starred 3 repositories'),
+              child: Text('@sunarya starred 3 repositories'),
             ),
             VNLOutlinedContainer(
-              child: const Text('@sunarya-thito/shadcn_flutter')
+              child: const Text('@sunarya/shadcn_flutter')
                   .small()
                   .mono()
                   .withPadding(horizontal: 16, vertical: 8),
@@ -43,7 +43,7 @@ class CollapsibleTile extends StatelessWidget implements IComponentPage {
               child: Text('@flutter starred 1 repository'),
             ).withPadding(top: 16),
             VNLOutlinedContainer(
-              child: const Text('@sunarya-thito/shadcn_flutter')
+              child: const Text('@sunarya/shadcn_flutter')
                   .small()
                   .mono()
                   .withPadding(horizontal: 16, vertical: 8),

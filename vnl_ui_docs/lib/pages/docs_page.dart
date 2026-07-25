@@ -11,7 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -81,7 +81,7 @@ class DocsPage extends StatefulWidget {
   DocsPageState createState() => DocsPageState();
 }
 
-enum ShadcnFeatureTag {
+enum VNLFeatureTag {
   newFeature,
   updated,
   experimental,
@@ -92,7 +92,7 @@ enum ShadcnFeatureTag {
     ThemeData copy;
     String badgeText;
     switch (this) {
-      case ShadcnFeatureTag.newFeature:
+      case VNLFeatureTag.newFeature:
         copy = theme.copyWith(
           colorScheme: () => theme.colorScheme.copyWith(
             primary: () => VNLColors.green,
@@ -100,7 +100,7 @@ enum ShadcnFeatureTag {
         );
         badgeText = 'New';
         break;
-      case ShadcnFeatureTag.updated:
+      case VNLFeatureTag.updated:
         copy = theme.copyWith(
           colorScheme: () => theme.colorScheme.copyWith(
             primary: () => VNLColors.blue,
@@ -108,7 +108,7 @@ enum ShadcnFeatureTag {
         );
         badgeText = 'Updated';
         break;
-      case ShadcnFeatureTag.workInProgress:
+      case VNLFeatureTag.workInProgress:
         copy = theme.copyWith(
           colorScheme: () => theme.colorScheme.copyWith(
             primary: () => VNLColors.orange,
@@ -116,7 +116,7 @@ enum ShadcnFeatureTag {
         );
         badgeText = 'WIP';
         break;
-      case ShadcnFeatureTag.experimental:
+      case VNLFeatureTag.experimental:
         copy = theme.copyWith(
           colorScheme: () => theme.colorScheme.copyWith(
             primary: () => VNLColors.purple,
@@ -134,193 +134,193 @@ enum ShadcnFeatureTag {
   }
 }
 
-class ShadcnDocsPage {
+class VNLDocsPage {
   final String title;
   final String name; // name for go_router
-  final ShadcnFeatureTag? tag;
+  final VNLFeatureTag? tag;
 
-  ShadcnDocsPage(this.title, this.name, [this.tag]);
+  VNLDocsPage(this.title, this.name, [this.tag]);
 }
 
-class ShadcnDocsSection {
+class VNLDocsSection {
   final String title;
-  final List<ShadcnDocsPage> pages;
+  final List<VNLDocsPage> pages;
   final IconData icon;
 
-  ShadcnDocsSection(this.title, this.pages, [this.icon = Icons.book]);
+  VNLDocsSection(this.title, this.pages, [this.icon = Icons.book]);
 }
 
 class DocsPageState extends State<DocsPage> {
-  static final List<ShadcnDocsSection> sections = [
-    ShadcnDocsSection(
+  static final List<VNLDocsSection> sections = [
+    VNLDocsSection(
         'Getting Started',
         List.unmodifiable([
-          ShadcnDocsPage('Introduction', 'introduction'),
-          ShadcnDocsPage('Installation', 'installation'),
-          ShadcnDocsPage('Theme', 'theme'),
-          ShadcnDocsPage('Typography', 'typography'),
-          ShadcnDocsPage('Layout', 'layout'),
-          ShadcnDocsPage('Web Preloader', 'web_preloader'),
-          ShadcnDocsPage('Components', 'components'),
-          ShadcnDocsPage('Icons', 'icons'),
-          ShadcnDocsPage('Colors', 'colors'),
-          ShadcnDocsPage('Material/Cupertino', 'external'),
-          ShadcnDocsPage('State Management', 'state'),
+          VNLDocsPage('Introduction', 'introduction'),
+          VNLDocsPage('Installation', 'installation'),
+          VNLDocsPage('Theme', 'theme'),
+          VNLDocsPage('Typography', 'typography'),
+          VNLDocsPage('Layout', 'layout'),
+          VNLDocsPage('Web Preloader', 'web_preloader'),
+          VNLDocsPage('Components', 'components'),
+          VNLDocsPage('Icons', 'icons'),
+          VNLDocsPage('Colors', 'colors'),
+          VNLDocsPage('Material/Cupertino', 'external'),
+          VNLDocsPage('State Management', 'state'),
         ]),
         Icons.book),
     // COMPONENTS BEGIN
-    ShadcnDocsSection(
+    VNLDocsSection(
       'Application',
       [
-        ShadcnDocsPage('App Example', 'app'),
-        ShadcnDocsPage('GoRouter Example', 'go_router_app_example'),
-        ShadcnDocsPage('VNLookLayer', 'wrapper'),
+        VNLDocsPage('App Example', 'app'),
+        VNLDocsPage('GoRouter Example', 'go_router_app_example'),
+        VNLDocsPage('VNLLayer', 'wrapper'),
       ],
     ),
-    ShadcnDocsSection(
+    VNLDocsSection(
       'Animation',
       [
-        ShadcnDocsPage('Animated Value', 'animated_value_builder'),
+        VNLDocsPage('Animated Value', 'animated_value_builder'),
         // https://nyxbui.design/docs/components/number-ticker
-        ShadcnDocsPage('Number Ticker', 'number_ticker'),
-        ShadcnDocsPage('Repeated Animation', 'repeated_animation_builder'),
-        ShadcnDocsPage('VNLTimeline Animation', 'timeline_animation'),
+        VNLDocsPage('Number Ticker', 'number_ticker'),
+        VNLDocsPage('Repeated Animation', 'repeated_animation_builder'),
+        VNLDocsPage('VNLTimeline Animation', 'timeline_animation'),
       ],
     ),
-    ShadcnDocsSection('Control', [
-      ShadcnDocsPage('VNLButton', 'button'),
-      ShadcnDocsPage(
-          'Audio Control', 'audio_control', ShadcnFeatureTag.workInProgress),
-      ShadcnDocsPage(
-          'Video Control', 'video_control', ShadcnFeatureTag.workInProgress),
+    VNLDocsSection('Control', [
+      VNLDocsPage('VNLButton', 'button'),
+      VNLDocsPage(
+          'Audio Control', 'audio_control', VNLFeatureTag.workInProgress),
+      VNLDocsPage(
+          'Video Control', 'video_control', VNLFeatureTag.workInProgress),
     ]),
-    ShadcnDocsSection(
+    VNLDocsSection(
       'Disclosure',
       [
-        ShadcnDocsPage('VNLAccordion', 'accordion'),
-        ShadcnDocsPage('VNLCollapsible', 'collapsible'),
+        VNLDocsPage('VNLAccordion', 'accordion'),
+        VNLDocsPage('VNLCollapsible', 'collapsible'),
       ],
     ),
-    ShadcnDocsSection(
+    VNLDocsSection(
       'Display',
       [
-        ShadcnDocsPage('VNLAvatar', 'avatar'),
-        ShadcnDocsPage('VNLAvatar Group', 'avatar_group'),
-        ShadcnDocsPage('Code Snippet', 'code_snippet'),
-        ShadcnDocsPage('Chat Bubble', 'chat', ShadcnFeatureTag.newFeature),
-        ShadcnDocsPage('VNLTable', 'table'),
-        ShadcnDocsPage('VNLTracker', 'tracker'),
+        VNLDocsPage('VNLAvatar', 'avatar'),
+        VNLDocsPage('VNLAvatarGroup', 'avatar_group'),
+        VNLDocsPage('VNLCodeSnippet', 'code_snippet'),
+        VNLDocsPage('VNLChatBubble', 'chat', VNLFeatureTag.newFeature),
+        VNLDocsPage('VNLTable', 'table'),
+        VNLDocsPage('VNLTracker', 'tracker'),
       ],
     ),
-    ShadcnDocsSection(
+    VNLDocsSection(
       'Feedback',
       [
-        ShadcnDocsPage('VNLAlert', 'alert'),
-        ShadcnDocsPage('VNLAlert Dialog', 'alert_dialog'),
-        ShadcnDocsPage('Circular VNLProgress', 'circular_progress'),
-        ShadcnDocsPage('VNLProgress', 'progress'),
-        ShadcnDocsPage('Linear VNLProgress', 'linear_progress'),
-        ShadcnDocsPage('Skeleton', 'skeleton'),
-        ShadcnDocsPage('Toast', 'toast'),
+        VNLDocsPage('VNLAlert', 'alert'),
+        VNLDocsPage('VNLAlertDialog', 'alert_dialog'),
+        VNLDocsPage('VNLCircularProgress', 'circular_progress'),
+        VNLDocsPage('VNLProgress', 'progress'),
+        VNLDocsPage('VNLLinearProgress', 'linear_progress'),
+        VNLDocsPage('VNLSkeleton', 'skeleton'),
+        VNLDocsPage('VNLToast', 'toast'),
       ],
     ),
-    ShadcnDocsSection(
+    VNLDocsSection(
       'VNLForm',
       [
-        ShadcnDocsPage('VNLCheckbox', 'checkbox'),
-        ShadcnDocsPage('VNLChip Input', 'chip_input'),
-        ShadcnDocsPage('Color Picker', 'color_picker'),
-        ShadcnDocsPage('Linear Gradient Picker', 'linear_gradient_picker',
-            ShadcnFeatureTag.workInProgress),
-        ShadcnDocsPage('Radial Gradient Picker', 'radial_gradient_picker',
-            ShadcnFeatureTag.workInProgress),
-        ShadcnDocsPage('Sweep Gradient Picker', 'sweep_gradient_picker',
-            ShadcnFeatureTag.workInProgress),
-        ShadcnDocsPage('Date Picker', 'date_picker'),
-        ShadcnDocsPage('VNLForm', 'form'),
-        ShadcnDocsPage('Formatted Input', 'formatted_input'),
-        ShadcnDocsPage('Text Input', 'input'),
-        ShadcnDocsPage('VNLAutoComplete', 'autocomplete'),
-        ShadcnDocsPage('Number Input', 'number_input'),
-        ShadcnDocsPage('Input OTP', 'input_otp'),
-        ShadcnDocsPage('Phone Input', 'phone_input'),
-        ShadcnDocsPage('VNLRadio Group', 'radio_group'),
-        ShadcnDocsPage('VNLRadio VNLCard', 'radio_card'),
-        ShadcnDocsPage('Select', 'select'),
-        ShadcnDocsPage('VNLSlider', 'slider'),
-        ShadcnDocsPage('Star Rating', 'star_rating'),
-        ShadcnDocsPage('VNLSwitch', 'switch'),
-        ShadcnDocsPage('Text Area', 'text_area'),
-        ShadcnDocsPage('Time Picker', 'time_picker'),
-        ShadcnDocsPage('VNLToggle', 'toggle'),
-        ShadcnDocsPage('Multi Select', 'multiselect'),
-        ShadcnDocsPage('Item Picker', 'item_picker'),
+        VNLDocsPage('VNLCheckbox', 'checkbox'),
+        VNLDocsPage('VNLChipInput', 'chip_input'),
+        VNLDocsPage('VNLColorPicker', 'color_picker'),
+        VNLDocsPage('VNLLinearGradientPicker', 'linear_gradient_picker',
+            VNLFeatureTag.workInProgress),
+        VNLDocsPage('VNLRadialGradientPicker', 'radial_gradient_picker',
+            VNLFeatureTag.workInProgress),
+        VNLDocsPage('VNLSweepGradientPicker', 'sweep_gradient_picker',
+            VNLFeatureTag.workInProgress),
+        VNLDocsPage('VNLDatePicker', 'date_picker'),
+        VNLDocsPage('VNLForm', 'form'),
+        VNLDocsPage('VNLFormattedInput', 'formatted_input'),
+        VNLDocsPage('VNLTextInput', 'input'),
+        VNLDocsPage('VNLAutoComplete', 'autocomplete'),
+        VNLDocsPage('VNLNumberInput', 'number_input'),
+        VNLDocsPage('VNLInputOTP', 'input_otp'),
+        VNLDocsPage('VNLPhoneInput', 'phone_input'),
+        VNLDocsPage('VNLRadioGroup', 'radio_group'),
+        VNLDocsPage('VNLRadioCard', 'radio_card'),
+        VNLDocsPage('VNLSelect', 'select'),
+        VNLDocsPage('VNLSlider', 'slider'),
+        VNLDocsPage('VNLStarRating', 'star_rating'),
+        VNLDocsPage('VNLSwitch', 'switch'),
+        VNLDocsPage('VNLTextArea', 'text_area'),
+        VNLDocsPage('VNLTimePicker', 'time_picker'),
+        VNLDocsPage('VNLToggle', 'toggle'),
+        VNLDocsPage('VNLMultiSelect', 'multiselect'),
+        VNLDocsPage('VNLItemPicker', 'item_picker'),
       ],
     ),
-    ShadcnDocsSection(
+    VNLDocsSection(
       'Layout',
       [
-        ShadcnDocsPage('VNLCard', 'card'),
-        ShadcnDocsPage('VNLCarousel', 'carousel'),
-        ShadcnDocsPage('VNLDivider', 'divider'),
-        ShadcnDocsPage('Resizable', 'resizable'),
-        ShadcnDocsPage('Sortable', 'sortable'),
-        ShadcnDocsPage('VNLSteps', 'steps'),
-        ShadcnDocsPage('VNLStepper', 'stepper'),
-        ShadcnDocsPage('VNLTimeline', 'timeline'),
-        ShadcnDocsPage('VNLScaffold', 'scaffold'),
-        ShadcnDocsPage('App Bar', 'app_bar'),
-        ShadcnDocsPage('VNLCard Image', 'card_image'),
+        VNLDocsPage('VNLCard', 'card'),
+        VNLDocsPage('VNLCarousel', 'carousel'),
+        VNLDocsPage('VNLDivider', 'divider'),
+        VNLDocsPage('VNLResizable', 'resizable'),
+        VNLDocsPage('VNLSortable', 'sortable'),
+        VNLDocsPage('VNLSteps', 'steps'),
+        VNLDocsPage('VNLStepper', 'stepper'),
+        VNLDocsPage('VNLTimeline', 'timeline'),
+        VNLDocsPage('VNLScaffold', 'scaffold'),
+        VNLDocsPage('VNLAppBar', 'app_bar'),
+        VNLDocsPage('VNLCardImage', 'card_image'),
       ],
     ),
-    ShadcnDocsSection(
+    VNLDocsSection(
       'Navigation',
       [
-        ShadcnDocsPage('VNLBreadcrumb', 'breadcrumb'),
-        ShadcnDocsPage('VNLMenubar', 'menubar'),
-        ShadcnDocsPage('Navigation Menu', 'navigation_menu'),
-        ShadcnDocsPage('VNLPagination', 'pagination'),
-        ShadcnDocsPage('VNLTabs', 'tabs'),
-        ShadcnDocsPage('Tab List', 'tab_list'),
-        ShadcnDocsPage('Tab Pane', 'tab_pane'),
-        ShadcnDocsPage('Tree', 'tree'),
+        VNLDocsPage('VNLBreadcrumb', 'breadcrumb'),
+        VNLDocsPage('VNLMenubar', 'menubar'),
+        VNLDocsPage('VNLNavigationMenu', 'navigation_menu'),
+        VNLDocsPage('VNLPagination', 'pagination'),
+        VNLDocsPage('VNLTabs', 'tabs'),
+        VNLDocsPage('VNLTabList', 'tab_list'),
+        VNLDocsPage('VNLTabPane', 'tab_pane'),
+        VNLDocsPage('VNLTreeView', 'tree'),
         // aka Bottom Navigation Bar
-        ShadcnDocsPage('Navigation Bar', 'navigation_bar'),
-        ShadcnDocsPage('Navigation Rail', 'navigation_rail'),
-        ShadcnDocsPage('Expandable Sidebar', 'expandable_sidebar'),
+        VNLDocsPage('VNLNavigationBar', 'navigation_bar'),
+        VNLDocsPage('VNLNavigationRail', 'navigation_rail'),
+        VNLDocsPage('VNLExpandableSidebar', 'expandable_sidebar'),
         // aka Drawer
-        ShadcnDocsPage('Navigation Sidebar', 'navigation_sidebar'),
-        ShadcnDocsPage('Dot Indicator', 'dot_indicator'),
+        VNLDocsPage('VNLNavigationSidebar', 'navigation_sidebar'),
+        VNLDocsPage('VNLDotIndicator', 'dot_indicator'),
         //
-        ShadcnDocsPage('VNLSwitcher', 'switcher'),
+        VNLDocsPage('VNLSwitcher', 'switcher'),
       ],
     ),
-    ShadcnDocsSection(
+    VNLDocsSection(
       'Overlay',
       [
-        ShadcnDocsPage('Dialog', 'dialog'),
-        ShadcnDocsPage('Drawer', 'drawer'),
-        ShadcnDocsPage('VNLHover VNLCard', 'hover_card'),
-        ShadcnDocsPage('VNLPopover', 'popover'),
-        ShadcnDocsPage('Sheet', 'sheet'),
-        ShadcnDocsPage('VNLSwiper', 'swiper'),
-        ShadcnDocsPage('VNLTooltip', 'tooltip'),
-        ShadcnDocsPage('VNLWindow', 'window', ShadcnFeatureTag.experimental),
+        VNLDocsPage('VNLDialog', 'dialog'),
+        VNLDocsPage('VNLDrawer', 'drawer'),
+        VNLDocsPage('VNLHoverCard', 'hover_card'),
+        VNLDocsPage('VNLPopover', 'popover'),
+        VNLDocsPage('VNLSheet', 'sheet'),
+        VNLDocsPage('VNLSwiper', 'swiper'),
+        VNLDocsPage('VNLTooltip', 'tooltip'),
+        VNLDocsPage('VNLWindow', 'window', VNLFeatureTag.experimental),
       ],
     ),
 
-    ShadcnDocsSection(
+    VNLDocsSection(
       'Utility',
       [
-        ShadcnDocsPage('Badge', 'badge'),
-        ShadcnDocsPage('VNLChip', 'chip'),
-        ShadcnDocsPage('VNLCalendar', 'calendar'),
-        ShadcnDocsPage('VNLCommand', 'command'),
-        ShadcnDocsPage('Context Menu', 'context_menu'),
-        ShadcnDocsPage('Dropdown Menu', 'dropdown_menu'),
-        ShadcnDocsPage('Keyboard Display', 'keyboard_display'),
-        ShadcnDocsPage('Refresh Trigger', 'refresh_trigger'),
-        ShadcnDocsPage('Overflow Marquee', 'overflow_marquee'),
+        VNLDocsPage('VNLBadge', 'badge'),
+        VNLDocsPage('VNLChip', 'chip'),
+        VNLDocsPage('VNLCalendar', 'calendar'),
+        VNLDocsPage('VNLCommand', 'command'),
+        VNLDocsPage('VNLContextMenu', 'context_menu'),
+        VNLDocsPage('VNLDropdownMenu', 'dropdown_menu'),
+        VNLDocsPage('VNLKeyboardDisplay', 'keyboard_display'),
+        VNLDocsPage('VNLRefreshTrigger', 'refresh_trigger'),
+        VNLDocsPage('VNLOverflowMarquee', 'overflow_marquee'),
       ],
     ),
     // COMPONENTS END
@@ -355,7 +355,7 @@ class DocsPageState extends State<DocsPage> {
       if (componentCategories.contains(section.title)) {
         count += section.pages.length;
         for (var page in section.pages) {
-          if (page.tag == ShadcnFeatureTag.workInProgress) {
+          if (page.tag == VNLFeatureTag.workInProgress) {
             workInProgress++;
           }
         }
@@ -465,14 +465,14 @@ class DocsPageState extends State<DocsPage> {
                     child: Text(getReleaseTagName()),
                     onPressed: (context) {
                       launchUrlString(
-                          'https://sunarya-thito.github.io/shadcn_flutter/');
+                          'https://thanhduy1812.github.io/vnl_flutter_ui/');
                     },
                   ),
                   VNLMenuButton(
                     child: const Text('Experimental'),
                     onPressed: (context) {
                       launchUrlString(
-                          'https://sunarya-thito.github.io/shadcn_flutter/experimental/');
+                          'https://thanhduy1812.github.io/vnl_flutter_ui/experimental/');
                     },
                   ),
                 ],
@@ -504,7 +504,7 @@ class DocsPageState extends State<DocsPage> {
   @override
   Widget build(BuildContext context) {
     Map<String, OnThisPage> onThisPage = widget.onThisPage;
-    ShadcnDocsPage? page = sections
+    VNLDocsPage? page = sections
         .expand((e) => e.pages)
         .where((e) => e.name == widget.name)
         .firstOrNull;
@@ -560,13 +560,13 @@ class DocsPageState extends State<DocsPage> {
                                 Semantics(
                                   link: true,
                                   linkUrl: Uri.tryParse(
-                                    'https://github.com/sunarya-thito/shadcn_flutter',
+                                    'https://github.com/thanhduy1812/vnl_flutter_ui',
                                   ),
                                   child: VNLGhostButton(
                                     density: VNLButtonDensity.icon,
                                     onPressed: () {
                                       openInNewTab(
-                                          'https://github.com/sunarya-thito/shadcn_flutter');
+                                          'https://github.com/thanhduy1812/vnl_flutter_ui');
                                     },
                                     child: FaIcon(
                                       FontAwesomeIcons.github,
@@ -580,7 +580,7 @@ class DocsPageState extends State<DocsPage> {
                                     density: VNLButtonDensity.icon,
                                     onPressed: () {
                                       openInNewTab(
-                                          'https://pub.dev/packages/shadcn_flutter');
+                                          'https://pub.dev/packages/vnl_common_ui');
                                     },
                                     child: ColorFiltered(
                                       // turns into white
@@ -807,7 +807,7 @@ class DocsPageState extends State<DocsPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Text(
-              'shadcn_flutter',
+              'vnl_flutter_ui',
             ).textLarge().mono(),
             Gap(16 * theme.scaling),
             buildFlavorTag(),
@@ -842,7 +842,7 @@ class DocsPageState extends State<DocsPage> {
         VNLGhostButton(
           density: VNLButtonDensity.icon,
           onPressed: () {
-            openInNewTab('https://github.com/sunarya-thito/shadcn_flutter');
+            openInNewTab('https://github.com/thanhduy1812/vnl_flutter_ui');
           },
           child: FaIcon(FontAwesomeIcons.github,
                   color: theme.colorScheme.secondaryForeground)
@@ -852,7 +852,7 @@ class DocsPageState extends State<DocsPage> {
         VNLGhostButton(
             density: VNLButtonDensity.icon,
             onPressed: () {
-              openInNewTab('https://pub.dev/packages/shadcn_flutter');
+              openInNewTab('https://pub.dev/packages/vnl_common_ui');
             },
             child: ColorFiltered(
               // turns into white
@@ -889,7 +889,7 @@ class DocsPageState extends State<DocsPage> {
                   ),
                   Gap(18 * scaling),
                   const Text(
-                    'shadcn_flutter',
+                    'vnl_flutter_ui',
                   ).medium().mono(),
                   Gap(12 * scaling),
                   buildFlavorTag(),
@@ -921,12 +921,12 @@ class DocsPageState extends State<DocsPage> {
                               Semantics(
                                 link: true,
                                 linkUrl: Uri.tryParse(
-                                  'https://sunarya-thito.github.io/shadcn_flutter${_goRouterNamedLocation(context, page.name)}',
+                                  'https://thanhduy1812.github.io/vnl_flutter_ui${_goRouterNamedLocation(context, page.name)}',
                                 ),
                                 child: DocsNavigationButton(
                                   onPressed: () {
                                     if (page.tag ==
-                                        ShadcnFeatureTag.workInProgress) {
+                                        VNLFeatureTag.workInProgress) {
                                       showDialog(
                                         context: context,
                                         builder: (context) {
@@ -983,7 +983,7 @@ class _DocsSidebar extends StatefulWidget {
     required this.pageName,
   });
 
-  final List<ShadcnDocsSection> sections;
+  final List<VNLDocsSection> sections;
   final String pageName;
 
   @override
@@ -1076,7 +1076,7 @@ class _DocsSidebarSection extends StatefulWidget {
     required this.pageName,
   });
 
-  final ShadcnDocsSection section;
+  final VNLDocsSection section;
   final String pageName;
 
   @override
@@ -1112,7 +1112,7 @@ class _DocsSidebarButton extends StatefulWidget {
     required this.pageName,
   });
 
-  final ShadcnDocsPage page;
+  final VNLDocsPage page;
   final String pageName;
 
   @override
@@ -1134,7 +1134,7 @@ class _DocsSidebarButtonState extends State<_DocsSidebarButton> {
       link: true,
       label: widget.page.title,
       linkUrl: Uri.tryParse(
-        'https://sunarya-thito.github.io/shadcn_flutter${_goRouterNamedLocation(context, widget.page.name)}',
+        'https://thanhduy1812.github.io/vnl_flutter_ui${_goRouterNamedLocation(context, widget.page.name)}',
       ),
       child: DocsNavigationButton(
         onPressed: _onPressed,
@@ -1151,7 +1151,7 @@ class _DocsSidebarButtonState extends State<_DocsSidebarButton> {
   }
 
   void _onPressed() {
-    if (widget.page.tag == ShadcnFeatureTag.workInProgress) {
+    if (widget.page.tag == VNLFeatureTag.workInProgress) {
       showDialog(
         context: context,
         builder: (context) {

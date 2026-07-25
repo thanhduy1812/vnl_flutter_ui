@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 // VNLookApp.router example using GoRouter for declarative navigation.
 // Defines two routes ('/' and '/about') and renders a simple VNLScaffold for each.

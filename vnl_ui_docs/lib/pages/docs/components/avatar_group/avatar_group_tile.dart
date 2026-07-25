@@ -1,6 +1,6 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:flutter/material.dart' as material;
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class AvatarGroupTile extends StatelessWidget implements IComponentPage {
   const AvatarGroupTile({super.key});
@@ -17,19 +17,19 @@ class AvatarGroupTile extends StatelessWidget implements IComponentPage {
       center: true,
       example: VNLAvatarGroup.toLeft(children: [
         VNLAvatar(
-          initials: VNLAvatar.getInitials('sunarya-thito'),
+          initials: VNLAvatar.getInitials('thanhduy1812'),
           backgroundColor: material.Colors.red,
         ),
         VNLAvatar(
-          initials: VNLAvatar.getInitials('sunarya-thito'),
+          initials: VNLAvatar.getInitials('thanhduy1812'),
           backgroundColor: material.Colors.green,
         ),
         VNLAvatar(
-          initials: VNLAvatar.getInitials('sunarya-thito'),
+          initials: VNLAvatar.getInitials('thanhduy1812'),
           backgroundColor: material.Colors.blue,
         ),
         VNLAvatar(
-          initials: VNLAvatar.getInitials('sunarya-thito'),
+          initials: VNLAvatar.getInitials('thanhduy1812'),
           backgroundColor: material.Colors.yellow,
         ),
       ]),

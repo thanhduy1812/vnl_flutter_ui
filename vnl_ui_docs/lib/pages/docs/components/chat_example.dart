@@ -2,7 +2,7 @@ import 'package:docs/pages/docs/component_page.dart';
 import 'package:docs/pages/docs/components/chat/chat_example_1.dart';
 import 'package:docs/pages/docs/components/chat/chat_example_2.dart';
 import 'package:docs/pages/widget_usage_example.dart';
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class ChatExample extends StatelessWidget {
   const ChatExample({super.key});

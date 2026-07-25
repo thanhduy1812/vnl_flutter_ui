@@ -3,7 +3,7 @@ import 'package:docs/main.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../docs_page.dart';
 import '../docs/sidebar_nav.dart';
@@ -968,7 +968,7 @@ class _ThemePageState extends State<ThemePage> {
 
   Widget _buildKitchenMentions() {
     return VNLTextField(
-      placeholder: const Text('@sunarya-thito'),
+      placeholder: const Text('@sunarya'),
       features: [
         VNLInputFeature.trailing(VNLIconButton.primary(
           density: VNLButtonDensity.iconDense,
@@ -987,12 +987,12 @@ class _ThemePageState extends State<ThemePage> {
       Semantics(
         link: true,
         linkUrl: Uri.tryParse(
-          'https://github.com/sunarya-thito/shadcn_flutter',
+          'https://github.com/thanhduy1812/vnl_flutter_ui',
         ),
         child: VNLGhostButton(
           density: VNLButtonDensity.icon,
           onPressed: () {
-            openInNewTab('https://github.com/sunarya-thito/shadcn_flutter');
+            openInNewTab('https://github.com/thanhduy1812/vnl_flutter_ui');
           },
           child: FaIcon(
             FontAwesomeIcons.github,
@@ -1003,7 +1003,7 @@ class _ThemePageState extends State<ThemePage> {
       VNLGhostButton(
         density: VNLButtonDensity.icon,
         onPressed: () {
-          openInNewTab('https://pub.dev/packages/shadcn_flutter');
+          openInNewTab('https://pub.dev/packages/vnl_common_ui');
         },
         child: ColorFiltered(
           colorFilter: ColorFilter.mode(
@@ -1030,7 +1030,7 @@ class _ThemePageState extends State<ThemePage> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text('shadcn_flutter').textLarge().mono(),
+            const Text('vnl_flutter_ui').textLarge().mono(),
             Gap(16 * theme.scaling),
             _buildFlavorTag(),
           ],
@@ -1174,7 +1174,7 @@ class _ThemePageState extends State<ThemePage> {
                     size: 24 * scaling,
                   ),
                   Gap(18 * scaling),
-                  const Text('shadcn_flutter').medium().mono(),
+                  const Text('vnl_flutter_ui').medium().mono(),
                   Gap(12 * scaling),
                   _buildFlavorTag(),
                   const Spacer(),
@@ -1208,12 +1208,12 @@ class _ThemePageState extends State<ThemePage> {
                               Semantics(
                                 link: true,
                                 linkUrl: Uri.tryParse(
-                                  'https://sunarya-thito.github.io/shadcn_flutter${_goRouterNamedLocation(context, page.name)}',
+                                  'https://thanhduy1812.github.io/vnl_flutter_ui${_goRouterNamedLocation(context, page.name)}',
                                 ),
                                 child: DocsNavigationButton(
                                   onPressed: () {
                                     if (page.tag ==
-                                        ShadcnFeatureTag.workInProgress) {
+                                        VNLFeatureTag.workInProgress) {
                                       showDialog(
                                         context: context,
                                         builder: (context) {
@@ -1827,7 +1827,7 @@ class _ThemeSidebar extends StatefulWidget {
     required this.pageName,
   });
 
-  final List<ShadcnDocsSection> sections;
+  final List<VNLDocsSection> sections;
   final String pageName;
 
   @override
@@ -1854,11 +1854,11 @@ class _ThemeSidebarState extends State<_ThemeSidebar> {
               Semantics(
                 link: true,
                 linkUrl: Uri.tryParse(
-                  'https://sunarya-thito.github.io/shadcn_flutter${_goRouterNamedLocation(context, page.name)}',
+                  'https://thanhduy1812.github.io/vnl_flutter_ui${_goRouterNamedLocation(context, page.name)}',
                 ),
                 child: DocsNavigationButton(
                   onPressed: () {
-                    if (page.tag == ShadcnFeatureTag.workInProgress) {
+                    if (page.tag == VNLFeatureTag.workInProgress) {
                       showDialog(
                         context: context,
                         builder: (context) {

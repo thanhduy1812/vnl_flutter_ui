@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 /// Demonstrates IgnoreForm to exclude widgets from form participation.
 ///

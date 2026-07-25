@@ -1,5 +1,5 @@
 import 'package:docs/pages/docs/components/carousel_example.dart';
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 // Demonstrates VNLTabList (a low-level tab header) with an IndexedStack body.
 // The header controls the index; the content is managed separately.

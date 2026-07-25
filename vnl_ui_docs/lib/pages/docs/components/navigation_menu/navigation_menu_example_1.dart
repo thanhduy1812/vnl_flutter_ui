@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class NavigationMenuExample1 extends StatelessWidget {
   const NavigationMenuExample1({super.key});
@@ -48,7 +48,7 @@ class NavigationMenuExample1 extends StatelessWidget {
                         size: 32,
                       ),
                       const Gap(16),
-                      const Text('shadcn_flutter').mono().semiBold().large(),
+                      const Text('vnl_flutter_ui').mono().semiBold().large(),
                       const Gap(8),
                       const Text(
                               'Beautifully designed components from Shadcn/UI is now available for Flutter')

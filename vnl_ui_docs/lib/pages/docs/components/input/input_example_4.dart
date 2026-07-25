@@ -15,11 +15,11 @@ class InputExample4 extends StatelessWidget {
         validator: VNLConditionalValidator((value) async {
           // Simulate a network delay for demonstration purposes
           await Future.delayed(const Duration(seconds: 1));
-          return !['sunarya-thito', 'septogeddon', 'admin'].contains(value);
+          return !['thanhduy1812', 'septogeddon', 'admin'].contains(value);
         }, message: 'Username already taken'),
         child: const VNLTextField(
           placeholder: Text('Enter your username'),
-          initialValue: 'sunarya-thito',
+          initialValue: 'thanhduy1812',
           features: [
             // Manually triggers the validator again (useful after edits or on demand).
             VNLInputFeature.revalidate(),

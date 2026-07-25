@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class FormExample1 extends StatefulWidget {
   const FormExample1({super.key});
@@ -65,7 +65,7 @@ class _FormExample1State extends State<FormExample1> {
                   hint: const Text('This is your public display name'),
                   validator: const VNLLengthValidator(min: 4),
                   child: const VNLTextField(
-                    initialValue: 'sunarya-thito',
+                    initialValue: 'thanhduy1812',
                   ),
                 ),
                 FormField(

@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 // Demonstrates VNLookApp with custom light/dark themes.
 // Highlights theme knobs like colorScheme, radius, scaling, surfaceOpacity,

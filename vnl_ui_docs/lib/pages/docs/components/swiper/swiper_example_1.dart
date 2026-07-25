@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 class SwiperExample1 extends StatefulWidget {
   const SwiperExample1({super.key});

@@ -5,7 +5,7 @@ import 'package:docs/pages/docs/components/resizable/resizable_example_4.dart';
 import 'package:docs/pages/docs/components/resizable/resizable_example_5.dart';
 import 'package:docs/pages/docs/components/resizable/resizable_example_6.dart';
 import 'package:docs/pages/docs/components/resizable/resizable_example_7.dart';
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 import '../../widget_usage_example.dart';
 import '../component_page.dart';

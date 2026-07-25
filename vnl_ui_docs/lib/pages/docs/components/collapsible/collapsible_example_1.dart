@@ -12,10 +12,10 @@ class CollapsibleExample1 extends StatelessWidget {
     return VNLCollapsible(
       children: [
         const VNLCollapsibleTrigger(
-          child: Text('@sunarya-thito starred 3 repositories'),
+          child: Text('@sunarya starred 3 repositories'),
         ),
         VNLOutlinedContainer(
-          child: const Text('@sunarya-thito/vnl_ui').small().mono().withPadding(horizontal: 16, vertical: 8),
+          child: const Text('@sunarya/vnl_ui').small().mono().withPadding(horizontal: 16, vertical: 8),
         ).withPadding(top: 8),
         VNLCollapsibleContent(
           child: VNLOutlinedContainer(

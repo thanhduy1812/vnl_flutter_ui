@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vnl_common_ui/shadcn_flutter.dart' as shadcnui;
+import 'package:vnl_common_ui/vnl_ui.dart' as vnl;
 
 class MaterialExample1 extends StatefulWidget {
   const MaterialExample1({super.key});
@@ -41,18 +41,18 @@ class _MaterialExample1State extends State<MaterialExample1> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            const shadcnui.Gap(64),
+            const vnl.Gap(64),
             // You can compose shadcn_flutter widgets inside a Material app.
             // Wrapping with VNLookUI ensures inherited theme/semantics are properly applied.
-            shadcnui.VNLookUI(
-                child: shadcnui.VNLCard(
+            vnl.VNLookUI(
+                child: vnl.VNLCard(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text(
                       'You can also use shadcn_flutter widgets inside Material widgets'),
-                  const shadcnui.Gap(16),
-                  shadcnui.VNLPrimaryButton(
+                  const vnl.Gap(16),
+                  vnl.VNLPrimaryButton(
                     onPressed: () {
                       // Show a native Material dialog
                       showDialog(
@@ -75,19 +75,19 @@ class _MaterialExample1State extends State<MaterialExample1> {
                     },
                     child: const Text('Open Material Dialog'),
                   ),
-                  const shadcnui.Gap(8),
-                  shadcnui.VNLSecondaryButton(
+                  const vnl.Gap(8),
+                  vnl.VNLSecondaryButton(
                     onPressed: () {
                       // Show a shadcn_flutter dialog side-by-side for comparison
-                      shadcnui.showDialog(
+                      vnl.showDialog(
                         context: context,
                         builder: (context) {
-                          return shadcnui.VNLAlertDialog(
+                          return vnl.VNLAlertDialog(
                             title: const Text('Hello'),
                             content:
                                 const Text('This is shadcn_flutter dialog'),
                             actions: [
-                              shadcnui.VNLPrimaryButton(
+                              vnl.VNLPrimaryButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },

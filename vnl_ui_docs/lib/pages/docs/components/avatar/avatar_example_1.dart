@@ -1,4 +1,4 @@
-import 'package:vnl_common_ui/shadcn_flutter.dart';
+import 'package:vnl_common_ui/vnl_ui.dart';
 
 /// VNLAvatar with image and initials fallback.
 ///
@@ -12,7 +12,7 @@ class AvatarExample1 extends StatelessWidget {
     return VNLAvatar(
       backgroundColor: VNLColors.red,
       // Helper to derive initials from a username or full name.
-      initials: VNLAvatar.getInitials('sunarya-thito'),
+      initials: VNLAvatar.getInitials('thanhduy1812'),
       provider: const NetworkImage(
           'https://avatars.githubusercontent.com/u/64018564?v=4'),
     );
