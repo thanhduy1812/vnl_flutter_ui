@@ -588,8 +588,10 @@ class DocsPageState extends State<DocsPage> {
                                         theme.colorScheme.secondaryForeground,
                                         BlendMode.srcIn,
                                       ),
-                                      child: FlutterLogo(
-                                        size: 24 * theme.scaling,
+                                      child: Image(
+                                        image: const AssetImage('assets/icon/icon.png'),
+                                        width: 24 * theme.scaling,
+                                        height: 24 * theme.scaling,
                                       ),
                                     )),
                               ],
@@ -793,14 +795,15 @@ class DocsPageState extends State<DocsPage> {
       //               right: 32,
       //             ) *
       //             theme.scaling)
-      //     .copyWith(
       //   top: 12 * theme.scaling,
       //   bottom: 12 * theme.scaling,
       // ),
       padding: padding,
       title: VNLBasic(
-        leading: FlutterLogo(
-          size: 32 * theme.scaling,
+        leading: Image(
+          image: const AssetImage('assets/icon/icon.png'),
+          width: 32 * theme.scaling,
+          height: 32 * theme.scaling,
         ),
         content: Row(
           mainAxisSize: MainAxisSize.min,
@@ -860,8 +863,10 @@ class DocsPageState extends State<DocsPage> {
                 theme.colorScheme.secondaryForeground,
                 BlendMode.srcIn,
               ),
-              child: FlutterLogo(
-                size: 24 * theme.scaling,
+              child: Image(
+                image: const AssetImage('assets/icon/icon.png'),
+                width: 24 * theme.scaling,
+                height: 24 * theme.scaling,
               ),
             )),
       ],
@@ -884,8 +889,10 @@ class DocsPageState extends State<DocsPage> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  FlutterLogo(
-                    size: 24 * scaling,
+                  Image(
+                    image: const AssetImage('assets/icon/icon.png'),
+                    width: 24 * scaling,
+                    height: 24 * scaling,
                   ),
                   Gap(18 * scaling),
                   const Text(
