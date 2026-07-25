@@ -250,6 +250,33 @@ class VNLDivider extends StatelessWidget implements PreferredSizeWidget {
       themeValue: compTheme?.childAlignment,
       defaultValue: AxisAlignment.center,
     ).resolve(textDirection);
+
+    // Material Divider doesn't support negative indent. Fall back to
+    // CustomPaint with VNLDividerPainter when indent or endIndent < 0.
+    Widget buildLine({
+      required double lineIndent,
+      required double lineEndIndent,
+    }) {
+      if (lineIndent < 0 || lineEndIndent < 0) {
+        return CustomPaint(
+          painter: VNLDividerPainter(
+            color: color,
+            thickness: thickness,
+            indent: lineIndent,
+            endIndent: lineEndIndent,
+          ),
+          size: Size(double.infinity, height),
+        );
+      }
+      return Divider(
+        color: color,
+        height: height,
+        thickness: thickness,
+        indent: lineIndent,
+        endIndent: lineEndIndent,
+      );
+    }
+
     if (child != null) {
       final clampedAlignmentValue =
           childAlignment.value.clamp(-1.0, 1.0);
@@ -266,28 +293,7 @@ class VNLDivider extends StatelessWidget implements PreferredSizeWidget {
               if (leftFlex > 0)
                 Expanded(
                   flex: leftFlex,
-                  child: SizedBox(
-                    height: height,
-                    child: AnimatedValueBuilder(
-                        value: VNLDividerProperties(
-                          color: color,
-                          thickness: thickness,
-                          indent: indent,
-                          endIndent: 0,
-                        ),
-                        duration: kDefaultDuration,
-                        lerp: VNLDividerProperties.lerp,
-                        builder: (context, value, child) {
-                          return CustomPaint(
-                            painter: VNLDividerPainter(
-                              color: value.color,
-                              thickness: value.thickness,
-                              indent: value.indent,
-                              endIndent: value.endIndent,
-                            ),
-                          );
-                        }),
-                  ),
+                  child: buildLine(lineIndent: indent, lineEndIndent: 0),
                 )
               else
                 const SizedBox.shrink(),
@@ -295,28 +301,7 @@ class VNLDivider extends StatelessWidget implements PreferredSizeWidget {
               if (rightFlex > 0)
                 Expanded(
                   flex: rightFlex,
-                  child: SizedBox(
-                    height: height,
-                    child: AnimatedValueBuilder(
-                        value: VNLDividerProperties(
-                          color: color,
-                          thickness: thickness,
-                          indent: 0,
-                          endIndent: endIndent,
-                        ),
-                        duration: kDefaultDuration,
-                        lerp: VNLDividerProperties.lerp,
-                        builder: (context, value, child) {
-                          return CustomPaint(
-                            painter: VNLDividerPainter(
-                              color: value.color,
-                              thickness: value.thickness,
-                              indent: value.indent,
-                              endIndent: value.endIndent,
-                            ),
-                          );
-                        }),
-                  ),
+                  child: buildLine(lineIndent: 0, lineEndIndent: endIndent),
                 )
               else
                 const SizedBox.shrink(),
@@ -325,30 +310,9 @@ class VNLDivider extends StatelessWidget implements PreferredSizeWidget {
         ),
       );
     }
-    return SizedBox(
-      height: height,
-      width: double.infinity,
-      child: AnimatedValueBuilder(
-          value: VNLDividerProperties(
-            color: color,
-            thickness: thickness,
-            indent: indent,
-            endIndent: endIndent,
-          ),
-          lerp: VNLDividerProperties.lerp,
-          duration: kDefaultDuration,
-          builder: (context, value, child) {
-            return CustomPaint(
-              painter: VNLDividerPainter(
-                color: value.color,
-                thickness: value.thickness,
-                indent: value.indent,
-                endIndent: value.endIndent,
-              ),
-            );
-          }),
-    );
+    return buildLine(lineIndent: indent, lineEndIndent: endIndent);
   }
+
 }
 
 /// Custom painter for drawing horizontal divider lines.

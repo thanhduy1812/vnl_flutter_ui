@@ -20,7 +20,7 @@ export 'package:flutter/cupertino.dart'
         cupertinoDesktopTextSelectionHandleControls;
 // export Icons from material
 export 'package:flutter/material.dart'
-    show Icons, MaterialPageRoute, MaterialPage, SliverAppBar, FlutterLogo;
+    show Icons, MaterialPageRoute, MaterialPage, SliverAppBar, FlutterLogo, Divider;
 export 'package:flutter/widgets.dart'
     hide
         // these widgets are patched, see the patch export below
@@ -159,6 +159,7 @@ export 'src/theme/generated_colors.dart';
 export 'src/theme/generated_themes.dart';
 export 'src/theme/legacy_generated_themes.dart';
 export 'src/theme/theme.dart';
+export 'src/theme/theme_extension.dart';
 export 'src/theme/typography.dart';
 export 'src/util.dart';
 export 'src/components/form/input.dart';

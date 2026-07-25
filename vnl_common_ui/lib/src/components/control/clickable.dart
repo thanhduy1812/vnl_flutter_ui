@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/material.dart' as mat;
 import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 /// Extension on `Set<WidgetState>` providing convenient boolean getters for common states.
@@ -792,6 +793,9 @@ class _ClickableState extends State<VNLClickable> {
       borderRadius = theme.borderRadiusMd;
     }
     var buttonContainer = _buildContainer(context, decoration, widgetStates);
+    // Wrap with GestureDetector for secondary/tertiary gestures
+    // that InkWell doesn't support, then use InkWell as the core
+    // for primary taps + keyboard + hover/focus + ripple effect.
     return VNLFocusOutline(
       focused: widget.focusOutline &&
           widgetStates.contains(WidgetState.focused) &&
@@ -799,9 +803,6 @@ class _ClickableState extends State<VNLClickable> {
       borderRadius: borderRadius,
       child: GestureDetector(
         behavior: widget.behavior,
-        onTap: widget.onPressed != null ? _onPressed : null,
-        onLongPress: widget.onLongPress,
-        // onDoubleTap: widget.onDoubleTap, HANDLED CUSTOMLY
         onSecondaryTapDown: widget.onSecondaryTapDown,
         onSecondaryTapUp: widget.onSecondaryTapUp,
         onSecondaryTapCancel: widget.onSecondaryTapCancel,
@@ -813,94 +814,51 @@ class _ClickableState extends State<VNLClickable> {
         onLongPressMoveUpdate: widget.onLongPressMoveUpdate,
         onLongPressEnd: widget.onLongPressEnd,
         onSecondaryLongPress: widget.onSecondaryLongPress,
-        onTertiaryLongPress: widget.onTertiaryLongPress,
-        onTapDown: widget.onPressed != null
-            ? (details) {
-                if (widget.enableFeedback) {
-                  // also dispatch hover
-                  _updateState(WidgetState.hovered, true);
+        child: mat.InkWell(
+          onTap: widget.onPressed != null ? _onPressed : null,
+          onLongPress: widget.onLongPress,
+          onDoubleTap: widget.onDoubleTap,
+          onTapDown: widget.onPressed != null
+              ? (details) {
+                  if (widget.enableFeedback) {
+                    _updateState(WidgetState.hovered, true);
+                  }
+                  _updateState(WidgetState.pressed, true);
+                  widget.onTapDown?.call(details);
                 }
-                _updateState(WidgetState.pressed, true);
-                widget.onTapDown?.call(details);
-              }
-            : widget.onTapDown,
-        onTapUp: widget.onPressed != null
-            ? (details) {
-                if (widget.enableFeedback) {
-                  // also dispatch hover
-                  _updateState(WidgetState.hovered, false);
+              : widget.onTapDown,
+          onTapUp: widget.onPressed != null
+              ? (details) {
+                  if (widget.enableFeedback) {
+                    _updateState(WidgetState.hovered, false);
+                  }
+                  _updateState(WidgetState.pressed, false);
+                  widget.onTapUp?.call(details);
                 }
-                _updateState(WidgetState.pressed, false);
-                widget.onTapUp?.call(details);
-              }
-            : widget.onTapUp,
-        onTapCancel: widget.onPressed != null
-            ? () {
-                if (widget.enableFeedback) {
-                  // also dispatch hover
-                  _updateState(WidgetState.hovered, false);
+              : widget.onTapUp,
+          onTapCancel: widget.onPressed != null
+              ? () {
+                  if (widget.enableFeedback) {
+                    _updateState(WidgetState.hovered, false);
+                  }
+                  _updateState(WidgetState.pressed, false);
+                  widget.onTapCancel?.call();
                 }
-                _updateState(WidgetState.pressed, false);
-                widget.onTapCancel?.call();
-              }
-            : widget.onTapCancel,
-        child: FocusableActionDetector(
-          enabled: enabled,
-          focusNode: _focusNode,
-          shortcuts: {
-            LogicalKeySet(LogicalKeyboardKey.enter): const ActivateIntent(),
-            LogicalKeySet(LogicalKeyboardKey.space): const ActivateIntent(),
-            LogicalKeySet(LogicalKeyboardKey.arrowUp):
-                const DirectionalFocusIntent(TraversalDirection.up),
-            LogicalKeySet(LogicalKeyboardKey.arrowDown):
-                const DirectionalFocusIntent(TraversalDirection.down),
-            LogicalKeySet(LogicalKeyboardKey.arrowLeft):
-                const DirectionalFocusIntent(TraversalDirection.left),
-            LogicalKeySet(LogicalKeyboardKey.arrowRight):
-                const DirectionalFocusIntent(TraversalDirection.right),
-            ...?widget.shortcuts,
-          },
-          actions: {
-            ActivateIntent: CallbackAction(
-              onInvoke: (e) {
-                _onPressed();
-                return null;
-              },
-            ),
-            DirectionalFocusIntent: CallbackAction<DirectionalFocusIntent>(
-              onInvoke: (e) {
-                final direction = e.direction;
-                final focus = _focusNode;
-                switch (direction) {
-                  case TraversalDirection.up:
-                    focus.focusInDirection(TraversalDirection.up);
-                    break;
-                  case TraversalDirection.down:
-                    focus.focusInDirection(TraversalDirection.down);
-                    break;
-                  case TraversalDirection.left:
-                    focus.focusInDirection(TraversalDirection.left);
-                    break;
-                  case TraversalDirection.right:
-                    focus.focusInDirection(TraversalDirection.right);
-                    break;
-                }
-                return null;
-              },
-            ),
-            ...?widget.actions,
-          },
-          onShowHoverHighlight: (value) {
+              : widget.onTapCancel,
+          onHover: (value) {
             _updateState(
                 WidgetState.hovered, value && !widget.disableHoverEffect);
             widget.onHover?.call(value);
           },
-          onShowFocusHighlight: (value) {
+          onFocusChange: (value) {
             _updateState(WidgetState.focused, value);
             widget.onFocus?.call(value);
           },
+          focusNode: _focusNode,
+          canRequestFocus: enabled,
           mouseCursor:
               widget.mouseCursor?.resolve(widgetStates) ?? MouseCursor.defer,
+          enableFeedback: widget.enableFeedback,
           child: DefaultTextStyle.merge(
             style: widget.textStyle?.resolve(widgetStates),
             child: IconTheme.merge(

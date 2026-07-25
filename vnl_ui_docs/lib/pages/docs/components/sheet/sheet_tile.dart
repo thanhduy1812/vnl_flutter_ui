@@ -1,33 +1,72 @@
 import 'package:docs/pages/docs/components_page.dart';
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-class SheetTile extends StatelessWidget implements IComponentPage {
-  const SheetTile({super.key});
+class PinnedSheetTile extends StatefulWidget implements IComponentPage {
+  const PinnedSheetTile({super.key});
 
   @override
-  String get title => 'Sheet';
+  String get title => 'Pinned Sheet';
+
+  @override
+  State<PinnedSheetTile> createState() => _PinnedSheetTileState();
+}
+
+class _PinnedSheetTileState extends State<PinnedSheetTile> {
+  final VNLSheetController controller = VNLSheetController();
+
+  static const List<VNLSheetStage> stages = [
+    VNLSheetStage.peekDragHandle(),
+    VNLSheetStage.expanded(),
+  ];
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return ComponentCard(
-      title: 'Sheet',
-      name: 'sheet',
-      verticalOffset: 0,
-      scale: 1,
-      example: VNLSheetWrapper(
-        position: VNLOverlayPosition.right,
-        stackIndex: 0,
-        size: const Size(300, 300),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Sheet!').large().medium(),
-            const Gap(4),
-            const Text('This is a sheet that you can use to display content')
-                .muted(),
-          ],
-        ).withPadding(horizontal: 32, vertical: 48),
-      ).sized(width: 300, height: 300),
+      title: 'Pinned Sheet',
+      name: 'pinned_sheet',
+      fit: true,
+      example: SizedBox(
+        width: 300,
+        height: 300,
+        child: VNLOutlinedContainer(
+          clipBehavior: Clip.antiAlias,
+          child: VNLPinnedSheet(
+            controller: controller,
+            position: VNLOverlayPosition.bottom,
+            stages: stages,
+            initialStage: const VNLSheetStage.peekDragHandle(),
+            backdrop: VNLCard(
+              fillColor: theme.colorScheme.muted,
+              filled: true,
+              child: Center(child: const Text('Backdrop content').muted()),
+            ),
+            child: VNLDrawerContainer(
+              child: SizedBox(
+                height: 180,
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Pinned Sheet').large().medium(),
+                      const Gap(4),
+                      const Text('Drag the handle to expand').muted(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

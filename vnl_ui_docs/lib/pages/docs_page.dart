@@ -302,7 +302,7 @@ class DocsPageState extends State<DocsPage> {
         VNLDocsPage('VNLDrawer', 'drawer'),
         VNLDocsPage('VNLHoverCard', 'hover_card'),
         VNLDocsPage('VNLPopover', 'popover'),
-        VNLDocsPage('VNLSheet', 'sheet'),
+        VNLDocsPage('Pinned Sheet', 'sheet'),
         VNLDocsPage('VNLSwiper', 'swiper'),
         VNLDocsPage('VNLTooltip', 'tooltip'),
         VNLDocsPage('VNLWindow', 'window', VNLFeatureTag.experimental),

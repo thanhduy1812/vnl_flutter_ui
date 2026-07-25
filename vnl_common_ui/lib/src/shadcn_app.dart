@@ -526,16 +526,7 @@ class _VNLookAppState extends State<VNLookApp> {
       data: this,
       child: m.Theme(
         data: widget.materialTheme ??
-            m.ThemeData.from(
-              colorScheme: m.ColorScheme.fromSeed(
-                seedColor: widget.theme.colorScheme.primary,
-                brightness: widget.theme.brightness,
-                surface: widget.theme.colorScheme.background,
-                primary: widget.theme.colorScheme.primary,
-                secondary: widget.theme.colorScheme.secondary,
-                error: widget.theme.colorScheme.destructive,
-              ),
-            ),
+            vnlToMaterialTheme(widget.theme),
         child: c.CupertinoTheme(
           data: widget.cupertinoTheme ??
               c.CupertinoThemeData(
