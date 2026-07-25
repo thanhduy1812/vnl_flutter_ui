@@ -5,6 +5,10 @@
 				"mcp"
 			],
 			"command": "verus"
+		},
+		"dart": {
+			"command": "dart",
+			"args": ["mcp-server"]
 		}
 	}
 }

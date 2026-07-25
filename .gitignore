@@ -31,3 +31,21 @@ AGENTS.md
 CLAUDE.md
 
 GEMINI.md
+
+# Dart/Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# macOS
+.DS_Store
+
+# vnl_common_ui is a library — pubspec.lock should not be tracked
+vnl_common_ui/pubspec.lock
