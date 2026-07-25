@@ -160,3 +160,18 @@ N/A — internal refactor, không có multi-stage flow, không có destructive o
 * Edge Cases: Form validation — VNLForm vẫn hoạt động với Material control → Phase 3
 * Edge Cases: Navigation state — chuyển tab/page không mất state → Phase 4
 * Interruption / recovery: Rebuild giữa chừng — hot reload không crash → Phase 1-5
+
+## Intentionally Excluded from Migration
+
+| Component | File | Reason |
+|-----------|------|--------|
+| VNLTable + VNLTableRow + VNLTableCell | `layout/table.dart` (3341 LOC) | Material 3 has no stable TableView. VNL feature set cannot be replicated. |
+| VNLForm + VNLFormState + Validator | `form/form.dart` (3268 LOC) | Validator pipeline + VNLFormValidationMode richer than Material Form. |
+| VNLVerticalDivider | `display/divider.dart` | Custom painter for vertical. Material VerticalDivider API incompatible. |
+| VNLLinearProgressIndicator | `display/linear_progress_indicator.dart` | Spark effects not in Material widget. |
+| VNLTooltip | `overlay/tooltip.dart` | Custom VNL overlay system with surface effects. |
+| VNLBadge (4 variants) | `display/badge.dart` | Uses VNLButton — already benefits from InkWell via VNLClickable. |
+| VNLChip | `display/chip.dart` | Uses VNLButton — already benefits from InkWell chain. |
+| VNLDatePicker + VNLTimePicker | `form/date_picker.dart`, `form/time_picker.dart` | Custom calendar/time UI. |
+
+**Hide directives:** Every `hide` in `shadcn_flutter.dart` is intentional — each hides a Material class VNL supersedes.
