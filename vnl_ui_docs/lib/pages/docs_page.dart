@@ -863,10 +863,8 @@ class DocsPageState extends State<DocsPage> {
                 theme.colorScheme.secondaryForeground,
                 BlendMode.srcIn,
               ),
-              child: Image(
-                image: const AssetImage('assets/icon/icon.png'),
-                width: 24 * theme.scaling,
-                height: 24 * theme.scaling,
+              child: FlutterLogo(
+                size: 24 * theme.scaling,
               ),
             )),
       ],
