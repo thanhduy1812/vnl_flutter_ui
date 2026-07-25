@@ -1,138 +1,138 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-class SheetExample1 extends StatefulWidget {
-  const SheetExample1({super.key});
+/// A controller-driven [PinnedSheet] with three snap stages.
+///
+/// The sheet is pinned to the bottom of a bounded region. It snaps between a
+/// closed state, a half-open "peek" ([VNLSheetStage.fraction]) and a fully
+/// expanded state. The backdrop scales down while the sheet opens
+/// ([PinnedSheet.backdropTransform]). The buttons drive the [VNLSheetController],
+/// and the sheet can also be dragged by its handle.
+class PinnedSheetExample1 extends StatefulWidget {
+  const PinnedSheetExample1({super.key});
 
   @override
-  State<SheetExample1> createState() => _SheetExample1State();
+  State<PinnedSheetExample1> createState() => _PinnedSheetExample1State();
 }
 
-class _SheetExample1State extends State<SheetExample1> {
-  // A form controller to read values and validation state inside the sheet.
-  final VNLFormController controller = VNLFormController();
+class _PinnedSheetExample1State extends State<PinnedSheetExample1> {
+  final VNLSheetController controller = VNLSheetController();
 
-  void saveProfile() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return VNLAlertDialog(
-          title: const Text('Profile updated'),
-          // For demo, show raw form values.
-          content: Text('Content: ${controller.values}'),
-          actions: [
-            VNLPrimaryButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Close'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+  static const List<VNLSheetStage> stages = [
+    VNLSheetStage.closed(),
+    VNLSheetStage.fraction(0.4),
+    VNLSheetStage.expanded(),
+  ];
 
-  Widget buildSheet(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      constraints: const BoxConstraints(maxWidth: 400),
-      child: VNLForm(
-        controller: controller,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  child: const Text('Edit profile').large().medium(),
-                ),
-                VNLTextButton(
-                  density: VNLButtonDensity.icon,
-                  child: const Icon(Icons.close),
-                  onPressed: () {
-                    // Close the sheet without saving.
-                    closeSheet(context);
-                  },
-                ),
-              ],
-            ),
-            const Gap(8),
-            const Text('Make changes to your profile here. Click save when you\'re done.').muted(),
-            const Gap(16),
-            VNLFormTableLayout(
-              rows: [
-                FormField<String>(
-                  key: const FormKey(#name),
-                  label: const Text('Name'),
-                  validator: const VNLNotEmptyValidator() & const VNLLengthValidator(min: 4),
-                  child: const VNLTextField(
-                    initialValue: 'Thito Yalasatria Sunarya',
-                    placeholder: Text('Your fullname'),
-                  ),
-                ),
-                FormField<String>(
-                  key: const FormKey(#username),
-                  label: const Text('Username'),
-                  validator: const VNLNotEmptyValidator() & const VNLLengthValidator(min: 4),
-                  child: const VNLTextField(
-                    initialValue: '@sunarya',
-                    placeholder: Text('Your username'),
-                  ),
-                ),
-              ],
-            ),
-            const Gap(16),
-            Align(
-              alignment: AlignmentDirectional.centerEnd,
-              child: VNLFormErrorBuilder(
-                builder: (context, errors, child) {
-                  return VNLPrimaryButton(
-                    // Disable save while there are validation errors.
-                    onPressed: errors.isNotEmpty
-                        ? null
-                        : () {
-                            // Attempt to submit the form; close the sheet when successful
-                            // and show a confirmation dialog.
-                            context.submitForm().then(
-                              (value) {
-                                if (value.errors.isEmpty) {
-                                  closeSheet(context).then(
-                                    (value) {
-                                      saveProfile();
-                                    },
-                                  );
-                                }
-                              },
-                            );
-                          },
-                    child: const Text('Save changes'),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return VNLPrimaryButton(
-      onPressed: () {
-        openSheet(
-          context: context,
-          builder: (context) {
-            // Build the sheet content; keep it small and focused on the form.
-            return buildSheet(context);
-          },
-          // Slide in from the end (right on LTR).
-          position: VNLOverlayPosition.end,
-        );
-      },
-      child: const Text('Open Sheet'),
+    return SizedBox(
+      height: 420,
+      child: VNLOutlinedContainer(
+        clipBehavior: Clip.antiAlias,
+        child: VNLPinnedSheet(
+          controller: controller,
+          position: VNLOverlayPosition.bottom,
+          stages: stages,
+          initialStage: const VNLSheetStage.fraction(0.4),
+          backdropTransform: const VNLScaleBackdropTransform(),
+          // The backdrop is scaled down as the sheet opens.
+          backdrop: ListenableBuilder(
+            listenable: controller,
+            builder: (context, child) {
+              return Opacity(
+                opacity: 1.0 - controller.fraction,
+                child: child,
+              );
+            },
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {
+                if (controller.stage == const VNLSheetStage.expanded()) {
+                  controller.stage = const VNLSheetStage.fraction(0.4);
+                }
+              },
+              child: VNLCard(
+                filled: true,
+                fillColor: Theme.of(context).colorScheme.muted,
+                child: Center(
+                  child: IntrinsicWidth(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const Text('Backdrop content')
+                            .large()
+                            .medium()
+                            .center(),
+                        const Gap(8),
+                        ListenableBuilder(
+                          listenable: controller,
+                          builder: (context, child) {
+                            final percent = (controller.fraction * 100).round();
+                            return Text('Sheet is $percent% open')
+                                .muted()
+                                .center();
+                          },
+                        ),
+                        const Gap(24),
+                        VNLPrimaryButton(
+                          onPressed: () =>
+                              controller.stage = const VNLSheetStage.expanded(),
+                          alignment: Alignment.center,
+                          child: const Text('Expand'),
+                        ),
+                        const Gap(8),
+                        VNLPrimaryButton(
+                          onPressed: () =>
+                              controller.stage = const VNLSheetStage.fraction(0.4),
+                          alignment: Alignment.center,
+                          child: const Text('Peek'),
+                        ),
+                        const Gap(8),
+                        VNLPrimaryButton(
+                          onPressed: () => controller.animateTo(
+                            const VNLSheetStage.closed(),
+                            duration: const Duration(milliseconds: 250),
+                            curve: Curves.easeOut,
+                          ),
+                          alignment: Alignment.center,
+                          child: const Text('Close'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          // The caller decides the chrome by wrapping their content in a
+          // VNLDrawerContainer (rounded, bordered) or a VNLSheetContainer (edge-to-edge).
+          child: VNLDrawerContainer(
+            child: Container(
+              height: 320,
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Pinned sheet').large().medium(),
+                  const Gap(8),
+                  const Text(
+                    'Drag the handle to snap between closed, peek and '
+                    'expanded, or use the buttons on the backdrop.',
+                  ).muted(),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

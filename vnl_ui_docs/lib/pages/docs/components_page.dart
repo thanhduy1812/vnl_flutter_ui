@@ -240,7 +240,7 @@ class ComponentsPageState extends State<ComponentsPage> {
               const DialogTile(),
               const DrawerTile(),
               const HoverCardTile(),
-              const SheetTile(),
+              const PinnedSheetTile(),
               const TooltipTile(),
               const PopoverTile(),
             ]),
