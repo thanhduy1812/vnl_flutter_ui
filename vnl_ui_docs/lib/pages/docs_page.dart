@@ -807,7 +807,7 @@ class DocsPageState extends State<DocsPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Text(
-              'vnl_flutter_ui',
+              'vnldocs',
             ).textLarge().mono(),
             Gap(16 * theme.scaling),
             buildFlavorTag(),
@@ -889,7 +889,7 @@ class DocsPageState extends State<DocsPage> {
                   ),
                   Gap(18 * scaling),
                   const Text(
-                    'vnl_flutter_ui',
+                    'vnldocs',
                   ).medium().mono(),
                   Gap(12 * scaling),
                   buildFlavorTag(),

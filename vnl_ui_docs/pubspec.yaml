@@ -74,3 +74,4 @@ flutter:
   assets:
     - docs.json
     - pubspec.lock
+    - assets/icon/icon.png
