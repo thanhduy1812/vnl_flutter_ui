@@ -203,7 +203,7 @@ class VNLModalBackdrop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<VNLModalBackdropTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLModalBackdropTheme>(context);
     final modal = styleValue(
         widgetValue: this.modal,
         themeValue: compTheme?.modal,
@@ -864,8 +864,8 @@ class VNLDialogOverlayHandler extends VNLOverlayHandler {
     required WidgetBuilder builder,
     Offset? position,
     AlignmentGeometry? anchorAlignment,
-    PopoverConstraint widthConstraint = PopoverConstraint.flexible,
-    PopoverConstraint heightConstraint = PopoverConstraint.flexible,
+    VNLPopoverConstraint widthConstraint = VNLPopoverConstraint.flexible,
+    VNLPopoverConstraint heightConstraint = VNLPopoverConstraint.flexible,
     Key? key,
     bool rootOverlay = true,
     bool modal = true,
@@ -1001,8 +1001,8 @@ class VNLFullScreenDialogOverlayHandler extends VNLOverlayHandler {
     required WidgetBuilder builder,
     Offset? position,
     AlignmentGeometry? anchorAlignment,
-    PopoverConstraint widthConstraint = PopoverConstraint.flexible,
-    PopoverConstraint heightConstraint = PopoverConstraint.flexible,
+    VNLPopoverConstraint widthConstraint = VNLPopoverConstraint.flexible,
+    VNLPopoverConstraint heightConstraint = VNLPopoverConstraint.flexible,
     Key? key,
     bool rootOverlay = true,
     bool modal = true,

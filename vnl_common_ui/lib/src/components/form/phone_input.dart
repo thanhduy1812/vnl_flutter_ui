@@ -343,7 +343,7 @@ class _PhoneInputState extends State<VNLPhoneInput>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final componentTheme = ComponentTheme.maybeOf<VNLPhoneInputTheme>(context);
+    final componentTheme = VNLComponentTheme.maybeOf<VNLPhoneInputTheme>(context);
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -388,7 +388,7 @@ class _PhoneInputState extends State<VNLPhoneInput>
             ),
             popoverAlignment: Alignment.topLeft,
             popoverAnchorAlignment: Alignment.bottomLeft,
-            popupWidthConstraint: PopoverConstraint.flexible,
+            popupWidthConstraint: VNLPopoverConstraint.flexible,
             onChanged: (value) {
               if (value != null) {
                 setState(() {

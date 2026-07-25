@@ -35,7 +35,7 @@ class VNLCalendarTheme extends ComponentThemeData {
 /// Defines the different view types available in calendar components.
 ///
 /// Specifies what granularity of time selection is displayed.
-enum CalendarViewType {
+enum VNLCalendarViewType {
   /// Shows individual days in a month grid.
   date,
 
@@ -49,7 +49,7 @@ enum CalendarViewType {
 /// Represents the interactive state of a date in the calendar.
 ///
 /// Controls whether a specific date can be selected or interacted with.
-enum DateState {
+enum VNLDateState {
   /// Date cannot be selected or clicked.
   disabled,
 
@@ -59,14 +59,14 @@ enum DateState {
 
 /// Callback function type for determining the state of calendar dates.
 ///
-/// Takes a [DateTime] and returns a [DateState] to control whether
+/// Takes a [DateTime] and returns a [VNLDateState] to control whether
 /// that date should be enabled or disabled for user interaction.
-typedef DateStateBuilder = DateState Function(DateTime date);
+typedef DateStateBuilder = VNLDateState Function(DateTime date);
 
 /// Selection modes available for calendar components.
 ///
 /// Determines how users can select dates in calendar widgets.
-enum CalendarSelectionMode {
+enum VNLCalendarSelectionMode {
   /// No date selection allowed (display only).
   none,
 
@@ -97,24 +97,24 @@ enum CalendarSelectionMode {
 /// Example:
 /// ```dart
 /// VNLDatePickerDialog(
-///   initialViewType: CalendarViewType.date,
-///   selectionMode: CalendarSelectionMode.single,
+///   initialViewType: VNLCalendarViewType.date,
+///   selectionMode: VNLCalendarSelectionMode.single,
 ///   initialValue: VNLCalendarValue.single(DateTime.now()),
 ///   onChanged: (value) => print('Selected: $value'),
 /// )
 /// ```
 class VNLDatePickerDialog extends StatefulWidget {
   /// The initial view type to display (date, month, or year grid).
-  final CalendarViewType initialViewType;
+  final VNLCalendarViewType initialViewType;
 
   /// The initial calendar view position (month/year to display).
   final VNLCalendarView? initialView;
 
   /// The selection mode determining how dates can be selected.
-  final CalendarSelectionMode selectionMode;
+  final VNLCalendarSelectionMode selectionMode;
 
   /// Alternative view mode for display purposes.
-  final CalendarSelectionMode? viewMode;
+  final VNLCalendarSelectionMode? viewMode;
 
   /// The initially selected date value(s).
   final VNLCalendarValue? initialValue;
@@ -131,10 +131,10 @@ class VNLDatePickerDialog extends StatefulWidget {
   /// for handling date changes and validation.
   ///
   /// Parameters:
-  /// - [initialViewType] (CalendarViewType, required): Starting view (date/month/year)
+  /// - [initialViewType] (VNLCalendarViewType, required): Starting view (date/month/year)
   /// - [initialView] (VNLCalendarView?, optional): Initial calendar view position
-  /// - [selectionMode] (CalendarSelectionMode, required): How dates can be selected
-  /// - [viewMode] (CalendarSelectionMode?, optional): Alternative view mode for display
+  /// - [selectionMode] (VNLCalendarSelectionMode, required): How dates can be selected
+  /// - [viewMode] (VNLCalendarSelectionMode?, optional): Alternative view mode for display
   /// - [initialValue] (VNLCalendarValue?, optional): Pre-selected date(s)
   /// - [onChanged] (`ValueChanged<VNLCalendarValue>?`, optional): Called when selection changes
   /// - [stateBuilder] (DateStateBuilder?, optional): Custom date state validation
@@ -142,12 +142,12 @@ class VNLDatePickerDialog extends StatefulWidget {
   /// Example:
   /// ```dart
   /// VNLDatePickerDialog(
-  ///   initialViewType: CalendarViewType.date,
-  ///   selectionMode: CalendarSelectionMode.range,
+  ///   initialViewType: VNLCalendarViewType.date,
+  ///   selectionMode: VNLCalendarSelectionMode.range,
   ///   onChanged: (value) => handleDateChange(value),
   ///   stateBuilder: (date) => date.isBefore(DateTime.now())
-  ///     ? DateState.disabled
-  ///     : DateState.enabled,
+  ///     ? VNLDateState.disabled
+  ///     : VNLDateState.enabled,
   /// )
   /// ```
   const VNLDatePickerDialog({
@@ -169,7 +169,7 @@ class _DatePickerDialogState extends State<VNLDatePickerDialog> {
   late VNLCalendarView _view;
   late VNLCalendarView _alternateView;
   late VNLCalendarValue? _value;
-  late CalendarViewType _viewType;
+  late VNLCalendarViewType _viewType;
   late int _yearSelectStart;
   bool _alternate = false;
 
@@ -204,11 +204,11 @@ class _DatePickerDialogState extends State<VNLDatePickerDialog> {
   }
 
   String getHeaderText(VNLookLocalizations localizations, VNLCalendarView view,
-      CalendarViewType viewType) {
-    if (viewType == CalendarViewType.date) {
+      VNLCalendarViewType viewType) {
+    if (viewType == VNLCalendarViewType.date) {
       return '${localizations.getMonth(view.month)} ${view.year}';
     }
-    if (viewType == CalendarViewType.month) {
+    if (viewType == VNLCalendarViewType.month) {
       return '${view.year}';
     }
     return localizations.datePickerSelectYear;
@@ -218,11 +218,11 @@ class _DatePickerDialogState extends State<VNLDatePickerDialog> {
   Widget build(BuildContext context) {
     VNLookLocalizations localizations = VNLookLocalizations.of(context);
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLCalendarTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLCalendarTheme>(context);
     final arrowColor =
         styleValue(themeValue: compTheme?.arrowIconColor, defaultValue: null);
     final viewMode = widget.viewMode ?? widget.selectionMode;
-    if (widget.selectionMode == CalendarSelectionMode.range) {
+    if (widget.selectionMode == VNLCalendarSelectionMode.range) {
       return IntrinsicWidth(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -236,18 +236,18 @@ class _DatePickerDialogState extends State<VNLDatePickerDialog> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       VNLOutlineButton(
-                        density: ButtonDensity.icon,
+                        density: VNLButtonDensity.icon,
                         onPressed: () {
                           setState(() {
                             switch (_viewType) {
-                              case CalendarViewType.date:
+                              case VNLCalendarViewType.date:
                                 _view = _view.previous;
                                 _alternateView = _alternateView.previous;
                                 break;
-                              case CalendarViewType.month:
+                              case VNLCalendarViewType.month:
                                 _view = _view.previousYear;
                                 break;
-                              case CalendarViewType.year:
+                              case VNLCalendarViewType.year:
                                 _yearSelectStart -= 16;
                                 break;
                             }
@@ -261,18 +261,18 @@ class _DatePickerDialogState extends State<VNLDatePickerDialog> {
                       ),
                       Expanded(
                         child: VNLGhostButton(
-                          enabled: _viewType != CalendarViewType.year,
+                          enabled: _viewType != VNLCalendarViewType.year,
                           onPressed: () {
                             _alternate = false;
                             switch (_viewType) {
-                              case CalendarViewType.date:
+                              case VNLCalendarViewType.date:
                                 setState(() {
-                                  _viewType = CalendarViewType.month;
+                                  _viewType = VNLCalendarViewType.month;
                                 });
                                 break;
-                              case CalendarViewType.month:
+                              case VNLCalendarViewType.month:
                                 setState(() {
-                                  _viewType = CalendarViewType.year;
+                                  _viewType = VNLCalendarViewType.year;
                                 });
                                 break;
                               default:
@@ -287,28 +287,28 @@ class _DatePickerDialogState extends State<VNLDatePickerDialog> {
                               .center(),
                         ).sized(height: theme.scaling * 32),
                       ),
-                      if (_viewType == CalendarViewType.date &&
-                          viewMode == CalendarSelectionMode.range)
+                      if (_viewType == VNLCalendarViewType.date &&
+                          viewMode == VNLCalendarSelectionMode.range)
                         SizedBox(
                           width: theme.scaling * 32,
                         ),
                       SizedBox(
                         width: theme.scaling * 16,
                       ),
-                      if (_viewType != CalendarViewType.date ||
-                          viewMode != CalendarSelectionMode.range)
+                      if (_viewType != VNLCalendarViewType.date ||
+                          viewMode != VNLCalendarSelectionMode.range)
                         VNLOutlineButton(
-                          density: ButtonDensity.icon,
+                          density: VNLButtonDensity.icon,
                           onPressed: () {
                             setState(() {
                               switch (_viewType) {
-                                case CalendarViewType.date:
+                                case VNLCalendarViewType.date:
                                   _view = _view.next;
                                   break;
-                                case CalendarViewType.month:
+                                case VNLCalendarViewType.month:
                                   _view = _view.nextYear;
                                   break;
-                                case CalendarViewType.year:
+                                case VNLCalendarViewType.year:
                                   _yearSelectStart += 16;
                                   break;
                               }
@@ -320,11 +320,11 @@ class _DatePickerDialogState extends State<VNLDatePickerDialog> {
                     ],
                   ),
                 ),
-                if (_viewType == CalendarViewType.date &&
-                    viewMode == CalendarSelectionMode.range)
+                if (_viewType == VNLCalendarViewType.date &&
+                    viewMode == VNLCalendarSelectionMode.range)
                   Gap(theme.density.baseGap * theme.scaling * 2),
-                if (_viewType == CalendarViewType.date &&
-                    viewMode == CalendarSelectionMode.range)
+                if (_viewType == VNLCalendarViewType.date &&
+                    viewMode == VNLCalendarSelectionMode.range)
                   Expanded(
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -337,14 +337,14 @@ class _DatePickerDialogState extends State<VNLDatePickerDialog> {
                             onPressed: () {
                               _alternate = true;
                               switch (_viewType) {
-                                case CalendarViewType.date:
+                                case VNLCalendarViewType.date:
                                   setState(() {
-                                    _viewType = CalendarViewType.month;
+                                    _viewType = VNLCalendarViewType.month;
                                   });
                                   break;
-                                case CalendarViewType.month:
+                                case VNLCalendarViewType.month:
                                   setState(() {
-                                    _viewType = CalendarViewType.year;
+                                    _viewType = VNLCalendarViewType.year;
                                   });
                                   break;
                                 default:
@@ -363,18 +363,18 @@ class _DatePickerDialogState extends State<VNLDatePickerDialog> {
                           width: theme.scaling * 16,
                         ),
                         VNLOutlineButton(
-                          density: ButtonDensity.icon,
+                          density: VNLButtonDensity.icon,
                           onPressed: () {
                             setState(() {
                               switch (_viewType) {
-                                case CalendarViewType.date:
+                                case VNLCalendarViewType.date:
                                   _view = _view.next;
                                   _alternateView = _alternateView.next;
                                   break;
-                                case CalendarViewType.month:
+                                case VNLCalendarViewType.month:
                                   _view = _view.nextYear;
                                   break;
-                                case CalendarViewType.year:
+                                case VNLCalendarViewType.year:
                                   _yearSelectStart += 16;
                                   break;
                               }
@@ -391,7 +391,7 @@ class _DatePickerDialogState extends State<VNLDatePickerDialog> {
             Gap(theme.density.baseGap * theme.scaling * 2),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: viewMode == CalendarSelectionMode.range
+              mainAxisAlignment: viewMode == VNLCalendarSelectionMode.range
                   ? MainAxisAlignment.spaceAround
                   : MainAxisAlignment.center,
               children: [
@@ -411,23 +411,23 @@ class _DatePickerDialogState extends State<VNLDatePickerDialog> {
                         _alternateView = value;
                       }
                       switch (_viewType) {
-                        case CalendarViewType.date:
+                        case VNLCalendarViewType.date:
                           break;
-                        case CalendarViewType.month:
-                          _viewType = CalendarViewType.date;
+                        case VNLCalendarViewType.month:
+                          _viewType = VNLCalendarViewType.date;
                           break;
-                        case CalendarViewType.year:
-                          _viewType = CalendarViewType.month;
+                        case VNLCalendarViewType.year:
+                          _viewType = VNLCalendarViewType.month;
                           break;
                       }
                     });
                   },
                 ),
-                if (_viewType == CalendarViewType.date &&
-                    viewMode == CalendarSelectionMode.range)
+                if (_viewType == VNLCalendarViewType.date &&
+                    viewMode == VNLCalendarSelectionMode.range)
                   Gap(theme.density.baseGap * theme.scaling * 2),
-                if (_viewType == CalendarViewType.date &&
-                    viewMode == CalendarSelectionMode.range)
+                if (_viewType == VNLCalendarViewType.date &&
+                    viewMode == VNLCalendarSelectionMode.range)
                   buildView(
                     context,
                     _yearSelectStart,
@@ -450,17 +450,17 @@ class _DatePickerDialogState extends State<VNLDatePickerDialog> {
           Row(
             children: [
               VNLOutlineButton(
-                density: ButtonDensity.icon,
+                density: VNLButtonDensity.icon,
                 onPressed: () {
                   setState(() {
                     switch (_viewType) {
-                      case CalendarViewType.date:
+                      case VNLCalendarViewType.date:
                         _view = _view.previous;
                         break;
-                      case CalendarViewType.month:
+                      case VNLCalendarViewType.month:
                         _view = _view.previousYear;
                         break;
-                      case CalendarViewType.year:
+                      case VNLCalendarViewType.year:
                         _yearSelectStart -= 16;
                         break;
                     }
@@ -474,17 +474,17 @@ class _DatePickerDialogState extends State<VNLDatePickerDialog> {
               ),
               Expanded(
                 child: VNLGhostButton(
-                  enabled: _viewType != CalendarViewType.year,
+                  enabled: _viewType != VNLCalendarViewType.year,
                   onPressed: () {
                     switch (_viewType) {
-                      case CalendarViewType.date:
+                      case VNLCalendarViewType.date:
                         setState(() {
-                          _viewType = CalendarViewType.month;
+                          _viewType = VNLCalendarViewType.month;
                         });
                         break;
-                      case CalendarViewType.month:
+                      case VNLCalendarViewType.month:
                         setState(() {
-                          _viewType = CalendarViewType.year;
+                          _viewType = VNLCalendarViewType.year;
                         });
                         break;
                       default:
@@ -502,17 +502,17 @@ class _DatePickerDialogState extends State<VNLDatePickerDialog> {
                 width: theme.scaling * 16,
               ),
               VNLOutlineButton(
-                density: ButtonDensity.icon,
+                density: VNLButtonDensity.icon,
                 onPressed: () {
                   setState(() {
                     switch (_viewType) {
-                      case CalendarViewType.date:
+                      case VNLCalendarViewType.date:
                         _view = _view.next;
                         break;
-                      case CalendarViewType.month:
+                      case VNLCalendarViewType.month:
                         _view = _view.nextYear;
                         break;
-                      case CalendarViewType.year:
+                      case VNLCalendarViewType.year:
                         _yearSelectStart += 16;
                         break;
                     }
@@ -534,13 +534,13 @@ class _DatePickerDialogState extends State<VNLDatePickerDialog> {
               setState(() {
                 _view = value;
                 switch (_viewType) {
-                  case CalendarViewType.date:
+                  case VNLCalendarViewType.date:
                     break;
-                  case CalendarViewType.month:
-                    _viewType = CalendarViewType.date;
+                  case VNLCalendarViewType.month:
+                    _viewType = VNLCalendarViewType.date;
                     break;
-                  case CalendarViewType.year:
-                    _viewType = CalendarViewType.month;
+                  case VNLCalendarViewType.year:
+                    _viewType = VNLCalendarViewType.month;
                     break;
                 }
               });
@@ -555,10 +555,10 @@ class _DatePickerDialogState extends State<VNLDatePickerDialog> {
       BuildContext context,
       int yearSelectStart,
       VNLCalendarView view,
-      CalendarViewType viewType,
-      CalendarSelectionMode selectionMode,
+      VNLCalendarViewType viewType,
+      VNLCalendarSelectionMode selectionMode,
       ValueChanged<VNLCalendarView> onViewChanged) {
-    if (viewType == CalendarViewType.year) {
+    if (viewType == VNLCalendarViewType.year) {
       return VNLYearCalendar(
         value: view.year,
         yearSelectStart: yearSelectStart,
@@ -571,7 +571,7 @@ class _DatePickerDialogState extends State<VNLDatePickerDialog> {
         },
       );
     }
-    if (viewType == CalendarViewType.month) {
+    if (viewType == VNLCalendarViewType.month) {
       return VNLMonthCalendar(
         value: view,
         onChanged: onViewChanged,
@@ -671,7 +671,7 @@ DateTime _convertNecessarry(DateTime from, int year, [int? month, int? date]) {
 ///
 /// Encapsulates a single [DateTime] selection and provides lookup functionality
 /// to determine if a given date matches the selected date. Used primarily
-/// with [CalendarSelectionMode.single].
+/// with [VNLCalendarSelectionMode.single].
 ///
 /// Example:
 /// ```dart
@@ -733,7 +733,7 @@ class VNLSingleCalendarValue extends VNLCalendarValue {
 ///
 /// Encapsulates a date range with start and end dates. Provides lookup
 /// functionality to determine if a date is the start, end, within the range,
-/// or outside. Used with [CalendarSelectionMode.range].
+/// or outside. Used with [VNLCalendarSelectionMode.range].
 ///
 /// The range is automatically normalized so start is always before or equal to end.
 class VNLRangeCalendarValue extends VNLCalendarValue {
@@ -817,7 +817,7 @@ class VNLRangeCalendarValue extends VNLCalendarValue {
 ///
 /// Encapsulates a list of individually selected dates. Provides lookup
 /// functionality to determine if a date is among the selected dates.
-/// Used with [CalendarSelectionMode.multi].
+/// Used with [VNLCalendarSelectionMode.multi].
 class VNLMultiCalendarValue extends VNLCalendarValue {
   /// The list of selected dates.
   final List<DateTime> dates;
@@ -1072,12 +1072,12 @@ extension CalendarDateTime on DateTime {
 /// ```dart
 /// VNLCalendar(
 ///   view: VNLCalendarView.now(),
-///   selectionMode: CalendarSelectionMode.range,
+///   selectionMode: VNLCalendarSelectionMode.range,
 ///   value: VNLCalendarValue.range(startDate, endDate),
 ///   onChanged: (value) => setState(() => selectedDates = value),
 ///   stateBuilder: (date) => date.isBefore(DateTime.now())
-///     ? DateState.disabled
-///     : DateState.enabled,
+///     ? VNLDateState.disabled
+///     : VNLDateState.enabled,
 /// )
 /// ```
 class VNLCalendar extends StatefulWidget {
@@ -1091,7 +1091,7 @@ class VNLCalendar extends StatefulWidget {
   final VNLCalendarView view;
 
   /// The selection mode determining how dates can be selected.
-  final CalendarSelectionMode selectionMode;
+  final VNLCalendarSelectionMode selectionMode;
 
   /// Callback invoked when the selected date(s) change.
   final ValueChanged<VNLCalendarValue?>? onChanged;
@@ -1109,7 +1109,7 @@ class VNLCalendar extends StatefulWidget {
   ///
   /// Parameters:
   /// - [view] (VNLCalendarView, required): Month/year to display in calendar grid
-  /// - [selectionMode] (CalendarSelectionMode, required): How dates can be selected
+  /// - [selectionMode] (VNLCalendarSelectionMode, required): How dates can be selected
   /// - [now] (DateTime?, optional): Current date for highlighting, defaults to DateTime.now()
   /// - [value] (VNLCalendarValue?, optional): Currently selected date(s)
   /// - [onChanged] (`ValueChanged<VNLCalendarValue>?`, optional): Called when selection changes
@@ -1125,11 +1125,11 @@ class VNLCalendar extends StatefulWidget {
   /// ```dart
   /// VNLCalendar(
   ///   view: VNLCalendarView(2024, 3), // March 2024
-  ///   selectionMode: CalendarSelectionMode.single,
+  ///   selectionMode: VNLCalendarSelectionMode.single,
   ///   onChanged: (value) => print('Selected: ${value?.toString()}'),
   ///   stateBuilder: (date) => date.weekday == DateTime.sunday
-  ///     ? DateState.disabled
-  ///     : DateState.enabled,
+  ///     ? VNLDateState.disabled
+  ///     : VNLDateState.enabled,
   /// )
   /// ```
   const VNLCalendar({
@@ -1169,10 +1169,10 @@ class _CalendarState extends State<VNLCalendar> {
 
   void _handleTap(DateTime date) {
     var calendarValue = widget.value;
-    if (widget.selectionMode == CalendarSelectionMode.none) {
+    if (widget.selectionMode == VNLCalendarSelectionMode.none) {
       return;
     }
-    if (widget.selectionMode == CalendarSelectionMode.single) {
+    if (widget.selectionMode == VNLCalendarSelectionMode.single) {
       if (calendarValue is VNLSingleCalendarValue &&
           date.isAtSameMomentAs(calendarValue.date)) {
         widget.onChanged?.call(null);
@@ -1181,7 +1181,7 @@ class _CalendarState extends State<VNLCalendar> {
       widget.onChanged?.call(VNLCalendarValue.single(date));
       return;
     }
-    if (widget.selectionMode == CalendarSelectionMode.multi) {
+    if (widget.selectionMode == VNLCalendarSelectionMode.multi) {
       if (calendarValue == null) {
         widget.onChanged?.call(VNLCalendarValue.single(date));
         return;
@@ -1203,7 +1203,7 @@ class _CalendarState extends State<VNLCalendar> {
         return;
       }
     }
-    if (widget.selectionMode == CalendarSelectionMode.range) {
+    if (widget.selectionMode == VNLCalendarSelectionMode.range) {
       if (calendarValue == null) {
         widget.onChanged?.call(VNLCalendarValue.single(date));
         return;
@@ -1253,24 +1253,24 @@ class _CalendarState extends State<VNLCalendar> {
         CalendarValueLookup lookup =
             widget.value?.lookup(date.year, date.month, date.day) ??
                 CalendarValueLookup.none;
-        CalendarItemType type = CalendarItemType.none;
+        VNLCalendarItemType type = VNLCalendarItemType.none;
         switch (lookup) {
           case CalendarValueLookup.none:
             if (widget.now != null && widget.now!.isAtSameMomentAs(date)) {
-              type = CalendarItemType.today;
+              type = VNLCalendarItemType.today;
             }
             break;
           case CalendarValueLookup.selected:
-            type = CalendarItemType.selected;
+            type = VNLCalendarItemType.selected;
             break;
           case CalendarValueLookup.start:
-            type = CalendarItemType.startRangeSelected;
+            type = VNLCalendarItemType.startRangeSelected;
             break;
           case CalendarValueLookup.end:
-            type = CalendarItemType.endRangeSelected;
+            type = VNLCalendarItemType.endRangeSelected;
             break;
           case CalendarValueLookup.inRange:
-            type = CalendarItemType.inRange;
+            type = VNLCalendarItemType.inRange;
             break;
         }
         Widget calendarItem = VNLCalendarItem(
@@ -1280,7 +1280,7 @@ class _CalendarState extends State<VNLCalendar> {
           onTap: () {
             _handleTap(date);
           },
-          state: widget.stateBuilder?.call(date) ?? DateState.enabled,
+          state: widget.stateBuilder?.call(date) ?? VNLDateState.enabled,
           child: Text('${date.day}'),
         );
         if (item.fromAnotherMonth) {
@@ -1335,33 +1335,33 @@ class VNLMonthCalendar extends StatelessWidget {
     List<Widget> months = [];
     for (int i = 1; i <= 12; i++) {
       DateTime date = DateTime(value.year, i);
-      CalendarItemType type = CalendarItemType.none;
+      VNLCalendarItemType type = VNLCalendarItemType.none;
       if (calendarValue != null) {
         final lookup = calendarValue!.lookup(date.year, date.month);
         switch (lookup) {
           case CalendarValueLookup.none:
             if (now != null &&
                 DateTime(now!.year, now!.month).isAtSameMomentAs(date)) {
-              type = CalendarItemType.today;
+              type = VNLCalendarItemType.today;
             }
             break;
           case CalendarValueLookup.selected:
-            type = CalendarItemType.selected;
+            type = VNLCalendarItemType.selected;
             break;
           case CalendarValueLookup.start:
-            type = CalendarItemType.startRangeSelected;
+            type = VNLCalendarItemType.startRangeSelected;
             break;
           case CalendarValueLookup.end:
-            type = CalendarItemType.endRangeSelected;
+            type = VNLCalendarItemType.endRangeSelected;
             break;
           case CalendarValueLookup.inRange:
-            type = CalendarItemType.inRange;
+            type = VNLCalendarItemType.inRange;
             break;
         }
       } else {
         if (now != null &&
             DateTime(now!.year, now!.month).isAtSameMomentAs(date)) {
-          type = CalendarItemType.today;
+          type = VNLCalendarItemType.today;
         }
       }
       months.add(
@@ -1374,7 +1374,7 @@ class VNLMonthCalendar extends StatelessWidget {
             onChanged(value.copyWith(month: () => i));
           },
           width: theme.scaling * 56,
-          state: stateBuilder?.call(date) ?? DateState.enabled,
+          state: stateBuilder?.call(date) ?? VNLDateState.enabled,
           child: Text(localizations.getAbbreviatedMonth(i)),
         ),
       );
@@ -1435,31 +1435,31 @@ class VNLYearCalendar extends StatelessWidget {
     List<Widget> years = [];
     for (int i = yearSelectStart; i < yearSelectStart + 16; i++) {
       DateTime date = DateTime(i);
-      CalendarItemType type = CalendarItemType.none;
+      VNLCalendarItemType type = VNLCalendarItemType.none;
       if (calendarValue != null) {
         final lookup = calendarValue!.lookup(date.year);
         switch (lookup) {
           case CalendarValueLookup.none:
             if (now != null && now!.year == date.year) {
-              type = CalendarItemType.today;
+              type = VNLCalendarItemType.today;
             }
             break;
           case CalendarValueLookup.selected:
-            type = CalendarItemType.selected;
+            type = VNLCalendarItemType.selected;
             break;
           case CalendarValueLookup.start:
-            type = CalendarItemType.startRangeSelected;
+            type = VNLCalendarItemType.startRangeSelected;
             break;
           case CalendarValueLookup.end:
-            type = CalendarItemType.endRangeSelected;
+            type = VNLCalendarItemType.endRangeSelected;
             break;
           case CalendarValueLookup.inRange:
-            type = CalendarItemType.inRange;
+            type = VNLCalendarItemType.inRange;
             break;
         }
       } else {
         if (now != null && now!.year == date.year) {
-          type = CalendarItemType.today;
+          type = VNLCalendarItemType.today;
         }
       }
       years.add(
@@ -1472,7 +1472,7 @@ class VNLYearCalendar extends StatelessWidget {
             onChanged(i);
           },
           width: theme.scaling * 56,
-          state: stateBuilder?.call(date) ?? DateState.enabled,
+          state: stateBuilder?.call(date) ?? VNLDateState.enabled,
           child: Text('$i'),
         ),
       );
@@ -1494,7 +1494,7 @@ class VNLYearCalendar extends StatelessWidget {
 ///
 /// Defines the different visual appearances and behaviors that calendar date cells
 /// can have based on their selection state and position within ranges.
-enum CalendarItemType {
+enum VNLCalendarItemType {
   /// Normal unselected date.
   none,
 
@@ -1549,10 +1549,10 @@ enum CalendarItemType {
 /// Example:
 /// ```dart
 /// VNLCalendarItem(
-///   type: CalendarItemType.selected,
+///   type: VNLCalendarItemType.selected,
 ///   indexAtRow: 2,
 ///   rowCount: 7,
-///   state: DateState.enabled,
+///   state: VNLDateState.enabled,
 ///   onTap: () => handleDateTap(date),
 ///   child: Text('15'),
 /// )
@@ -1562,7 +1562,7 @@ class VNLCalendarItem extends StatelessWidget {
   final Widget child;
 
   /// The visual state type for this calendar item.
-  final CalendarItemType type;
+  final VNLCalendarItemType type;
 
   /// Callback invoked when the item is tapped.
   final VoidCallback? onTap;
@@ -1580,7 +1580,7 @@ class VNLCalendarItem extends StatelessWidget {
   final double? height;
 
   /// The interaction state of this date (enabled/disabled).
-  final DateState state;
+  final VNLDateState state;
 
   /// Creates a calendar item with the specified properties.
   const VNLCalendarItem({
@@ -1600,60 +1600,60 @@ class VNLCalendarItem extends StatelessWidget {
     final theme = Theme.of(context);
     var type = this.type;
     if ((indexAtRow == 0 || indexAtRow == rowCount - 1) &&
-        (type == CalendarItemType.startRangeSelected ||
-            type == CalendarItemType.endRangeSelected ||
-            type == CalendarItemType.startRangeSelectedShort ||
-            type == CalendarItemType.endRangeSelectedShort)) {
-      type = CalendarItemType.selected;
+        (type == VNLCalendarItemType.startRangeSelected ||
+            type == VNLCalendarItemType.endRangeSelected ||
+            type == VNLCalendarItemType.startRangeSelectedShort ||
+            type == VNLCalendarItemType.endRangeSelectedShort)) {
+      type = VNLCalendarItemType.selected;
     }
     switch (type) {
-      case CalendarItemType.none:
+      case VNLCalendarItemType.none:
         return SizedBox(
           width: width ?? theme.scaling * 32,
           height: height ?? theme.scaling * 32,
           child: VNLGhostButton(
-            density: ButtonDensity.compact,
+            density: VNLButtonDensity.compact,
             alignment: Alignment.center,
-            enabled: state == DateState.enabled,
+            enabled: state == VNLDateState.enabled,
             onPressed: onTap,
             child: child,
           ),
         );
-      case CalendarItemType.today:
+      case VNLCalendarItemType.today:
         return SizedBox(
           width: width ?? theme.scaling * 32,
           height: height ?? theme.scaling * 32,
           child: VNLSecondaryButton(
-            density: ButtonDensity.compact,
+            density: VNLButtonDensity.compact,
             alignment: Alignment.center,
-            enabled: state == DateState.enabled,
+            enabled: state == VNLDateState.enabled,
             onPressed: onTap,
             child: child,
           ),
         );
-      case CalendarItemType.selected:
+      case VNLCalendarItemType.selected:
         return SizedBox(
           width: width ?? theme.scaling * 32,
           height: height ?? theme.scaling * 32,
-          child: PrimaryButton(
-            density: ButtonDensity.compact,
+          child: VNLPrimaryButton(
+            density: VNLButtonDensity.compact,
             alignment: Alignment.center,
-            enabled: state == DateState.enabled,
+            enabled: state == VNLDateState.enabled,
             onPressed: onTap,
             child: child,
           ),
         );
-      case CalendarItemType.inRange:
+      case VNLCalendarItemType.inRange:
         return SizedBox(
           width: width ?? theme.scaling * 32,
           height: height ?? theme.scaling * 32,
           child: VNLButton(
             alignment: Alignment.center,
             onPressed: onTap,
-            enabled: state == DateState.enabled,
+            enabled: state == VNLDateState.enabled,
             style: const VNLButtonStyle(
               variance: VNLButtonVariance.secondary,
-              density: ButtonDensity.compact,
+              density: VNLButtonDensity.compact,
             ).copyWith(
               decoration: (context, states, value) {
                 return (value as BoxDecoration).copyWith(
@@ -1674,17 +1674,17 @@ class VNLCalendarItem extends StatelessWidget {
             child: child,
           ),
         );
-      case CalendarItemType.startRange:
+      case VNLCalendarItemType.startRange:
         return SizedBox(
           width: width ?? theme.scaling * 32,
           height: height ?? theme.scaling * 32,
           child: VNLButton(
             alignment: Alignment.center,
             onPressed: onTap,
-            enabled: state == DateState.enabled,
+            enabled: state == VNLDateState.enabled,
             style: const VNLButtonStyle(
               variance: VNLButtonVariance.secondary,
-              density: ButtonDensity.compact,
+              density: VNLButtonDensity.compact,
             ).copyWith(
               decoration: (context, states, value) {
                 return (value as BoxDecoration).copyWith(
@@ -1698,17 +1698,17 @@ class VNLCalendarItem extends StatelessWidget {
             child: child,
           ),
         );
-      case CalendarItemType.endRange:
+      case VNLCalendarItemType.endRange:
         return SizedBox(
           width: width ?? theme.scaling * 32,
           height: height ?? theme.scaling * 32,
           child: VNLButton(
             alignment: Alignment.center,
             onPressed: onTap,
-            enabled: state == DateState.enabled,
+            enabled: state == VNLDateState.enabled,
             style: const VNLButtonStyle(
               variance: VNLButtonVariance.secondary,
-              density: ButtonDensity.compact,
+              density: VNLButtonDensity.compact,
             ).copyWith(
               decoration: (context, states, value) {
                 return (value as BoxDecoration).copyWith(
@@ -1722,7 +1722,7 @@ class VNLCalendarItem extends StatelessWidget {
             child: child,
           ),
         );
-      case CalendarItemType.startRangeSelected:
+      case VNLCalendarItemType.startRangeSelected:
         return SizedBox(
           width: width ?? theme.scaling * 32,
           height: height ?? theme.scaling * 32,
@@ -1740,17 +1740,17 @@ class VNLCalendarItem extends StatelessWidget {
                   ),
                 ),
               ),
-              PrimaryButton(
-                density: ButtonDensity.compact,
+              VNLPrimaryButton(
+                density: VNLButtonDensity.compact,
                 alignment: Alignment.center,
-                enabled: state == DateState.enabled,
+                enabled: state == VNLDateState.enabled,
                 onPressed: onTap,
                 child: child,
               ),
             ],
           ),
         );
-      case CalendarItemType.endRangeSelected:
+      case VNLCalendarItemType.endRangeSelected:
         return SizedBox(
           width: width ?? theme.scaling * 32,
           height: height ?? theme.scaling * 32,
@@ -1768,27 +1768,27 @@ class VNLCalendarItem extends StatelessWidget {
                   ),
                 ),
               ),
-              PrimaryButton(
-                density: ButtonDensity.compact,
+              VNLPrimaryButton(
+                density: VNLButtonDensity.compact,
                 alignment: Alignment.center,
-                enabled: state == DateState.enabled,
+                enabled: state == VNLDateState.enabled,
                 onPressed: onTap,
                 child: child,
               ),
             ],
           ),
         );
-      case CalendarItemType.startRangeSelectedShort:
+      case VNLCalendarItemType.startRangeSelectedShort:
         return SizedBox(
           width: width ?? theme.scaling * 32,
           height: height ?? theme.scaling * 32,
           child: VNLButton(
             alignment: Alignment.center,
             onPressed: onTap,
-            enabled: state == DateState.enabled,
+            enabled: state == VNLDateState.enabled,
             style: const VNLButtonStyle(
               variance: VNLButtonVariance.primary,
-              density: ButtonDensity.compact,
+              density: VNLButtonDensity.compact,
             ).copyWith(
               decoration: (context, states, value) {
                 return (value as BoxDecoration).copyWith(
@@ -1802,17 +1802,17 @@ class VNLCalendarItem extends StatelessWidget {
             child: child,
           ),
         );
-      case CalendarItemType.endRangeSelectedShort:
+      case VNLCalendarItemType.endRangeSelectedShort:
         return SizedBox(
           width: width ?? theme.scaling * 32,
           height: height ?? theme.scaling * 32,
           child: VNLButton(
             alignment: Alignment.center,
             onPressed: onTap,
-            enabled: state == DateState.enabled,
+            enabled: state == VNLDateState.enabled,
             style: const VNLButtonStyle(
               variance: VNLButtonVariance.primary,
-              density: ButtonDensity.compact,
+              density: VNLButtonDensity.compact,
             ).copyWith(
               decoration: (context, states, value) {
                 return (value as BoxDecoration).copyWith(
@@ -1826,17 +1826,17 @@ class VNLCalendarItem extends StatelessWidget {
             child: child,
           ),
         );
-      case CalendarItemType.inRangeSelectedShort:
+      case VNLCalendarItemType.inRangeSelectedShort:
         return SizedBox(
           width: width ?? theme.scaling * 32,
           height: height ?? theme.scaling * 32,
           child: VNLButton(
             alignment: Alignment.center,
-            enabled: state == DateState.enabled,
+            enabled: state == VNLDateState.enabled,
             onPressed: onTap,
             style: const VNLButtonStyle(
               variance: VNLButtonVariance.primary,
-              density: ButtonDensity.compact,
+              density: VNLButtonDensity.compact,
             ).copyWith(
               decoration: (context, states, value) {
                 return (value as BoxDecoration).copyWith(

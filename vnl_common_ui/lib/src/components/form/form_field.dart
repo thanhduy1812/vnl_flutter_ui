@@ -1,16 +1,16 @@
 import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 /// Type definition for the save button in an object input form field.
-typedef ObjectInputSaveButton = PrimaryButton;
+typedef ObjectInputSaveButton = VNLPrimaryButton;
 
 /// Type definition for the cancel button in an object input form field.
 typedef ObjectInputCancelButton = VNLOutlineButton;
 
 /// Defines how a form field editor is presented to the user.
 ///
-/// [PromptMode] determines whether the field editor appears in a modal
+/// [VNLPromptMode] determines whether the field editor appears in a modal
 /// dialog or a popover overlay.
-enum PromptMode {
+enum VNLPromptMode {
   /// Display the editor in a modal dialog.
   dialog,
 
@@ -34,7 +34,7 @@ enum PromptMode {
 ///   placeholder: Text('Select date'),
 ///   builder: (context, date) => Text(formatDate(date)),
 ///   editorBuilder: (context, handler) => CalendarWidget(),
-///   mode: PromptMode.dialog,
+///   mode: VNLPromptMode.dialog,
 /// )
 /// ```
 class ObjectFormField<T> extends StatefulWidget {
@@ -57,7 +57,7 @@ class ObjectFormField<T> extends StatefulWidget {
   final Widget? trailing;
 
   /// How the editor is presented (dialog or popover).
-  final PromptMode mode;
+  final VNLPromptMode mode;
 
   /// Builds the editor widget.
   final Widget Function(BuildContext context, ObjectFormHandler<T> handler)
@@ -79,10 +79,10 @@ class ObjectFormField<T> extends StatefulWidget {
   final VNLButtonSize? size;
 
   /// VNLButton density for the trigger.
-  final ButtonDensity? density;
+  final VNLButtonDensity? density;
 
   /// VNLButton shape for the trigger.
-  final ButtonShape? shape;
+  final VNLButtonShape? shape;
 
   /// Custom dialog action buttons.
   final List<Widget> Function(
@@ -107,7 +107,7 @@ class ObjectFormField<T> extends StatefulWidget {
     required this.builder,
     this.leading,
     this.trailing,
-    this.mode = PromptMode.dialog,
+    this.mode = VNLPromptMode.dialog,
     required this.editorBuilder,
     this.popoverAlignment,
     this.popoverAnchorAlignment,
@@ -284,7 +284,7 @@ class ObjectFormFieldState<T> extends State<ObjectFormField<T>>
 
   /// Prompts the user to select or edit a value via dialog or popover.
   ///
-  /// Displays the appropriate UI based on the configured [PromptMode].
+  /// Displays the appropriate UI based on the configured [VNLPromptMode].
   ///
   /// Parameters:
   /// - [value] (`T?`, optional): An initial value to display in the prompt.
@@ -294,7 +294,7 @@ class ObjectFormFieldState<T> extends State<ObjectFormField<T>>
   /// fieldState.prompt(initialValue);
   /// ```
   void prompt([T? value]) {
-    if (widget.mode == PromptMode.dialog) {
+    if (widget.mode == VNLPromptMode.dialog) {
       _showDialog(value);
     } else {
       _showPopover(value);
@@ -304,8 +304,8 @@ class ObjectFormFieldState<T> extends State<ObjectFormField<T>>
   @override
   Widget build(BuildContext context) {
     final size = widget.size ?? VNLButtonSize.normal;
-    final density = widget.density ?? ButtonDensity.normal;
-    final shape = widget.shape ?? ButtonShape.rectangle;
+    final density = widget.density ?? VNLButtonDensity.normal;
+    final shape = widget.shape ?? VNLButtonShape.rectangle;
     return VNLOutlineButton(
       trailing: widget.trailing?.iconMutedForeground().iconSmall(),
       leading: widget.leading?.iconMutedForeground().iconSmall(),

@@ -3,7 +3,7 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 /// A swipeable container that transitions between multiple child widgets.
 ///
-/// [Switcher] provides smooth animated transitions between different views
+/// [VNLSwitcher] provides smooth animated transitions between different views
 /// with gesture-based navigation. Users can swipe to change the active view,
 /// and the component supports all four axis directions for transitions.
 ///
@@ -21,7 +21,7 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 ///
 /// Example:
 /// ```dart
-/// Switcher(
+/// VNLSwitcher(
 ///   index: currentIndex,
 ///   direction: AxisDirection.right,
 ///   onIndexChanged: (newIndex) => setState(() => currentIndex = newIndex),
@@ -32,7 +32,7 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 ///   ],
 /// );
 /// ```
-class Switcher extends StatefulWidget {
+class VNLSwitcher extends StatefulWidget {
   /// Current active child index.
   final int index;
 
@@ -51,7 +51,7 @@ class Switcher extends StatefulWidget {
   /// Animation curve for the transition.
   final Curve curve;
 
-  /// Creates a [Switcher].
+  /// Creates a [VNLSwitcher].
   ///
   /// The [direction] and [children] parameters are required. The [index]
   /// determines which child is initially visible.
@@ -66,7 +66,7 @@ class Switcher extends StatefulWidget {
   ///
   /// Example:
   /// ```dart
-  /// Switcher(
+  /// VNLSwitcher(
   ///   index: 0,
   ///   direction: AxisDirection.left,
   ///   duration: Duration(milliseconds: 250),
@@ -79,7 +79,7 @@ class Switcher extends StatefulWidget {
   ///   ],
   /// );
   /// ```
-  const Switcher({
+  const VNLSwitcher({
     super.key,
     this.index = 0,
     required this.direction,
@@ -90,10 +90,10 @@ class Switcher extends StatefulWidget {
   });
 
   @override
-  State<Switcher> createState() => _SwitcherState();
+  State<VNLSwitcher> createState() => _SwitcherState();
 }
 
-class _SwitcherState extends State<Switcher> {
+class _SwitcherState extends State<VNLSwitcher> {
   late double _index;
   bool _dragging = false;
 
@@ -104,7 +104,7 @@ class _SwitcherState extends State<Switcher> {
   }
 
   @override
-  void didUpdateWidget(covariant Switcher oldWidget) {
+  void didUpdateWidget(covariant VNLSwitcher oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.index != widget.index) {
       _index = widget.index.toDouble();

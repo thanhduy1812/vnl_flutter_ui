@@ -21,7 +21,7 @@ class AlertDialogTile extends StatelessWidget implements IComponentPage {
             onPressed: () {},
             child: const Text('Cancel'),
           ),
-          PrimaryButton(
+          VNLPrimaryButton(
             onPressed: () {},
             child: const Text('OK'),
           ),

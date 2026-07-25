@@ -22,7 +22,7 @@ class _CarouselExample1State extends State<CarouselExample1> {
       child: Row(
         children: [
           VNLOutlineButton(
-              shape: ButtonShape.circle,
+              shape: VNLButtonShape.circle,
               onPressed: () {
                 // Animate to previous slide.
                 controller.animatePrevious(const Duration(milliseconds: 500));
@@ -52,7 +52,7 @@ class _CarouselExample1State extends State<CarouselExample1> {
           ),
           const Gap(24),
           VNLOutlineButton(
-              shape: ButtonShape.circle,
+              shape: VNLButtonShape.circle,
               onPressed: () {
                 // Animate to next slide.
                 controller.animateNext(const Duration(milliseconds: 500));

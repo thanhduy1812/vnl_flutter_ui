@@ -40,7 +40,7 @@ class _NavigationSidebarExample1State extends State<NavigationSidebarExample1> {
           children: [
             // A mix of labels, gaps, dividers, and items can be used to
             // structure the navigation list into logical sections.
-            NavigationGroup(
+            VNLNavigationGroup(
               label: const Text('Discovery'),
               children: [
                 buildButton(
@@ -52,7 +52,7 @@ class _NavigationSidebarExample1State extends State<NavigationSidebarExample1> {
             ),
             const VNLNavigationGap(24),
             const VNLNavigationDivider(),
-            NavigationGroup(
+            VNLNavigationGroup(
               label: const Text('Library'),
               children: [
                 buildButton('Playlist', BootstrapIcons.musicNoteList,
@@ -68,7 +68,7 @@ class _NavigationSidebarExample1State extends State<NavigationSidebarExample1> {
             ),
             const VNLNavigationGap(24),
             const VNLNavigationDivider(),
-            NavigationGroup(
+            VNLNavigationGroup(
               label: const Text('Playlists'),
               children: [
                 buildButton('Recently Added', BootstrapIcons.musicNoteList,

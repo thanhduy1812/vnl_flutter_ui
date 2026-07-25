@@ -11,7 +11,7 @@ class CheckboxExample2 extends StatefulWidget {
 }
 
 class _CheckboxExample2State extends State<CheckboxExample2> {
-  CheckboxState _state = CheckboxState.unchecked;
+  VNLCheckboxState _state = VNLCheckboxState.unchecked;
   @override
   Widget build(BuildContext context) {
     return VNLCheckbox(

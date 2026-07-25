@@ -4,11 +4,11 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 extension ShadcnLocalizationsExtensions on VNLookLocalizations {
   /// The order of date parts for the current locale.
   ///
-  /// Default is [DatePart.month], [DatePart.day], [DatePart.year].
-  List<DatePart> get datePartsOrder => const [
-        DatePart.month,
-        DatePart.day,
-        DatePart.year,
+  /// Default is [VNLDatePart.month], [VNLDatePart.day], [VNLDatePart.year].
+  List<VNLDatePart> get datePartsOrder => const [
+        VNLDatePart.month,
+        VNLDatePart.day,
+        VNLDatePart.year,
       ];
 
   /// The abbreviation for the year component (e.g., 'YYYY').
@@ -20,14 +20,14 @@ extension ShadcnLocalizationsExtensions on VNLookLocalizations {
   /// The abbreviation for the day component (e.g., 'DD').
   String get dateDayAbbreviation => 'DD';
 
-  /// Gets the abbreviation for a specific [DatePart].
-  String getDatePartAbbreviation(DatePart part) {
+  /// Gets the abbreviation for a specific [VNLDatePart].
+  String getDatePartAbbreviation(VNLDatePart part) {
     switch (part) {
-      case DatePart.year:
+      case VNLDatePart.year:
         return dateYearAbbreviation;
-      case DatePart.month:
+      case VNLDatePart.month:
         return dateMonthAbbreviation;
-      case DatePart.day:
+      case VNLDatePart.day:
         return dateDayAbbreviation;
     }
   }
@@ -118,16 +118,16 @@ extension ShadcnLocalizationsExtensions on VNLookLocalizations {
     return value.toString();
   }
 
-  /// Gets the localized label for a [ColorPickerMode].
-  String getColorPickerMode(ColorPickerMode mode) {
+  /// Gets the localized label for a [VNLColorPickerMode].
+  String getColorPickerMode(VNLColorPickerMode mode) {
     switch (mode) {
-      case ColorPickerMode.rgb:
+      case VNLColorPickerMode.rgb:
         return colorPickerTabRGB;
-      case ColorPickerMode.hsv:
+      case VNLColorPickerMode.hsv:
         return colorPickerTabHSV;
-      case ColorPickerMode.hsl:
+      case VNLColorPickerMode.hsl:
         return colorPickerTabHSL;
-      case ColorPickerMode.hex:
+      case VNLColorPickerMode.hex:
         return colorPickerTabHEX;
     }
   }
@@ -249,28 +249,28 @@ extension ShadcnLocalizationsExtensions on VNLookLocalizations {
     return parts.join(' ');
   }
 
-  /// Gets the abbreviation for a [DurationPart].
-  String getDurationPartAbbreviation(DurationPart part) {
+  /// Gets the abbreviation for a [VNLDurationPart].
+  String getDurationPartAbbreviation(VNLDurationPart part) {
     switch (part) {
-      case DurationPart.day:
+      case VNLDurationPart.day:
         return timeDaysAbbreviation;
-      case DurationPart.hour:
+      case VNLDurationPart.hour:
         return timeHoursAbbreviation;
-      case DurationPart.minute:
+      case VNLDurationPart.minute:
         return timeMinutesAbbreviation;
-      case DurationPart.second:
+      case VNLDurationPart.second:
         return timeSecondsAbbreviation;
     }
   }
 
-  /// Gets the abbreviation for a [TimePart].
-  String getTimePartAbbreviation(TimePart part) {
+  /// Gets the abbreviation for a [VNLTimePart].
+  String getTimePartAbbreviation(VNLTimePart part) {
     switch (part) {
-      case TimePart.hour:
+      case VNLTimePart.hour:
         return timeHoursAbbreviation;
-      case TimePart.minute:
+      case VNLTimePart.minute:
         return timeMinutesAbbreviation;
-      case TimePart.second:
+      case VNLTimePart.second:
         return timeSecondsAbbreviation;
     }
   }

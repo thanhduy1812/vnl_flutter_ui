@@ -1130,7 +1130,7 @@ class _SliderState extends State<VNLSlider>
       BuildContext context, BoxConstraints constraints, ThemeData theme) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLSliderTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLSliderTheme>(context);
     var value = widget.value;
     var start = value.start;
     var end = value.end;
@@ -1187,7 +1187,7 @@ class _SliderState extends State<VNLSlider>
       BuildContext context, BoxConstraints constraints, ThemeData theme) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLSliderTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLSliderTheme>(context);
     return Positioned(
       left: 0,
       right: 0,
@@ -1219,7 +1219,7 @@ class _SliderState extends State<VNLSlider>
       VoidCallback onDecrease) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLSliderTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLSliderTheme>(context);
     if (widget.divisions != null) {
       value = (value * widget.divisions!).round() / widget.divisions!;
     }

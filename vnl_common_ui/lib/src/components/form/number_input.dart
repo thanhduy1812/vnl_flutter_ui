@@ -96,7 +96,7 @@ class _NumberInputState extends State<VNLNumberInput> with FormValueSupplier<num
   }
 
   VNLAbstractButtonStyle get _buttonStyle {
-    return widget.buttonStyle ?? const VNLButtonStyle.text(density: ButtonDensity.compact, size: VNLButtonSize.small);
+    return widget.buttonStyle ?? const VNLButtonStyle.text(density: VNLButtonDensity.compact, size: VNLButtonSize.small);
   }
 
   Widget buildButton(BuildContext context, ThemeData theme) {

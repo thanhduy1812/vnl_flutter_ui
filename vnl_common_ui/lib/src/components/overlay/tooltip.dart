@@ -137,7 +137,7 @@ class VNLTooltipContainer extends StatelessWidget {
     final scaling = theme.scaling;
     final densityGap = theme.density.baseGap * scaling;
     final densityContentPadding = theme.density.baseContentPadding * scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLTooltipTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLTooltipTheme>(context);
     Color backgroundColor = styleValue(
         widgetValue: this.backgroundColor,
         themeValue: compTheme?.backgroundColor,
@@ -426,8 +426,8 @@ class VNLOverlayManagerAsTooltipOverlayHandler extends VNLOverlayHandler {
     required WidgetBuilder builder,
     Offset? position,
     AlignmentGeometry? anchorAlignment,
-    PopoverConstraint widthConstraint = PopoverConstraint.flexible,
-    PopoverConstraint heightConstraint = PopoverConstraint.flexible,
+    VNLPopoverConstraint widthConstraint = VNLPopoverConstraint.flexible,
+    VNLPopoverConstraint heightConstraint = VNLPopoverConstraint.flexible,
     Key? key,
     bool rootOverlay = true,
     bool barrierDismissable = true,
@@ -498,8 +498,8 @@ class VNLFixedTooltipOverlayHandler extends VNLOverlayHandler {
     required WidgetBuilder builder,
     Offset? position,
     AlignmentGeometry? anchorAlignment,
-    PopoverConstraint widthConstraint = PopoverConstraint.flexible,
-    PopoverConstraint heightConstraint = PopoverConstraint.flexible,
+    VNLPopoverConstraint widthConstraint = VNLPopoverConstraint.flexible,
+    VNLPopoverConstraint heightConstraint = VNLPopoverConstraint.flexible,
     Key? key,
     bool rootOverlay = true,
     bool modal = true,

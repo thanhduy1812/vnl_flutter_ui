@@ -8,7 +8,7 @@ class SortableExample6 extends StatefulWidget {
 }
 
 class _SortableExample6State extends State<SortableExample6> {
-  late List<SortableData<String>> names;
+  late List<VNLSortableData<String>> names;
 
   @override
   void initState() {
@@ -18,11 +18,11 @@ class _SortableExample6State extends State<SortableExample6> {
 
   void _reset() {
     names = [
-      const SortableData('James'),
-      const SortableData('John'),
-      const SortableData('Robert'),
-      const SortableData('Michael'),
-      const SortableData('William'),
+      const VNLSortableData('James'),
+      const VNLSortableData('John'),
+      const VNLSortableData('Robert'),
+      const VNLSortableData('Michael'),
+      const VNLSortableData('William'),
     ];
   }
 
@@ -32,7 +32,7 @@ class _SortableExample6State extends State<SortableExample6> {
       child: Builder(
           // this builder is needed to access the context of the VNLSortableLayer
           builder: (context) {
-        return SortableDropFallback<int>(
+        return VNLSortableDropFallback<int>(
           onAccept: (value) {
             setState(() {
               names.add(names.removeAt(value.data));
@@ -41,7 +41,7 @@ class _SortableExample6State extends State<SortableExample6> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              PrimaryButton(
+              VNLPrimaryButton(
                 onPressed: () {
                   setState(() {
                     _reset();

@@ -38,9 +38,9 @@ class _ExpandableSidebarExample1State extends State<ExpandableSidebarExample1> {
     );
   }
 
-  NavigationGroup buildLabel(String label, List<Widget> children) {
+  VNLNavigationGroup buildLabel(String label, List<Widget> children) {
     // Section header used to group related navigation items.
-    return NavigationGroup(
+    return VNLNavigationGroup(
       labelAlignment: Alignment.centerLeft,
       label: Text(label).semiBold.muted.xSmall,
       children: children,
@@ -61,15 +61,15 @@ class _ExpandableSidebarExample1State extends State<ExpandableSidebarExample1> {
             backgroundColor: theme.colorScheme.accent.withValues(alpha: 0.4),
             // Expand/collapse behavior is handled by the `expanded` boolean.
             // With labelType.expanded, labels are hidden when collapsed.
-            labelType: NavigationLabelType.expanded,
-            labelPosition: NavigationLabelPosition.end,
-            alignment: NavigationRailAlignment.start,
+            labelType: VNLNavigationLabelType.expanded,
+            labelPosition: VNLNavigationLabelPosition.end,
+            alignment: VNLNavigationRailAlignment.start,
             expandedSize: 250,
             expanded: expanded,
             header: [
               Builder(builder: (context) {
-                return NavigationSlot(
-                  leading: IconContainer(
+                return VNLNavigationSlot(
+                  leading: VNLIconContainer(
                     backgroundColor: VNLColors.blue,
                     icon: const Icon(LucideIcons.galleryVerticalEnd).iconMedium,
                   ),
@@ -104,7 +104,7 @@ class _ExpandableSidebarExample1State extends State<ExpandableSidebarExample1> {
               }),
             ],
             footer: [
-              NavigationSlot(
+              VNLNavigationSlot(
                 leading: VNLAvatar(
                   size: 32,
                   initials: 'SU',
@@ -123,7 +123,7 @@ class _ExpandableSidebarExample1State extends State<ExpandableSidebarExample1> {
                 buildButton('Subscription', Icons.subscriptions),
               ]),
               const VNLNavigationDivider(),
-              NavigationCollapsible(
+              VNLNavigationCollapsible(
                 leading: const Icon(Icons.history),
                 label: const Text('History'),
                 children: [
@@ -138,7 +138,7 @@ class _ExpandableSidebarExample1State extends State<ExpandableSidebarExample1> {
                 buildButton('Thriller', Icons.movie_creation_outlined),
               ]),
               const VNLNavigationDivider(),
-              NavigationCollapsible(
+              VNLNavigationCollapsible(
                 leading: const Icon(Icons.movie_filter_outlined),
                 label: const Text('Short Films'),
                 children: [

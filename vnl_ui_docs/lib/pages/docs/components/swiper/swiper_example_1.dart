@@ -8,10 +8,10 @@ class SwiperExample1 extends StatefulWidget {
 }
 
 class _SwiperExample1State extends State<SwiperExample1> {
-  OverlayPosition _position = OverlayPosition.end;
+  VNLOverlayPosition _position = VNLOverlayPosition.end;
   bool _typeDrawer = true;
 
-  Widget _buildSelectPosition(OverlayPosition position, String label) {
+  Widget _buildSelectPosition(VNLOverlayPosition position, String label) {
     return VNLSelectedButton(
       value: _position == position,
       onChanged: (value) {
@@ -42,7 +42,7 @@ class _SwiperExample1State extends State<SwiperExample1> {
             children: [
               const Text('Hello!'),
               const Gap(24),
-              PrimaryButton(
+              VNLPrimaryButton(
                 onPressed: () {
                   openDrawer(
                       context: context,
@@ -59,7 +59,7 @@ class _SwiperExample1State extends State<SwiperExample1> {
                           },
                         );
                       },
-                      position: OverlayPosition.bottom);
+                      position: VNLOverlayPosition.bottom);
                 },
                 child: const Text('Close'),
               ),
@@ -81,10 +81,10 @@ class _SwiperExample1State extends State<SwiperExample1> {
                 const Text('Swipe me!'),
                 const Gap(24),
                 VNLButtonGroup(children: [
-                  _buildSelectPosition(OverlayPosition.left, 'Left'),
-                  _buildSelectPosition(OverlayPosition.right, 'Right'),
-                  _buildSelectPosition(OverlayPosition.top, 'Top'),
-                  _buildSelectPosition(OverlayPosition.bottom, 'Bottom'),
+                  _buildSelectPosition(VNLOverlayPosition.left, 'Left'),
+                  _buildSelectPosition(VNLOverlayPosition.right, 'Right'),
+                  _buildSelectPosition(VNLOverlayPosition.top, 'Top'),
+                  _buildSelectPosition(VNLOverlayPosition.bottom, 'Bottom'),
                 ]),
                 const Gap(24),
                 VNLButtonGroup(children: [

@@ -8,19 +8,19 @@ class SortableExample5 extends StatefulWidget {
 }
 
 class _SortableExample5State extends State<SortableExample5> {
-  List<SortableData<String>> names = [
-    const SortableData('James'),
-    const SortableData('John'),
-    const SortableData('Robert'),
-    const SortableData('Michael'),
-    const SortableData('William'),
+  List<VNLSortableData<String>> names = [
+    const VNLSortableData('James'),
+    const VNLSortableData('John'),
+    const VNLSortableData('Robert'),
+    const VNLSortableData('Michael'),
+    const VNLSortableData('William'),
   ];
 
   @override
   Widget build(BuildContext context) {
     return VNLSortableLayer(
       lock: true,
-      child: SortableDropFallback<int>(
+      child: VNLSortableDropFallback<int>(
         // Dropping outside edge targets appends the item to the end.
         onAccept: (value) {
           setState(() {

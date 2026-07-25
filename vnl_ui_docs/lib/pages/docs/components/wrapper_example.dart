@@ -1,4 +1,4 @@
-// Wrapper example page: lists and renders the Wrapper component demos.
+// VNLWrapper example page: lists and renders the VNLWrapper component demos.
 //
 // This is a docs wrapper page (not the demo unit). It composes a ComponentPage
 // with one or more WidgetUsageExample entries that point to the actual demo
@@ -18,10 +18,10 @@ class WrapperExample extends StatelessWidget {
       description:
           'VNLookUI widget is a component that allows you to use Shadcn/UI components '
           'within your MaterialApp or CupertinoApp, providing consistent theming and styling.',
-      displayName: 'Wrapper',
+      displayName: 'VNLWrapper',
       children: [
         WidgetUsageExample(
-          title: 'Wrapper Example',
+          title: 'VNLWrapper Example',
           path: 'lib/pages/docs/components/wrapper/wrapper_example_1.dart',
           child: const WrapperExample1().sized(height: 300),
         ),

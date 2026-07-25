@@ -96,7 +96,7 @@ class AccordionState extends State<VNLAccordion> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final accTheme = ComponentTheme.maybeOf<VNLAccordionTheme>(context);
+    final accTheme = VNLComponentTheme.maybeOf<VNLAccordionTheme>(context);
     return Data.inherit(
         data: this,
         child: IntrinsicWidth(
@@ -123,11 +123,11 @@ class AccordionState extends State<VNLAccordion> {
 /// for consistent accordion styling across an application while still permitting
 /// per-instance customization.
 ///
-/// Used with [ComponentTheme] to apply theme values throughout the widget tree.
+/// Used with [VNLComponentTheme] to apply theme values throughout the widget tree.
 ///
 /// Example:
 /// ```dart
-/// ComponentTheme<VNLAccordionTheme>(
+/// VNLComponentTheme<VNLAccordionTheme>(
 ///   data: VNLAccordionTheme(
 ///     duration: Duration(milliseconds: 300),
 ///     curve: Curves.easeInOut,
@@ -419,7 +419,7 @@ class _AccordionItemState extends State<VNLAccordionItem>
       accordion = newAccordion;
     }
 
-    final theme = ComponentTheme.maybeOf<VNLAccordionTheme>(context);
+    final theme = VNLComponentTheme.maybeOf<VNLAccordionTheme>(context);
 
     if (_theme != theme) {
       _theme = theme;
@@ -487,7 +487,7 @@ class _AccordionItemState extends State<VNLAccordionItem>
             SizeTransition(
               key: const ValueKey('accordion_size_transition'),
               sizeFactor: _easeInAnimation,
-              axisAlignment: -1,
+              alignment: Alignment.topCenter,
               child: Padding(
                 padding: EdgeInsets.only(
                   bottom: _theme?.padding ?? 16 * scaling,
@@ -607,7 +607,7 @@ class _AccordionTriggerState extends State<VNLAccordionTrigger> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    final accTheme = ComponentTheme.maybeOf<VNLAccordionTheme>(context);
+    final accTheme = VNLComponentTheme.maybeOf<VNLAccordionTheme>(context);
     final scaling = theme.scaling;
     return GestureDetector(
       onTap: () {

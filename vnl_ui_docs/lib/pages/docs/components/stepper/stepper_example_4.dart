@@ -31,7 +31,7 @@ class _StepperExample4State extends State<StepperExample4> {
                 const VNLSecondaryButton(
                   child: Text('Prev'),
                 ),
-                PrimaryButton(
+                VNLPrimaryButton(
                     child: const Text('Next'),
                     onPressed: () {
                       controller.nextStep();
@@ -60,7 +60,7 @@ class _StepperExample4State extends State<StepperExample4> {
                     controller.previousStep();
                   },
                 ),
-                PrimaryButton(
+                VNLPrimaryButton(
                     child: const Text('Next'),
                     onPressed: () {
                       controller.nextStep();
@@ -89,7 +89,7 @@ class _StepperExample4State extends State<StepperExample4> {
                     controller.previousStep();
                   },
                 ),
-                PrimaryButton(
+                VNLPrimaryButton(
                     child: const Text('Finish'),
                     onPressed: () {
                       controller.nextStep();

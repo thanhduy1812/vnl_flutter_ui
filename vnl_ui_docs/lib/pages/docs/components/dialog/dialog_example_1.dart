@@ -10,7 +10,7 @@ class DialogExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PrimaryButton(
+    return VNLPrimaryButton(
       onPressed: () {
         // Present a Material dialog on top of the current route.
         showDialog(
@@ -51,7 +51,7 @@ class DialogExample1 extends StatelessWidget {
                 ],
               ),
               actions: [
-                PrimaryButton(
+                VNLPrimaryButton(
                   child: const Text('Save changes'),
                   onPressed: () {
                     // Return the form values and close the dialog.

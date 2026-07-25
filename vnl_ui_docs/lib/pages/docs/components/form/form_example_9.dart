@@ -15,7 +15,7 @@ class FormExample9 extends StatefulWidget {
 
 class _FormExample9State extends State<FormExample9> {
   // ── Standard widgets need manual state ──
-  CheckboxState _checkboxState = CheckboxState.unchecked;
+  VNLCheckboxState _checkboxState = VNLCheckboxState.unchecked;
   bool _switchValue = false;
 
   @override

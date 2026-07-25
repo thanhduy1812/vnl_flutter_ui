@@ -19,7 +19,7 @@ class _TimePickerExample1State extends State<TimePickerExample1> {
         VNLTimePicker(
           value: _value,
           // VNLPopover mode shows a compact inline picker anchored to the field.
-          mode: PromptMode.popover,
+          mode: VNLPromptMode.popover,
           onChanged: (value) {
             setState(() {
               // If user cancels, keep time by falling back to now.
@@ -31,7 +31,7 @@ class _TimePickerExample1State extends State<TimePickerExample1> {
         VNLTimePicker(
           value: _value,
           // Dialog mode opens a modal sheet/dialog for selection.
-          mode: PromptMode.dialog,
+          mode: VNLPromptMode.dialog,
           dialogTitle: const Text('Select Time'),
           onChanged: (value) {
             setState(() {

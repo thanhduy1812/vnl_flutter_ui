@@ -661,7 +661,7 @@ Future<void> _showContextMenu(
                     },
                     builder: (context, children) {
                       final compTheme =
-                          ComponentTheme.maybeOf<VNLContextMenuTheme>(context);
+                          VNLComponentTheme.maybeOf<VNLContextMenuTheme>(context);
                       return VNLMenuPopup(
                         surfaceOpacity: compTheme?.surfaceOpacity,
                         surfaceBlur: compTheme?.surfaceBlur,
@@ -755,7 +755,7 @@ class VNLContextMenuPopup extends StatelessWidget {
                     : EdgeInsets.zero,
                 builder: (context, children) {
                   final compTheme =
-                      ComponentTheme.maybeOf<VNLContextMenuTheme>(context);
+                      VNLComponentTheme.maybeOf<VNLContextMenuTheme>(context);
                   return VNLMenuPopup(
                     surfaceOpacity: compTheme?.surfaceOpacity,
                     surfaceBlur: compTheme?.surfaceBlur,

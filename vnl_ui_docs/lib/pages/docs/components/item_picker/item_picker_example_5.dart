@@ -33,17 +33,17 @@ class _ItemPickerExample5State extends State<ItemPickerExample5> {
   Widget build(BuildContext context) {
     return ItemPicker<NamedColor>(
       items: ItemList(colors),
-      mode: PromptMode.popover,
+      mode: VNLPromptMode.popover,
       title: const Text('Pick a color'),
       builder: (context, item) {
         return ItemPickerOption(
           value: item,
           label: Text(item.name),
           style: const VNLButtonStyle.ghostIcon(
-            shape: ButtonShape.circle,
+            shape: VNLButtonShape.circle,
           ),
           selectedStyle: const VNLButtonStyle.primary(
-            shape: ButtonShape.circle,
+            shape: VNLButtonShape.circle,
           ),
           child: Container(
             constraints: const BoxConstraints(minWidth: 40, minHeight: 40),

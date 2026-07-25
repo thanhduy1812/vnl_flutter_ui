@@ -6,11 +6,11 @@ import '../../../shadcn_flutter.dart';
 /// border radius, colors, and badge positioning. It enables consistent avatar
 /// styling across an application while allowing per-instance customization.
 ///
-/// Used with [ComponentTheme] to apply theme values throughout the widget tree.
+/// Used with [VNLComponentTheme] to apply theme values throughout the widget tree.
 ///
 /// Example:
 /// ```dart
-/// ComponentTheme<VNLAvatarTheme>(
+/// VNLComponentTheme<VNLAvatarTheme>(
 ///   data: VNLAvatarTheme(
 ///     size: 48.0,
 ///     borderRadius: 8.0,
@@ -384,7 +384,7 @@ class VNLAvatar extends StatefulWidget implements VNLAvatarWidget {
 class _AvatarState extends State<VNLAvatar> {
   Widget _build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLAvatarTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLAvatarTheme>(context);
     double size = styleValue(
         widgetValue: widget.size,
         themeValue: compTheme?.size,
@@ -418,7 +418,7 @@ class _AvatarState extends State<VNLAvatar> {
 
   Widget _buildInitials(BuildContext context, double borderRadius) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLAvatarTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLAvatarTheme>(context);
     final densityGap = theme.density.baseGap * theme.scaling;
     return Container(
       decoration: BoxDecoration(
@@ -457,7 +457,7 @@ class _AvatarState extends State<VNLAvatar> {
       return _build(context);
     }
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLAvatarTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLAvatarTheme>(context);
     double size = styleValue(
         widgetValue: widget.size,
         themeValue: compTheme?.size,

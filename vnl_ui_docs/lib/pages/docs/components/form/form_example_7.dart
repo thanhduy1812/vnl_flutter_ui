@@ -32,7 +32,7 @@ class FormExample7 extends StatelessWidget {
                 title: const Text('Submitted Values'),
                 content: Text(json),
                 actions: [
-                  PrimaryButton(
+                  VNLPrimaryButton(
                     onPressed: () => Navigator.of(context).pop(),
                     child: const Text('Close'),
                   ),

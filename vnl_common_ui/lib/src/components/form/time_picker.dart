@@ -7,7 +7,7 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 /// format, popover positioning, and dialog customization.
 class VNLTimePickerTheme extends ComponentThemeData {
   /// Mode for displaying the time picker (popover or dialog).
-  final PromptMode? mode;
+  final VNLPromptMode? mode;
 
   /// Alignment of the popover relative to its anchor.
   final AlignmentGeometry? popoverAlignment;
@@ -40,7 +40,7 @@ class VNLTimePickerTheme extends ComponentThemeData {
 
   /// Creates a copy of this theme with the given fields replaced.
   VNLTimePickerTheme copyWith({
-    ValueGetter<PromptMode?>? mode,
+    ValueGetter<VNLPromptMode?>? mode,
     ValueGetter<AlignmentGeometry?>? popoverAlignment,
     ValueGetter<AlignmentGeometry?>? popoverAnchorAlignment,
     ValueGetter<EdgeInsetsGeometry?>? popoverPadding,
@@ -150,7 +150,7 @@ class VNLControlledTimePicker extends StatelessWidget
   ///
   /// Determines how the time selection interface is displayed to the user.
   /// Can be either dialog mode (modal popup) or popover mode (dropdown).
-  final PromptMode mode;
+  final VNLPromptMode mode;
 
   /// Widget displayed when no time is selected.
   ///
@@ -160,19 +160,19 @@ class VNLControlledTimePicker extends StatelessWidget
 
   /// Alignment for the popover relative to its anchor widget.
   ///
-  /// Used only when [mode] is [PromptMode.popover]. Controls where the popover
+  /// Used only when [mode] is [VNLPromptMode.popover]. Controls where the popover
   /// appears relative to the picker button.
   final AlignmentGeometry? popoverAlignment;
 
   /// Alignment of the anchor point on the picker button.
   ///
-  /// Used only when [mode] is [PromptMode.popover]. Determines which point
+  /// Used only when [mode] is [VNLPromptMode.popover]. Determines which point
   /// on the picker button the popover aligns to.
   final AlignmentGeometry? popoverAnchorAlignment;
 
   /// Internal padding for the popover content.
   ///
-  /// Used only when [mode] is [PromptMode.popover]. Controls spacing inside
+  /// Used only when [mode] is [VNLPromptMode.popover]. Controls spacing inside
   /// the popover container around the time picker interface.
   final EdgeInsetsGeometry? popoverPadding;
 
@@ -190,7 +190,7 @@ class VNLControlledTimePicker extends StatelessWidget
 
   /// Optional title widget for the dialog mode.
   ///
-  /// Used only when [mode] is [PromptMode.dialog]. Displayed at the top
+  /// Used only when [mode] is [VNLPromptMode.dialog]. Displayed at the top
   /// of the modal time picker dialog.
   final Widget? dialogTitle;
 
@@ -205,7 +205,7 @@ class VNLControlledTimePicker extends StatelessWidget
   /// - [initialValue] (TimeOfDay?, optional): Initial time when no controller is provided
   /// - [onChanged] (`ValueChanged<TimeOfDay?>?`, optional): Callback for time selection changes
   /// - [enabled] (bool, default: true): Whether the picker accepts user interaction
-  /// - [mode] (PromptMode, default: PromptMode.dialog): Presentation style (dialog or popover)
+  /// - [mode] (VNLPromptMode, default: VNLPromptMode.dialog): Presentation style (dialog or popover)
   /// - [placeholder] (Widget?, optional): Content displayed when no time is selected
   /// - [popoverAlignment] (AlignmentGeometry?, optional): VNLPopover positioning relative to anchor
   /// - [popoverAnchorAlignment] (AlignmentGeometry?, optional): Anchor point on picker button
@@ -218,7 +218,7 @@ class VNLControlledTimePicker extends StatelessWidget
   /// ```dart
   /// VNLControlledTimePicker(
   ///   initialValue: TimeOfDay(hour: 14, minute: 30),
-  ///   mode: PromptMode.popover,
+  ///   mode: VNLPromptMode.popover,
   ///   use24HourFormat: true,
   ///   onChanged: (time) => print('Selected: $time'),
   /// );
@@ -229,7 +229,7 @@ class VNLControlledTimePicker extends StatelessWidget
     this.initialValue,
     this.onChanged,
     this.enabled = true,
-    this.mode = PromptMode.dialog,
+    this.mode = VNLPromptMode.dialog,
     this.placeholder,
     this.popoverAlignment,
     this.popoverAnchorAlignment,
@@ -277,7 +277,7 @@ class VNLTimePicker extends StatelessWidget {
   final ValueChanged<TimeOfDay?>? onChanged;
 
   /// The display mode for the time picker (popover or dialog).
-  final PromptMode mode;
+  final VNLPromptMode mode;
 
   /// Placeholder widget shown when no time is selected.
   final Widget? placeholder;
@@ -308,7 +308,7 @@ class VNLTimePicker extends StatelessWidget {
     super.key,
     required this.value,
     this.onChanged,
-    this.mode = PromptMode.dialog,
+    this.mode = VNLPromptMode.dialog,
     this.placeholder,
     this.popoverAlignment,
     this.popoverAnchorAlignment,
@@ -322,7 +322,7 @@ class VNLTimePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     VNLookLocalizations localizations = VNLookLocalizations.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLTimePickerTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLTimePickerTheme>(context);
     bool use24HourFormat = this.use24HourFormat ??
         compTheme?.use24HourFormat ??
         MediaQuery.of(context).alwaysUse24HourFormat;
@@ -655,7 +655,7 @@ class VNLDurationPicker extends StatelessWidget {
   final ValueChanged<Duration?>? onChanged;
 
   /// The display mode for the duration picker (popover or dialog).
-  final PromptMode mode;
+  final VNLPromptMode mode;
 
   /// Placeholder widget shown when no duration is selected.
   final Widget? placeholder;
@@ -680,7 +680,7 @@ class VNLDurationPicker extends StatelessWidget {
     super.key,
     required this.value,
     this.onChanged,
-    this.mode = PromptMode.dialog,
+    this.mode = VNLPromptMode.dialog,
     this.placeholder,
     this.popoverAlignment,
     this.popoverAnchorAlignment,

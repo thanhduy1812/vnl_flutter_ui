@@ -22,7 +22,7 @@ mixin ComponentController<T> implements ValueNotifier<T> {}
 ///
 /// Example:
 /// ```dart
-/// final controller = ComponentValueController<String>('initial value');
+/// final controller = VNLComponentValueController<String>('initial value');
 ///
 /// // Listen to changes
 /// controller.addListener(() {
@@ -32,13 +32,13 @@ mixin ComponentController<T> implements ValueNotifier<T> {}
 /// // Update the value
 /// controller.value = 'new value';
 /// ```
-class ComponentValueController<T> extends ValueNotifier<T>
+class VNLComponentValueController<T> extends ValueNotifier<T>
     implements ComponentController<T> {
-  /// Creates a [ComponentValueController] with the given initial [value].
+  /// Creates a [VNLComponentValueController] with the given initial [value].
   ///
   /// The [value] parameter sets the initial state of the controller.
   /// Listeners will be notified whenever this value changes.
-  ComponentValueController(super.value);
+  VNLComponentValueController(super.value);
 }
 
 /// A mixin that provides a standardized interface for controlled components.

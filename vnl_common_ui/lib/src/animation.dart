@@ -402,7 +402,7 @@ class AnimatedProperty<T> {
 ///
 /// ## Overview
 ///
-/// Use [AnimationRequest] with [AnimationQueueController] to queue multiple
+/// Use [AnimationRequest] with [VNLAnimationQueueController] to queue multiple
 /// animation steps that will be executed sequentially or as replacements.
 ///
 /// ## Example
@@ -442,7 +442,7 @@ class AnimationRequest {
 ///
 /// ## Overview
 ///
-/// [AnimationRunner] is used internally by [AnimationQueueController] to
+/// [AnimationRunner] is used internally by [VNLAnimationQueueController] to
 /// execute individual animation steps. It tracks progress and computes
 /// intermediate values.
 ///
@@ -490,14 +490,14 @@ class AnimationRunner {
 ///
 /// ## Overview
 ///
-/// Use [AnimationQueueController] when you need to chain multiple animations
+/// Use [VNLAnimationQueueController] when you need to chain multiple animations
 /// or dynamically add/remove animation steps. Call [tick] regularly (e.g., in
 /// a ticker or animation frame callback) to progress the animations.
 ///
 /// ## Example
 ///
 /// ```dart
-/// final controller = AnimationQueueController(0.0);
+/// final controller = VNLAnimationQueueController(0.0);
 ///
 /// // Queue animations
 /// controller.push(AnimationRequest(0.5, Duration(milliseconds: 200), Curves.easeIn));
@@ -506,7 +506,7 @@ class AnimationRunner {
 /// // In ticker
 /// controller.tick(deltaTime);
 /// ```
-class AnimationQueueController extends ChangeNotifier {
+class VNLAnimationQueueController extends ChangeNotifier {
   double _value;
 
   /// Creates an animation queue controller with an optional initial value.
@@ -518,9 +518,9 @@ class AnimationQueueController extends ChangeNotifier {
   /// ## Example
   ///
   /// ```dart
-  /// final controller = AnimationQueueController(0.5);
+  /// final controller = VNLAnimationQueueController(0.5);
   /// ```
-  AnimationQueueController([this._value = 0.0]);
+  VNLAnimationQueueController([this._value = 0.0]);
 
   List<AnimationRequest> _requests = [];
   AnimationRunner? _runner;

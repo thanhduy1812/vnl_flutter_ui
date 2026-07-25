@@ -4,7 +4,7 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 ///
 /// Defines the visual properties and default behaviors for color input components
 /// including popover presentation, picker modes, and interaction features. Applied
-/// globally through [ComponentTheme] or per-instance for customization.
+/// globally through [VNLComponentTheme] or per-instance for customization.
 ///
 /// Supports comprehensive customization of color picker appearance, positioning,
 /// and functionality to match application design requirements.
@@ -38,13 +38,13 @@ class VNLColorInputTheme extends ComponentThemeData {
   ///
   /// Determines whether color selection opens a popover or modal dialog.
   /// When null, uses framework default prompt mode behavior.
-  final PromptMode? mode;
+  final VNLPromptMode? mode;
 
   /// Default color picker interface type.
   ///
   /// Specifies whether to use HSV, HSL, or other color picker implementations.
   /// When null, uses framework default picker mode.
-  final ColorPickerMode? pickerMode;
+  final VNLColorPickerMode? pickerMode;
 
   /// Whether to enable screen color sampling functionality.
   ///
@@ -90,8 +90,8 @@ class VNLColorInputTheme extends ComponentThemeData {
     ValueGetter<AlignmentGeometry?>? popoverAlignment,
     ValueGetter<AlignmentGeometry?>? popoverAnchorAlignment,
     ValueGetter<EdgeInsetsGeometry?>? popoverPadding,
-    ValueGetter<PromptMode?>? mode,
-    ValueGetter<ColorPickerMode?>? pickerMode,
+    ValueGetter<VNLPromptMode?>? mode,
+    ValueGetter<VNLColorPickerMode?>? pickerMode,
     ValueGetter<bool?>? enableEyeDropper,
     ValueGetter<bool?>? showLabel,
     ValueGetter<Axis?>? orientation,
@@ -184,7 +184,7 @@ class VNLColorInput extends StatefulWidget {
   final bool? showAlpha;
 
   /// The initial color picker mode (HSV, HSL, etc.).
-  final ColorPickerMode? initialMode;
+  final VNLColorPickerMode? initialMode;
 
   /// Whether to enable the eye dropper (screen color sampling) feature.
   final bool? enableEyeDropper;
@@ -202,7 +202,7 @@ class VNLColorInput extends StatefulWidget {
   final Widget? placeholder;
 
   /// The mode for presenting the color picker (popover or modal).
-  final PromptMode? promptMode;
+  final VNLPromptMode? promptMode;
 
   /// Title widget for the dialog when using modal mode.
   final Widget? dialogTitle;
@@ -269,7 +269,7 @@ class _ColorInputState extends State<VNLColorInput>
     final locale = VNLookLocalizations.of(context);
     final theme = Theme.of(context);
     final densityGap = theme.density.baseGap * theme.scaling;
-    final componentTheme = ComponentTheme.maybeOf<VNLColorInputTheme>(context);
+    final componentTheme = VNLComponentTheme.maybeOf<VNLColorInputTheme>(context);
     final showAlpha = styleValue(
         defaultValue: true,
         themeValue: componentTheme?.showAlpha,
@@ -293,7 +293,7 @@ class _ColorInputState extends State<VNLColorInput>
     final promptMode = styleValue(
         themeValue: componentTheme?.mode,
         widgetValue: widget.promptMode,
-        defaultValue: PromptMode.popover);
+        defaultValue: VNLPromptMode.popover);
     final enableEyeDropper = styleValue(
         defaultValue: true,
         themeValue: componentTheme?.enableEyeDropper,
@@ -301,7 +301,7 @@ class _ColorInputState extends State<VNLColorInput>
     final initialMode = styleValue(
         themeValue: componentTheme?.pickerMode,
         widgetValue: widget.initialMode,
-        defaultValue: ColorPickerMode.rgb);
+        defaultValue: VNLColorPickerMode.rgb);
     final orientation = styleValue(
         defaultValue: null,
         themeValue: componentTheme?.orientation,
@@ -313,7 +313,7 @@ class _ColorInputState extends State<VNLColorInput>
     return ObjectFormField(
       value: widget.value,
       placeholder: widget.placeholder ?? Text(locale.placeholderColorPicker),
-      immediateValueChange: promptMode == PromptMode.popover ? false : null,
+      immediateValueChange: promptMode == VNLPromptMode.popover ? false : null,
       onChanged: (color) {
         if (color != null) {
           widget.onChanged?.call(color);
@@ -329,13 +329,13 @@ class _ColorInputState extends State<VNLColorInput>
       popoverPadding: popoverPadding,
       mode: promptMode,
       density:
-          promptMode == PromptMode.popover ? ButtonDensity.iconDense : null,
+          promptMode == VNLPromptMode.popover ? VNLButtonDensity.iconDense : null,
       enabled: widget.enabled,
       builder: (context, value) {
         if (!showLabel) {
           return Container(
             key: const Key('color_input_preview'),
-            constraints: promptMode == PromptMode.popover
+            constraints: promptMode == VNLPromptMode.popover
                 ? BoxConstraints(
                     minWidth: 28 * theme.scaling,
                     minHeight: 28 * theme.scaling,
@@ -408,16 +408,16 @@ class _ColorInputState extends State<VNLColorInput>
               return AnimatedSize(
                 duration: kDefaultDuration,
                 curve: Curves.easeInOut,
-                child: ColorPicker(
+                child: VNLColorPicker(
                   // force rebuild when showHistory changes
                   key: ValueKey(_showHistoryNotifier.value),
                   value: handler.value ??
                       VNLColorDerivative.fromColor(Color(0x00000000)),
                   initialShowHistory: _showHistoryNotifier.value,
                   enableEyeDropper:
-                      promptMode == PromptMode.popover && enableEyeDropper,
+                      promptMode == VNLPromptMode.popover && enableEyeDropper,
                   showHistoryButton:
-                      showHistory && promptMode == PromptMode.popover,
+                      showHistory && promptMode == VNLPromptMode.popover,
                   onChanging: (color) {
                     widget.onChanging?.call(color);
                     setState(() {
@@ -562,7 +562,7 @@ class VNLControlledColorInput extends StatelessWidget
   final Widget? placeholder;
 
   /// The prompt display mode for the color picker.
-  final PromptMode? promptMode;
+  final VNLPromptMode? promptMode;
 
   /// Title widget for the dialog mode.
   final Widget? dialogTitle;
@@ -577,7 +577,7 @@ class VNLControlledColorInput extends StatelessWidget
   final bool? enableEyeDropper;
 
   /// The initial color picker mode to display.
-  final ColorPickerMode? initialMode;
+  final VNLColorPickerMode? initialMode;
 
   /// Callback invoked while the color is being changed (live updates).
   final ValueChanged<VNLColorDerivative>? onChanging;

@@ -7,7 +7,7 @@ import 'misc.dart';
 /// Provides a labeled header row that toggles visibility of sub-items. Intended
 /// for hierarchical navigation structures, especially in vertical sidebars or
 /// rails.
-class NavigationCollapsible extends StatefulWidget {
+class VNLNavigationCollapsible extends StatefulWidget {
   /// Optional leading widget for the group header.
   final Widget? leading;
 
@@ -57,10 +57,10 @@ class NavigationCollapsible extends StatefulWidget {
   final bool? enabled;
 
   /// How to handle label overflow.
-  final NavigationOverflow overflow;
+  final VNLNavigationOverflow overflow;
 
-  /// Creates a [NavigationCollapsible].
-  const NavigationCollapsible({
+  /// Creates a [VNLNavigationCollapsible].
+  const VNLNavigationCollapsible({
     super.key,
     this.leading,
     required this.label,
@@ -78,14 +78,14 @@ class NavigationCollapsible extends StatefulWidget {
     this.spacing,
     this.alignment,
     this.enabled,
-    this.overflow = NavigationOverflow.marquee,
+    this.overflow = VNLNavigationOverflow.marquee,
   });
 
   @override
-  State<NavigationCollapsible> createState() => _NavigationCollapsibleState();
+  State<VNLNavigationCollapsible> createState() => _NavigationCollapsibleState();
 }
 
-class _NavigationCollapsibleState extends State<NavigationCollapsible> {
+class _NavigationCollapsibleState extends State<VNLNavigationCollapsible> {
   late bool _expanded;
 
   bool get _isExpanded => widget.expanded ?? _expanded;
@@ -97,7 +97,7 @@ class _NavigationCollapsibleState extends State<NavigationCollapsible> {
   }
 
   @override
-  void didUpdateWidget(covariant NavigationCollapsible oldWidget) {
+  void didUpdateWidget(covariant VNLNavigationCollapsible oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.expanded != null && widget.expanded != oldWidget.expanded) {
       _expanded = widget.expanded ?? _expanded;
@@ -137,7 +137,7 @@ class _NavigationCollapsibleState extends State<NavigationCollapsible> {
     final scaling = theme.scaling;
     final densityGap = theme.density.baseGap * scaling;
     final depth = [VNLTreeNodeDepth(childIndex, childCount)];
-    final compTheme = ComponentTheme.maybeOf<TreeTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLTreeTheme>(context);
     final branchLine =
         widget.branchLine ?? compTheme?.branchLine ?? VNLBranchLine.line;
     final guideIndex = branchLine is VNLIndentGuideLine ? 1 : 0;
@@ -184,41 +184,41 @@ class _NavigationCollapsibleState extends State<NavigationCollapsible> {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
     final densityGap = theme.density.baseGap * scaling;
-    final labelType = data?.parentLabelType ?? NavigationLabelType.none;
+    final labelType = data?.parentLabelType ?? VNLNavigationLabelType.none;
     final direction = data?.direction ?? Axis.vertical;
-    final showLabel = labelType == NavigationLabelType.all ||
-        (labelType == NavigationLabelType.expanded && data?.expanded == true);
-    final canShowLabel = labelType == NavigationLabelType.expanded ||
-        labelType == NavigationLabelType.all ||
-        labelType == NavigationLabelType.selected;
+    final showLabel = labelType == VNLNavigationLabelType.all ||
+        (labelType == VNLNavigationLabelType.expanded && data?.expanded == true);
+    final canShowLabel = labelType == VNLNavigationLabelType.expanded ||
+        labelType == VNLNavigationLabelType.all ||
+        labelType == VNLNavigationLabelType.selected;
     final label = DefaultTextStyle.merge(
       textAlign: TextAlign.center,
-      child: NavigationChildOverflowHandle(
+      child: VNLNavigationChildOverflowHandle(
         overflow: widget.overflow,
-        child: data?.parentLabelSize == NavigationLabelSize.small
+        child: data?.parentLabelSize == VNLNavigationLabelSize.small
             ? widget.label.xSmall
             : widget.label,
       ),
     );
-    final content = NavigationLabeled(
+    final content = VNLNavigationLabeled(
       label: label,
       showLabel: showLabel,
       labelType: labelType,
       direction: direction,
       keepMainAxisSize: (data?.keepMainAxisSize ?? false) && canShowLabel,
       keepCrossAxisSize: (data?.keepCrossAxisSize ?? false) && canShowLabel,
-      position: data?.parentLabelPosition ?? NavigationLabelPosition.bottom,
+      position: data?.parentLabelPosition ?? VNLNavigationLabelPosition.bottom,
       spacing: widget.spacing ?? densityGap,
       child: widget.leading ?? const SizedBox.shrink(),
     );
 
     VNLAbstractButtonStyle style = widget.style ??
-        (data?.containerType != NavigationContainerType.sidebar
-            ? const VNLButtonStyle.ghost(density: ButtonDensity.icon)
+        (data?.containerType != VNLNavigationContainerType.sidebar
+            ? const VNLButtonStyle.ghost(density: VNLButtonDensity.icon)
             : const VNLButtonStyle.ghost());
     VNLAbstractButtonStyle selectedStyle = widget.selectedStyle ??
-        (data?.containerType != NavigationContainerType.sidebar
-            ? const VNLButtonStyle.secondary(density: ButtonDensity.icon)
+        (data?.containerType != VNLNavigationContainerType.sidebar
+            ? const VNLButtonStyle.secondary(density: VNLButtonDensity.icon)
             : const VNLButtonStyle.secondary());
 
     final hasChildren = widget.children.isNotEmpty;
@@ -266,9 +266,9 @@ class _NavigationCollapsibleState extends State<NavigationCollapsible> {
       style: style,
       selectedStyle: selectedStyle,
       alignment: widget.alignment ??
-          (data?.containerType == NavigationContainerType.sidebar &&
+          (data?.containerType == VNLNavigationContainerType.sidebar &&
                   data?.labelDirection == Axis.horizontal
-              ? (data?.parentLabelPosition == NavigationLabelPosition.start
+              ? (data?.parentLabelPosition == VNLNavigationLabelPosition.start
                   ? AlignmentDirectional.centerEnd
                   : AlignmentDirectional.centerStart)
               : null),
@@ -280,7 +280,7 @@ class _NavigationCollapsibleState extends State<NavigationCollapsible> {
       ),
     );
 
-    if (labelType == NavigationLabelType.tooltip) {
+    if (labelType == VNLNavigationLabelType.tooltip) {
       AlignmentGeometry alignment = Alignment.topCenter;
       AlignmentGeometry anchorAlignment = Alignment.bottomCenter;
       if (direction == Axis.vertical) {
@@ -333,7 +333,7 @@ class _NavigationCollapsibleState extends State<NavigationCollapsible> {
     final indentPadding = _indentForDirection(indent, direction);
 
     final parentExpanded = data?.expanded ?? true;
-    if (data?.containerType == NavigationContainerType.sidebar) {
+    if (data?.containerType == VNLNavigationContainerType.sidebar) {
       final decoratedChildren = <Widget>[];
       for (var i = 0; i < children.length; i++) {
         decoratedChildren.add(

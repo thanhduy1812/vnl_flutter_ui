@@ -8,9 +8,9 @@ class NavigationRailExample1 extends StatefulWidget {
 }
 
 class _NavigationRailExample1State extends State<NavigationRailExample1> {
-  NavigationRailAlignment alignment = NavigationRailAlignment.start;
-  NavigationLabelType labelType = NavigationLabelType.none;
-  NavigationLabelPosition labelPosition = NavigationLabelPosition.bottom;
+  VNLNavigationRailAlignment alignment = VNLNavigationRailAlignment.start;
+  VNLNavigationLabelType labelType = VNLNavigationLabelType.none;
+  VNLNavigationLabelPosition labelPosition = VNLNavigationLabelPosition.bottom;
   bool customButtonStyle = false;
   bool expanded = true;
 
@@ -20,10 +20,10 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
     return VNLNavigationItem(
       selected: selected == label,
       style: customButtonStyle
-          ? const VNLButtonStyle.muted(density: ButtonDensity.icon)
+          ? const VNLButtonStyle.muted(density: VNLButtonDensity.icon)
           : null,
       selectedStyle: customButtonStyle
-          ? const VNLButtonStyle.fixed(density: ButtonDensity.icon)
+          ? const VNLButtonStyle.fixed(density: VNLButtonDensity.icon)
           : null,
       onChanged: (selected) {
         if (selected) {
@@ -39,7 +39,7 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return VNLScaffold(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -53,7 +53,7 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
               buildButton('Explore', BootstrapIcons.compass),
               buildButton('Library', BootstrapIcons.musicNoteList),
               const VNLNavigationDivider(),
-              NavigationGroup(
+              VNLNavigationGroup(
                 label: const Text('Settings'),
                 children: [
                   buildButton('Profile', BootstrapIcons.person),
@@ -80,13 +80,13 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                   spacing: 8,
                   children: [
                     // Alignment of items within the rail.
-                    Select<NavigationRailAlignment>(
+                    Select<VNLNavigationRailAlignment>(
                       value: alignment,
                       itemBuilder:
-                          (BuildContext context, NavigationRailAlignment item) {
+                          (BuildContext context, VNLNavigationRailAlignment item) {
                         return Text(item.name);
                       },
-                      popupWidthConstraint: PopoverConstraint.anchorFixedSize,
+                      popupWidthConstraint: VNLPopoverConstraint.anchorFixedSize,
                       onChanged: (value) {
                         if (value != null) {
                           setState(() {
@@ -96,7 +96,7 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                       },
                       popup: SelectPopup(
                           items: VNLSelectItemList(children: [
-                        for (var value in NavigationRailAlignment.values)
+                        for (var value in VNLNavigationRailAlignment.values)
                           SelectItemButton(
                             value: value,
                             child: Text(value.name),
@@ -104,10 +104,10 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                       ])),
                     ),
                     // VNLLabel visibility behavior for each destination.
-                    Select<NavigationLabelType>(
+                    Select<VNLNavigationLabelType>(
                       value: labelType,
                       itemBuilder:
-                          (BuildContext context, NavigationLabelType item) {
+                          (BuildContext context, VNLNavigationLabelType item) {
                         return Text(item.name);
                       },
                       popupConstraints:
@@ -122,7 +122,7 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                       popup: SelectPopup(
                         items: VNLSelectItemList(
                           children: [
-                            for (var value in NavigationLabelType.values)
+                            for (var value in VNLNavigationLabelType.values)
                               SelectItemButton(
                                 value: value,
                                 child: Text(value.name),
@@ -132,10 +132,10 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                       ),
                     ),
                     // Where the label appears relative to the icon.
-                    Select<NavigationLabelPosition>(
+                    Select<VNLNavigationLabelPosition>(
                       value: labelPosition,
                       itemBuilder:
-                          (BuildContext context, NavigationLabelPosition item) {
+                          (BuildContext context, VNLNavigationLabelPosition item) {
                         return Text(item.name);
                       },
                       onChanged: (value) {
@@ -148,7 +148,7 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                       popup: SelectPopup(
                         items: VNLSelectItemList(
                           children: [
-                            for (var value in NavigationLabelPosition.values)
+                            for (var value in VNLNavigationLabelPosition.values)
                               SelectItemButton(
                                 value: value,
                                 child: Text(value.name),
@@ -160,11 +160,11 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                     // VNLToggle custom vs default button styles for normal/selected.
                     VNLCheckbox(
                       state: customButtonStyle
-                          ? CheckboxState.checked
-                          : CheckboxState.unchecked,
+                          ? VNLCheckboxState.checked
+                          : VNLCheckboxState.unchecked,
                       onChanged: (value) {
                         setState(() {
-                          customButtonStyle = value == CheckboxState.checked;
+                          customButtonStyle = value == VNLCheckboxState.checked;
                         });
                       },
                       trailing: const Text('Custom VNLButton Style'),
@@ -172,11 +172,11 @@ class _NavigationRailExample1State extends State<NavigationRailExample1> {
                     // Whether the rail is in expanded mode (shows labels, etc.).
                     VNLCheckbox(
                       state: expanded
-                          ? CheckboxState.checked
-                          : CheckboxState.unchecked,
+                          ? VNLCheckboxState.checked
+                          : VNLCheckboxState.unchecked,
                       onChanged: (value) {
                         setState(() {
-                          expanded = value == CheckboxState.checked;
+                          expanded = value == VNLCheckboxState.checked;
                         });
                       },
                       trailing: const Text('Expanded'),

@@ -287,7 +287,7 @@ class _OutlinedContainerState extends State<VNLOutlinedContainer> {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLOutlinedContainerTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLOutlinedContainerTheme>(context);
     var borderRadius = styleValue(
       defaultValue: theme.borderRadiusXl,
       themeValue: compTheme?.borderRadius,
@@ -357,7 +357,7 @@ class _OutlinedContainerState extends State<VNLOutlinedContainer> {
         decoration: BoxDecoration(
           borderRadius: subtractByBorder(borderRadius, borderWidth),
         ),
-        child: DensityContainerPadding(padding: padding, child: widget.child),
+        child: VNLDensityContainerPadding(padding: padding, child: widget.child),
       ),
     );
     if (surfaceBlur != null && surfaceBlur > 0) {

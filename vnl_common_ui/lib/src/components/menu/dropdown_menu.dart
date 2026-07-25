@@ -62,8 +62,8 @@ OverlayCompleter<T?> showDropdown<T>({
   required WidgetBuilder builder,
   Offset? position,
   AlignmentGeometry? anchorAlignment,
-  PopoverConstraint widthConstraint = PopoverConstraint.flexible,
-  PopoverConstraint heightConstraint = PopoverConstraint.flexible,
+  VNLPopoverConstraint widthConstraint = VNLPopoverConstraint.flexible,
+  VNLPopoverConstraint heightConstraint = VNLPopoverConstraint.flexible,
   Key? key,
   bool rootOverlay = true,
   bool modal = true,
@@ -256,7 +256,7 @@ class _DropdownMenuState extends State<VNLDropdownMenu> {
     final densityContentPadding =
         theme.density.baseContentPadding * theme.scaling;
     final isSheetOverlay = VNLSheetOverlayHandler.isSheetOverlay(context);
-    final compTheme = ComponentTheme.maybeOf<VNLDropdownMenuTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLDropdownMenuTheme>(context);
     return ConstrainedBox(
       constraints: const BoxConstraints(
         minWidth: 192,

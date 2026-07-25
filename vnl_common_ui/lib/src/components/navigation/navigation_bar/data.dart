@@ -5,7 +5,7 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 /// This enum provides various alignment strategies for positioning navigation
 /// items within the available space, corresponding to Flutter's MainAxisAlignment
 /// options but specifically tailored for navigation contexts.
-enum NavigationBarAlignment {
+enum VNLNavigationBarAlignment {
   /// Align items to the start of the navigation bar.
   start(MainAxisAlignment.start),
 
@@ -27,15 +27,15 @@ enum NavigationBarAlignment {
   /// The corresponding MainAxisAlignment value.
   final MainAxisAlignment mainAxisAlignment;
 
-  /// Creates a NavigationBarAlignment with the associated MainAxisAlignment.
-  const NavigationBarAlignment(this.mainAxisAlignment);
+  /// Creates a VNLNavigationBarAlignment with the associated MainAxisAlignment.
+  const VNLNavigationBarAlignment(this.mainAxisAlignment);
 }
 
 /// Enumeration defining alignment options for navigation rail items.
 ///
 /// This enum provides alignment strategies specifically for navigation rails,
 /// which are typically vertical navigation components.
-enum NavigationRailAlignment {
+enum VNLNavigationRailAlignment {
   /// Align items to the start (top) of the rail.
   start,
 
@@ -50,7 +50,7 @@ enum NavigationRailAlignment {
 ///
 /// This enum identifies the different navigation layout modes available,
 /// each with distinct visual presentations and interaction patterns.
-enum NavigationContainerType {
+enum VNLNavigationContainerType {
   /// Vertical rail navigation, typically positioned at the side.
   rail,
 
@@ -62,7 +62,7 @@ enum NavigationContainerType {
 }
 
 /// Determines when labels are shown in navigation items.
-enum NavigationLabelType {
+enum VNLNavigationLabelType {
   /// No labels displayed.
   none,
 
@@ -80,7 +80,7 @@ enum NavigationLabelType {
 }
 
 /// Position of navigation item labels relative to icons.
-enum NavigationLabelPosition {
+enum VNLNavigationLabelPosition {
   /// VNLLabel before icon (left in LTR, right in RTL)
   start,
 
@@ -95,7 +95,7 @@ enum NavigationLabelPosition {
 }
 
 /// Size variant for navigation item labels.
-enum NavigationLabelSize {
+enum VNLNavigationLabelSize {
   /// Compact label text
   small,
 
@@ -110,16 +110,16 @@ enum NavigationLabelSize {
 /// behavior across navigation items.
 class VNLNavigationControlData {
   /// Type of navigation container (bar, rail, etc.).
-  final NavigationContainerType containerType;
+  final VNLNavigationContainerType containerType;
 
   /// VNLLabel display type from parent container.
-  final NavigationLabelType parentLabelType;
+  final VNLNavigationLabelType parentLabelType;
 
   /// VNLLabel position relative to icon from parent.
-  final NavigationLabelPosition parentLabelPosition;
+  final VNLNavigationLabelPosition parentLabelPosition;
 
   /// VNLLabel size variant from parent.
-  final NavigationLabelSize parentLabelSize;
+  final VNLNavigationLabelSize parentLabelSize;
 
   /// Padding applied by parent container.
   final EdgeInsets parentPadding;
@@ -152,8 +152,8 @@ class VNLNavigationControlData {
   ///
   /// Returns horizontal for start/end positions, vertical for top/bottom.
   Axis get labelDirection {
-    return parentLabelPosition == NavigationLabelPosition.start ||
-            parentLabelPosition == NavigationLabelPosition.end
+    return parentLabelPosition == VNLNavigationLabelPosition.start ||
+            parentLabelPosition == VNLNavigationLabelPosition.end
         ? Axis.horizontal
         : Axis.vertical;
   }
@@ -161,10 +161,10 @@ class VNLNavigationControlData {
   /// Creates navigation control data.
   ///
   /// Parameters:
-  /// - [containerType] (NavigationContainerType, required): Container type
-  /// - [parentLabelType] (NavigationLabelType, required): VNLLabel display type
-  /// - [parentLabelPosition] (NavigationLabelPosition, required): VNLLabel position
-  /// - [parentLabelSize] (NavigationLabelSize, required): VNLLabel size variant
+  /// - [containerType] (VNLNavigationContainerType, required): Container type
+  /// - [parentLabelType] (VNLNavigationLabelType, required): VNLLabel display type
+  /// - [parentLabelPosition] (VNLNavigationLabelPosition, required): VNLLabel position
+  /// - [parentLabelSize] (VNLNavigationLabelSize, required): VNLLabel size variant
   /// - [parentPadding] (EdgeInsets, required): Container padding
   /// - [direction] (Axis, required): Layout direction
   /// - [selectedKey] (Key?): Selected item key

@@ -207,7 +207,7 @@ class VNLScrollableClient extends StatelessWidget {
     assert(axisDirectionToAxis(horizontalDetails.direction) == Axis.horizontal,
         'TwoDimensionalScrollView.horizontalDetails are not Axis.horizontal.');
 
-    final compTheme = ComponentTheme.maybeOf<VNLScrollableClientTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLScrollableClientTheme>(context);
     final diag = diagonalDragBehavior ??
         compTheme?.diagonalDragBehavior ??
         DiagonalDragBehavior.none;
@@ -302,7 +302,7 @@ class VNLScrollableClientViewport extends TwoDimensionalViewport {
     required super.horizontalAxisDirection,
     required super.delegate,
     required super.mainAxis,
-    super.cacheExtent,
+    super.scrollCacheExtent,
     super.clipBehavior = Clip.hardEdge,
     required this.overscroll,
   });
@@ -317,7 +317,7 @@ class VNLScrollableClientViewport extends TwoDimensionalViewport {
       delegate: delegate,
       mainAxis: mainAxis,
       childManager: context as TwoDimensionalChildManager,
-      cacheExtent: cacheExtent,
+      scrollCacheExtent: scrollCacheExtent,
       clipBehavior: clipBehavior,
       overscroll: overscroll,
     );
@@ -340,7 +340,7 @@ class VNLRenderScrollableClientViewport extends RenderTwoDimensionalViewport {
     required super.delegate,
     required super.mainAxis,
     required super.childManager,
-    super.cacheExtent,
+    super.scrollCacheExtent,
     super.clipBehavior = Clip.hardEdge,
     required this.overscroll,
   });

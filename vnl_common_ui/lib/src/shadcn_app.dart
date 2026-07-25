@@ -60,7 +60,7 @@ class VNLookApp extends StatefulWidget {
     this.pixelSnap = true,
     this.enableScrollInterception = true,
     this.darkTheme,
-    this.themeMode = ThemeMode.system,
+    this.themeMode = VNLThemeMode.system,
     this.popoverHandler,
     this.tooltipHandler,
     this.menuHandler,
@@ -112,7 +112,7 @@ class VNLookApp extends StatefulWidget {
     this.pixelSnap = true,
     this.enableScrollInterception = false,
     this.darkTheme,
-    this.themeMode = ThemeMode.system,
+    this.themeMode = VNLThemeMode.system,
     this.popoverHandler,
     this.tooltipHandler,
     this.menuHandler,
@@ -189,7 +189,7 @@ class VNLookApp extends StatefulWidget {
   final ThemeData? darkTheme;
 
   /// Determines which theme will be used by the app.
-  final ThemeMode themeMode;
+  final VNLThemeMode themeMode;
 
   /// The primary color to use for the app's widgets.
   final Color? color;
@@ -581,7 +581,7 @@ class VNLookLayer extends StatelessWidget {
   final ThemeData? darkTheme;
 
   /// Determines which theme to use.
-  final ThemeMode themeMode;
+  final VNLThemeMode themeMode;
 
   /// The scaling strategy for adaptive layouts.
   final AdaptiveScaling? scaling;
@@ -625,7 +625,7 @@ class VNLookLayer extends StatelessWidget {
     this.builder,
     this.enableScrollInterception = false,
     this.darkTheme,
-    this.themeMode = ThemeMode.system,
+    this.themeMode = VNLThemeMode.system,
     this.popoverHandler,
     this.tooltipHandler,
     this.menuHandler,
@@ -634,12 +634,12 @@ class VNLookLayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appScaling = scaling ?? AdaptiveScaler.defaultScaling(theme);
+    var appScaling = scaling ?? VNLAdaptiveScaler.defaultScaling(theme);
     var platformBrightness = MediaQuery.platformBrightnessOf(context);
     var mobileMode = isMobile(theme.platform);
     var hasShadcnApp = Data.maybeOf<_VNLookAppState>(context) != null;
-    final scaledTheme = themeMode == ThemeMode.dark ||
-            (themeMode == ThemeMode.system &&
+    final scaledTheme = themeMode == VNLThemeMode.dark ||
+            (themeMode == VNLThemeMode.system &&
                 platformBrightness == Brightness.dark)
         ? appScaling.scale(darkTheme ?? theme)
         : appScaling.scale(theme);
@@ -663,7 +663,7 @@ class VNLookLayer extends StatelessWidget {
           var theme = Theme.of(context);
           var scrollViewInterceptor = VNLScrollViewInterceptor(
             enabled: enableScrollInterception,
-            child: ShadcnSkeletonizerConfigLayer(
+            child: VNLShadcnSkeletonizerConfigLayer(
               theme: theme,
               child: DefaultTextStyle.merge(
                 style: theme.typography.base.copyWith(
@@ -677,7 +677,7 @@ class VNLookLayer extends StatelessWidget {
                     initialRecentColors: initialRecentColors,
                     maxRecentColors: maxRecentColors,
                     onRecentColorsChanged: onRecentColorsChanged,
-                    child: EyeDropperLayer(
+                    child: VNLEyeDropperLayer(
                       child: VNLKeyboardShortcutDisplayMapper(
                         child: VNLToastLayer(
                           child: builder != null
@@ -745,7 +745,7 @@ class VNLookAnimatedTheme extends StatelessWidget {
         child: child,
       );
     }
-    return AnimatedTheme(
+    return VNLAnimatedTheme(
       data: data,
       duration: duration,
       curve: curve,

@@ -7,11 +7,11 @@ import '../../../shadcn_flutter.dart';
 /// It integrates with the shadcn_flutter theming system to ensure consistent
 /// styling across code display components.
 ///
-/// Used with [ComponentTheme] to apply theme values throughout the widget tree.
+/// Used with [VNLComponentTheme] to apply theme values throughout the widget tree.
 ///
 /// Example:
 /// ```dart
-/// ComponentTheme<VNLCodeSnippetTheme>(
+/// VNLComponentTheme<VNLCodeSnippetTheme>(
 ///   data: VNLCodeSnippetTheme(
 ///     backgroundColor: VNLColors.grey.shade900,
 ///     borderColor: VNLColors.grey.shade700,
@@ -291,7 +291,7 @@ class _CodeSnippetState extends State<VNLCodeSnippet> {
     final densityGap = theme.density.baseGap * theme.scaling;
     final densityContentPadding =
         theme.density.baseContentPadding * theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLCodeSnippetTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLCodeSnippetTheme>(context);
     final backgroundColor = styleValue(
       themeValue: compTheme?.backgroundColor,
       defaultValue: theme.colorScheme.card,
@@ -348,7 +348,7 @@ class _CodeSnippetState extends State<VNLCodeSnippet> {
                 ...widget.actions,
                 // if (wid)
                 // VNLGhostButton(
-                //   density: ButtonDensity.icon,
+                //   density: VNLButtonDensity.icon,
                 //   onPressed: () {
                 //     // Clipboard.setData(ClipboardData(text: widget.code))
                 //     //     .then((value) {

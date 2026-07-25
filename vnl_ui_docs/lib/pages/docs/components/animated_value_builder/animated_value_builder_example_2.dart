@@ -51,7 +51,7 @@ class _AnimatedValueBuilderExample2State
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 setState(() {
                   // Change the target color to trigger a new tween.
@@ -61,7 +61,7 @@ class _AnimatedValueBuilderExample2State
               child: const Text('Change Color'),
             ),
             const Gap(24),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 setState(() {
                   // Force the AnimatedValueBuilder to restart by changing the key.

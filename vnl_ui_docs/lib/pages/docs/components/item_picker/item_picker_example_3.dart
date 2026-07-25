@@ -30,7 +30,7 @@ class _ItemPickerExample3State extends State<ItemPickerExample3> {
   int selectedColor = 0;
   @override
   Widget build(BuildContext context) {
-    return PrimaryButton(
+    return VNLPrimaryButton(
       onPressed: () {
         showItemPickerDialog<NamedColor>(
           context,
@@ -41,10 +41,10 @@ class _ItemPickerExample3State extends State<ItemPickerExample3> {
             return ItemPickerOption(
               value: item,
               selectedStyle: const VNLButtonStyle.primary(
-                shape: ButtonShape.circle,
+                shape: VNLButtonShape.circle,
               ),
               style: const VNLButtonStyle.ghost(
-                shape: ButtonShape.circle,
+                shape: VNLButtonShape.circle,
               ),
               label: Text(item.name),
               child: Container(

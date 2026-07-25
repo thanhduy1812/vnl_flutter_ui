@@ -42,7 +42,7 @@ class _RepeatedAnimationBuilderExample3State
           },
         ),
         const Gap(24),
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             setState(() {
               // VNLToggle the 'play' flag, which starts/stops the animation.

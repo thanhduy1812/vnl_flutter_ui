@@ -13,49 +13,49 @@ class _ChatExample2State extends State<ChatExample2> {
     return Column(
       spacing: 8,
       children: [
-        // ChatGroup example
-        ChatGroup(
+        // VNLChatGroup example
+        VNLChatGroup(
           color: VNLColors.blue,
           type:
-              ChatBubbleType.tail.copyWith(position: () => AxisDirectional.end),
+              VNLChatBubbleType.tail.copyWith(position: () => AxisDirectional.end),
           alignment: AxisAlignmentDirectional.end,
           children: const [
-            ChatBubble(
+            VNLChatBubble(
                 child: Text(
                     'John, did you remember what time you took the call with Mrs. Smith?')),
-            ChatBubble(child: Text('Reply ASAP')),
+            VNLChatBubble(child: Text('Reply ASAP')),
           ],
         ),
-        ChatGroup(
+        VNLChatGroup(
           color: VNLColors.gray,
           avatarPrefix: const VNLAvatar(initials: 'JO'),
           alignment: AxisAlignmentDirectional.start,
-          type: ChatBubbleType.tail.copyWith(
+          type: VNLChatBubbleType.tail.copyWith(
               position: () => AxisDirectional.start,
               tailAlignment: () => AxisAlignmentDirectional.end),
           children: const [
-            ChatBubble(child: Text('Around 6 or 7?')),
-            ChatBubble(child: Text('New phone who dis?')),
+            VNLChatBubble(child: Text('Around 6 or 7?')),
+            VNLChatBubble(child: Text('New phone who dis?')),
           ],
         ),
-        ChatBubble(
+        VNLChatBubble(
           color: VNLColors.blue,
           alignment: AxisAlignmentDirectional.end,
           type:
-              ChatBubbleType.tail.copyWith(position: () => AxisDirectional.end),
+              VNLChatBubbleType.tail.copyWith(position: () => AxisDirectional.end),
           child: const Text('SIX SEVENNN 🤤🤪'),
         ),
-        ChatGroup(
+        VNLChatGroup(
           color: VNLColors.gray,
           avatarPrefix: const VNLAvatar(initials: 'JO'),
           alignment: AxisAlignmentDirectional.start,
-          type: ChatBubbleType.tail.copyWith(
+          type: VNLChatBubbleType.tail.copyWith(
               position: () => AxisDirectional.start,
               tailAlignment: () => AxisAlignmentDirectional.end),
           children: const [
-            ChatBubble(child: Text('?')),
-            ChatBubble(child: Text('Seriously who is this')),
-            ChatBubble(child: Text('gonna have to block you')),
+            VNLChatBubble(child: Text('?')),
+            VNLChatBubble(child: Text('Seriously who is this')),
+            VNLChatBubble(child: Text('gonna have to block you')),
           ],
         ),
       ],

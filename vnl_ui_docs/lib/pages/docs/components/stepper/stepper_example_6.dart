@@ -19,7 +19,7 @@ class _StepperExample6State extends State<StepperExample6> {
     'Circle Alt',
     'Line',
   ];
-  static const List<StepSize> _stepSize = StepSize.values;
+  static const List<VNLStepSize> _stepSize = VNLStepSize.values;
   static const List<String> _stepSizeNames = [
     'Small',
     'Medium',
@@ -100,11 +100,11 @@ class _StepperExample6State extends State<StepperExample6> {
               animation: controller,
               builder: (context, child) {
                 return VNLToggle(
-                  value: controller.value.stepStates[1] == StepState.failed,
+                  value: controller.value.stepStates[1] == VNLStepState.failed,
                   onChanged: (value) {
                     if (value) {
                       // Mark step 2 as failed to demo error state.
-                      controller.setStatus(1, StepState.failed);
+                      controller.setStatus(1, VNLStepState.failed);
                     } else {
                       controller.setStatus(1, null);
                     }
@@ -131,7 +131,7 @@ class _StepperExample6State extends State<StepperExample6> {
                     const VNLSecondaryButton(
                       child: Text('Prev'),
                     ),
-                    PrimaryButton(
+                    VNLPrimaryButton(
                         child: const Text('Next'),
                         onPressed: () {
                           controller.nextStep();
@@ -158,7 +158,7 @@ class _StepperExample6State extends State<StepperExample6> {
                         controller.previousStep();
                       },
                     ),
-                    PrimaryButton(
+                    VNLPrimaryButton(
                         child: const Text('Next'),
                         onPressed: () {
                           controller.nextStep();
@@ -182,7 +182,7 @@ class _StepperExample6State extends State<StepperExample6> {
                         controller.previousStep();
                       },
                     ),
-                    PrimaryButton(
+                    VNLPrimaryButton(
                         child: const Text('Finish'),
                         onPressed: () {
                           controller.nextStep();

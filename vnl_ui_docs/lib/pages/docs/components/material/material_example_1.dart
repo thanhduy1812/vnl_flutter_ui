@@ -52,7 +52,7 @@ class _MaterialExample1State extends State<MaterialExample1> {
                   const Text(
                       'You can also use shadcn_flutter widgets inside Material widgets'),
                   const shadcnui.Gap(16),
-                  shadcnui.PrimaryButton(
+                  shadcnui.VNLPrimaryButton(
                     onPressed: () {
                       // Show a native Material dialog
                       showDialog(
@@ -87,7 +87,7 @@ class _MaterialExample1State extends State<MaterialExample1> {
                             content:
                                 const Text('This is shadcn_flutter dialog'),
                             actions: [
-                              shadcnui.PrimaryButton(
+                              shadcnui.VNLPrimaryButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },

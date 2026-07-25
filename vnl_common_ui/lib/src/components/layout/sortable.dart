@@ -29,13 +29,13 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 ///   child: Column(
 ///     children: [
 ///       Sortable<String>(
-///         data: SortableData('Item 1'),
+///         data: VNLSortableData('Item 1'),
 ///         onAcceptTop: (data) => reorderAbove(data.data),
 ///         onAcceptBottom: (data) => reorderBelow(data.data),
 ///         child: VNLCard(child: Text('Item 1')),
 ///       ),
 ///       Sortable<String>(
-///         data: SortableData('Item 2'),
+///         data: VNLSortableData('Item 2'),
 ///         onAcceptTop: (data) => reorderAbove(data.data),
 ///         onAcceptBottom: (data) => reorderBelow(data.data),
 ///         child: VNLCard(child: Text('Item 2')),
@@ -47,55 +47,55 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 class Sortable<T> extends StatefulWidget {
   /// Predicate to determine if data can be accepted when dropped above this widget.
   ///
-  /// Type: `Predicate<SortableData<T>>?`. If null, drops from the top are not accepted.
+  /// Type: `Predicate<VNLSortableData<T>>?`. If null, drops from the top are not accepted.
   /// Called before [onAcceptTop] to validate the drop operation.
-  final Predicate<SortableData<T>>? canAcceptTop;
+  final Predicate<VNLSortableData<T>>? canAcceptTop;
 
   /// Predicate to determine if data can be accepted when dropped to the left of this widget.
   ///
-  /// Type: `Predicate<SortableData<T>>?`. If null, drops from the left are not accepted.
+  /// Type: `Predicate<VNLSortableData<T>>?`. If null, drops from the left are not accepted.
   /// Called before [onAcceptLeft] to validate the drop operation.
-  final Predicate<SortableData<T>>? canAcceptLeft;
+  final Predicate<VNLSortableData<T>>? canAcceptLeft;
 
   /// Predicate to determine if data can be accepted when dropped to the right of this widget.
   ///
-  /// Type: `Predicate<SortableData<T>>?`. If null, drops from the right are not accepted.
+  /// Type: `Predicate<VNLSortableData<T>>?`. If null, drops from the right are not accepted.
   /// Called before [onAcceptRight] to validate the drop operation.
-  final Predicate<SortableData<T>>? canAcceptRight;
+  final Predicate<VNLSortableData<T>>? canAcceptRight;
 
   /// Predicate to determine if data can be accepted when dropped below this widget.
   ///
-  /// Type: `Predicate<SortableData<T>>?`. If null, drops from the bottom are not accepted.
+  /// Type: `Predicate<VNLSortableData<T>>?`. If null, drops from the bottom are not accepted.
   /// Called before [onAcceptBottom] to validate the drop operation.
-  final Predicate<SortableData<T>>? canAcceptBottom;
+  final Predicate<VNLSortableData<T>>? canAcceptBottom;
 
   /// Callback invoked when data is successfully dropped above this widget.
   ///
-  /// Type: `ValueChanged<SortableData<T>>?`. The callback receives the dropped
+  /// Type: `ValueChanged<VNLSortableData<T>>?`. The callback receives the dropped
   /// data and should handle the reordering logic. Only called after [canAcceptTop]
   /// validation passes.
-  final ValueChanged<SortableData<T>>? onAcceptTop;
+  final ValueChanged<VNLSortableData<T>>? onAcceptTop;
 
   /// Callback invoked when data is successfully dropped to the left of this widget.
   ///
-  /// Type: `ValueChanged<SortableData<T>>?`. The callback receives the dropped
+  /// Type: `ValueChanged<VNLSortableData<T>>?`. The callback receives the dropped
   /// data and should handle the reordering logic. Only called after [canAcceptLeft]
   /// validation passes.
-  final ValueChanged<SortableData<T>>? onAcceptLeft;
+  final ValueChanged<VNLSortableData<T>>? onAcceptLeft;
 
   /// Callback invoked when data is successfully dropped to the right of this widget.
   ///
-  /// Type: `ValueChanged<SortableData<T>>?`. The callback receives the dropped
+  /// Type: `ValueChanged<VNLSortableData<T>>?`. The callback receives the dropped
   /// data and should handle the reordering logic. Only called after [canAcceptRight]
   /// validation passes.
-  final ValueChanged<SortableData<T>>? onAcceptRight;
+  final ValueChanged<VNLSortableData<T>>? onAcceptRight;
 
   /// Callback invoked when data is successfully dropped below this widget.
   ///
-  /// Type: `ValueChanged<SortableData<T>>?`. The callback receives the dropped
+  /// Type: `ValueChanged<VNLSortableData<T>>?`. The callback receives the dropped
   /// data and should handle the reordering logic. Only called after [canAcceptBottom]
   /// validation passes.
-  final ValueChanged<SortableData<T>>? onAcceptBottom;
+  final ValueChanged<VNLSortableData<T>>? onAcceptBottom;
 
   /// Callback invoked when a drag operation starts on this widget.
   ///
@@ -123,9 +123,9 @@ class Sortable<T> extends StatefulWidget {
 
   /// The data associated with this sortable item.
   ///
-  /// Type: `SortableData<T>`. Contains the actual data being sorted and provides
+  /// Type: `VNLSortableData<T>`. Contains the actual data being sorted and provides
   /// identity for the drag-and-drop operations.
-  final SortableData<T> data;
+  final VNLSortableData<T> data;
 
   /// Widget displayed in drop zones when this item is being dragged over them.
   ///
@@ -178,17 +178,17 @@ class Sortable<T> extends StatefulWidget {
   ///
   /// Parameters:
   /// - [key] (Key?): Widget identifier for the widget tree
-  /// - [data] (`SortableData<T>`, required): Data associated with this sortable item
+  /// - [data] (`VNLSortableData<T>`, required): Data associated with this sortable item
   /// - [child] (Widget, required): The main widget to make sortable
   /// - [enabled] (bool, default: true): Whether drag interactions are enabled
-  /// - [canAcceptTop] (`Predicate<SortableData<T>>?`, optional): Validation for top drops
-  /// - [canAcceptLeft] (`Predicate<SortableData<T>>?`, optional): Validation for left drops
-  /// - [canAcceptRight] (`Predicate<SortableData<T>>?`, optional): Validation for right drops
-  /// - [canAcceptBottom] (`Predicate<SortableData<T>>?`, optional): Validation for bottom drops
-  /// - [onAcceptTop] (`ValueChanged<SortableData<T>>?`, optional): Handler for top drops
-  /// - [onAcceptLeft] (`ValueChanged<SortableData<T>>?`, optional): Handler for left drops
-  /// - [onAcceptRight] (`ValueChanged<SortableData<T>>?`, optional): Handler for right drops
-  /// - [onAcceptBottom] (`ValueChanged<SortableData<T>>?`, optional): Handler for bottom drops
+  /// - [canAcceptTop] (`Predicate<VNLSortableData<T>>?`, optional): Validation for top drops
+  /// - [canAcceptLeft] (`Predicate<VNLSortableData<T>>?`, optional): Validation for left drops
+  /// - [canAcceptRight] (`Predicate<VNLSortableData<T>>?`, optional): Validation for right drops
+  /// - [canAcceptBottom] (`Predicate<VNLSortableData<T>>?`, optional): Validation for bottom drops
+  /// - [onAcceptTop] (`ValueChanged<VNLSortableData<T>>?`, optional): Handler for top drops
+  /// - [onAcceptLeft] (`ValueChanged<VNLSortableData<T>>?`, optional): Handler for left drops
+  /// - [onAcceptRight] (`ValueChanged<VNLSortableData<T>>?`, optional): Handler for right drops
+  /// - [onAcceptBottom] (`ValueChanged<VNLSortableData<T>>?`, optional): Handler for bottom drops
   /// - [placeholder] (Widget?, default: SizedBox()): Widget shown in drop zones
   /// - [ghost] (Widget?, optional): Widget displayed while dragging
   /// - [fallback] (Widget?, optional): Widget shown at original position during drag
@@ -202,7 +202,7 @@ class Sortable<T> extends StatefulWidget {
   /// Example:
   /// ```dart
   /// Sortable<String>(
-  ///   data: SortableData('item_1'),
+  ///   data: VNLSortableData('item_1'),
   ///   onAcceptTop: (data) => moveAbove(data.data),
   ///   onAcceptBottom: (data) => moveBelow(data.data),
   ///   placeholder: Container(height: 2, color: VNLColors.blue),
@@ -243,7 +243,7 @@ class _SortableDraggingSession<T> {
   final Size size;
   final Widget ghost;
   final Widget placeholder;
-  final SortableData<T> data;
+  final VNLSortableData<T> data;
   final ValueNotifier<Offset> offset;
   final _SortableLayerState layer;
   final RenderBox layerRenderBox;
@@ -310,7 +310,7 @@ _SortableDropLocation? _getPosition(Offset position, Size size,
 
 /// A fallback drop zone for sortable items when dropped outside specific sortable widgets.
 ///
-/// SortableDropFallback provides a catch-all drop zone that can accept sortable
+/// VNLSortableDropFallback provides a catch-all drop zone that can accept sortable
 /// items when they're dropped outside of any specific sortable widget drop zones.
 /// This is useful for implementing deletion zones, creation areas, or general
 /// drop handling areas.
@@ -320,7 +320,7 @@ _SortableDropLocation? _getPosition(Offset position, Size size,
 ///
 /// Example:
 /// ```dart
-/// SortableDropFallback<String>(
+/// VNLSortableDropFallback<String>(
 ///   canAccept: (data) => data.data.startsWith('temp_'),
 ///   onAccept: (data) => deleteItem(data.data),
 ///   child: Container(
@@ -329,19 +329,19 @@ _SortableDropLocation? _getPosition(Offset position, Size size,
 ///   ),
 /// )
 /// ```
-class SortableDropFallback<T> extends StatefulWidget {
+class VNLSortableDropFallback<T> extends StatefulWidget {
   /// Callback invoked when a sortable item is dropped on this fallback zone.
   ///
-  /// Type: `ValueChanged<SortableData<T>>?`. Receives the dropped item's data
+  /// Type: `ValueChanged<VNLSortableData<T>>?`. Receives the dropped item's data
   /// and should handle the drop operation. Only called if [canAccept] validation
   /// passes or is null.
-  final ValueChanged<SortableData<T>>? onAccept;
+  final ValueChanged<VNLSortableData<T>>? onAccept;
 
   /// Predicate to determine if dropped data can be accepted by this fallback zone.
   ///
-  /// Type: `Predicate<SortableData<T>>?`. If null, all sortable items are accepted.
+  /// Type: `Predicate<VNLSortableData<T>>?`. If null, all sortable items are accepted.
   /// Return true to accept the drop, false to reject it.
-  final Predicate<SortableData<T>>? canAccept;
+  final Predicate<VNLSortableData<T>>? canAccept;
 
   /// The child widget that defines the drop zone area.
   ///
@@ -350,7 +350,7 @@ class SortableDropFallback<T> extends StatefulWidget {
   /// for drop detection.
   final Widget child;
 
-  /// Creates a [SortableDropFallback] drop zone.
+  /// Creates a [VNLSortableDropFallback] drop zone.
   ///
   /// Configures a fallback drop zone that can accept sortable items dropped
   /// outside of specific sortable widget drop zones.
@@ -358,18 +358,18 @@ class SortableDropFallback<T> extends StatefulWidget {
   /// Parameters:
   /// - [key] (Key?): Widget identifier for the widget tree
   /// - [child] (Widget, required): The widget that defines the drop zone area
-  /// - [onAccept] (`ValueChanged<SortableData<T>>?`, optional): Handler for accepted drops
-  /// - [canAccept] (`Predicate<SortableData<T>>?`, optional): Validation for drops
+  /// - [onAccept] (`ValueChanged<VNLSortableData<T>>?`, optional): Handler for accepted drops
+  /// - [canAccept] (`Predicate<VNLSortableData<T>>?`, optional): Validation for drops
   ///
   /// Example:
   /// ```dart
-  /// SortableDropFallback<String>(
+  /// VNLSortableDropFallback<String>(
   ///   canAccept: (data) => data.data.contains('removable'),
   ///   onAccept: (data) => removeFromList(data.data),
   ///   child: Icon(Icons.delete, size: 48),
   /// )
   /// ```
-  const SortableDropFallback({
+  const VNLSortableDropFallback({
     super.key,
     required this.child,
     this.onAccept,
@@ -377,11 +377,11 @@ class SortableDropFallback<T> extends StatefulWidget {
   });
 
   @override
-  State<SortableDropFallback<T>> createState() =>
+  State<VNLSortableDropFallback<T>> createState() =>
       _SortableDropFallbackState<T>();
 }
 
-class _SortableDropFallbackState<T> extends State<SortableDropFallback<T>> {
+class _SortableDropFallbackState<T> extends State<VNLSortableDropFallback<T>> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -648,7 +648,7 @@ class _SortableState<T> extends State<Sortable<T>>
     }
   }
 
-  ValueChanged<SortableData<T>>? _getCallback(_SortableDropLocation location) {
+  ValueChanged<VNLSortableData<T>>? _getCallback(_SortableDropLocation location) {
     switch (location) {
       case _SortableDropLocation.top:
         return widget.onAcceptTop;
@@ -661,7 +661,7 @@ class _SortableState<T> extends State<Sortable<T>>
     }
   }
 
-  Predicate<SortableData<T>>? _getPredicate(_SortableDropLocation location) {
+  Predicate<VNLSortableData<T>>? _getPredicate(_SortableDropLocation location) {
     switch (location) {
       case _SortableDropLocation.top:
         return widget.canAcceptTop;
@@ -1014,7 +1014,7 @@ class _SortableState<T> extends State<Sortable<T>>
 /// Example:
 /// ```dart
 /// Sortable<String>(
-///   data: SortableData('item'),
+///   data: VNLSortableData('item'),
 ///   child: Row(
 ///     children: [
 ///       VNLSortableDragHandle(
@@ -1141,7 +1141,7 @@ class _SortableDragHandleState extends State<VNLSortableDragHandle>
 
 /// Immutable data wrapper for sortable items in drag-and-drop operations.
 ///
-/// SortableData wraps the actual data being sorted and provides identity for
+/// VNLSortableData wraps the actual data being sorted and provides identity for
 /// drag-and-drop operations. Each sortable item must have associated data that
 /// uniquely identifies it within the sorting context.
 ///
@@ -1155,23 +1155,23 @@ class _SortableDragHandleState extends State<VNLSortableDragHandle>
 /// Example:
 /// ```dart
 /// // Simple string data
-/// SortableData<String>('item_1')
+/// VNLSortableData<String>('item_1')
 ///
 /// // Complex object data
-/// SortableData<TodoItem>(TodoItem(id: 1, title: 'Task 1'))
+/// VNLSortableData<TodoItem>(TodoItem(id: 1, title: 'Task 1'))
 ///
 /// // Map data
-/// SortableData<Map<String, dynamic>>({'id': 1, 'name': 'Item'})
+/// VNLSortableData<Map<String, dynamic>>({'id': 1, 'name': 'Item'})
 /// ```
 @immutable
-class SortableData<T> {
+class VNLSortableData<T> {
   /// The actual data being wrapped for sorting operations.
   ///
   /// Type: `T`. This is the data that will be passed to drop handlers and
   /// validation predicates. Can be any type that represents the sortable item.
   final T data;
 
-  /// Creates a [SortableData] wrapper for the given data.
+  /// Creates a [VNLSortableData] wrapper for the given data.
   ///
   /// Wraps the provided data in an immutable container that can be used with
   /// sortable widgets for drag-and-drop operations.
@@ -1182,11 +1182,11 @@ class SortableData<T> {
   /// Example:
   /// ```dart
   /// // Wrapping different data types
-  /// SortableData('text_item')
-  /// SortableData(42)
-  /// SortableData(MyCustomObject(id: 1))
+  /// VNLSortableData('text_item')
+  /// VNLSortableData(42)
+  /// VNLSortableData(MyCustomObject(id: 1))
   /// ```
-  const SortableData(this.data);
+  const VNLSortableData(this.data);
 
   @override
   @nonVirtual
@@ -1197,7 +1197,7 @@ class SortableData<T> {
   int get hashCode => super.hashCode;
 
   @override
-  String toString() => 'SortableData($data)';
+  String toString() => 'VNLSortableData($data)';
 }
 
 /// A layer widget that manages drag-and-drop sessions for sortable widgets.
@@ -1346,7 +1346,7 @@ class VNLSortableLayer extends StatefulWidget {
 class _PendingDropTransform {
   final Matrix4 from;
   final Widget child;
-  final SortableData data;
+  final VNLSortableData data;
 
   _PendingDropTransform({
     required this.from,
@@ -1387,7 +1387,7 @@ class _SortableLayerState extends State<VNLSortableLayer>
     return _pendingDrop.value != null && data == _pendingDrop.value!.data;
   }
 
-  _DropTransform? _claimDrop(_SortableState item, SortableData data,
+  _DropTransform? _claimDrop(_SortableState item, VNLSortableData data,
       [bool force = false]) {
     if (_pendingDrop.value != null &&
         (force || data == _pendingDrop.value!.data)) {
@@ -1671,7 +1671,7 @@ class VNLScrollableSortableLayer extends StatefulWidget {
   ///     controller: controller,
   ///     itemCount: items.length,
   ///     itemBuilder: (context, index) => Sortable<Item>(
-  ///       data: SortableData(items[index]),
+  ///       data: VNLSortableData(items[index]),
   ///       child: ItemWidget(items[index]),
   ///     ),
   ///   ),

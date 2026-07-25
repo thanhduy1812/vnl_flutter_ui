@@ -8,26 +8,26 @@ class SortableExample4 extends StatefulWidget {
 }
 
 class _SortableExample4State extends State<SortableExample4> {
-  List<SortableData<String>> names = [
-    const SortableData('James'),
-    const SortableData('John'),
-    const SortableData('Robert'),
-    const SortableData('Michael'),
-    const SortableData('William'),
-    const SortableData('David'),
-    const SortableData('Richard'),
-    const SortableData('Joseph'),
-    const SortableData('Thomas'),
-    const SortableData('Charles'),
-    const SortableData('Daniel'),
-    const SortableData('Matthew'),
-    const SortableData('Anthony'),
-    const SortableData('Donald'),
-    const SortableData('Mark'),
-    const SortableData('Paul'),
-    const SortableData('Steven'),
-    const SortableData('Andrew'),
-    const SortableData('Kenneth'),
+  List<VNLSortableData<String>> names = [
+    const VNLSortableData('James'),
+    const VNLSortableData('John'),
+    const VNLSortableData('Robert'),
+    const VNLSortableData('Michael'),
+    const VNLSortableData('William'),
+    const VNLSortableData('David'),
+    const VNLSortableData('Richard'),
+    const VNLSortableData('Joseph'),
+    const VNLSortableData('Thomas'),
+    const VNLSortableData('Charles'),
+    const VNLSortableData('Daniel'),
+    const VNLSortableData('Matthew'),
+    const VNLSortableData('Anthony'),
+    const VNLSortableData('Donald'),
+    const VNLSortableData('Mark'),
+    const VNLSortableData('Paul'),
+    const VNLSortableData('Steven'),
+    const VNLSortableData('Andrew'),
+    const VNLSortableData('Kenneth'),
   ];
 
   final ScrollController controller = ScrollController();
@@ -39,7 +39,7 @@ class _SortableExample4State extends State<SortableExample4> {
       child: VNLSortableLayer(
         // Constrain drag overlays to the layer bounds so they scroll within the list.
         lock: true,
-        child: SortableDropFallback<int>(
+        child: VNLSortableDropFallback<int>(
           // If dropped outside a specific edge target, append to the end.
           onAccept: (value) {
             setState(() {

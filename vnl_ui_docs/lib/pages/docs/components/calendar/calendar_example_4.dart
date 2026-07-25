@@ -2,7 +2,7 @@ import 'package:vnl_common_ui/vnl_ui.dart';
 
 /// VNLCalendar in read-only mode (no selection).
 ///
-/// [CalendarSelectionMode.none] displays the month grid without allowing
+/// [VNLCalendarSelectionMode.none] displays the month grid without allowing
 /// user selections; useful for a visual calendar-only view.
 class CalendarExample4 extends StatefulWidget {
   const CalendarExample4({super.key});
@@ -26,7 +26,7 @@ class _CalendarExample4State extends State<CalendarExample4> {
             Row(
               children: [
                 VNLOutlineButton(
-                  density: ButtonDensity.icon,
+                  density: VNLButtonDensity.icon,
                   onPressed: () {
                     setState(() {
                       _view = _view.previous;
@@ -36,7 +36,7 @@ class _CalendarExample4State extends State<CalendarExample4> {
                 ),
                 Text('${localizations.getMonth(_view.month)} ${_view.year}').small().medium().center().expanded(),
                 VNLOutlineButton(
-                  density: ButtonDensity.icon,
+                  density: VNLButtonDensity.icon,
                   onPressed: () {
                     setState(() {
                       _view = _view.next;
@@ -57,7 +57,7 @@ class _CalendarExample4State extends State<CalendarExample4> {
               },
               now: DateTime.now(),
               // Disable all selection (view-only).
-              selectionMode: CalendarSelectionMode.none,
+              selectionMode: VNLCalendarSelectionMode.none,
             ),
           ],
         ),

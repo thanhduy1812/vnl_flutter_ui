@@ -86,7 +86,7 @@ class ButtonExample extends StatelessWidget {
           child: ButtonExample10(),
         ),
         WidgetUsageExample(
-          title: 'VNLButton Density Example',
+          title: 'VNLButton VNLDensity Example',
           path: 'lib/pages/docs/components/button/button_example_11.dart',
           child: ButtonExample11(),
         ),

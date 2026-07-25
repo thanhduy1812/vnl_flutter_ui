@@ -20,12 +20,12 @@ class PopoverTile extends StatelessWidget implements IComponentPage {
           children: [
             VNLDatePicker(
               value: DateTime.now(),
-              mode: PromptMode.popover,
+              mode: VNLPromptMode.popover,
               stateBuilder: (date) {
                 if (date.isAfter(DateTime.now())) {
-                  return DateState.disabled;
+                  return VNLDateState.disabled;
                 }
-                return DateState.enabled;
+                return VNLDateState.enabled;
               },
               onChanged: (value) {},
             ),

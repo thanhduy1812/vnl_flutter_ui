@@ -1,9 +1,9 @@
 import 'package:vnl_common_ui/shadcn_flutter.dart';
 /// Provides themed icon container widgets for shadcn_flutter components.
 ///
-/// Includes [IconContainerTheme] and [IconContainer] for styling icons with background, padding, and border radius.
+/// Includes [VNLIconContainerTheme] and [VNLIconContainer] for styling icons with background, padding, and border radius.
 
-class IconContainerTheme extends ComponentThemeData {
+class VNLIconContainerTheme extends ComponentThemeData {
   /// Background color for the icon container.
   final Color? backgroundColor;
   /// Color for the icon inside the container.
@@ -13,21 +13,21 @@ class IconContainerTheme extends ComponentThemeData {
   /// Border radius for the icon container.
   final BorderRadius? borderRadius;
 
-  /// Creates an [IconContainerTheme].
+  /// Creates an [VNLIconContainerTheme].
   ///
   /// Parameters:
   /// - [backgroundColor] (`Color?`, optional): Container background color.
   /// - [iconColor] (`Color?`, optional): Icon color.
   /// - [padding] (`EdgeInsetsGeometry?`, optional): Container padding.
   /// - [borderRadius] (`BorderRadius?`, optional): Container border radius.
-  /// Creates an [IconContainerTheme].
+  /// Creates an [VNLIconContainerTheme].
   ///
   /// Parameters:
   /// - [backgroundColor] (`Color?`, optional): Container background color.
   /// - [iconColor] (`Color?`, optional): Icon color.
   /// - [padding] (`EdgeInsetsGeometry?`, optional): Container padding.
   /// - [borderRadius] (`BorderRadius?`, optional): Container border radius.
-  const IconContainerTheme({
+  const VNLIconContainerTheme({
     this.backgroundColor,
     this.iconColor,
     this.padding,
@@ -35,13 +35,13 @@ class IconContainerTheme extends ComponentThemeData {
   });
 
   /// Returns a copy of this theme with the given fields replaced.
-  IconContainerTheme copyWith({
+  VNLIconContainerTheme copyWith({
     ValueGetter<Color?>? backgroundColor,
     ValueGetter<Color?>? iconColor,
     ValueGetter<EdgeInsetsGeometry?>? padding,
     ValueGetter<BorderRadius?>? borderRadius,
   }) {
-    return IconContainerTheme(
+    return VNLIconContainerTheme(
       backgroundColor:
           backgroundColor != null ? backgroundColor() : this.backgroundColor,
       iconColor: iconColor != null ? iconColor() : this.iconColor,
@@ -54,7 +54,7 @@ class IconContainerTheme extends ComponentThemeData {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is IconContainerTheme &&
+    return other is VNLIconContainerTheme &&
         other.backgroundColor == backgroundColor &&
         other.iconColor == iconColor &&
         other.padding == padding &&
@@ -74,17 +74,17 @@ class IconContainerTheme extends ComponentThemeData {
 
 /// A container widget for displaying an icon with customizable padding, background, and border radius.
 ///
-/// Use [IconContainer] to wrap an icon and apply theme or custom styling.
+/// Use [VNLIconContainer] to wrap an icon and apply theme or custom styling.
 ///
 /// Example:
 /// ```dart
-/// IconContainer(
+/// VNLIconContainer(
 ///   icon: Icon(Icons.star),
 ///   backgroundColor: VNLColors.yellow,
 ///   borderRadius: BorderRadius.circular(8),
 /// )
 /// ```
-class IconContainer extends StatelessWidget {
+class VNLIconContainer extends StatelessWidget {
   /// The icon widget to display.
   final Widget icon;
   /// Padding inside the container.
@@ -95,7 +95,7 @@ class IconContainer extends StatelessWidget {
   final Color? backgroundColor;
   /// Color for the icon.
   final Color? iconColor;
-  /// Creates an [IconContainer].
+  /// Creates an [VNLIconContainer].
   ///
   /// Parameters:
   /// - [icon] (`Widget`, required): Icon widget to display.
@@ -103,7 +103,7 @@ class IconContainer extends StatelessWidget {
   /// - [borderRadius] (`BorderRadius?`, optional): Container border radius.
   /// - [backgroundColor] (`Color?`, optional): Container background color.
   /// - [iconColor] (`Color?`, optional): Icon color.
-  const IconContainer({
+  const VNLIconContainer({
     super.key,
     required this.icon,
     this.padding,
@@ -115,7 +115,7 @@ class IconContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<IconContainerTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLIconContainerTheme>(context);
     return Container(
       padding: styleValue(
           defaultValue: EdgeInsetsDensity.all(padXs)

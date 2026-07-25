@@ -12,7 +12,7 @@ typedef KeyboardShortcutDisplayBuilder = Widget Function(
 );
 
 /// Theme for keyboard shortcut displays.
-class KeyboardShortcutTheme extends ComponentThemeData {
+class VNLKeyboardShortcutTheme extends ComponentThemeData {
   /// Spacing between keys.
   final double? spacing;
 
@@ -22,20 +22,20 @@ class KeyboardShortcutTheme extends ComponentThemeData {
   /// Shadow applied to key displays.
   final List<BoxShadow>? keyShadow;
 
-  /// Creates a [KeyboardShortcutTheme].
-  const KeyboardShortcutTheme({
+  /// Creates a [VNLKeyboardShortcutTheme].
+  const VNLKeyboardShortcutTheme({
     this.spacing,
     this.keyPadding,
     this.keyShadow,
   });
 
   /// Creates a copy with the given values replaced.
-  KeyboardShortcutTheme copyWith({
+  VNLKeyboardShortcutTheme copyWith({
     ValueGetter<double?>? spacing,
     ValueGetter<EdgeInsetsGeometry?>? keyPadding,
     ValueGetter<List<BoxShadow>?>? keyShadow,
   }) {
-    return KeyboardShortcutTheme(
+    return VNLKeyboardShortcutTheme(
       spacing: spacing == null ? this.spacing : spacing(),
       keyPadding: keyPadding == null ? this.keyPadding : keyPadding(),
       keyShadow: keyShadow == null ? this.keyShadow : keyShadow(),
@@ -45,7 +45,7 @@ class KeyboardShortcutTheme extends ComponentThemeData {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is KeyboardShortcutTheme &&
+    return other is VNLKeyboardShortcutTheme &&
         other.spacing == spacing &&
         other.keyPadding == keyPadding &&
         listEquals(other.keyShadow, keyShadow);
@@ -244,7 +244,7 @@ class VNLKeyboardDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<KeyboardShortcutTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLKeyboardShortcutTheme>(context);
     var keys = _keys ?? shortcutActivatorToKeySet(_activator!);
     final spacing = styleValue(
         widgetValue: this.spacing,
@@ -325,7 +325,7 @@ class VNLKeyboardKeyDisplay extends StatelessWidget {
     final displayMapper = Data.of<VNLKeyboardShortcutDisplayHandle>(context);
     final theme = Theme.of(context);
     final directionality = Directionality.of(context);
-    final compTheme = ComponentTheme.maybeOf<KeyboardShortcutTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLKeyboardShortcutTheme>(context);
     final padding = styleValue(
                 widgetValue: this.padding,
                 themeValue: compTheme?.keyPadding,

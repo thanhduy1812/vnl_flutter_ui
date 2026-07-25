@@ -40,7 +40,7 @@ class _WindowExample1State extends State<WindowExample1> {
             ),
           ),
         ),
-        PrimaryButton(
+        VNLPrimaryButton(
           child: const Text('Add VNLWindow'),
           onPressed: () {
             // Push a new window via the navigator; title uses the current count.

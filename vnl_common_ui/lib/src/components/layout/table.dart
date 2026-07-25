@@ -11,11 +11,11 @@ import 'package:vnl_common_ui/src/resizer.dart';
 /// It integrates with the shadcn_flutter theming system to ensure consistent
 /// table styling throughout an application.
 ///
-/// Used with [ComponentTheme] to apply theme values throughout the widget tree.
+/// Used with [VNLComponentTheme] to apply theme values throughout the widget tree.
 ///
 /// Example:
 /// ```dart
-/// ComponentTheme<VNLTableTheme>(
+/// VNLComponentTheme<VNLTableTheme>(
 ///   data: VNLTableTheme(
 ///     border: Border.all(color: VNLColors.grey.shade300),
 ///     borderRadius: BorderRadius.circular(8.0),
@@ -648,7 +648,7 @@ class VNLResizableTableController extends ChangeNotifier {
 /// Defines how table cells should resize.
 ///
 /// Determines the behavior when a table cell is resized by the user.
-enum TableCellResizeMode {
+enum VNLTableCellResizeMode {
   /// The cell size will expand when resized
   expand,
 
@@ -688,10 +688,10 @@ class VNLResizableTable extends StatefulWidget {
   final Clip clipBehavior;
 
   /// Resize mode for column widths.
-  final TableCellResizeMode cellWidthResizeMode;
+  final VNLTableCellResizeMode cellWidthResizeMode;
 
   /// Resize mode for row heights.
-  final TableCellResizeMode cellHeightResizeMode;
+  final VNLTableCellResizeMode cellHeightResizeMode;
 
   /// Configuration for frozen (non-scrolling) rows and columns.
   final VNLFrozenTableData? frozenCells;
@@ -712,8 +712,8 @@ class VNLResizableTable extends StatefulWidget {
   /// - [controller] (`VNLResizableTableController`, required): Resize controller.
   /// - [theme] (`VNLResizableTableTheme?`, optional): VNLTable theme.
   /// - [clipBehavior] (`Clip`, default: `Clip.hardEdge`): Clipping behavior.
-  /// - [cellWidthResizeMode] (`TableCellResizeMode`, default: `reallocate`): Column resize mode.
-  /// - [cellHeightResizeMode] (`TableCellResizeMode`, default: `expand`): Row resize mode.
+  /// - [cellWidthResizeMode] (`VNLTableCellResizeMode`, default: `reallocate`): Column resize mode.
+  /// - [cellHeightResizeMode] (`VNLTableCellResizeMode`, default: `expand`): Row resize mode.
   /// - [frozenCells] (`VNLFrozenTableData?`, optional): Frozen cell configuration.
   /// - [horizontalOffset] (`double?`, optional): Horizontal scroll offset.
   /// - [verticalOffset] (`double?`, optional): Vertical scroll offset.
@@ -724,8 +724,8 @@ class VNLResizableTable extends StatefulWidget {
     required this.controller,
     this.theme,
     this.clipBehavior = Clip.hardEdge,
-    this.cellWidthResizeMode = TableCellResizeMode.reallocate,
-    this.cellHeightResizeMode = TableCellResizeMode.expand,
+    this.cellWidthResizeMode = VNLTableCellResizeMode.reallocate,
+    this.cellHeightResizeMode = VNLTableCellResizeMode.expand,
     this.frozenCells,
     this.horizontalOffset,
     this.verticalOffset,
@@ -815,9 +815,9 @@ class _ResizableTableState extends State<VNLResizableTable> {
   @override
   Widget build(BuildContext context) {
     VNLResizableTableTheme? resizableTableTheme =
-        widget.theme ?? ComponentTheme.maybeOf<VNLResizableTableTheme>(context);
+        widget.theme ?? VNLComponentTheme.maybeOf<VNLResizableTableTheme>(context);
     VNLTableTheme? tableTheme = resizableTableTheme?.tableTheme ??
-        ComponentTheme.maybeOf<VNLTableTheme>(context);
+        VNLComponentTheme.maybeOf<VNLTableTheme>(context);
     var children = _cells.map((cell) {
       return Data.inherit(
         data: cell,
@@ -877,8 +877,8 @@ typedef _HoverCallback = void Function(bool hover, int index, Axis direction);
 
 class _ResizableTableData {
   final VNLResizableTableController controller;
-  final TableCellResizeMode cellWidthResizeMode;
-  final TableCellResizeMode cellHeightResizeMode;
+  final VNLTableCellResizeMode cellWidthResizeMode;
+  final VNLTableCellResizeMode cellHeightResizeMode;
   final int maxColumn;
   final int maxRow;
 
@@ -1017,7 +1017,7 @@ class _CellResizerState extends State<_CellResizer> {
     return Stack(
       children: [
         // top
-        if (row > 0 && heightMode != TableCellResizeMode.none)
+        if (row > 0 && heightMode != VNLTableCellResizeMode.none)
           Positioned(
             top: -thickness / 2,
             left: 0,
@@ -1036,7 +1036,7 @@ class _CellResizerState extends State<_CellResizer> {
                 behavior: HitTestBehavior.translucent,
                 onVerticalDragStart: _onDragStartRow,
                 onVerticalDragUpdate: (details) {
-                  if (heightMode == TableCellResizeMode.reallocate) {
+                  if (heightMode == VNLTableCellResizeMode.reallocate) {
                     _onDragUpdate(row - 1, row, details);
                   } else {
                     widget.controller.resizeRow(
@@ -1075,8 +1075,8 @@ class _CellResizerState extends State<_CellResizer> {
           ),
         // bottom
         if ((row + rowSpan <= tableData.maxRow ||
-                heightMode == TableCellResizeMode.expand) &&
-            heightMode != TableCellResizeMode.none)
+                heightMode == VNLTableCellResizeMode.expand) &&
+            heightMode != VNLTableCellResizeMode.none)
           Positioned(
             bottom: -thickness / 2,
             left: 0,
@@ -1095,7 +1095,7 @@ class _CellResizerState extends State<_CellResizer> {
                 behavior: HitTestBehavior.translucent,
                 onVerticalDragStart: _onDragStartRow,
                 onVerticalDragUpdate: (details) {
-                  if (heightMode == TableCellResizeMode.reallocate) {
+                  if (heightMode == VNLTableCellResizeMode.reallocate) {
                     _onDragUpdate(row + rowSpan - 1, row + rowSpan, details);
                   } else {
                     widget.controller.resizeRow(
@@ -1132,7 +1132,7 @@ class _CellResizerState extends State<_CellResizer> {
             ),
           ),
         // left
-        if (column > 0 && widthMode != TableCellResizeMode.none)
+        if (column > 0 && widthMode != VNLTableCellResizeMode.none)
           Positioned(
             left: -thickness / 2,
             top: 0,
@@ -1151,7 +1151,7 @@ class _CellResizerState extends State<_CellResizer> {
                 behavior: HitTestBehavior.translucent,
                 onHorizontalDragStart: _onDragStartColumn,
                 onHorizontalDragUpdate: (details) {
-                  if (widthMode == TableCellResizeMode.reallocate) {
+                  if (widthMode == VNLTableCellResizeMode.reallocate) {
                     _onDragUpdate(column - 1, column, details);
                   } else {
                     widget.controller.resizeColumn(
@@ -1189,8 +1189,8 @@ class _CellResizerState extends State<_CellResizer> {
           ),
         // right
         if ((column + columnSpan <= tableData.maxColumn ||
-                widthMode == TableCellResizeMode.expand) &&
-            widthMode != TableCellResizeMode.none)
+                widthMode == VNLTableCellResizeMode.expand) &&
+            widthMode != VNLTableCellResizeMode.none)
           Positioned(
             right: -thickness / 2,
             top: 0,
@@ -1209,7 +1209,7 @@ class _CellResizerState extends State<_CellResizer> {
                 behavior: HitTestBehavior.translucent,
                 onHorizontalDragStart: _onDragStartColumn,
                 onHorizontalDragUpdate: (details) {
-                  if (widthMode == TableCellResizeMode.reallocate) {
+                  if (widthMode == VNLTableCellResizeMode.reallocate) {
                     _onDragUpdate(
                         column + columnSpan - 1, column + columnSpan, details);
                   } else {
@@ -1905,7 +1905,7 @@ class VNLTable extends StatefulWidget {
   /// Theme configuration for the table appearance.
   ///
   /// Type: `VNLTableTheme?`. Controls borders, colors, and overall styling.
-  /// If null, uses the default theme from [ComponentTheme].
+  /// If null, uses the default theme from [VNLComponentTheme].
   final VNLTableTheme? theme;
 
   /// Configuration for frozen cells during scrolling.
@@ -2023,7 +2023,7 @@ class _TableState extends State<VNLTable> {
   @override
   Widget build(BuildContext context) {
     VNLTableTheme? tableTheme =
-        widget.theme ?? ComponentTheme.maybeOf<VNLTableTheme>(context);
+        widget.theme ?? VNLComponentTheme.maybeOf<VNLTableTheme>(context);
     return Container(
       clipBehavior: widget.clipBehavior,
       decoration: BoxDecoration(

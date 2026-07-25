@@ -1,4 +1,3 @@
-library vnl_ui;
 
 // Preferred public entrypoint (VNL prefix).
 //

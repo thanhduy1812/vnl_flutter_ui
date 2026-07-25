@@ -213,7 +213,7 @@ class VNLStageContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<VNLStageContainerTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLStageContainerTheme>(context);
     final VNLStageBreakpoint breakpoint = compTheme?.breakpoint ?? this.breakpoint;
     final EdgeInsets padding = styleValue(
       defaultValue: this.padding,

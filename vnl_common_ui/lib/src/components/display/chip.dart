@@ -64,7 +64,7 @@ class VNLChipButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLChipTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLChipTheme>(context);
     final padding = styleValue(
       themeValue: compTheme?.padding,
       defaultValue: EdgeInsets.zero,
@@ -185,7 +185,7 @@ class VNLChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLChipTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLChipTheme>(context);
     final baseStyle = style ?? compTheme?.style ?? VNLButtonVariance.secondary;
     return VNLButton(
       style: baseStyle.copyWith(

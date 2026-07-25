@@ -3,7 +3,7 @@ import 'package:vnl_common_ui/vnl_ui.dart';
 /// VNLCalendar with range selection mode.
 ///
 /// Demonstrates navigating months using a custom header and binding
-/// a [VNLCalendarValue] for a date range via [CalendarSelectionMode.range].
+/// a [VNLCalendarValue] for a date range via [VNLCalendarSelectionMode.range].
 class CalendarExample1 extends StatefulWidget {
   const CalendarExample1({super.key});
 
@@ -28,7 +28,7 @@ class _CalendarExample1State extends State<CalendarExample1> {
             Row(
               children: [
                 VNLOutlineButton(
-                  density: ButtonDensity.icon,
+                  density: VNLButtonDensity.icon,
                   onPressed: () {
                     setState(() {
                       // Move the calendar view to the previous month.
@@ -39,7 +39,7 @@ class _CalendarExample1State extends State<CalendarExample1> {
                 ),
                 Text('${localizations.getMonth(_view.month)} ${_view.year}').small().medium().center().expanded(),
                 VNLOutlineButton(
-                  density: ButtonDensity.icon,
+                  density: VNLButtonDensity.icon,
                   onPressed: () {
                     setState(() {
                       // Move the calendar view to the next month.
@@ -60,7 +60,7 @@ class _CalendarExample1State extends State<CalendarExample1> {
                 });
               },
               // Range selection allows choosing a start and end date.
-              selectionMode: CalendarSelectionMode.range,
+              selectionMode: VNLCalendarSelectionMode.range,
             ),
           ],
         ),

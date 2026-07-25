@@ -124,7 +124,7 @@ class _CodeBlockFutureBuilderState extends State<CodeBlockFutureBuilder> {
             mode: widget.mode,
             actions: [
               VNLGhostButton(
-                density: ButtonDensity.icon,
+                density: VNLButtonDensity.icon,
                 onPressed: _refresh,
                 child: const Icon(
                   Icons.refresh,
@@ -141,7 +141,7 @@ class _CodeBlockFutureBuilderState extends State<CodeBlockFutureBuilder> {
               mode: widget.mode,
               actions: [
                 VNLGhostButton(
-                  density: ButtonDensity.icon,
+                  density: VNLButtonDensity.icon,
                   onPressed: () {
                     // open in new tab
                     String url =
@@ -162,7 +162,7 @@ class _CodeBlockFutureBuilderState extends State<CodeBlockFutureBuilder> {
             mode: widget.mode,
             actions: [
               VNLGhostButton(
-                density: ButtonDensity.icon,
+                density: VNLButtonDensity.icon,
                 onPressed: () {
                   // open in new tab
                   //https://github.com/sunarya-thito/shadcn_flutter/blob/master/docs/lib/pages/docs/layout_page/layout_page_example_1.dart

@@ -2,7 +2,7 @@ import 'package:vnl_common_ui/vnl_ui.dart';
 
 /// VNLAlertDialog demo with a trigger button.
 ///
-/// Tapping the [PrimaryButton] opens a Material [showDialog] that
+/// Tapping the [VNLPrimaryButton] opens a Material [showDialog] that
 /// contains an [VNLAlertDialog] with a title, content, and action buttons.
 /// The actions simply dismiss the dialog using [Navigator.pop].
 class AlertDialogExample1 extends StatelessWidget {
@@ -10,7 +10,7 @@ class AlertDialogExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PrimaryButton(
+    return VNLPrimaryButton(
       child: const Text('Click Here'),
       onPressed: () {
         // Standard Flutter API to present a dialog above the current route.
@@ -30,7 +30,7 @@ class AlertDialogExample1 extends StatelessWidget {
                   },
                 ),
                 // Primary action to accept/confirm.
-                PrimaryButton(
+                VNLPrimaryButton(
                   child: const Text('OK'),
                   onPressed: () {
                     // Close the dialog. In real apps, perform work before closing.

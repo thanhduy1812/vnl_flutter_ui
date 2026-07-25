@@ -46,7 +46,7 @@ class DialogTile extends StatelessWidget implements IComponentPage {
           ),
         ),
         actions: [
-          PrimaryButton(
+          VNLPrimaryButton(
             child: const Text('Save changes'),
             onPressed: () {},
           ),

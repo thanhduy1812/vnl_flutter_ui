@@ -7,5 +7,5 @@ extension ThemeExtension on BuildContext {
 
   /// Get component theme
   T? componentTheme<T extends ComponentThemeData>() =>
-      ComponentTheme.maybeOf<T>(this);
+      VNLComponentTheme.maybeOf<T>(this);
 }

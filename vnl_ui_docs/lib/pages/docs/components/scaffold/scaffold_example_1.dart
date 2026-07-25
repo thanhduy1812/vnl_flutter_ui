@@ -8,7 +8,7 @@ class ScaffoldExample1 extends StatefulWidget {
 }
 
 class _ScaffoldExample1State extends State<ScaffoldExample1> {
-  // Simple counter to demonstrate updating content inside the Scaffold body.
+  // Simple counter to demonstrate updating content inside the VNLScaffold body.
   int _counter = 0;
 
   void _incrementCounter() {
@@ -19,29 +19,29 @@ class _ScaffoldExample1State extends State<ScaffoldExample1> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return VNLScaffold(
       // Show an indeterminate progress indicator in the header area (for demo purposes).
       loadingProgressIndeterminate: true,
       headers: [
-        AppBar(
+        VNLAppBar(
           title: const Text('Counter App'),
           subtitle: const Text('A simple counter app'),
           leading: [
             VNLOutlineButton(
               onPressed: () {},
-              density: ButtonDensity.icon,
+              density: VNLButtonDensity.icon,
               child: const Icon(Icons.menu),
             ),
           ],
           trailing: [
             VNLOutlineButton(
               onPressed: () {},
-              density: ButtonDensity.icon,
+              density: VNLButtonDensity.icon,
               child: const Icon(Icons.search),
             ),
             VNLOutlineButton(
               onPressed: () {},
-              density: ButtonDensity.icon,
+              density: VNLButtonDensity.icon,
               child: const Icon(Icons.add),
             ),
           ],
@@ -58,9 +58,9 @@ class _ScaffoldExample1State extends State<ScaffoldExample1> {
             Text(
               '$_counter',
             ).h1(),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: _incrementCounter,
-              density: ButtonDensity.icon,
+              density: VNLButtonDensity.icon,
               child: const Icon(Icons.add),
             ).p(),
           ],

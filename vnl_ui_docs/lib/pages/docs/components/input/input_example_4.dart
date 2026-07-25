@@ -12,7 +12,7 @@ class InputExample4 extends StatelessWidget {
         label: const Text('Username'),
         // Async validator simulating server-side availability check.
         // Returns `false` (invalid) when the username is taken.
-        validator: ConditionalValidator((value) async {
+        validator: VNLConditionalValidator((value) async {
           // Simulate a network delay for demonstration purposes
           await Future.delayed(const Duration(seconds: 1));
           return !['sunarya-thito', 'septogeddon', 'admin'].contains(value);

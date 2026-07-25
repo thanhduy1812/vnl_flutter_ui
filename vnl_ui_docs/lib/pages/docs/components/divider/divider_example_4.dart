@@ -31,7 +31,7 @@ class DividerExample4 extends StatelessWidget {
               padding: EdgeInsets.zero,
               child: VNLIconButton.outline(
                 icon: const Icon(Icons.arrow_back_ios_new),
-                shape: ButtonShape.circle,
+                shape: VNLButtonShape.circle,
                 size: VNLButtonSize.small,
                 onPressed: () {},
               ),

@@ -1,8 +1,8 @@
 import 'package:vnl_common_ui/shadcn_flutter.dart';
 
-/// AppBar with header, title, subtitle, and action buttons.
+/// VNLAppBar with header, title, subtitle, and action buttons.
 ///
-/// Demonstrates the structure of [AppBar] and how to provide leading and
+/// Demonstrates the structure of [VNLAppBar] and how to provide leading and
 /// trailing actions using outline-styled icon buttons.
 class AppBarExample1 extends StatelessWidget {
   const AppBarExample1({super.key});
@@ -11,7 +11,7 @@ class AppBarExample1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return VNLOutlinedContainer(
       clipBehavior: Clip.antiAlias,
-      child: AppBar(
+      child: VNLAppBar(
         // Optional top line above the main title area.
         header: const Text('This is Header'),
         // Primary title and an optional subtitle.
@@ -20,7 +20,7 @@ class AppBarExample1 extends StatelessWidget {
         leading: [
           // Leading actions typically appear on the left.
           VNLOutlineButton(
-            density: ButtonDensity.icon,
+            density: VNLButtonDensity.icon,
             onPressed: () {},
             child: const Icon(Icons.arrow_back),
           ),
@@ -28,12 +28,12 @@ class AppBarExample1 extends StatelessWidget {
         trailing: [
           // Trailing actions typically appear on the right.
           VNLOutlineButton(
-            density: ButtonDensity.icon,
+            density: VNLButtonDensity.icon,
             onPressed: () {},
             child: const Icon(Icons.search),
           ),
           VNLOutlineButton(
-            density: ButtonDensity.icon,
+            density: VNLButtonDensity.icon,
             onPressed: () {},
             child: const Icon(Icons.more_vert),
           ),

@@ -27,7 +27,7 @@ class _SwitcherExample1State extends State<SwitcherExample1> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        PrimaryButton(
+        VNLPrimaryButton(
             child: Text(
                 'VNLSwitch Direction (${directions[directionIndex % directions.length]})'),
             onPressed: () {
@@ -36,7 +36,7 @@ class _SwitcherExample1State extends State<SwitcherExample1> {
               });
             }),
         gap(8),
-        PrimaryButton(
+        VNLPrimaryButton(
             child: const Text('Next Item'),
             onPressed: () {
               setState(() {
@@ -45,7 +45,7 @@ class _SwitcherExample1State extends State<SwitcherExample1> {
             }),
         gap(24),
         ClipRect(
-          child: Switcher(
+          child: VNLSwitcher(
             // The index selects which child is visible; transitions are directional.
             index: index,
             direction: directions[directionIndex % directions.length],

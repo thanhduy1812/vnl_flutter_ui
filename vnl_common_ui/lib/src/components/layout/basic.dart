@@ -193,7 +193,7 @@ class VNLBasic extends StatelessWidget {
     final densityGap = theme.density.baseGap * scaling;
     final densityContainerPadding =
         theme.density.baseContainerPadding * scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLBasicTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLBasicTheme>(context);
     final padding = styleValue(
         widgetValue: this.padding,
         themeValue: compTheme?.padding,
@@ -372,7 +372,7 @@ class VNLBasicLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLBasicTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLBasicTheme>(context);
     final contentSpacing = styleValue(
         widgetValue: this.contentSpacing,
         themeValue: compTheme?.contentSpacing,

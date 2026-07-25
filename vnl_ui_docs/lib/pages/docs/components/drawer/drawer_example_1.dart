@@ -13,15 +13,15 @@ class DrawerExample1 extends StatefulWidget {
 
 class _DrawerExample1State extends State<DrawerExample1> {
   // Sequence of positions to cycle through as drawers are stacked.
-  List<OverlayPosition> positions = [
-    OverlayPosition.end,
-    OverlayPosition.end,
-    OverlayPosition.bottom,
-    OverlayPosition.bottom,
-    OverlayPosition.top,
-    OverlayPosition.top,
-    OverlayPosition.start,
-    OverlayPosition.start,
+  List<VNLOverlayPosition> positions = [
+    VNLOverlayPosition.end,
+    VNLOverlayPosition.end,
+    VNLOverlayPosition.bottom,
+    VNLOverlayPosition.bottom,
+    VNLOverlayPosition.top,
+    VNLOverlayPosition.top,
+    VNLOverlayPosition.start,
+    VNLOverlayPosition.start,
   ];
   // Open a drawer and optionally open another from within it.
   void open(BuildContext context, int count) {
@@ -38,7 +38,7 @@ class _DrawerExample1State extends State<DrawerExample1> {
               children: [
                 Text('Drawer ${count + 1} at ${positions[count % positions.length].name}'),
                 const Gap(16),
-                PrimaryButton(
+                VNLPrimaryButton(
                   onPressed: () {
                     // Open another drawer on top.
                     open(context, count + 1);
@@ -64,7 +64,7 @@ class _DrawerExample1State extends State<DrawerExample1> {
 
   @override
   Widget build(BuildContext context) {
-    return PrimaryButton(
+    return VNLPrimaryButton(
       onPressed: () {
         open(context, 0);
       },

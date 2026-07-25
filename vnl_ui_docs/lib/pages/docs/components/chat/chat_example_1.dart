@@ -18,28 +18,28 @@ class _ChatExample1State extends State<ChatExample1> {
   TailBehavior otherBehavior = TailBehavior.last;
   ChatType type = ChatType.tail;
 
-  ChatBubbleType get selfType => switch (type) {
-        ChatType.tail => ChatBubbleType.tail.copyWith(
+  VNLChatBubbleType get selfType => switch (type) {
+        ChatType.tail => VNLChatBubbleType.tail.copyWith(
             position: () => selfPosition,
             tailAlignment: () => selfTailAlignment,
             tailBehavior: () => selfBehavior,
           ),
-        ChatType.sharpCorner => ChatBubbleType.sharpCorner.copyWith(
+        ChatType.sharpCorner => VNLChatBubbleType.sharpCorner.copyWith(
             tailBehavior: () => selfBehavior,
           ),
-        _ => ChatBubbleType.plain,
+        _ => VNLChatBubbleType.plain,
       };
 
-  ChatBubbleType get otherType => switch (type) {
-        ChatType.tail => ChatBubbleType.tail.copyWith(
+  VNLChatBubbleType get otherType => switch (type) {
+        ChatType.tail => VNLChatBubbleType.tail.copyWith(
             position: () => otherPosition,
             tailAlignment: () => otherTailAlignment,
             tailBehavior: () => otherBehavior,
           ),
-        ChatType.sharpCorner => ChatBubbleType.sharpCorner.copyWith(
+        ChatType.sharpCorner => VNLChatBubbleType.sharpCorner.copyWith(
             tailBehavior: () => otherBehavior,
           ),
-        _ => ChatBubbleType.plain,
+        _ => VNLChatBubbleType.plain,
       };
 
   @override
@@ -47,43 +47,43 @@ class _ChatExample1State extends State<ChatExample1> {
     return Column(
       spacing: 8,
       children: [
-        // ChatGroup example
-        ChatGroup(
+        // VNLChatGroup example
+        VNLChatGroup(
           color: VNLColors.blue,
           type: selfType,
           alignment: selfAlignment,
           children: const [
-            ChatBubble(
+            VNLChatBubble(
                 child: Text(
                     'John, did you remember what time you took the call with Mrs. Smith?')),
-            ChatBubble(child: Text('Reply ASAP')),
+            VNLChatBubble(child: Text('Reply ASAP')),
           ],
         ),
-        ChatGroup(
+        VNLChatGroup(
           color: VNLColors.gray,
           avatarPrefix: const VNLAvatar(initials: 'JO'),
           type: otherType,
           alignment: otherAlignment,
           children: const [
-            ChatBubble(child: Text('Around 6 or 7?')),
-            ChatBubble(child: Text('New phone who dis?')),
+            VNLChatBubble(child: Text('Around 6 or 7?')),
+            VNLChatBubble(child: Text('New phone who dis?')),
           ],
         ),
-        ChatBubble(
+        VNLChatBubble(
           color: VNLColors.blue,
           type: selfType,
           alignment: selfAlignment,
           child: const Text('SIX SEVENNN 🤤🤪'),
         ),
-        ChatGroup(
+        VNLChatGroup(
           color: VNLColors.gray,
           avatarPrefix: const VNLAvatar(initials: 'JO'),
           type: otherType,
           alignment: otherAlignment,
           children: const [
-            ChatBubble(child: Text('?')),
-            ChatBubble(child: Text('Seriously who is this')),
-            ChatBubble(child: Text('gonna have to block you')),
+            VNLChatBubble(child: Text('?')),
+            VNLChatBubble(child: Text('Seriously who is this')),
+            VNLChatBubble(child: Text('gonna have to block you')),
           ],
         ),
         // controls

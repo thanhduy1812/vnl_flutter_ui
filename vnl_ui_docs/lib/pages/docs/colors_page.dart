@@ -85,7 +85,7 @@ class ColorsPageState extends State<ColorsPage> {
             ),
           ),
           actions: [
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -170,11 +170,11 @@ class ColorsPageState extends State<ColorsPage> {
                         alignment: Alignment.topCenter,
                         anchorAlignment: Alignment.bottomCenter,
                         offset: const Offset(0, 8),
-                        widthConstraint: PopoverConstraint.intrinsic,
-                        heightConstraint: PopoverConstraint.intrinsic,
+                        widthConstraint: VNLPopoverConstraint.intrinsic,
+                        heightConstraint: VNLPopoverConstraint.intrinsic,
                         builder: (context) {
                           return VNLSurfaceCard(
-                            child: ColorPicker(
+                            child: VNLColorPicker(
                               value: VNLColorDerivative.fromColor(swatch[shade]),
                               showAlpha: false,
                               onChanged: (value) {
@@ -319,7 +319,7 @@ class ColorsPageState extends State<ColorsPage> {
                           });
                         },
                         size: VNLButtonSize.xSmall,
-                        density: ButtonDensity.icon,
+                        density: VNLButtonDensity.icon,
                         child: const Icon(Icons.edit),
                       ),
                     ],
@@ -485,7 +485,7 @@ class ColorsPageState extends State<ColorsPage> {
                           content: const Text(
                               'Are you sure you want to reset the options?'),
                           actions: [
-                            PrimaryButton(
+                            VNLPrimaryButton(
                               onPressed: () {
                                 setState(() {
                                   _hueShift = _defaultHueShift;

@@ -39,7 +39,7 @@ class VNLNavigationItem extends VNLAbstractNavigationButton {
   /// - [style] (VNLAbstractButtonStyle?): Default style
   /// - [alignment] (AlignmentGeometry?): Content alignment
   /// - [enabled] (bool?): Whether enabled for interaction
-  /// - [overflow] (NavigationOverflow): Overflow behavior
+  /// - [overflow] (VNLNavigationOverflow): Overflow behavior
   /// - [marginAlignment] (AlignmentGeometry?): Margin alignment
   const VNLNavigationItem({
     super.key,
@@ -73,35 +73,35 @@ class _NavigationItemState
     final theme = Theme.of(context);
     final scaling = theme.scaling;
     final densityGap = theme.density.baseGap * scaling;
-    final labelType = data?.parentLabelType ?? NavigationLabelType.none;
+    final labelType = data?.parentLabelType ?? VNLNavigationLabelType.none;
     final direction = data?.direction ?? Axis.vertical;
-    bool showLabel = labelType == NavigationLabelType.all ||
-        (labelType == NavigationLabelType.selected && isSelected) ||
-        (labelType == NavigationLabelType.expanded && data?.expanded == true);
+    bool showLabel = labelType == VNLNavigationLabelType.all ||
+        (labelType == VNLNavigationLabelType.selected && isSelected) ||
+        (labelType == VNLNavigationLabelType.expanded && data?.expanded == true);
 
     VNLAbstractButtonStyle style = widget.style ??
-        (data?.containerType != NavigationContainerType.sidebar
-            ? const VNLButtonStyle.ghost(density: ButtonDensity.icon)
+        (data?.containerType != VNLNavigationContainerType.sidebar
+            ? const VNLButtonStyle.ghost(density: VNLButtonDensity.icon)
             : const VNLButtonStyle.ghost());
     VNLAbstractButtonStyle selectedStyle = widget.selectedStyle ??
-        (data?.containerType != NavigationContainerType.sidebar
-            ? const VNLButtonStyle.secondary(density: ButtonDensity.icon)
+        (data?.containerType != VNLNavigationContainerType.sidebar
+            ? const VNLButtonStyle.secondary(density: VNLButtonDensity.icon)
             : const VNLButtonStyle.secondary());
 
     Widget? label = widget.label == null
         ? const SizedBox.shrink()
         : DefaultTextStyle.merge(
             textAlign: TextAlign.center,
-            child: NavigationChildOverflowHandle(
+            child: VNLNavigationChildOverflowHandle(
               overflow: widget.overflow,
-              child: data?.parentLabelSize == NavigationLabelSize.small
+              child: data?.parentLabelSize == VNLNavigationLabelSize.small
                   ? widget.label!.xSmall()
                   : widget.label!,
             ),
           );
-    var canShowLabel = (labelType == NavigationLabelType.expanded ||
-        labelType == NavigationLabelType.all ||
-        labelType == NavigationLabelType.selected);
+    var canShowLabel = (labelType == VNLNavigationLabelType.expanded ||
+        labelType == VNLNavigationLabelType.all ||
+        labelType == VNLNavigationLabelType.selected);
 
     return VNLSelectedButton(
       value: isSelected,
@@ -116,20 +116,20 @@ class _NavigationItemState
       style: style,
       selectedStyle: selectedStyle,
       alignment: widget.alignment ??
-          (data?.containerType == NavigationContainerType.sidebar &&
+          (data?.containerType == VNLNavigationContainerType.sidebar &&
                   data?.labelDirection == Axis.horizontal
-              ? (data?.parentLabelPosition == NavigationLabelPosition.start
+              ? (data?.parentLabelPosition == VNLNavigationLabelPosition.start
                   ? AlignmentDirectional.centerEnd
                   : AlignmentDirectional.centerStart)
               : null),
-      child: NavigationLabeled(
+      child: VNLNavigationLabeled(
         label: label,
         showLabel: showLabel,
         labelType: labelType,
         direction: direction,
         keepMainAxisSize: (data?.keepMainAxisSize ?? false) && canShowLabel,
         keepCrossAxisSize: (data?.keepCrossAxisSize ?? false) && canShowLabel,
-        position: data?.parentLabelPosition ?? NavigationLabelPosition.bottom,
+        position: data?.parentLabelPosition ?? VNLNavigationLabelPosition.bottom,
         spacing: widget.spacing ?? densityGap,
         child: widget.child,
       ),
@@ -199,29 +199,29 @@ class _NavigationButtonState
     final theme = Theme.of(context);
     final scaling = theme.scaling;
     final densityGap = theme.density.baseGap * scaling;
-    final labelType = data?.parentLabelType ?? NavigationLabelType.none;
+    final labelType = data?.parentLabelType ?? VNLNavigationLabelType.none;
     final direction = data?.direction ?? Axis.vertical;
-    bool showLabel = labelType == NavigationLabelType.all ||
-        (labelType == NavigationLabelType.expanded && data?.expanded == true);
+    bool showLabel = labelType == VNLNavigationLabelType.all ||
+        (labelType == VNLNavigationLabelType.expanded && data?.expanded == true);
     VNLAbstractButtonStyle style = widget.style ??
-        (data?.containerType != NavigationContainerType.sidebar
-            ? const VNLButtonStyle.ghost(density: ButtonDensity.icon)
+        (data?.containerType != VNLNavigationContainerType.sidebar
+            ? const VNLButtonStyle.ghost(density: VNLButtonDensity.icon)
             : const VNLButtonStyle.ghost());
 
     Widget? label = widget.label == null
         ? const SizedBox()
         : DefaultTextStyle.merge(
             textAlign: TextAlign.center,
-            child: NavigationChildOverflowHandle(
+            child: VNLNavigationChildOverflowHandle(
               overflow: widget.overflow,
-              child: data?.parentLabelSize == NavigationLabelSize.small
+              child: data?.parentLabelSize == VNLNavigationLabelSize.small
                   ? widget.label!.xSmall()
                   : widget.label!,
             ),
           );
-    var canShowLabel = (labelType == NavigationLabelType.expanded ||
-        labelType == NavigationLabelType.all ||
-        labelType == NavigationLabelType.selected);
+    var canShowLabel = (labelType == VNLNavigationLabelType.expanded ||
+        labelType == VNLNavigationLabelType.all ||
+        labelType == VNLNavigationLabelType.selected);
     return VNLButton(
       enabled: widget.enabled,
       onPressed: widget.onPressed,
@@ -229,20 +229,20 @@ class _NavigationButtonState
       style: style,
       enableFeedback: widget.enableFeedback,
       alignment: widget.alignment ??
-          (data?.containerType == NavigationContainerType.sidebar &&
+          (data?.containerType == VNLNavigationContainerType.sidebar &&
                   data?.labelDirection == Axis.horizontal
-              ? (data?.parentLabelPosition == NavigationLabelPosition.start
+              ? (data?.parentLabelPosition == VNLNavigationLabelPosition.start
                   ? AlignmentDirectional.centerEnd
                   : AlignmentDirectional.centerStart)
               : null),
-      child: NavigationLabeled(
+      child: VNLNavigationLabeled(
         label: label,
         showLabel: showLabel,
         labelType: labelType,
         direction: direction,
         keepMainAxisSize: (data?.keepMainAxisSize ?? false) && canShowLabel,
         keepCrossAxisSize: (data?.keepCrossAxisSize ?? false) && canShowLabel,
-        position: data?.parentLabelPosition ?? NavigationLabelPosition.bottom,
+        position: data?.parentLabelPosition ?? VNLNavigationLabelPosition.bottom,
         spacing: widget.spacing ?? densityGap,
         child: widget.child,
       ),
@@ -276,7 +276,7 @@ abstract class VNLAbstractNavigationButton extends StatefulWidget {
   final bool? enabled;
 
   /// How to handle label overflow.
-  final NavigationOverflow overflow;
+  final VNLNavigationOverflow overflow;
 
   /// Alignment for margins.
   final AlignmentGeometry? marginAlignment;
@@ -290,7 +290,7 @@ abstract class VNLAbstractNavigationButton extends StatefulWidget {
   /// - [style] (VNLAbstractButtonStyle?): VNLButton style
   /// - [alignment] (AlignmentGeometry?): Content alignment
   /// - [enabled] (bool?): Enabled state
-  /// - [overflow] (NavigationOverflow): Overflow behavior, defaults to marquee
+  /// - [overflow] (VNLNavigationOverflow): Overflow behavior, defaults to marquee
   /// - [marginAlignment] (AlignmentGeometry?): Margin alignment
   const VNLAbstractNavigationButton({
     super.key,
@@ -299,7 +299,7 @@ abstract class VNLAbstractNavigationButton extends StatefulWidget {
     this.style,
     this.alignment,
     this.enabled,
-    this.overflow = NavigationOverflow.marquee,
+    this.overflow = VNLNavigationOverflow.marquee,
     this.marginAlignment,
     required this.child,
   });
@@ -313,11 +313,11 @@ abstract class _AbstractNavigationButtonState<
   @override
   Widget build(BuildContext context) {
     final data = Data.maybeOf<VNLNavigationControlData>(context);
-    if (data?.containerType == NavigationContainerType.sidebar) {
+    if (data?.containerType == VNLNavigationContainerType.sidebar) {
       return buildSliver(context, data);
     }
-    final labelType = data?.parentLabelType ?? NavigationLabelType.none;
-    if (labelType == NavigationLabelType.tooltip) {
+    final labelType = data?.parentLabelType ?? VNLNavigationLabelType.none;
+    if (labelType == VNLNavigationLabelType.tooltip) {
       return buildTooltip(context, data);
     }
     return _buildBox(context, data);
@@ -351,8 +351,8 @@ abstract class _AbstractNavigationButtonState<
     BuildContext context,
     VNLNavigationControlData? data,
   ) {
-    final labelType = data?.parentLabelType ?? NavigationLabelType.none;
-    if (labelType == NavigationLabelType.tooltip) {
+    final labelType = data?.parentLabelType ?? VNLNavigationLabelType.none;
+    if (labelType == VNLNavigationLabelType.tooltip) {
       return SliverToBoxAdapter(child: buildTooltip(context, data));
     }
     return SliverToBoxAdapter(child: _buildBox(context, data));

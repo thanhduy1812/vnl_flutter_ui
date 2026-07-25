@@ -6,7 +6,7 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 /// surface appearance, positioning, and spacing. This theme controls
 /// how navigation menu content is displayed when triggered.
 ///
-/// The theme can be applied through [ComponentTheme] or passed directly
+/// The theme can be applied through [VNLComponentTheme] or passed directly
 /// to individual [VNLNavigationMenu] widgets for customization.
 class VNLNavigationMenuTheme extends ComponentThemeData {
   /// Opacity of the popover surface.
@@ -624,7 +624,7 @@ class VNLNavigationMenuState extends State<VNLNavigationMenu> {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
     final densityGap = theme.density.baseGap * scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLNavigationMenuTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLNavigationMenuTheme>(context);
     _popoverController.show(
       context: context,
       alignment: Alignment.topCenter,
@@ -700,7 +700,7 @@ class VNLNavigationMenuState extends State<VNLNavigationMenu> {
   /// Returns: `Widget` — the popover widget
   Widget buildPopover(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLNavigationMenuTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLNavigationMenuTheme>(context);
     final surfaceOpacity = widget.surfaceOpacity ??
         compTheme?.surfaceOpacity ??
         theme.surfaceOpacity;

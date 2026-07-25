@@ -21,7 +21,7 @@ class ToggleExample2State extends State<ToggleExample2> {
         VNLToggle(
           // Exactly one of three toggles is active at a time.
           value: flag == 0,
-          style: const VNLButtonStyle.outline(density: ButtonDensity.compact),
+          style: const VNLButtonStyle.outline(density: VNLButtonDensity.compact),
           onChanged: (v) {
             setState(() {
               // Activate when pressed; deactivate to clear selection.
@@ -32,7 +32,7 @@ class ToggleExample2State extends State<ToggleExample2> {
         ).sized(width: 40, height: 40),
         VNLToggle(
           value: flag == 1,
-          style: const VNLButtonStyle.outline(density: ButtonDensity.compact),
+          style: const VNLButtonStyle.outline(density: VNLButtonDensity.compact),
           onChanged: (v) {
             setState(() {
               flag = v ? 1 : -1;
@@ -42,7 +42,7 @@ class ToggleExample2State extends State<ToggleExample2> {
         ).sized(width: 40, height: 40),
         VNLToggle(
           value: flag == 2,
-          style: const VNLButtonStyle.outline(density: ButtonDensity.compact),
+          style: const VNLButtonStyle.outline(density: VNLButtonDensity.compact),
           onChanged: (v) {
             setState(() {
               flag = v ? 2 : -1;

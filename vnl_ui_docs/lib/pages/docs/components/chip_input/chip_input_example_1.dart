@@ -1,11 +1,11 @@
 import 'package:vnl_common_ui/vnl_ui.dart';
 
-/// ChipInput with inline autocomplete suggestions.
+/// VNLChipInput with inline autocomplete suggestions.
 ///
 /// Shows how to:
-/// - Listen to a [ChipEditingController] to compute suggestions based on
+/// - Listen to a [VNLChipEditingController] to compute suggestions based on
 ///   the current token being typed (using [textAtCursor]).
-/// - Wrap [ChipInput] with [VNLAutoComplete] to display suggestions.
+/// - Wrap [VNLChipInput] with [VNLAutoComplete] to display suggestions.
 /// - Transform submitted chips (here we prepend '@').
 class ChipInputExample1 extends StatefulWidget {
   const ChipInputExample1({super.key});
@@ -18,7 +18,7 @@ class _ChipInputExample1State extends State<ChipInputExample1> {
   // Current filtered suggestions for the token at the cursor.
   List<String> _suggestions = [];
   // Controller manages both chips and text entry.
-  final ChipEditingController<String> _controller = ChipEditingController();
+  final VNLChipEditingController<String> _controller = VNLChipEditingController();
   // Static suggestion pool to match against.
   static const List<String> _availableSuggestions = [
     'hello world',
@@ -57,7 +57,7 @@ class _ChipInputExample1State extends State<ChipInputExample1> {
         VNLAutoComplete(
           // Provide suggestions to show below the input as the user types.
           suggestions: _suggestions,
-          child: ChipInput<String>(
+          child: VNLChipInput<String>(
             controller: _controller,
             onChipSubmitted: (value) {
               setState(() {

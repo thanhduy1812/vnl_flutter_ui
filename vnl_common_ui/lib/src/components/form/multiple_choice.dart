@@ -1,17 +1,17 @@
 import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 /// Theme data for [MultipleChoice] and [MultipleAnswer].
-class MultipleChoiceTheme extends ComponentThemeData {
+class VNLMultipleChoiceTheme extends ComponentThemeData {
   /// Whether selections can be unselected.
   final bool? allowUnselect;
 
-  /// Creates a [MultipleChoiceTheme].
-  const MultipleChoiceTheme({this.allowUnselect});
+  /// Creates a [VNLMultipleChoiceTheme].
+  const VNLMultipleChoiceTheme({this.allowUnselect});
 
   /// Returns a copy of this theme with the given fields replaced by the
   /// non-null parameters.
-  MultipleChoiceTheme copyWith({ValueGetter<bool?>? allowUnselect}) {
-    return MultipleChoiceTheme(
+  VNLMultipleChoiceTheme copyWith({ValueGetter<bool?>? allowUnselect}) {
+    return VNLMultipleChoiceTheme(
       allowUnselect:
           allowUnselect == null ? this.allowUnselect : allowUnselect(),
     );
@@ -19,13 +19,13 @@ class MultipleChoiceTheme extends ComponentThemeData {
 
   @override
   bool operator ==(Object other) =>
-      other is MultipleChoiceTheme && other.allowUnselect == allowUnselect;
+      other is VNLMultipleChoiceTheme && other.allowUnselect == allowUnselect;
 
   @override
   int get hashCode => allowUnselect.hashCode;
 
   @override
-  String toString() => 'MultipleChoiceTheme(allowUnselect: $allowUnselect)';
+  String toString() => 'VNLMultipleChoiceTheme(allowUnselect: $allowUnselect)';
 }
 
 /// A mixin that provides choice selection functionality.
@@ -66,18 +66,18 @@ mixin Choice<T> {
 ///
 /// Example:
 /// ```dart
-/// final controller = MultipleAnswerController<String>(['option1', 'option2']);
+/// final controller = VNLMultipleAnswerController<String>(['option1', 'option2']);
 /// controller.addListener(() {
 ///   print('Selected items: ${controller.value}');
 /// });
 /// ```
-class MultipleAnswerController<T> extends ValueNotifier<Iterable<T>?>
+class VNLMultipleAnswerController<T> extends ValueNotifier<Iterable<T>?>
     with ComponentController<Iterable<T>?> {
-  /// Creates a [MultipleAnswerController] with an optional initial selection.
+  /// Creates a [VNLMultipleAnswerController] with an optional initial selection.
   ///
   /// Parameters:
   /// - [value] (`Iterable<T>?`, optional): Initial selection of items
-  MultipleAnswerController([super.value]);
+  VNLMultipleAnswerController([super.value]);
 }
 
 /// A controller for managing [ControlledMultipleChoice] selection programmatically.
@@ -89,18 +89,18 @@ class MultipleAnswerController<T> extends ValueNotifier<Iterable<T>?>
 ///
 /// Example:
 /// ```dart
-/// final controller = MultipleChoiceController<String>('option1');
+/// final controller = VNLMultipleChoiceController<String>('option1');
 /// controller.addListener(() {
 ///   print('Selected item: ${controller.value}');
 /// });
 /// ```
-class MultipleChoiceController<T> extends ValueNotifier<T?>
+class VNLMultipleChoiceController<T> extends ValueNotifier<T?>
     with ComponentController<T?> {
-  /// Creates a [MultipleChoiceController] with an optional initial selection.
+  /// Creates a [VNLMultipleChoiceController] with an optional initial selection.
   ///
   /// Parameters:
   /// - [value] (T?, optional): Initial selected item
-  MultipleChoiceController([super.value]);
+  VNLMultipleChoiceController([super.value]);
 }
 
 /// A controlled widget for managing multiple item selections with external state management.
@@ -133,7 +133,7 @@ class MultipleChoiceController<T> extends ValueNotifier<T?>
 class ControlledMultipleAnswer<T> extends StatelessWidget
     with ControlledComponent<Iterable<T>?> {
   @override
-  final MultipleAnswerController<T>? controller;
+  final VNLMultipleAnswerController<T>? controller;
   @override
   final Iterable<T>? initialValue;
   @override
@@ -160,7 +160,7 @@ class ControlledMultipleAnswer<T> extends StatelessWidget
   /// that integrate with the multiple selection system.
   ///
   /// Parameters:
-  /// - [controller] (`MultipleAnswerController<T>?`, optional): External controller for programmatic control
+  /// - [controller] (`VNLMultipleAnswerController<T>?`, optional): External controller for programmatic control
   /// - [initialValue] (`Iterable<T>?`, optional): Initial selection when no controller provided
   /// - [onChanged] (`ValueChanged<Iterable<T>?>?`, optional): Callback for selection changes
   /// - [enabled] (bool, default: true): Whether selections can be modified
@@ -236,7 +236,7 @@ class ControlledMultipleAnswer<T> extends StatelessWidget
 class ControlledMultipleChoice<T> extends StatelessWidget
     with ControlledComponent<T?> {
   @override
-  final MultipleChoiceController<T>? controller;
+  final VNLMultipleChoiceController<T>? controller;
   @override
   final T? initialValue;
   @override
@@ -264,7 +264,7 @@ class ControlledMultipleChoice<T> extends StatelessWidget
   /// that integrate with the single selection system.
   ///
   /// Parameters:
-  /// - [controller] (`MultipleChoiceController<T>?`, optional): External controller for programmatic control
+  /// - [controller] (`VNLMultipleChoiceController<T>?`, optional): External controller for programmatic control
   /// - [initialValue] (T?, optional): Initial selection when no controller provided
   /// - [onChanged] (`ValueChanged<T?>?`, optional): Callback for selection changes
   /// - [enabled] (bool, default: true): Whether selection can be modified
@@ -427,7 +427,7 @@ class _MultipleChoiceState<T> extends State<MultipleChoice<T>>
   }
 
   bool get _allowUnselect {
-    final theme = ComponentTheme.maybeOf<MultipleChoiceTheme>(context);
+    final theme = VNLComponentTheme.maybeOf<VNLMultipleChoiceTheme>(context);
     return widget.allowUnselect ?? theme?.allowUnselect ?? false;
   }
 }
@@ -543,7 +543,7 @@ class _MultipleAnswerState<T> extends State<MultipleAnswer<T>>
   }
 
   bool get _allowUnselect {
-    final theme = ComponentTheme.maybeOf<MultipleChoiceTheme>(context);
+    final theme = VNLComponentTheme.maybeOf<VNLMultipleChoiceTheme>(context);
     return widget.allowUnselect ?? theme?.allowUnselect ?? true;
   }
 }

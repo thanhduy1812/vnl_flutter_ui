@@ -4,7 +4,7 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 ///
 /// Provides visual styling properties for progress indicators including colors,
 /// border radius, and sizing constraints. These properties can be overridden
-/// at the widget level or applied globally via [ComponentTheme].
+/// at the widget level or applied globally via [VNLComponentTheme].
 ///
 /// The theme integrates seamlessly with the design system by leveraging
 /// theme scaling factors and color schemes for consistent visual presentation.
@@ -207,7 +207,7 @@ class VNLProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLProgressTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLProgressTheme>(context);
     return VNLLinearProgressIndicator(
       value: normalizedValue,
       backgroundColor: styleValue(

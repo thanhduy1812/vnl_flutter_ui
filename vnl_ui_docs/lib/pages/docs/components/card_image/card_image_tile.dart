@@ -61,7 +61,7 @@ class CardImageTile extends StatelessWidget implements IComponentPage {
                         ),
                         const Gap(8),
                         Expanded(
-                          child: PrimaryButton(
+                          child: VNLPrimaryButton(
                             onPressed: () {},
                             child: const Text('Action'),
                           ),

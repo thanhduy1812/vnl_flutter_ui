@@ -1009,7 +1009,7 @@ class _WindowWidgetState extends State<VNLWindowWidget> with WindowHandle {
       child: ListenableBuilder(
         listenable: controller,
         builder: (context, child) {
-          final compTheme = ComponentTheme.maybeOf<VNLWindowTheme>(context);
+          final compTheme = VNLComponentTheme.maybeOf<VNLWindowTheme>(context);
           var resizeThickness =
               widget.resizeThickness ?? compTheme?.resizeThickness ?? 8;
           final titleBarHeight =
@@ -2382,7 +2382,7 @@ class _WindowNavigatorState extends State<VNLWindowNavigator>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLWindowTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLWindowTheme>(context);
     final titleBarHeight = (compTheme?.titleBarHeight ?? 32) * theme.scaling;
     return LayoutBuilder(builder: (context, constraints) {
       return ListenableBuilder(

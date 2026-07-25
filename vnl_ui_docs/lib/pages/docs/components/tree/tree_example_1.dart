@@ -129,7 +129,7 @@ class _TreeExample1State extends State<TreeExample1> {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 setState(() {
                   treeItems = treeItems.expandAll();
@@ -138,7 +138,7 @@ class _TreeExample1State extends State<TreeExample1> {
               child: const Text('Expand All'),
             ),
             const Gap(8),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 setState(() {
                   treeItems = treeItems.collapseAll();
@@ -150,20 +150,20 @@ class _TreeExample1State extends State<TreeExample1> {
         ),
         const Gap(8),
         VNLCheckbox(
-          state: expandIcon ? CheckboxState.checked : CheckboxState.unchecked,
+          state: expandIcon ? VNLCheckboxState.checked : VNLCheckboxState.unchecked,
           onChanged: (value) {
             setState(() {
-              expandIcon = value == CheckboxState.checked;
+              expandIcon = value == VNLCheckboxState.checked;
             });
           },
           trailing: const Text('Expand Icon'),
         ),
         const Gap(8),
         VNLCheckbox(
-          state: usePath ? CheckboxState.checked : CheckboxState.unchecked,
+          state: usePath ? VNLCheckboxState.checked : VNLCheckboxState.unchecked,
           onChanged: (value) {
             setState(() {
-              usePath = value == CheckboxState.checked;
+              usePath = value == VNLCheckboxState.checked;
             });
           },
           trailing: const Text('Use Path Branch Line'),
@@ -171,11 +171,11 @@ class _TreeExample1State extends State<TreeExample1> {
         const Gap(8),
         VNLCheckbox(
           state: recursiveSelection
-              ? CheckboxState.checked
-              : CheckboxState.unchecked,
+              ? VNLCheckboxState.checked
+              : VNLCheckboxState.unchecked,
           onChanged: (value) {
             setState(() {
-              recursiveSelection = value == CheckboxState.checked;
+              recursiveSelection = value == VNLCheckboxState.checked;
               if (recursiveSelection) {
                 // Update nodes so parent/child reflect selected state recursively.
                 treeItems = treeItems.updateRecursiveSelection();

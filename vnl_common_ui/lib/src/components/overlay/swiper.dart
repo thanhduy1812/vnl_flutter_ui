@@ -215,7 +215,7 @@ abstract class VNLSwiperHandler {
   DrawerOverlayCompleter openSwiper({
     required BuildContext context,
     required WidgetBuilder builder,
-    required OverlayPosition position,
+    required VNLOverlayPosition position,
     bool? expands,
     bool? draggable,
     bool? barrierDismissible,
@@ -240,7 +240,7 @@ abstract class VNLSwiperHandler {
 /// ```dart
 /// VNLSwiper(
 ///   handler: VNLSwiperHandler.drawer,
-///   position: OverlayPosition.left,
+///   position: VNLOverlayPosition.left,
 ///   builder: (context) => DrawerContent(),
 ///   child: VNLMenuButton(),
 /// )
@@ -253,7 +253,7 @@ class VNLDrawerSwiperHandler extends VNLSwiperHandler {
   DrawerOverlayCompleter openSwiper({
     required BuildContext context,
     required WidgetBuilder builder,
-    required OverlayPosition position,
+    required VNLOverlayPosition position,
     bool? expands,
     bool? draggable,
     bool? barrierDismissible,
@@ -297,7 +297,7 @@ class VNLDrawerSwiperHandler extends VNLSwiperHandler {
 /// ```dart
 /// VNLSwiper(
 ///   handler: VNLSwiperHandler.sheet,
-///   position: OverlayPosition.bottom,
+///   position: VNLOverlayPosition.bottom,
 ///   builder: (context) => BottomSheetContent(),
 ///   child: ActionButton(),
 /// )
@@ -310,7 +310,7 @@ class VNLSheetSwiperHandler extends VNLSwiperHandler {
   DrawerOverlayCompleter openSwiper({
     required BuildContext context,
     required WidgetBuilder builder,
-    required OverlayPosition position,
+    required VNLOverlayPosition position,
     bool? expands,
     bool? draggable,
     bool? barrierDismissible,
@@ -359,9 +359,9 @@ class VNLSheetSwiperHandler extends VNLSwiperHandler {
 /// ```dart
 /// VNLSwiper(
 ///   handler: VNLSwiperHandler.drawer,
-///   position: OverlayPosition.left,
+///   position: VNLOverlayPosition.left,
 ///   builder: (context) => NavigationDrawer(),
-///   child: AppBar(
+///   child: VNLAppBar(
 ///     leading: Icon(Icons.menu),
 ///     title: Text('My App'),
 ///   ),
@@ -372,7 +372,7 @@ class VNLSwiper extends StatefulWidget {
   final bool enabled;
 
   /// Position from which the overlay should appear.
-  final OverlayPosition position;
+  final VNLOverlayPosition position;
 
   /// Builder function that creates the overlay content.
   final WidgetBuilder builder;
@@ -429,7 +429,7 @@ class VNLSwiper extends StatefulWidget {
   ///
   /// Parameters:
   /// - [enabled] (bool, default: true): whether swipe gestures are enabled
-  /// - [position] (OverlayPosition, required): side from which overlay appears
+  /// - [position] (VNLOverlayPosition, required): side from which overlay appears
   /// - [builder] (WidgetBuilder, required): builds the overlay content
   /// - [handler] (VNLSwiperHandler, required): defines overlay behavior (drawer/sheet)
   /// - [child] (Widget, required): widget that responds to swipe gestures
@@ -450,7 +450,7 @@ class VNLSwiper extends StatefulWidget {
   /// Example:
   /// ```dart
   /// VNLSwiper(
-  ///   position: OverlayPosition.bottom,
+  ///   position: VNLOverlayPosition.bottom,
   ///   handler: VNLSwiperHandler.sheet,
   ///   builder: (context) => ActionSheet(),
   ///   child: FloatingActionButton(
@@ -494,18 +494,18 @@ class _SwiperState extends State<VNLSwiper> {
     super.initState();
   }
 
-  OverlayPosition get resolvedPosition {
-    if (widget.position == OverlayPosition.start) {
+  VNLOverlayPosition get resolvedPosition {
+    if (widget.position == VNLOverlayPosition.start) {
       var textDirection = Directionality.of(context);
       return textDirection == TextDirection.ltr
-          ? OverlayPosition.left
-          : OverlayPosition.right;
+          ? VNLOverlayPosition.left
+          : VNLOverlayPosition.right;
     }
-    if (widget.position == OverlayPosition.end) {
+    if (widget.position == VNLOverlayPosition.end) {
       var textDirection = Directionality.of(context);
       return textDirection == TextDirection.ltr
-          ? OverlayPosition.right
-          : OverlayPosition.left;
+          ? VNLOverlayPosition.right
+          : VNLOverlayPosition.left;
     }
     return widget.position;
   }
@@ -516,12 +516,12 @@ class _SwiperState extends State<VNLSwiper> {
       var controller = _activeOverlay!.animationController;
       double delta;
       switch (resolvedPosition) {
-        case OverlayPosition.top:
-        case OverlayPosition.left:
+        case VNLOverlayPosition.top:
+        case VNLOverlayPosition.left:
           delta = details.primaryDelta!;
           break;
-        case OverlayPosition.bottom:
-        case OverlayPosition.right:
+        case VNLOverlayPosition.bottom:
+        case VNLOverlayPosition.right:
           delta = -details.primaryDelta!;
           break;
         default:
@@ -533,8 +533,8 @@ class _SwiperState extends State<VNLSwiper> {
         return;
       }
       double axisSize;
-      if (resolvedPosition == OverlayPosition.top ||
-          resolvedPosition == OverlayPosition.bottom) {
+      if (resolvedPosition == VNLOverlayPosition.top ||
+          resolvedPosition == VNLOverlayPosition.bottom) {
         axisSize = size.height;
       } else {
         axisSize = size.width;
@@ -578,7 +578,7 @@ class _SwiperState extends State<VNLSwiper> {
 
   void _onDragStart(DragStartDetails details) {
     _onDragCancel();
-    final compTheme = ComponentTheme.maybeOf<VNLSwiperTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLSwiperTheme>(context);
     _activeOverlay = widget.handler.openSwiper(
       context: context,
       builder: (context) {
@@ -609,11 +609,11 @@ class _SwiperState extends State<VNLSwiper> {
     required Widget child,
     required bool draggable,
   }) {
-    final compTheme = ComponentTheme.maybeOf<VNLSwiperTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLSwiperTheme>(context);
     final behavior =
         widget.behavior ?? compTheme?.behavior ?? HitTestBehavior.translucent;
-    if (widget.position == OverlayPosition.top ||
-        widget.position == OverlayPosition.bottom) {
+    if (widget.position == VNLOverlayPosition.top ||
+        widget.position == VNLOverlayPosition.bottom) {
       return GestureDetector(
         behavior: behavior,
         onVerticalDragUpdate: draggable ? _onDrag : null,

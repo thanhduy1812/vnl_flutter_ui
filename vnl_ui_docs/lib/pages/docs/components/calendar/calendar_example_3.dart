@@ -2,7 +2,7 @@ import 'package:vnl_common_ui/vnl_ui.dart';
 
 /// VNLCalendar with multi-date selection.
 ///
-/// [CalendarSelectionMode.multi] allows selecting multiple individual days.
+/// [VNLCalendarSelectionMode.multi] allows selecting multiple individual days.
 class CalendarExample3 extends StatefulWidget {
   const CalendarExample3({super.key});
 
@@ -25,7 +25,7 @@ class _CalendarExample3State extends State<CalendarExample3> {
             Row(
               children: [
                 VNLOutlineButton(
-                  density: ButtonDensity.icon,
+                  density: VNLButtonDensity.icon,
                   onPressed: () {
                     setState(() {
                       _view = _view.previous;
@@ -35,7 +35,7 @@ class _CalendarExample3State extends State<CalendarExample3> {
                 ),
                 Text('${localizations.getMonth(_view.month)} ${_view.year}').small().medium().center().expanded(),
                 VNLOutlineButton(
-                  density: ButtonDensity.icon,
+                  density: VNLButtonDensity.icon,
                   onPressed: () {
                     setState(() {
                       _view = _view.next;
@@ -55,7 +55,7 @@ class _CalendarExample3State extends State<CalendarExample3> {
                 });
               },
               // Multi selection lets users toggle arbitrary dates on/off.
-              selectionMode: CalendarSelectionMode.multi,
+              selectionMode: VNLCalendarSelectionMode.multi,
             ),
           ],
         ),

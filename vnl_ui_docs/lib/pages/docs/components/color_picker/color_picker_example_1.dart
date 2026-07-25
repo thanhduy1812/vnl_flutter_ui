@@ -23,7 +23,7 @@ class _ColorPickerExample1State extends State<ColorPickerExample1> {
               // A compact square color input that opens a popover prompt.
               value: color,
               orientation: Axis.horizontal,
-              promptMode: PromptMode.popover,
+              promptMode: VNLPromptMode.popover,
               onChanged: (value) {
                 setState(() {
                   color = value;
@@ -35,7 +35,7 @@ class _ColorPickerExample1State extends State<ColorPickerExample1> {
           VNLColorInput(
             value: color,
             // Full dialog mode with a title.
-            promptMode: PromptMode.dialog,
+            promptMode: VNLPromptMode.dialog,
             dialogTitle: const Text('Select Color'),
             onChanged: (value) {
               setState(() {

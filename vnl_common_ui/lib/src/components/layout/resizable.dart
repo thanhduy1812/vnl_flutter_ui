@@ -6,7 +6,7 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 import 'package:vnl_common_ui/src/resizer.dart';
 
 /// Theme for [VNLHorizontalResizableDragger] and [VNLVerticalResizableDragger].
-class ResizableDraggerTheme extends ComponentThemeData {
+class VNLResizableDraggerTheme extends ComponentThemeData {
   /// Background color of the dragger.
   final Color? color;
 
@@ -25,8 +25,8 @@ class ResizableDraggerTheme extends ComponentThemeData {
   /// Icon color inside the dragger.
   final Color? iconColor;
 
-  /// Creates a [ResizableDraggerTheme].
-  const ResizableDraggerTheme({
+  /// Creates a [VNLResizableDraggerTheme].
+  const VNLResizableDraggerTheme({
     this.color,
     this.borderRadius,
     this.width,
@@ -36,7 +36,7 @@ class ResizableDraggerTheme extends ComponentThemeData {
   });
 
   /// Creates a copy of this theme with the given fields replaced.
-  ResizableDraggerTheme copyWith({
+  VNLResizableDraggerTheme copyWith({
     ValueGetter<Color?>? color,
     ValueGetter<double?>? borderRadius,
     ValueGetter<double?>? width,
@@ -44,7 +44,7 @@ class ResizableDraggerTheme extends ComponentThemeData {
     ValueGetter<double?>? iconSize,
     ValueGetter<Color?>? iconColor,
   }) {
-    return ResizableDraggerTheme(
+    return VNLResizableDraggerTheme(
       color: color == null ? this.color : color(),
       borderRadius: borderRadius == null ? this.borderRadius : borderRadius(),
       width: width == null ? this.width : width(),
@@ -57,7 +57,7 @@ class ResizableDraggerTheme extends ComponentThemeData {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ResizableDraggerTheme &&
+    return other is VNLResizableDraggerTheme &&
         other.color == color &&
         other.borderRadius == borderRadius &&
         other.width == width &&
@@ -80,7 +80,7 @@ class VNLHorizontalResizableDragger extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<ResizableDraggerTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLResizableDraggerTheme>(context);
     final color = styleValue(
         widgetValue: null,
         themeValue: compTheme?.color,
@@ -131,7 +131,7 @@ class VNLVerticalResizableDragger extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<ResizableDraggerTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLResizableDraggerTheme>(context);
     final color = styleValue(
         widgetValue: null,
         themeValue: compTheme?.color,
@@ -180,7 +180,7 @@ class VNLVerticalResizableDragger extends StatelessWidget {
 ///
 /// Used to specify which neighboring panel should be affected when
 /// expanding or collapsing a resizable panel.
-enum PanelSibling {
+enum VNLPanelSibling {
   /// The panel before (left/top) the current panel.
   before(-1),
 
@@ -193,7 +193,7 @@ enum PanelSibling {
   /// Direction value used internally for calculations.
   final int direction;
 
-  const PanelSibling(this.direction);
+  const VNLPanelSibling(this.direction);
 }
 
 /// Mixin for controllers that manage resizable pane sizing.
@@ -221,7 +221,7 @@ mixin ResizablePaneController implements ValueListenable<double> {
   ///
   /// Returns `true` if successful, `false` if expansion was blocked.
   bool tryExpandSize(double size,
-      [PanelSibling direction = PanelSibling.both]) {
+      [VNLPanelSibling direction = VNLPanelSibling.both]) {
     assert(_paneState != null, 'ResizablePaneController is not attached');
     return _paneState!.tryExpandSize(size, direction);
   }
@@ -229,7 +229,7 @@ mixin ResizablePaneController implements ValueListenable<double> {
   /// Attempts to expand the panel in the specified [direction].
   ///
   /// Returns `true` if successful, `false` if expansion was blocked.
-  bool tryExpand([PanelSibling direction = PanelSibling.both]) {
+  bool tryExpand([VNLPanelSibling direction = VNLPanelSibling.both]) {
     assert(_paneState != null, 'ResizablePaneController is not attached');
     return _paneState!.tryExpand(direction);
   }
@@ -237,7 +237,7 @@ mixin ResizablePaneController implements ValueListenable<double> {
   /// Attempts to collapse the panel in the specified [direction].
   ///
   /// Returns `true` if successful, `false` if collapse was blocked.
-  bool tryCollapse([PanelSibling direction = PanelSibling.both]) {
+  bool tryCollapse([VNLPanelSibling direction = VNLPanelSibling.both]) {
     assert(_paneState != null, 'ResizablePaneController is not attached');
     return _paneState!.tryCollapse(direction);
   }
@@ -567,7 +567,7 @@ class _ResizablePaneState extends State<VNLResizablePane> {
     }
   }
 
-  bool tryExpand([PanelSibling direction = PanelSibling.both]) {
+  bool tryExpand([VNLPanelSibling direction = VNLPanelSibling.both]) {
     if (!_controller.collapsed) {
       return false;
     }
@@ -581,7 +581,7 @@ class _ResizablePaneState extends State<VNLResizablePane> {
     return result;
   }
 
-  bool tryCollapse([PanelSibling direction = PanelSibling.both]) {
+  bool tryCollapse([VNLPanelSibling direction = VNLPanelSibling.both]) {
     if (_controller.collapsed) {
       return false;
     }
@@ -596,7 +596,7 @@ class _ResizablePaneState extends State<VNLResizablePane> {
   }
 
   bool tryExpandSize(double size,
-      [PanelSibling direction = PanelSibling.both]) {
+      [VNLPanelSibling direction = VNLPanelSibling.both]) {
     List<ResizableItem> draggers = _panelState!.state.computeDraggers();
     Resizer resizer = Resizer(draggers);
     bool result =

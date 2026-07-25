@@ -48,7 +48,7 @@ class VNLNavigationGap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final data = Data.maybeOf<VNLNavigationControlData>(context);
-    if (data?.containerType == NavigationContainerType.sidebar) {
+    if (data?.containerType == VNLNavigationContainerType.sidebar) {
       return buildSliver(context);
     }
     return buildBox(context);
@@ -96,7 +96,7 @@ class VNLNavigationDivider extends StatelessWidget {
         color: color ?? theme.colorScheme.muted,
       );
     }
-    if (data?.containerType == NavigationContainerType.sidebar) {
+    if (data?.containerType == VNLNavigationContainerType.sidebar) {
       return SliverToBoxAdapter(
         child: Padding(
           padding: direction == Axis.vertical
@@ -122,7 +122,7 @@ class VNLNavigationDivider extends StatelessWidget {
 }
 
 /// Internal widget that handles label positioning and expansion animation.
-class NavigationLabeled extends StatelessWidget {
+class VNLNavigationLabeled extends StatelessWidget {
   /// The main content widget.
   final Widget child;
 
@@ -130,7 +130,7 @@ class NavigationLabeled extends StatelessWidget {
   final Widget label;
 
   /// Where to position the label relative to the child.
-  final NavigationLabelPosition position;
+  final VNLNavigationLabelPosition position;
 
   /// Spacing between label and child.
   final double spacing;
@@ -139,7 +139,7 @@ class NavigationLabeled extends StatelessWidget {
   final bool showLabel;
 
   /// Type of label presentation.
-  final NavigationLabelType labelType;
+  final VNLNavigationLabelType labelType;
 
   /// Layout direction of the navigation.
   final Axis direction;
@@ -150,8 +150,8 @@ class NavigationLabeled extends StatelessWidget {
   /// Whether to maintain main axis size when hidden.
   final bool keepMainAxisSize;
 
-  /// Creates a [NavigationLabeled].
-  const NavigationLabeled({
+  /// Creates a [VNLNavigationLabeled].
+  const VNLNavigationLabeled({
     super.key,
     required this.child,
     required this.label,
@@ -166,8 +166,8 @@ class NavigationLabeled extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var direction = position == NavigationLabelPosition.top ||
-            position == NavigationLabelPosition.bottom
+    var direction = position == VNLNavigationLabelPosition.top ||
+            position == VNLNavigationLabelPosition.bottom
         ? Axis.vertical
         : Axis.horizontal;
     var animatedSize = Flexible(
@@ -175,8 +175,8 @@ class NavigationLabeled extends StatelessWidget {
         hidden: !showLabel,
         direction: direction,
         duration: kDefaultDuration,
-        reverse: position == NavigationLabelPosition.start ||
-            position == NavigationLabelPosition.top,
+        reverse: position == VNLNavigationLabelPosition.start ||
+            position == VNLNavigationLabelPosition.top,
         keepCrossAxisSize: (this.direction != direction
             ? keepCrossAxisSize
             : keepMainAxisSize),
@@ -185,17 +185,17 @@ class NavigationLabeled extends StatelessWidget {
             : keepCrossAxisSize),
         child: Padding(
           padding: EdgeInsets.only(
-            top: position == NavigationLabelPosition.bottom ? spacing : 0,
-            bottom: position == NavigationLabelPosition.top ? spacing : 0,
-            left: position == NavigationLabelPosition.end ? spacing : 0,
-            right: position == NavigationLabelPosition.start ? spacing : 0,
+            top: position == VNLNavigationLabelPosition.bottom ? spacing : 0,
+            bottom: position == VNLNavigationLabelPosition.top ? spacing : 0,
+            left: position == VNLNavigationLabelPosition.end ? spacing : 0,
+            right: position == VNLNavigationLabelPosition.start ? spacing : 0,
           ),
           child: Align(
               alignment: switch (position) {
-                NavigationLabelPosition.top => Alignment.bottomCenter,
-                NavigationLabelPosition.bottom => Alignment.topCenter,
-                NavigationLabelPosition.start => AlignmentDirectional.centerEnd,
-                NavigationLabelPosition.end => AlignmentDirectional.centerStart,
+                VNLNavigationLabelPosition.top => Alignment.bottomCenter,
+                VNLNavigationLabelPosition.bottom => Alignment.topCenter,
+                VNLNavigationLabelPosition.start => AlignmentDirectional.centerEnd,
+                VNLNavigationLabelPosition.end => AlignmentDirectional.centerStart,
               },
               child: label),
         ),
@@ -206,12 +206,12 @@ class NavigationLabeled extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       // we don't use spacing here because we want to animate the size of the label
       children: [
-        if (position == NavigationLabelPosition.start ||
-            position == NavigationLabelPosition.top)
+        if (position == VNLNavigationLabelPosition.start ||
+            position == VNLNavigationLabelPosition.top)
           animatedSize,
         child,
-        if (position == NavigationLabelPosition.end ||
-            position == NavigationLabelPosition.bottom)
+        if (position == VNLNavigationLabelPosition.end ||
+            position == VNLNavigationLabelPosition.bottom)
           animatedSize,
       ],
     );
@@ -220,7 +220,7 @@ class NavigationLabeled extends StatelessWidget {
 }
 
 /// Overflow behavior for navigation item labels.
-enum NavigationOverflow {
+enum VNLNavigationOverflow {
   /// Clip text that exceeds bounds
   clip,
 
@@ -239,7 +239,7 @@ enum NavigationOverflow {
 /// Replaces the standalone `VNLNavigationLabel`. In sidebars, it organizes
 /// items into a scrollable group using `SliverMainAxisGroup`, optionally
 /// with a floating or pinned label header.
-class NavigationGroup extends StatelessWidget {
+class VNLNavigationGroup extends StatelessWidget {
   /// VNLLabel widget to display for the group.
   final Widget label;
 
@@ -247,7 +247,7 @@ class NavigationGroup extends StatelessWidget {
   final List<Widget> children;
 
   /// Position of the label relative to the children.
-  final NavigationLabelPosition labelPosition;
+  final VNLNavigationLabelPosition labelPosition;
 
   /// Alignment of the label content.
   final AlignmentGeometry? labelAlignment;
@@ -256,7 +256,7 @@ class NavigationGroup extends StatelessWidget {
   final EdgeInsetsGeometry? labelPadding;
 
   /// How to handle label text overflow.
-  final NavigationOverflow labelOverflow;
+  final VNLNavigationOverflow labelOverflow;
 
   /// Whether the label floats when scrolling (sidebar only).
   final bool labelFloating;
@@ -265,14 +265,14 @@ class NavigationGroup extends StatelessWidget {
   final bool labelPinned;
 
   /// Creates a new navigation group.
-  const NavigationGroup({
+  const VNLNavigationGroup({
     super.key,
     required this.label,
     this.children = const [],
-    this.labelPosition = NavigationLabelPosition.top,
+    this.labelPosition = VNLNavigationLabelPosition.top,
     this.labelAlignment,
     this.labelPadding,
-    this.labelOverflow = NavigationOverflow.clip,
+    this.labelOverflow = VNLNavigationOverflow.clip,
     this.labelFloating = false,
     this.labelPinned = true,
   });
@@ -280,7 +280,7 @@ class NavigationGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final data = Data.maybeOf<VNLNavigationControlData>(context);
-    if (data?.containerType == NavigationContainerType.sidebar) {
+    if (data?.containerType == VNLNavigationContainerType.sidebar) {
       return buildSliver(context, data);
     }
     return buildBox(context, data);
@@ -297,7 +297,7 @@ class NavigationGroup extends StatelessWidget {
       child: DefaultTextStyle.merge(
         textAlign: TextAlign.center,
         maxLines: 1,
-        child: NavigationChildOverflowHandle(
+        child: VNLNavigationChildOverflowHandle(
           overflow: labelOverflow,
           child: label,
         ),
@@ -384,8 +384,8 @@ class NavigationGroup extends StatelessWidget {
             keepMainAxisSize: data.keepMainAxisSize,
           );
     final flexChildren = [
-      if (labelPosition == NavigationLabelPosition.top ||
-          labelPosition == NavigationLabelPosition.start) ...[
+      if (labelPosition == VNLNavigationLabelPosition.top ||
+          labelPosition == VNLNavigationLabelPosition.start) ...[
         paddedLabel,
         AnimatedValueBuilder<double>(
           value: data?.expanded == true ? gap : 0,
@@ -405,8 +405,8 @@ class NavigationGroup extends StatelessWidget {
           children: items,
         ),
       ),
-      if (labelPosition == NavigationLabelPosition.bottom ||
-          labelPosition == NavigationLabelPosition.end) ...[
+      if (labelPosition == VNLNavigationLabelPosition.bottom ||
+          labelPosition == VNLNavigationLabelPosition.end) ...[
         AnimatedValueBuilder<double>(
           value: data?.expanded == true ? gap : 0,
           builder: (_, gap, __) => Gap(gap),
@@ -453,8 +453,8 @@ class NavigationGroup extends StatelessWidget {
           );
 
     final sliverChildren = [
-      if (labelPosition == NavigationLabelPosition.top ||
-          labelPosition == NavigationLabelPosition.start) ...[
+      if (labelPosition == VNLNavigationLabelPosition.top ||
+          labelPosition == VNLNavigationLabelPosition.start) ...[
         labelWidget,
         SliverGap(gap),
       ],
@@ -463,8 +463,8 @@ class NavigationGroup extends StatelessWidget {
           child: SliverMainAxisGroup(
             slivers: items,
           )),
-      if (labelPosition == NavigationLabelPosition.bottom ||
-          labelPosition == NavigationLabelPosition.end) ...[
+      if (labelPosition == VNLNavigationLabelPosition.bottom ||
+          labelPosition == VNLNavigationLabelPosition.end) ...[
         SliverGap(gap),
         labelWidget,
       ],
@@ -558,16 +558,16 @@ class _NavigationLabelBackgroundPainter extends CustomPainter {
   }
 }
 
-/// Internal widget that handles label overflow based on [NavigationOverflow].
-class NavigationChildOverflowHandle extends StatelessWidget {
+/// Internal widget that handles label overflow based on [VNLNavigationOverflow].
+class VNLNavigationChildOverflowHandle extends StatelessWidget {
   /// How to handle overflow.
-  final NavigationOverflow overflow;
+  final VNLNavigationOverflow overflow;
 
   /// The content that might overflow.
   final Widget child;
 
-  /// Creates a [NavigationChildOverflowHandle].
-  const NavigationChildOverflowHandle({
+  /// Creates a [VNLNavigationChildOverflowHandle].
+  const VNLNavigationChildOverflowHandle({
     super.key,
     required this.overflow,
     required this.child,
@@ -576,17 +576,17 @@ class NavigationChildOverflowHandle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     switch (overflow) {
-      case NavigationOverflow.clip:
+      case VNLNavigationOverflow.clip:
         return ClipRect(child: child);
-      case NavigationOverflow.marquee:
+      case VNLNavigationOverflow.marquee:
         return VNLOverflowMarquee(child: child);
-      case NavigationOverflow.ellipsis:
+      case VNLNavigationOverflow.ellipsis:
         return DefaultTextStyle.merge(
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           child: child,
         );
-      case NavigationOverflow.none:
+      case VNLNavigationOverflow.none:
         return child;
     }
   }
@@ -643,7 +643,7 @@ class VNLNavigationWidget extends StatelessWidget {
 ///
 /// Designed for navigation header and footer sections. The layout adapts to
 /// the navigation expansion state and keeps a compact density when collapsed.
-class NavigationSlot extends StatelessWidget {
+class VNLNavigationSlot extends StatelessWidget {
   /// Leading widget (usually an icon or avatar).
   final Widget leading;
 
@@ -665,8 +665,8 @@ class NavigationSlot extends StatelessWidget {
   /// Alignment for the button content.
   final AlignmentGeometry? alignment;
 
-  /// Creates a [NavigationSlot].
-  const NavigationSlot({
+  /// Creates a [VNLNavigationSlot].
+  const VNLNavigationSlot({
     super.key,
     required this.leading,
     required this.title,
@@ -686,9 +686,9 @@ class NavigationSlot extends StatelessWidget {
     final expanded = data?.expanded ?? true;
     final style = (expanded
             ? VNLButtonStyle.ghost(
-                density: ButtonDensity.compact,
+                density: VNLButtonDensity.compact,
               )
-            : VNLButtonStyle.text(density: ButtonDensity.compact))
+            : VNLButtonStyle.text(density: VNLButtonDensity.compact))
         .copyWith(
       margin: (context, state, margin) =>
           -EdgeInsetsDensity.all(expanded ? padXs : 0)
@@ -703,8 +703,8 @@ class NavigationSlot extends StatelessWidget {
     );
 
     final showLabel = data == null ||
-        data.parentLabelType == NavigationLabelType.all ||
-        (data.parentLabelType == NavigationLabelType.expanded && expanded);
+        data.parentLabelType == VNLNavigationLabelType.all ||
+        (data.parentLabelType == VNLNavigationLabelType.expanded && expanded);
 
     Widget content = Row(
       mainAxisSize: MainAxisSize.min,
@@ -751,7 +751,7 @@ class NavigationSlot extends StatelessWidget {
       child: content,
     );
 
-    if (data?.parentLabelType == NavigationLabelType.tooltip) {
+    if (data?.parentLabelType == VNLNavigationLabelType.tooltip) {
       if (title is! SizedBox) {
         AlignmentGeometry alignment = Alignment.topCenter;
         AlignmentGeometry anchorAlignment = Alignment.bottomCenter;

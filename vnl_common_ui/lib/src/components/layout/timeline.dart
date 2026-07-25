@@ -4,12 +4,12 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 ///
 /// Provides styling and layout defaults for timeline components including
 /// column constraints, spacing, indicator appearance, and connector styling.
-/// Used with [ComponentTheme] to apply consistent timeline styling across
+/// Used with [VNLComponentTheme] to apply consistent timeline styling across
 /// an application while allowing per-instance customization.
 ///
 /// Example:
 /// ```dart
-/// ComponentTheme<VNLTimelineTheme>(
+/// VNLComponentTheme<VNLTimelineTheme>(
 ///   data: VNLTimelineTheme(
 ///     timeConstraints: BoxConstraints(minWidth: 100, maxWidth: 150),
 ///     spacing: 20.0,
@@ -291,7 +291,7 @@ class VNLTimeline extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLTimelineTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLTimelineTheme>(context);
     final timeConstraints = this.timeConstraints ??
         compTheme?.timeConstraints ??
         BoxConstraints(minWidth: 120 * scaling, maxWidth: 120 * scaling);

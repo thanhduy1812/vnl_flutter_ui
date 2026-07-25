@@ -22,11 +22,11 @@ typedef NumberTickerFormatted = String Function(num number);
 /// multiple number tickers in an application while still permitting
 /// per-instance customization when needed.
 ///
-/// Used with [ComponentTheme] to provide theme values throughout the widget tree.
+/// Used with [VNLComponentTheme] to provide theme values throughout the widget tree.
 ///
 /// Example:
 /// ```dart
-/// ComponentTheme<VNLNumberTickerTheme>(
+/// VNLComponentTheme<VNLNumberTickerTheme>(
 ///   data: VNLNumberTickerTheme(
 ///     duration: Duration(milliseconds: 800),
 ///     curve: Curves.bounceOut,
@@ -269,7 +269,7 @@ class VNLNumberTicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<VNLNumberTickerTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLNumberTickerTheme>(context);
     final duration = styleValue(
       widgetValue: this.duration,
       themeValue: compTheme?.duration,
@@ -312,7 +312,7 @@ class VNLNumberTicker extends StatelessWidget {
   }
 }
 
-/// Defines a character set for [FlipperCharacter] and [TextFlipper].
+/// Defines a character set for [VNLFlipperCharacter] and [VNLTextFlipper].
 class FlipperCharset {
   /// Digits 0–9.
   static const FlipperCharset numbers = FlipperCharset('0123456789');
@@ -366,7 +366,7 @@ class FlipperCharset {
 }
 
 /// Animates a single character by flipping through [FlipperCharset].
-class FlipperCharacter extends StatelessWidget {
+class VNLFlipperCharacter extends StatelessWidget {
   /// The character set used for flipping.
   final FlipperCharset charset;
 
@@ -379,8 +379,8 @@ class FlipperCharacter extends StatelessWidget {
   /// Curve used for the flip animation.
   final Curve curve;
 
-  /// Creates a [FlipperCharacter].
-  const FlipperCharacter({
+  /// Creates a [VNLFlipperCharacter].
+  const VNLFlipperCharacter({
     super.key,
     required this.charset,
     required this.character,
@@ -503,7 +503,7 @@ class _FlipperGradientMask extends StatelessWidget {
 }
 
 /// Animates a string by flipping each character.
-class TextFlipper extends StatelessWidget {
+class VNLTextFlipper extends StatelessWidget {
   /// The character set used for each character flip.
   final FlipperCharset charset;
 
@@ -516,8 +516,8 @@ class TextFlipper extends StatelessWidget {
   /// Curve used for the flip animation.
   final Curve curve;
 
-  /// Creates a [TextFlipper].
-  const TextFlipper({
+  /// Creates a [VNLTextFlipper].
+  const VNLTextFlipper({
     super.key,
     this.charset = FlipperCharset.all,
     required this.text,
@@ -533,7 +533,7 @@ class TextFlipper extends StatelessWidget {
         clipBehavior: Clip.none,
         mainAxisSize: MainAxisSize.min,
         children: text.characters
-            .map((char) => FlipperCharacter(
+            .map((char) => VNLFlipperCharacter(
                   charset: charset,
                   character: char,
                   duration: duration,

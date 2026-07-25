@@ -8,7 +8,7 @@ import '../animation.dart' show VNLIntervalDuration;
 /// dimensions, spacing, and border styling. All properties are optional and
 /// fall back to framework defaults when not specified.
 ///
-/// Can be applied globally through [ComponentTheme] or used to override
+/// Can be applied globally through [VNLComponentTheme] or used to override
 /// specific checkbox instances with custom styling.
 class VNLCheckboxTheme extends ComponentThemeData {
   /// Color of the checkbox background when in unchecked state.
@@ -128,7 +128,7 @@ class VNLCheckboxTheme extends ComponentThemeData {
 ///
 /// Example:
 /// ```dart
-/// final controller = VNLCheckboxController(CheckboxState.unchecked);
+/// final controller = VNLCheckboxController(VNLCheckboxState.unchecked);
 ///
 /// // React to changes
 /// controller.addListener(() {
@@ -139,8 +139,8 @@ class VNLCheckboxTheme extends ComponentThemeData {
 /// controller.toggle(); // unchecked -> checked
 /// controller.indeterminate(); // -> indeterminate
 /// ```
-class VNLCheckboxController extends ValueNotifier<CheckboxState>
-    with ComponentController<CheckboxState> {
+class VNLCheckboxController extends ValueNotifier<VNLCheckboxState>
+    with ComponentController<VNLCheckboxState> {
   /// Creates a [VNLCheckboxController] with the specified initial [value].
   ///
   /// The controller will notify listeners whenever the checkbox state changes
@@ -150,17 +150,17 @@ class VNLCheckboxController extends ValueNotifier<CheckboxState>
   /// Sets the checkbox state to checked.
   ///
   /// Notifies listeners of the state change. Equivalent to setting
-  /// `value = CheckboxState.checked`.
+  /// `value = VNLCheckboxState.checked`.
   void check() {
-    value = CheckboxState.checked;
+    value = VNLCheckboxState.checked;
   }
 
   /// Sets the checkbox state to unchecked.
   ///
   /// Notifies listeners of the state change. Equivalent to setting
-  /// `value = CheckboxState.unchecked`.
+  /// `value = VNLCheckboxState.unchecked`.
   void uncheck() {
-    value = CheckboxState.unchecked;
+    value = VNLCheckboxState.unchecked;
   }
 
   /// Sets the checkbox state to indeterminate.
@@ -168,7 +168,7 @@ class VNLCheckboxController extends ValueNotifier<CheckboxState>
   /// Notifies listeners of the state change. Used for tri-state checkboxes
   /// to indicate a partially selected or mixed state.
   void indeterminate() {
-    value = CheckboxState.indeterminate;
+    value = VNLCheckboxState.indeterminate;
   }
 
   /// Toggles between checked and unchecked states.
@@ -176,9 +176,9 @@ class VNLCheckboxController extends ValueNotifier<CheckboxState>
   /// If currently checked, becomes unchecked. If currently unchecked or
   /// indeterminate, becomes checked. Does not cycle through indeterminate state.
   void toggle() {
-    value = value == CheckboxState.checked
-        ? CheckboxState.unchecked
-        : CheckboxState.checked;
+    value = value == VNLCheckboxState.checked
+        ? VNLCheckboxState.unchecked
+        : VNLCheckboxState.checked;
   }
 
   /// Cycles through all three states in order: checked -> unchecked -> indeterminate.
@@ -186,21 +186,21 @@ class VNLCheckboxController extends ValueNotifier<CheckboxState>
   /// Provides complete tri-state cycling behavior. Use this instead of [toggle]
   /// when working with tri-state checkboxes that need to support indeterminate state.
   void toggleTristate() {
-    value = value == CheckboxState.checked
-        ? CheckboxState.unchecked
-        : value == CheckboxState.unchecked
-            ? CheckboxState.indeterminate
-            : CheckboxState.checked;
+    value = value == VNLCheckboxState.checked
+        ? VNLCheckboxState.unchecked
+        : value == VNLCheckboxState.unchecked
+            ? VNLCheckboxState.indeterminate
+            : VNLCheckboxState.checked;
   }
 
   /// Returns true if the checkbox is currently checked.
-  bool get isChecked => value == CheckboxState.checked;
+  bool get isChecked => value == VNLCheckboxState.checked;
 
   /// Returns true if the checkbox is currently unchecked.
-  bool get isUnchecked => value == CheckboxState.unchecked;
+  bool get isUnchecked => value == VNLCheckboxState.unchecked;
 
   /// Returns true if the checkbox is currently in indeterminate state.
-  bool get isIndeterminate => value == CheckboxState.indeterminate;
+  bool get isIndeterminate => value == VNLCheckboxState.indeterminate;
 }
 
 /// Reactive checkbox with automatic state management and controller support.
@@ -218,7 +218,7 @@ class VNLCheckboxController extends ValueNotifier<CheckboxState>
 ///
 /// **Controller-based (recommended for complex state management):**
 /// ```dart
-/// final controller = VNLCheckboxController(CheckboxState.unchecked);
+/// final controller = VNLCheckboxController(VNLCheckboxState.unchecked);
 ///
 /// VNLControlledCheckbox(
 ///   controller: controller,
@@ -232,15 +232,15 @@ class VNLCheckboxController extends ValueNotifier<CheckboxState>
 /// bool checked = false;
 ///
 /// VNLControlledCheckbox(
-///   initialValue: checked ? CheckboxState.checked : CheckboxState.unchecked,
+///   initialValue: checked ? VNLCheckboxState.checked : VNLCheckboxState.unchecked,
 ///   onChanged: (state) => setState(() {
-///     checked = state == CheckboxState.checked;
+///     checked = state == VNLCheckboxState.checked;
 ///   }),
 ///   trailing: Text('Newsletter subscription'),
 /// )
 /// ```
 class VNLControlledCheckbox extends StatelessWidget
-    with ControlledComponent<CheckboxState> {
+    with ControlledComponent<VNLCheckboxState> {
   /// External controller for programmatic state management.
   ///
   /// When provided, takes precedence over [initialValue] and [onChanged].
@@ -250,16 +250,16 @@ class VNLControlledCheckbox extends StatelessWidget
 
   /// Initial checkbox state when no controller is provided.
   ///
-  /// Used only when [controller] is null. Defaults to [CheckboxState.unchecked].
+  /// Used only when [controller] is null. Defaults to [VNLCheckboxState.unchecked].
   @override
-  final CheckboxState initialValue;
+  final VNLCheckboxState initialValue;
 
   /// Callback fired when the checkbox state changes.
   ///
-  /// Called with the new [CheckboxState] when user interaction occurs.
+  /// Called with the new [VNLCheckboxState] when user interaction occurs.
   /// If both [controller] and [onChanged] are provided, both will receive updates.
   @override
-  final ValueChanged<CheckboxState>? onChanged;
+  final ValueChanged<VNLCheckboxState>? onChanged;
 
   /// Whether the checkbox is interactive.
   ///
@@ -324,8 +324,8 @@ class VNLControlledCheckbox extends StatelessWidget
   ///
   /// Parameters:
   /// - [controller] (VNLCheckboxController?, optional): external state controller
-  /// - [initialValue] (CheckboxState, default: unchecked): starting state when no controller
-  /// - [onChanged] (`ValueChanged<CheckboxState>?`, optional): state change callback
+  /// - [initialValue] (VNLCheckboxState, default: unchecked): starting state when no controller
+  /// - [onChanged] (`ValueChanged<VNLCheckboxState>?`, optional): state change callback
   /// - [enabled] (bool, default: true): whether checkbox is interactive
   /// - [leading] (Widget?, optional): widget displayed before checkbox
   /// - [trailing] (Widget?, optional): widget displayed after checkbox
@@ -349,7 +349,7 @@ class VNLControlledCheckbox extends StatelessWidget
   const VNLControlledCheckbox({
     super.key,
     this.controller,
-    this.initialValue = CheckboxState.unchecked,
+    this.initialValue = VNLCheckboxState.unchecked,
     this.onChanged,
     this.enabled = true,
     this.leading,
@@ -365,7 +365,7 @@ class VNLControlledCheckbox extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return ControlledComponentAdapter<CheckboxState>(
+    return ControlledComponentAdapter<VNLCheckboxState>(
       controller: controller,
       initialValue: initialValue,
       onChanged: onChanged,
@@ -398,7 +398,7 @@ class VNLControlledCheckbox extends StatelessWidget
 ///
 /// The enum implements [Comparable] to provide consistent ordering:
 /// checked < unchecked < indeterminate (based on declaration order).
-enum CheckboxState implements Comparable<CheckboxState> {
+enum VNLCheckboxState implements Comparable<VNLCheckboxState> {
   /// The checkbox is selected/checked state.
   ///
   /// Visually represented with a checkmark icon inside the checkbox square.
@@ -423,7 +423,7 @@ enum CheckboxState implements Comparable<CheckboxState> {
   /// Returns negative if this state comes before [other], zero if equal,
   /// positive if this state comes after [other] in the enum declaration.
   @override
-  int compareTo(CheckboxState other) {
+  int compareTo(VNLCheckboxState other) {
     return index.compareTo(other.index);
   }
 }
@@ -450,7 +450,7 @@ enum CheckboxState implements Comparable<CheckboxState> {
 /// Example:
 /// ```dart
 /// VNLCheckbox(
-///   state: CheckboxState.checked,
+///   state: VNLCheckboxState.checked,
 ///   onChanged: (newState) {
 ///     setState(() => currentState = newState);
 ///   },
@@ -462,19 +462,19 @@ enum CheckboxState implements Comparable<CheckboxState> {
 class VNLCheckbox extends StatefulWidget {
   /// Current state of the checkbox.
   ///
-  /// Must be one of [CheckboxState.checked], [CheckboxState.unchecked], or
-  /// [CheckboxState.indeterminate]. The widget rebuilds when this changes
+  /// Must be one of [VNLCheckboxState.checked], [VNLCheckboxState.unchecked], or
+  /// [VNLCheckboxState.indeterminate]. The widget rebuilds when this changes
   /// to reflect the new visual state with appropriate animations.
-  final CheckboxState state;
+  final VNLCheckboxState state;
 
   /// Callback fired when the user interacts with the checkbox.
   ///
-  /// Called with the new [CheckboxState] that should be applied. When null,
+  /// Called with the new [VNLCheckboxState] that should be applied. When null,
   /// the checkbox becomes non-interactive and visually disabled.
   ///
   /// The callback is responsible for updating the parent widget's state
   /// to reflect the change - this widget does not manage its own state.
-  final ValueChanged<CheckboxState>? onChanged;
+  final ValueChanged<VNLCheckboxState>? onChanged;
 
   /// Optional widget displayed before the checkbox square.
   ///
@@ -547,8 +547,8 @@ class VNLCheckbox extends StatefulWidget {
   /// of user interactions through the callback.
   ///
   /// Parameters:
-  /// - [state] (CheckboxState, required): current checkbox state to display
-  /// - [onChanged] (`ValueChanged<CheckboxState>?`, required): interaction callback
+  /// - [state] (VNLCheckboxState, required): current checkbox state to display
+  /// - [onChanged] (`ValueChanged<VNLCheckboxState>?`, required): interaction callback
   /// - [leading] (Widget?, optional): widget displayed before checkbox
   /// - [trailing] (Widget?, optional): widget displayed after checkbox
   /// - [tristate] (bool, default: false): enable indeterminate state cycling
@@ -563,9 +563,9 @@ class VNLCheckbox extends StatefulWidget {
   /// Example:
   /// ```dart
   /// VNLCheckbox(
-  ///   state: isAccepted ? CheckboxState.checked : CheckboxState.unchecked,
+  ///   state: isAccepted ? VNLCheckboxState.checked : VNLCheckboxState.unchecked,
   ///   onChanged: (state) => setState(() {
-  ///     isAccepted = state == CheckboxState.checked;
+  ///     isAccepted = state == VNLCheckboxState.checked;
   ///   }),
   ///   trailing: Text('I accept the terms and conditions'),
   /// )
@@ -591,7 +591,7 @@ class VNLCheckbox extends StatefulWidget {
 }
 
 class _CheckboxState extends State<VNLCheckbox>
-    with FormValueSupplier<CheckboxState, VNLCheckbox> {
+    with FormValueSupplier<VNLCheckboxState, VNLCheckbox> {
   final bool _focusing = false;
   bool _shouldAnimate = false;
 
@@ -601,7 +601,7 @@ class _CheckboxState extends State<VNLCheckbox>
     formValue = widget.state;
   }
 
-  void _changeTo(CheckboxState state) {
+  void _changeTo(VNLCheckboxState state) {
     if (widget.onChanged != null) {
       widget.onChanged!(state);
     }
@@ -610,27 +610,27 @@ class _CheckboxState extends State<VNLCheckbox>
   void _tap() {
     if (widget.tristate) {
       switch (widget.state) {
-        case CheckboxState.checked:
-          _changeTo(CheckboxState.unchecked);
+        case VNLCheckboxState.checked:
+          _changeTo(VNLCheckboxState.unchecked);
           break;
-        case CheckboxState.unchecked:
-          _changeTo(CheckboxState.indeterminate);
+        case VNLCheckboxState.unchecked:
+          _changeTo(VNLCheckboxState.indeterminate);
           break;
-        case CheckboxState.indeterminate:
-          _changeTo(CheckboxState.checked);
+        case VNLCheckboxState.indeterminate:
+          _changeTo(VNLCheckboxState.checked);
           break;
       }
     } else {
       _changeTo(
-        widget.state == CheckboxState.checked
-            ? CheckboxState.unchecked
-            : CheckboxState.checked,
+        widget.state == VNLCheckboxState.checked
+            ? VNLCheckboxState.unchecked
+            : VNLCheckboxState.checked,
       );
     }
   }
 
   @override
-  void didReplaceFormValue(CheckboxState value) {
+  void didReplaceFormValue(VNLCheckboxState value) {
     _changeTo(value);
   }
 
@@ -649,7 +649,7 @@ class _CheckboxState extends State<VNLCheckbox>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLCheckboxTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLCheckboxTheme>(context);
     final size = styleValue(
         widgetValue: widget.size,
         themeValue: compTheme?.size,
@@ -692,7 +692,7 @@ class _CheckboxState extends State<VNLCheckbox>
             width: size,
             height: size,
             decoration: BoxDecoration(
-              color: widget.state == CheckboxState.checked
+              color: widget.state == VNLCheckboxState.checked
                   ? activeColor
                   : backgroundColor,
               borderRadius:
@@ -701,13 +701,13 @@ class _CheckboxState extends State<VNLCheckbox>
               border: Border.all(
                 color: !enabled
                     ? theme.colorScheme.muted
-                    : widget.state == CheckboxState.checked
+                    : widget.state == VNLCheckboxState.checked
                         ? activeColor
                         : borderColor,
                 width: (_focusing ? 2 : 1) * scaling,
               ),
             ),
-            child: widget.state == CheckboxState.checked
+            child: widget.state == VNLCheckboxState.checked
                 ? Center(
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 100),
@@ -738,10 +738,10 @@ class _CheckboxState extends State<VNLCheckbox>
                 : Center(
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 100),
-                      width: widget.state == CheckboxState.indeterminate
+                      width: widget.state == VNLCheckboxState.indeterminate
                           ? scaling * 8
                           : 0,
-                      height: widget.state == CheckboxState.indeterminate
+                      height: widget.state == VNLCheckboxState.indeterminate
                           ? scaling * 8
                           : 0,
                       padding: EdgeInsets.zero,

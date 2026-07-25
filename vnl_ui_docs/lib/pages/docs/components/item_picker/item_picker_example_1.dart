@@ -5,7 +5,7 @@ class ItemPickerExample1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PrimaryButton(
+    return VNLPrimaryButton(
       onPressed: () {
         // Show a popover item picker (non-dialog) with a virtual list of 1000 items.
         showItemPicker<int>(

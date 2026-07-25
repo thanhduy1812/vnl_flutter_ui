@@ -278,7 +278,7 @@ class VNLPagination extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLPaginationTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLPaginationTheme>(context);
     final gap = styleValue(
         widgetValue: this.gap,
         themeValue: compTheme?.gap,

@@ -162,7 +162,7 @@ class VNLHidden extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textDirection = Directionality.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLHiddenTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLHiddenTheme>(context);
     final directionValue = styleValue(
       widgetValue: direction,
       themeValue: compTheme?.direction,

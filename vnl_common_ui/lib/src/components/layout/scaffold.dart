@@ -3,13 +3,13 @@ import 'dart:ui';
 import 'package:flutter/rendering.dart';
 import 'package:vnl_common_ui/shadcn_flutter.dart';
 
-/// Theme data for customizing [Scaffold] widget appearance.
+/// Theme data for customizing [VNLScaffold] widget appearance.
 ///
 /// This class defines the visual properties that can be applied to
-/// [Scaffold] widgets, including background colors for different sections,
+/// [VNLScaffold] widgets, including background colors for different sections,
 /// loading spark behavior, and keyboard avoidance settings. These properties
 /// can be set at the theme level to provide consistent styling across the application.
-class ScaffoldTheme extends ComponentThemeData {
+class VNLScaffoldTheme extends ComponentThemeData {
   /// Background color of the scaffold body.
   final Color? backgroundColor;
 
@@ -25,8 +25,8 @@ class ScaffoldTheme extends ComponentThemeData {
   /// Whether the scaffold should resize for the onscreen keyboard.
   final bool? resizeToAvoidBottomInset;
 
-  /// Creates a [ScaffoldTheme].
-  const ScaffoldTheme({
+  /// Creates a [VNLScaffoldTheme].
+  const VNLScaffoldTheme({
     this.backgroundColor,
     this.headerBackgroundColor,
     this.footerBackgroundColor,
@@ -35,14 +35,14 @@ class ScaffoldTheme extends ComponentThemeData {
   });
 
   /// Creates a copy of this theme with the given fields replaced.
-  ScaffoldTheme copyWith({
+  VNLScaffoldTheme copyWith({
     ValueGetter<Color?>? backgroundColor,
     ValueGetter<Color?>? headerBackgroundColor,
     ValueGetter<Color?>? footerBackgroundColor,
     ValueGetter<bool?>? showLoadingSparks,
     ValueGetter<bool?>? resizeToAvoidBottomInset,
   }) {
-    return ScaffoldTheme(
+    return VNLScaffoldTheme(
       backgroundColor:
           backgroundColor == null ? this.backgroundColor : backgroundColor(),
       headerBackgroundColor: headerBackgroundColor == null
@@ -62,7 +62,7 @@ class ScaffoldTheme extends ComponentThemeData {
 
   @override
   bool operator ==(Object other) =>
-      other is ScaffoldTheme &&
+      other is VNLScaffoldTheme &&
       other.backgroundColor == backgroundColor &&
       other.headerBackgroundColor == headerBackgroundColor &&
       other.footerBackgroundColor == footerBackgroundColor &&
@@ -80,12 +80,12 @@ class ScaffoldTheme extends ComponentThemeData {
 
   @override
   String toString() =>
-      'ScaffoldTheme(background: $backgroundColor, header: $headerBackgroundColor, footer: $footerBackgroundColor, showLoadingSparks: $showLoadingSparks, resizeToAvoidBottomInset: $resizeToAvoidBottomInset)';
+      'VNLScaffoldTheme(background: $backgroundColor, header: $headerBackgroundColor, footer: $footerBackgroundColor, showLoadingSparks: $showLoadingSparks, resizeToAvoidBottomInset: $resizeToAvoidBottomInset)';
 }
 
 /// A fundamental layout widget that provides the basic structure for screen layouts.
 ///
-/// [Scaffold] serves as the foundation for most screen layouts in the shadcn_flutter
+/// [VNLScaffold] serves as the foundation for most screen layouts in the shadcn_flutter
 /// design system. It provides a structured approach to organizing content with
 /// dedicated areas for headers, main content, and footers. The scaffold manages
 /// layout responsibilities, loading states, and provides a consistent framework
@@ -117,9 +117,9 @@ class ScaffoldTheme extends ComponentThemeData {
 ///
 /// Example:
 /// ```dart
-/// Scaffold(
+/// VNLScaffold(
 ///   headers: [
-///     AppBar(title: Text('My App')),
+///     VNLAppBar(title: Text('My App')),
 ///   ],
 ///   child: Center(
 ///     child: Text('Main content area'),
@@ -136,7 +136,7 @@ class ScaffoldTheme extends ComponentThemeData {
 ///   showLoadingSparks: true,
 /// );
 /// ```
-class Scaffold extends StatefulWidget {
+class VNLScaffold extends StatefulWidget {
   /// Header widgets displayed at the top of the scaffold.
   final List<Widget> headers;
 
@@ -173,8 +173,8 @@ class Scaffold extends StatefulWidget {
   /// Whether to resize when keyboard appears.
   final bool? resizeToAvoidBottomInset;
 
-  /// Creates a [Scaffold].
-  const Scaffold({
+  /// Creates a [VNLScaffold].
+  const VNLScaffold({
     super.key,
     required this.child,
     this.headers = const [],
@@ -191,7 +191,7 @@ class Scaffold extends StatefulWidget {
   });
 
   @override
-  State<Scaffold> createState() => VNLScaffoldState();
+  State<VNLScaffold> createState() => VNLScaffoldState();
 }
 
 /// Data class for identifying scaffold bar (header/footer) positioning.
@@ -216,11 +216,11 @@ class VNLScaffoldBarData {
   });
 }
 
-/// State class for [Scaffold] widget.
+/// State class for [VNLScaffold] widget.
 ///
 /// Manages the scaffold's layout state and provides methods for building
 /// header, footer, and body sections with proper theming and constraints.
-class VNLScaffoldState extends State<Scaffold> {
+class VNLScaffoldState extends State<VNLScaffold> {
   /// Builds the header section of the scaffold.
   ///
   /// Parameters:
@@ -228,7 +228,7 @@ class VNLScaffoldState extends State<Scaffold> {
   ///
   /// Returns: Widget tree for the header.
   Widget buildHeader(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<ScaffoldTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLScaffoldTheme>(context);
     return RepaintBoundary(
       child: Container(
         color: widget.headerBackgroundColor ?? compTheme?.headerBackgroundColor,
@@ -316,7 +316,7 @@ class VNLScaffoldState extends State<Scaffold> {
   ///
   /// Returns: Widget tree for the footer.
   Widget buildFooter(BuildContext context, EdgeInsets viewInsets) {
-    final compTheme = ComponentTheme.maybeOf<ScaffoldTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLScaffoldTheme>(context);
     return Offstage(
       offstage: viewInsets.bottom > 0,
       child: RepaintBoundary(
@@ -344,7 +344,7 @@ class VNLScaffoldState extends State<Scaffold> {
 
   Widget _buildContent(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<ScaffoldTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLScaffoldTheme>(context);
     final viewInsets = MediaQuery.viewInsetsOf(context);
     return VNLDrawerOverlay(
       child: Container(
@@ -553,7 +553,7 @@ class VNLScaffoldBoxConstraints extends BoxConstraints {
 ///
 /// Example:
 /// ```dart
-/// AppBar(
+/// VNLAppBar(
 ///   leading: [
 ///     VNLIconButton(icon: Icon(Icons.menu), onPressed: _openDrawer),
 ///   ],
@@ -566,7 +566,7 @@ class VNLScaffoldBoxConstraints extends BoxConstraints {
 ///   backgroundColor: VNLColors.blue.shade50,
 /// )
 /// ```
-class AppBar extends StatefulWidget {
+class VNLAppBar extends StatefulWidget {
   /// List of widgets to display in the trailing (right) area of the app bar.
   ///
   /// Typically contains action buttons, menus, or other interactive elements.
@@ -665,7 +665,7 @@ class AppBar extends StatefulWidget {
   /// Values range from 0.0 (transparent) to 1.0 (opaque).
   final double? surfaceOpacity;
 
-  /// Creates an [AppBar] with the specified content and configuration.
+  /// Creates an [VNLAppBar] with the specified content and configuration.
   ///
   /// All parameters are optional with sensible defaults. The app bar
   /// automatically handles layout, spacing, and theming while providing
@@ -688,7 +688,7 @@ class AppBar extends StatefulWidget {
   ///
   /// Example:
   /// ```dart
-  /// AppBar(
+  /// VNLAppBar(
   ///   leading: [BackButton()],
   ///   title: Text('Settings'),
   ///   trailing: [
@@ -698,7 +698,7 @@ class AppBar extends StatefulWidget {
   ///   backgroundColor: Theme.of(context).colorScheme.primaryContainer,
   /// )
   /// ```
-  const AppBar({
+  const VNLAppBar({
     super.key,
     this.trailing = const [],
     this.leading = const [],
@@ -722,10 +722,10 @@ class AppBar extends StatefulWidget {
         );
 
   @override
-  State<AppBar> createState() => _AppBarState();
+  State<VNLAppBar> createState() => _AppBarState();
 }
 
-class _AppBarState extends State<AppBar> {
+class _AppBarState extends State<VNLAppBar> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -1078,7 +1078,7 @@ class _RenderScaffoldPadding extends RenderBox
   @override
   void performLayout() {
     _ScaffoldRenderFlex? parentData = findParent();
-    assert(parentData != null, 'Must be a child of a Scaffold');
+    assert(parentData != null, 'Must be a child of a VNLScaffold');
     BoxConstraints constraints;
     switch (_paddingType) {
       case _ScaffoldPaddingType.header:

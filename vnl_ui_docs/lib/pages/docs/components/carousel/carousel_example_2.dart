@@ -5,7 +5,7 @@ import '../carousel_example.dart';
 /// Vertical carousel centered in a column with manual controls.
 ///
 /// Demonstrates changing [direction] to [Axis.vertical] and centering items
-/// using [CarouselAlignment.center].
+/// using [VNLCarouselAlignment.center].
 class CarouselExample2 extends StatefulWidget {
   const CarouselExample2({super.key});
 
@@ -23,7 +23,7 @@ class _CarouselExample2State extends State<CarouselExample2> {
         mainAxisSize: MainAxisSize.min,
         children: [
           VNLOutlineButton(
-              shape: ButtonShape.circle,
+              shape: VNLButtonShape.circle,
               onPressed: () {
                 // Move to previous item (upwards).
                 controller.animatePrevious(const Duration(milliseconds: 500));
@@ -36,7 +36,7 @@ class _CarouselExample2State extends State<CarouselExample2> {
               child: VNLCarousel(
                 transition: const VNLCarouselTransition.sliding(gap: 24),
                 // Center the visible item.
-                alignment: CarouselAlignment.center,
+                alignment: VNLCarouselAlignment.center,
                 controller: controller,
                 // Rotate layout to vertical flow.
                 direction: Axis.vertical,
@@ -50,7 +50,7 @@ class _CarouselExample2State extends State<CarouselExample2> {
           ),
           const Gap(24),
           VNLOutlineButton(
-              shape: ButtonShape.circle,
+              shape: VNLButtonShape.circle,
               onPressed: () {
                 // Move to next item (downwards).
                 controller.animateNext(const Duration(milliseconds: 500));

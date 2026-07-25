@@ -29,7 +29,7 @@ class FormExample8 extends StatelessWidget {
                 content: Text('Name: ${_nameKey[values]}\n'
                     'Email: ${_emailKey[values]}'),
                 actions: [
-                  PrimaryButton(
+                  VNLPrimaryButton(
                     onPressed: () => Navigator.of(context).pop(),
                     child: const Text('Close'),
                   ),
@@ -56,11 +56,11 @@ class FormExample8 extends StatelessWidget {
                   // Async validator only runs on submit
                   validator: const VNLEmailValidator() &
                       ValidationMode(
-                        ConditionalValidator((value) async {
+                        VNLConditionalValidator((value) async {
                           await Future.delayed(const Duration(seconds: 1));
                           return true; // always passes (demo)
                         }, message: 'Checking email...'),
-                        mode: {FormValidationMode.submitted},
+                        mode: {VNLFormValidationMode.submitted},
                       ),
                   child: const VNLTextField(),
                 ),
@@ -70,7 +70,7 @@ class FormExample8 extends StatelessWidget {
             // Option 1: Manual submit with VNLFormErrorBuilder
             VNLFormErrorBuilder(
               builder: (context, errors, child) {
-                return PrimaryButton(
+                return VNLPrimaryButton(
                   onPressed: errors.isEmpty ? () => context.submitForm() : null,
                   child: const Text('Manual Submit'),
                 );

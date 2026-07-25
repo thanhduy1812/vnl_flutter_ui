@@ -11,7 +11,7 @@ import 'package:vnl_common_ui/src/components/control/hover.dart';
 /// [Select] widgets, including popup constraints, positioning, styling, and
 /// interaction behaviors. These properties can be set at the theme level
 /// to provide consistent behavior across the application.
-class SelectTheme extends ComponentThemeData {
+class VNLSelectTheme extends ComponentThemeData {
   /// Constraints for the popup menu size.
   final BoxConstraints? popupConstraints;
 
@@ -37,7 +37,7 @@ class SelectTheme extends ComponentThemeData {
   final bool? autoClosePopover;
 
   /// Creates a select theme.
-  const SelectTheme({
+  const VNLSelectTheme({
     this.popupConstraints,
     this.popoverAlignment,
     this.popoverAnchorAlignment,
@@ -49,7 +49,7 @@ class SelectTheme extends ComponentThemeData {
   });
 
   /// Creates a copy of this theme with the given fields replaced.
-  SelectTheme copyWith({
+  VNLSelectTheme copyWith({
     ValueGetter<BoxConstraints?>? popupConstraints,
     ValueGetter<AlignmentGeometry?>? popoverAlignment,
     ValueGetter<AlignmentGeometry?>? popoverAnchorAlignment,
@@ -59,7 +59,7 @@ class SelectTheme extends ComponentThemeData {
     ValueGetter<bool?>? canUnselect,
     ValueGetter<bool?>? autoClosePopover,
   }) {
-    return SelectTheme(
+    return VNLSelectTheme(
       popupConstraints:
           popupConstraints == null ? this.popupConstraints : popupConstraints(),
       popoverAlignment:
@@ -80,7 +80,7 @@ class SelectTheme extends ComponentThemeData {
 
   @override
   bool operator ==(Object other) {
-    return other is SelectTheme &&
+    return other is VNLSelectTheme &&
         other.popupConstraints == popupConstraints &&
         other.popoverAlignment == popoverAlignment &&
         other.popoverAnchorAlignment == popoverAnchorAlignment &&
@@ -112,7 +112,7 @@ class SelectTheme extends ComponentThemeData {
 ///
 /// Example:
 /// ```dart
-/// final controller = SelectController<String>('initial');
+/// final controller = VNLSelectController<String>('initial');
 ///
 /// // Listen to changes
 /// controller.addListener(() {
@@ -122,16 +122,16 @@ class SelectTheme extends ComponentThemeData {
 /// // Update selection
 /// controller.value = 'new_value';
 /// ```
-class SelectController<T> extends ValueNotifier<T?>
+class VNLSelectController<T> extends ValueNotifier<T?>
     with ComponentController<T?> {
-  /// Creates a [SelectController] with an optional initial value.
+  /// Creates a [VNLSelectController] with an optional initial value.
   ///
   /// The [value] parameter sets the initial selected item. Can be null
   /// to start with no selection.
   ///
   /// Parameters:
   /// - [value] (T?, optional): Initial selected value
-  SelectController([super.value]);
+  VNLSelectController([super.value]);
 }
 
 /// Reactive single-selection dropdown with automatic state management.
@@ -153,7 +153,7 @@ class SelectController<T> extends ValueNotifier<T?>
 ///
 /// **Controller-based (recommended for complex state):**
 /// ```dart
-/// final controller = SelectController<String>('apple');
+/// final controller = VNLSelectController<String>('apple');
 ///
 /// ControlledSelect<String>(
 ///   controller: controller,
@@ -183,7 +183,7 @@ class ControlledSelect<T> extends StatelessWidget
   @override
   final bool enabled;
   @override
-  final SelectController<T>? controller;
+  final VNLSelectController<T>? controller;
 
   @override
   final Widget? placeholder;
@@ -196,7 +196,7 @@ class ControlledSelect<T> extends StatelessWidget
   @override
   final BoxConstraints? popupConstraints;
   @override
-  final PopoverConstraint popupWidthConstraint;
+  final VNLPopoverConstraint popupWidthConstraint;
   @override
   final BorderRadiusGeometry? borderRadius;
   @override
@@ -229,7 +229,7 @@ class ControlledSelect<T> extends StatelessWidget
   /// patterns depending on application architecture needs.
   ///
   /// Parameters:
-  /// - [controller] (`SelectController<T>?`, optional): external state controller
+  /// - [controller] (`VNLSelectController<T>?`, optional): external state controller
   /// - [initialValue] (T?, optional): starting selection when no controller
   /// - [onChanged] (`ValueChanged<T?>?`, optional): selection change callback
   /// - [enabled] (bool, default: true): whether select is interactive
@@ -238,7 +238,7 @@ class ControlledSelect<T> extends StatelessWidget
   /// - [focusNode] (FocusNode?, optional): custom focus node for keyboard handling
   /// - [constraints] (BoxConstraints?, optional): size constraints for select widget
   /// - [popupConstraints] (BoxConstraints?, optional): size constraints for popup
-  /// - [popupWidthConstraint] (PopoverConstraint, default: anchorFixedSize): popup width behavior
+  /// - [popupWidthConstraint] (VNLPopoverConstraint, default: anchorFixedSize): popup width behavior
   /// - [borderRadius] (BorderRadiusGeometry?, optional): override select border radius
   /// - [padding] (EdgeInsetsGeometry?, optional): override internal padding
   /// - [popoverAlignment] (AlignmentGeometry, default: topCenter): popup alignment
@@ -272,7 +272,7 @@ class ControlledSelect<T> extends StatelessWidget
     this.focusNode,
     this.constraints,
     this.popupConstraints,
-    this.popupWidthConstraint = PopoverConstraint.anchorFixedSize,
+    this.popupWidthConstraint = VNLPopoverConstraint.anchorFixedSize,
     this.borderRadius,
     this.padding,
     this.popoverAlignment = Alignment.topCenter,
@@ -325,13 +325,13 @@ class ControlledSelect<T> extends StatelessWidget
 
 /// Controller for managing [ControlledMultiSelect] state programmatically.
 ///
-/// Extends [SelectController] to provide reactive state management for multi-selection
+/// Extends [VNLSelectController] to provide reactive state management for multi-selection
 /// components. Manages a collection of selected items with methods for adding,
 /// removing, and bulk operations.
 ///
 /// Example:
 /// ```dart
-/// final controller = MultiSelectController<String>(['apple', 'banana']);
+/// final controller = VNLMultiSelectController<String>(['apple', 'banana']);
 ///
 /// // Listen to changes
 /// controller.addListener(() {
@@ -341,15 +341,15 @@ class ControlledSelect<T> extends StatelessWidget
 /// // Update selection
 /// controller.value = ['apple', 'cherry'];
 /// ```
-class MultiSelectController<T> extends SelectController<Iterable<T>> {
-  /// Creates a [MultiSelectController] with an optional initial selection.
+class VNLMultiSelectController<T> extends VNLSelectController<Iterable<T>> {
+  /// Creates a [VNLMultiSelectController] with an optional initial selection.
   ///
   /// The [value] parameter sets the initial selected items collection.
   /// Can be null or empty to start with no selections.
   ///
   /// Parameters:
   /// - [value] (`Iterable<T>?`, optional): Initial selected items
-  MultiSelectController([super.value]);
+  VNLMultiSelectController([super.value]);
 }
 
 /// Reactive multi-selection dropdown with automatic state management.
@@ -372,7 +372,7 @@ class MultiSelectController<T> extends SelectController<Iterable<T>> {
 ///
 /// **Controller-based (recommended for complex state):**
 /// ```dart
-/// final controller = MultiSelectController<String>(['apple']);
+/// final controller = VNLMultiSelectController<String>(['apple']);
 ///
 /// ControlledMultiSelect<String>(
 ///   controller: controller,
@@ -405,7 +405,7 @@ class ControlledMultiSelect<T> extends StatelessWidget
   @override
   final bool enabled;
   @override
-  final MultiSelectController<T>? controller;
+  final VNLMultiSelectController<T>? controller;
 
   @override
   final Widget? placeholder;
@@ -418,7 +418,7 @@ class ControlledMultiSelect<T> extends StatelessWidget
   @override
   final BoxConstraints? popupConstraints;
   @override
-  final PopoverConstraint popupWidthConstraint;
+  final VNLPopoverConstraint popupWidthConstraint;
   @override
   final BorderRadiusGeometry? borderRadius;
   @override
@@ -456,7 +456,7 @@ class ControlledMultiSelect<T> extends StatelessWidget
   /// patterns with multiple item selection capabilities.
   ///
   /// Parameters:
-  /// - [controller] (`MultiSelectController<T>?`, optional): external state controller
+  /// - [controller] (`VNLMultiSelectController<T>?`, optional): external state controller
   /// - [initialValue] (`Iterable<T>?`, optional): starting selection when no controller
   /// - [onChanged] (`ValueChanged<Iterable<T>?>?`, optional): selection change callback
   /// - [enabled] (bool, default: true): whether select is interactive
@@ -465,7 +465,7 @@ class ControlledMultiSelect<T> extends StatelessWidget
   /// - [focusNode] (FocusNode?, optional): custom focus node for keyboard handling
   /// - [constraints] (BoxConstraints?, optional): size constraints for select widget
   /// - [popupConstraints] (BoxConstraints?, optional): size constraints for popup
-  /// - [popupWidthConstraint] (PopoverConstraint, default: anchorFixedSize): popup width behavior
+  /// - [popupWidthConstraint] (VNLPopoverConstraint, default: anchorFixedSize): popup width behavior
   /// - [borderRadius] (BorderRadiusGeometry?, optional): override select border radius
   /// - [padding] (EdgeInsetsGeometry?, optional): override internal padding
   /// - [popoverAlignment] (AlignmentGeometry, default: topCenter): popup alignment
@@ -505,7 +505,7 @@ class ControlledMultiSelect<T> extends StatelessWidget
     this.focusNode,
     this.constraints,
     this.popupConstraints,
-    this.popupWidthConstraint = PopoverConstraint.anchorFixedSize,
+    this.popupWidthConstraint = VNLPopoverConstraint.anchorFixedSize,
     this.borderRadius,
     this.padding,
     this.popoverAlignment = Alignment.topCenter,
@@ -594,7 +594,7 @@ class SelectItemButton<T> extends StatelessWidget {
           },
         ),
       },
-      child: SubFocus(builder: (context, subFocusState) {
+      child: VNLSubFocus(builder: (context, subFocusState) {
         return VNLWidgetStatesProvider(
           states: {
             if (subFocusState.isFocused) WidgetState.hovered,
@@ -840,7 +840,7 @@ mixin SelectBase<T> {
   BoxConstraints? get popupConstraints;
 
   /// How popup width should relate to trigger width.
-  PopoverConstraint get popupWidthConstraint;
+  VNLPopoverConstraint get popupWidthConstraint;
 
   /// Border radius of the select trigger.
   BorderRadiusGeometry? get borderRadius;
@@ -940,7 +940,7 @@ class Select<T> extends StatefulWidget with SelectBase<T> {
   @override
   final BoxConstraints? popupConstraints;
   @override
-  final PopoverConstraint popupWidthConstraint;
+  final VNLPopoverConstraint popupWidthConstraint;
 
   /// The currently selected value.
   final T? value;
@@ -986,7 +986,7 @@ class Select<T> extends StatefulWidget with SelectBase<T> {
   /// - [focusNode] (FocusNode?): Focus node for keyboard interaction
   /// - [constraints] (BoxConstraints?): Size constraints for the select button
   /// - [popupConstraints] (BoxConstraints?): Size constraints for the popup menu
-  /// - [popupWidthConstraint] (PopoverConstraint): Width constraint mode for popup, defaults to `PopoverConstraint.anchorFixedSize`
+  /// - [popupWidthConstraint] (VNLPopoverConstraint): Width constraint mode for popup, defaults to `VNLPopoverConstraint.anchorFixedSize`
   /// - [value] (T?): Currently selected value
   /// - [disableHoverEffect] (bool): Whether to disable hover visual feedback, defaults to false
   /// - [borderRadius] (BorderRadiusGeometry?): Custom border radius
@@ -1009,7 +1009,7 @@ class Select<T> extends StatefulWidget with SelectBase<T> {
     this.focusNode,
     this.constraints,
     this.popupConstraints,
-    this.popupWidthConstraint = PopoverConstraint.anchorFixedSize,
+    this.popupWidthConstraint = VNLPopoverConstraint.anchorFixedSize,
     this.value,
     this.disableHoverEffect = false,
     this.borderRadius,
@@ -1051,12 +1051,12 @@ class SelectState<T> extends State<Select<T>>
   final VNLPopoverController _popoverController = VNLPopoverController();
   late ValueNotifier<T?> _valueNotifier;
 
-  SelectTheme? _theme;
+  VNLSelectTheme? _theme;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _theme = ComponentTheme.maybeOf<SelectTheme>(context);
+    _theme = VNLComponentTheme.maybeOf<VNLSelectTheme>(context);
   }
 
   BoxConstraints? get _popupConstraints => styleValue(
@@ -1428,7 +1428,7 @@ class MultiSelect<T> extends StatelessWidget with SelectBase<Iterable<T>> {
   @override
   final BoxConstraints? popupConstraints;
   @override
-  final PopoverConstraint popupWidthConstraint;
+  final VNLPopoverConstraint popupWidthConstraint;
 
   /// The currently selected values.
   final Iterable<T>? value;
@@ -1481,7 +1481,7 @@ class MultiSelect<T> extends StatelessWidget with SelectBase<Iterable<T>> {
   /// - [focusNode] (FocusNode?): Focus node for keyboard interaction
   /// - [constraints] (BoxConstraints?): Size constraints for the select button
   /// - [popupConstraints] (BoxConstraints?): Size constraints for the popup menu
-  /// - [popupWidthConstraint] (PopoverConstraint): Width constraint mode for popup, defaults to `PopoverConstraint.anchorFixedSize`
+  /// - [popupWidthConstraint] (VNLPopoverConstraint): Width constraint mode for popup, defaults to `VNLPopoverConstraint.anchorFixedSize`
   /// - [value] (`Iterable<T>`): Required currently selected values
   /// - [disableHoverEffect] (bool): Whether to disable hover visual feedback, defaults to false
   /// - [borderRadius] (BorderRadiusGeometry?): Custom border radius
@@ -1504,7 +1504,7 @@ class MultiSelect<T> extends StatelessWidget with SelectBase<Iterable<T>> {
     this.focusNode,
     this.constraints,
     this.popupConstraints,
-    this.popupWidthConstraint = PopoverConstraint.anchorFixedSize,
+    this.popupWidthConstraint = VNLPopoverConstraint.anchorFixedSize,
     required this.value,
     this.disableHoverEffect = false,
     this.borderRadius,
@@ -1816,7 +1816,7 @@ class _SelectPopupState<T> extends State<SelectPopup<T>>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    return SubFocusScope(builder: (context, subFocusScope) {
+    return VNLSubFocusScope(builder: (context, subFocusScope) {
       return Actions(
         actions: {
           VNLNextItemIntent: CallbackAction<VNLNextItemIntent>(
@@ -1872,7 +1872,7 @@ class _SelectPopupState<T> extends State<SelectPopup<T>>
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (widget.enableSearch)
-                      ComponentTheme(
+                      VNLComponentTheme(
                         data: const VNLFocusOutlineTheme(
                           border: Border.fromBorderSide(BorderSide.none),
                         ),

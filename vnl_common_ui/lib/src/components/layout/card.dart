@@ -256,7 +256,7 @@ class VNLCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLCardTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLCardTheme>(context);
     final scaling = theme.scaling;
     final densityContainerPadding =
         theme.density.baseContainerPadding * scaling;
@@ -430,7 +430,7 @@ class VNLSurfaceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLCardTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLCardTheme>(context);
     var isSheetOverlay = VNLSheetOverlayHandler.isSheetOverlay(context);
     final scaling = theme.scaling;
     final densityContainerPadding =

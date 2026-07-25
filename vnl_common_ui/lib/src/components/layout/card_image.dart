@@ -4,11 +4,11 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 ///
 /// Defines visual properties like scale animations, background colors,
 /// border styling, and layout direction. Applied through the widget tree
-/// using [ComponentTheme] to provide consistent theming across card images.
+/// using [VNLComponentTheme] to provide consistent theming across card images.
 ///
 /// Example:
 /// ```dart
-/// ComponentTheme(
+/// VNLComponentTheme(
 ///   data: VNLCardImageTheme(
 ///     hoverScale: 1.1,
 ///     backgroundColor: VNLColors.grey.shade100,
@@ -260,12 +260,12 @@ class _CardImageState extends State<VNLCardImage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLCardImageTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLCardImageTheme>(context);
     final style = styleValue(
         widgetValue: widget.style,
         themeValue: compTheme?.style,
         defaultValue: const VNLButtonStyle.fixed(
-          density: ButtonDensity.compact,
+          density: VNLButtonDensity.compact,
         ));
     final direction = styleValue(
         widgetValue: widget.direction,

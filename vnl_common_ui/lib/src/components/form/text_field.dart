@@ -360,14 +360,14 @@ abstract class VNLInputFeature {
   /// - [visibility] (`VNLInputFeatureVisibility`, default: always): When to show hint.
   /// - [popupBuilder] (`WidgetBuilder`, required): Builds the hint popup content.
   /// - [icon] (`Widget?`, optional): Icon to display for the hint trigger.
-  /// - [position] (`InputFeaturePosition`, default: trailing): Where to place the hint.
+  /// - [position] (`VNLInputFeaturePosition`, default: trailing): Where to place the hint.
   /// - [enableShortcuts] (`bool`, default: true): Enable keyboard shortcuts.
   /// - [skipFocusTraversal] (`bool`, default: false): Skip in focus order.
   const factory VNLInputFeature.hint({
     VNLInputFeatureVisibility visibility,
     required WidgetBuilder popupBuilder,
     Widget? icon,
-    InputFeaturePosition position,
+    VNLInputFeaturePosition position,
     bool enableShortcuts,
     bool skipFocusTraversal,
   }) = VNLInputHintFeature;
@@ -376,15 +376,15 @@ abstract class VNLInputFeature {
   ///
   /// Parameters:
   /// - [visibility] (`VNLInputFeatureVisibility`, default: always): When to show toggle.
-  /// - [mode] (`PasswordPeekMode`, default: toggle): VNLToggle or peek mode.
-  /// - [position] (`InputFeaturePosition`, default: trailing): Where to place toggle.
+  /// - [mode] (`VNLPasswordPeekMode`, default: toggle): VNLToggle or peek mode.
+  /// - [position] (`VNLInputFeaturePosition`, default: trailing): Where to place toggle.
   /// - [icon] (`Widget?`, optional): Icon when password is hidden.
   /// - [iconShow] (`Widget?`, optional): Icon when password is visible.
   /// - [skipFocusTraversal] (`bool`, default: false): Skip in focus order.
   const factory VNLInputFeature.passwordToggle({
     VNLInputFeatureVisibility visibility,
-    PasswordPeekMode mode,
-    InputFeaturePosition position,
+    VNLPasswordPeekMode mode,
+    VNLInputFeaturePosition position,
     Widget? icon,
     Widget? iconShow,
     bool skipFocusTraversal,
@@ -394,12 +394,12 @@ abstract class VNLInputFeature {
   ///
   /// Parameters:
   /// - [visibility] (`VNLInputFeatureVisibility`, default: textNotEmpty): When to show clear button.
-  /// - [position] (`InputFeaturePosition`, default: trailing): Where to place button.
+  /// - [position] (`VNLInputFeaturePosition`, default: trailing): Where to place button.
   /// - [icon] (`Widget?`, optional): Custom clear icon.
   /// - [skipFocusTraversal] (`bool`, default: false): Skip in focus order.
   const factory VNLInputFeature.clear({
     VNLInputFeatureVisibility visibility,
-    InputFeaturePosition position,
+    VNLInputFeaturePosition position,
     Widget? icon,
     bool skipFocusTraversal,
   }) = VNLInputClearFeature;
@@ -410,12 +410,12 @@ abstract class VNLInputFeature {
   ///
   /// Parameters:
   /// - [visibility] (`VNLInputFeatureVisibility`, default: always): When to show button.
-  /// - [position] (`InputFeaturePosition`, default: trailing): Where to place button.
+  /// - [position] (`VNLInputFeaturePosition`, default: trailing): Where to place button.
   /// - [icon] (`Widget?`, optional): Custom revalidate icon.
   /// - [skipFocusTraversal] (`bool`, default: false): Skip in focus order.
   const factory VNLInputFeature.revalidate({
     VNLInputFeatureVisibility visibility,
-    InputFeaturePosition position,
+    VNLInputFeaturePosition position,
     Widget? icon,
     bool skipFocusTraversal,
   }) = VNLInputRevalidateFeature;
@@ -427,20 +427,20 @@ abstract class VNLInputFeature {
   /// - [querySuggestions] (`SuggestionBuilder`, required): Builds suggestion list.
   /// - [child] (`Widget`, required): Child widget in the autocomplete popup.
   /// - [popoverConstraints] (`BoxConstraints?`, optional): Size constraints for popup.
-  /// - [popoverWidthConstraint] (`PopoverConstraint?`, optional): Width constraint mode.
+  /// - [popoverWidthConstraint] (`VNLPopoverConstraint?`, optional): Width constraint mode.
   /// - [popoverAnchorAlignment] (`AlignmentDirectional?`, optional): Anchor alignment.
   /// - [popoverAlignment] (`AlignmentDirectional?`, optional): Popup alignment.
-  /// - [mode] (`AutoCompleteMode`, default: popup): Display mode.
+  /// - [mode] (`VNLAutoCompleteMode`, default: popup): Display mode.
   /// - [skipFocusTraversal] (`bool`, default: false): Skip in focus order.
   const factory VNLInputFeature.autoComplete({
     VNLInputFeatureVisibility visibility,
     required SuggestionBuilder querySuggestions,
     required Widget child,
     BoxConstraints? popoverConstraints,
-    PopoverConstraint? popoverWidthConstraint,
+    VNLPopoverConstraint? popoverWidthConstraint,
     AlignmentDirectional? popoverAnchorAlignment,
     AlignmentDirectional? popoverAlignment,
-    AutoCompleteMode mode,
+    VNLAutoCompleteMode mode,
     bool skipFocusTraversal,
   }) = VNLInputAutoCompleteFeature;
 
@@ -468,7 +468,7 @@ abstract class VNLInputFeature {
   ///
   /// Parameters:
   /// - [visibility] (`VNLInputFeatureVisibility`, default: always): When to show button.
-  /// - [position] (`InputFeaturePosition`, default: trailing): Where to place button.
+  /// - [position] (`VNLInputFeaturePosition`, default: trailing): Where to place button.
   /// - [step] (`double`, default: 1): Increment step size.
   /// - [invalidValue] (`double?`, optional): Value to use when input is invalid.
   /// - [min] (`double?`, optional): Minimum allowed value.
@@ -477,7 +477,7 @@ abstract class VNLInputFeature {
   /// - [skipFocusTraversal] (`bool`, default: false): Skip in focus order.
   const factory VNLInputFeature.incrementButton({
     VNLInputFeatureVisibility visibility,
-    InputFeaturePosition position,
+    VNLInputFeaturePosition position,
     double step,
     double? invalidValue,
     double? min,
@@ -490,7 +490,7 @@ abstract class VNLInputFeature {
   ///
   /// Parameters:
   /// - [visibility] (`VNLInputFeatureVisibility`, default: always): When to show button.
-  /// - [position] (`InputFeaturePosition`, default: trailing): Where to place button.
+  /// - [position] (`VNLInputFeaturePosition`, default: trailing): Where to place button.
   /// - [step] (`double`, default: -1): Decrement step size.
   /// - [invalidValue] (`double?`, optional): Value to use when input is invalid.
   /// - [min] (`double?`, optional): Minimum allowed value.
@@ -499,7 +499,7 @@ abstract class VNLInputFeature {
   /// - [skipFocusTraversal] (`bool`, default: false): Skip in focus order.
   const factory VNLInputFeature.decrementButton({
     VNLInputFeatureVisibility visibility,
-    InputFeaturePosition position,
+    VNLInputFeaturePosition position,
     double step,
     double? invalidValue,
     double? min,
@@ -512,12 +512,12 @@ abstract class VNLInputFeature {
   ///
   /// Parameters:
   /// - [visibility] (`VNLInputFeatureVisibility`, default: textNotEmpty): When to show copy button.
-  /// - [position] (`InputFeaturePosition`, default: trailing): Where to place button.
+  /// - [position] (`VNLInputFeaturePosition`, default: trailing): Where to place button.
   /// - [icon] (`Widget?`, optional): Custom copy icon.
   /// - [skipFocusTraversal] (`bool`, default: false): Skip in focus order.
   const factory VNLInputFeature.copy({
     VNLInputFeatureVisibility visibility,
-    InputFeaturePosition position,
+    VNLInputFeaturePosition position,
     Widget? icon,
     bool skipFocusTraversal,
   }) = VNLInputCopyFeature;
@@ -526,12 +526,12 @@ abstract class VNLInputFeature {
   ///
   /// Parameters:
   /// - [visibility] (`VNLInputFeatureVisibility`, default: always): When to show paste button.
-  /// - [position] (`InputFeaturePosition`, default: trailing): Where to place button.
+  /// - [position] (`VNLInputFeaturePosition`, default: trailing): Where to place button.
   /// - [icon] (`Widget?`, optional): Custom paste icon.
   /// - [skipFocusTraversal] (`bool`, default: false): Skip in focus order.
   const factory VNLInputFeature.paste({
     VNLInputFeatureVisibility visibility,
-    InputFeaturePosition position,
+    VNLInputFeaturePosition position,
     Widget? icon,
     bool skipFocusTraversal,
   }) = VNLInputPasteFeature;
@@ -902,7 +902,7 @@ class _TextFieldSelectionGestureDetectorBuilder
 /// Mixin defining the interface for text input widgets.
 ///
 /// Provides a comprehensive set of properties that text input widgets
-/// must implement, ensuring consistency across [VNLTextField], [ChipInput],
+/// must implement, ensuring consistency across [VNLTextField], [VNLChipInput],
 /// [VNLTextArea], and similar components. This mixin helps avoid missing
 /// properties when implementing custom text input widgets.
 ///
@@ -2606,18 +2606,18 @@ class VNLTextFieldState extends State<VNLTextField>
               },
             ),
           ),
-          AutoCompleteIntent: Action.overridable(
+          VNLAutoCompleteIntent: Action.overridable(
             context: context,
-            defaultAction: CallbackAction<AutoCompleteIntent>(
+            defaultAction: CallbackAction<VNLAutoCompleteIntent>(
               onInvoke: (intent) {
                 switch (intent.mode) {
-                  case AutoCompleteMode.append:
+                  case VNLAutoCompleteMode.append:
                     _appendText(intent.suggestion);
                     break;
-                  case AutoCompleteMode.replaceWord:
+                  case VNLAutoCompleteMode.replaceWord:
                     _replaceCurrentWord(intent.suggestion);
                     break;
-                  case AutoCompleteMode.replaceAll:
+                  case VNLAutoCompleteMode.replaceAll:
                     _setText(intent.suggestion);
                     break;
                 }
@@ -2652,7 +2652,7 @@ class VNLTextFieldState extends State<VNLTextField>
         return char == ' ' ||
             char == '\n' ||
             char == '\t' ||
-            ChipInput.isChipCharacter(char);
+            VNLChipInput.isChipCharacter(char);
       });
       effectiveController.value = TextEditingValue(
         text: newText.$2,
@@ -2689,7 +2689,7 @@ class VNLTextFieldState extends State<VNLTextField>
   Widget _buildDecorated(BuildContext context) {
     var widget = this.widget;
     final ThemeData theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLTextFieldTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLTextFieldTheme>(context);
     assert(debugCheckHasDirectionality(context));
     final TextEditingController controller = effectiveController;
 

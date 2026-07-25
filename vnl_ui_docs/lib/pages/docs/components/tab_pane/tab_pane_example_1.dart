@@ -23,16 +23,16 @@ class MyTab {
 }
 
 class _TabPaneExample1State extends State<TabPaneExample1> {
-  late List<TabPaneData<MyTab>> tabs;
+  late List<VNLTabPaneData<MyTab>> tabs;
   int focused = 0;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Build the initial set of tabs. TabPaneData wraps your custom data type
+    // Build the initial set of tabs. VNLTabPaneData wraps your custom data type
     // (here, MyTab) and adds selection/drag metadata.
     tabs = [
-      for (int i = 0; i < 3; i++) TabPaneData(MyTab('Tab ${i + 1}', i + 1, 'Content ${i + 1}')),
+      for (int i = 0; i < 3; i++) VNLTabPaneData(MyTab('Tab ${i + 1}', i + 1, 'Content ${i + 1}')),
     ];
   }
 
@@ -55,7 +55,7 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
             ),
           ),
           trailing: VNLIconButton.ghost(
-            shape: ButtonShape.circle,
+            shape: VNLButtonShape.circle,
             size: VNLButtonSize.xSmall,
             icon: const Icon(Icons.close),
             onPressed: () {
@@ -97,7 +97,7 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
         VNLIconButton.secondary(
           icon: const Icon(Icons.arrow_drop_down),
           size: VNLButtonSize.small,
-          density: ButtonDensity.iconDense,
+          density: VNLButtonDensity.iconDense,
           onPressed: () {},
         ),
       ],
@@ -105,13 +105,13 @@ class _TabPaneExample1State extends State<TabPaneExample1> {
         VNLIconButton.ghost(
           icon: const Icon(Icons.add),
           size: VNLButtonSize.small,
-          density: ButtonDensity.iconDense,
+          density: VNLButtonDensity.iconDense,
           onPressed: () {
             setState(() {
               int max = tabs.fold<int>(0, (previousValue, element) {
                 return element.data.count > previousValue ? element.data.count : previousValue;
               });
-              tabs.add(TabPaneData(MyTab('Tab ${max + 1}', max + 1, 'Content ${max + 1}')));
+              tabs.add(VNLTabPaneData(MyTab('Tab ${max + 1}', max + 1, 'Content ${max + 1}')));
             });
           },
         )

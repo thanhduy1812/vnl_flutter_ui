@@ -212,7 +212,7 @@ class VNLDivider extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLDividerTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLDividerTheme>(context);
     final textDirection = Directionality.maybeOf(context) ?? TextDirection.ltr;
     final color = styleValue(
       widgetValue: this.color,

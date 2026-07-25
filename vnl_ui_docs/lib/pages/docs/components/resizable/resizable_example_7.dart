@@ -79,7 +79,7 @@ class _ResizableExample7State extends State<ResizableExample7> {
                 ),
             ],
           ),
-          PrimaryButton(
+          VNLPrimaryButton(
             child: const Text('Add'),
             onPressed: () {
               setState(() {

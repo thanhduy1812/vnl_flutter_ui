@@ -17,22 +17,22 @@ class _ColorPickerExample3State extends State<ColorPickerExample3> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Builder(builder: (context) {
-          return PrimaryButton(
+          return VNLPrimaryButton(
             onPressed: () {
               // Show the color picker as a popover anchored to the button.
               showPopover(
                 context: context,
                 alignment: Alignment.topCenter,
                 anchorAlignment: Alignment.bottomCenter,
-                widthConstraint: PopoverConstraint.intrinsic,
-                heightConstraint: PopoverConstraint.intrinsic,
+                widthConstraint: VNLPopoverConstraint.intrinsic,
+                heightConstraint: VNLPopoverConstraint.intrinsic,
                 offset: const Offset(0, 8),
                 builder: (context) {
                   return ListenableBuilder(
                       listenable: selectedColorNotifier,
                       builder: (context, _) {
                         return VNLSurfaceCard(
-                          child: ColorPicker(
+                          child: VNLColorPicker(
                             value: selectedColorNotifier.value,
                             orientation: Axis.horizontal,
                             showAlpha: true,
@@ -51,7 +51,7 @@ class _ColorPickerExample3State extends State<ColorPickerExample3> {
           );
         }),
         const Gap(16),
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             // Show the color picker as a dialog with a title.
             showDialog(
@@ -62,7 +62,7 @@ class _ColorPickerExample3State extends State<ColorPickerExample3> {
                   content: ListenableBuilder(
                       listenable: selectedColorNotifier,
                       builder: (context, _) {
-                        return ColorPicker(
+                        return VNLColorPicker(
                           value: selectedColorNotifier.value,
                           orientation: Axis.horizontal,
                           showAlpha: true,
@@ -74,7 +74,7 @@ class _ColorPickerExample3State extends State<ColorPickerExample3> {
                         );
                       }),
                   actions: [
-                    PrimaryButton(
+                    VNLPrimaryButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },

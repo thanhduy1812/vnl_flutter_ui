@@ -25,14 +25,14 @@ class _DataExample14State extends State<DataExample14> {
         children: [
           const InnerWidget(),
           const Gap(8),
-          PrimaryButton(
+          VNLPrimaryButton(
             onPressed: () {
               firstCounter.value++;
             },
             child: const Text('Increment First Counter'),
           ),
           const Gap(4),
-          PrimaryButton(
+          VNLPrimaryButton(
             onPressed: () {
               secondCounter.value++;
             },

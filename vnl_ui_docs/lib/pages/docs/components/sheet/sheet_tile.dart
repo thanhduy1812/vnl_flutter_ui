@@ -15,7 +15,7 @@ class SheetTile extends StatelessWidget implements IComponentPage {
       verticalOffset: 0,
       scale: 1,
       example: VNLSheetWrapper(
-        position: OverlayPosition.right,
+        position: VNLOverlayPosition.right,
         stackIndex: 0,
         size: const Size(300, 300),
         child: Column(

@@ -17,7 +17,7 @@ typedef PreviewLabelBuilder = Widget Function(
 
 /// A layer widget that provides eye dropper (color picking) functionality.
 ///
-/// [EyeDropperLayer] wraps its child widget and enables screen color sampling.
+/// [VNLEyeDropperLayer] wraps its child widget and enables screen color sampling.
 /// When active, it displays a magnified preview of the area under the cursor
 /// and allows users to pick colors directly from the screen.
 ///
@@ -29,7 +29,7 @@ typedef PreviewLabelBuilder = Widget Function(
 ///
 /// Example:
 /// ```dart
-/// EyeDropperLayer(
+/// VNLEyeDropperLayer(
 ///   child: MyApp(),
 ///   showPreview: true,
 ///   previewScale: 10,
@@ -38,7 +38,7 @@ typedef PreviewLabelBuilder = Widget Function(
 ///   },
 /// )
 /// ```
-class EyeDropperLayer extends StatefulWidget {
+class VNLEyeDropperLayer extends StatefulWidget {
   /// The child widget to wrap.
   final Widget child;
 
@@ -57,8 +57,8 @@ class EyeDropperLayer extends StatefulWidget {
   /// Builder for custom preview label widgets.
   final PreviewLabelBuilder? previewLabelBuilder;
 
-  /// Creates an [EyeDropperLayer].
-  const EyeDropperLayer({
+  /// Creates an [VNLEyeDropperLayer].
+  const VNLEyeDropperLayer({
     super.key,
     required this.child,
     this.previewAlignment,
@@ -69,7 +69,7 @@ class EyeDropperLayer extends StatefulWidget {
   });
 
   @override
-  State<EyeDropperLayer> createState() => _EyeDropperLayerState();
+  State<VNLEyeDropperLayer> createState() => _EyeDropperLayerState();
 }
 
 class _ScreenshotResult {
@@ -116,7 +116,7 @@ class _EyeDropperCompleter {
   _EyeDropperCompleter(this.completer, this.recentColorsScope);
 }
 
-class _EyeDropperLayerState extends State<EyeDropperLayer>
+class _EyeDropperLayerState extends State<VNLEyeDropperLayer>
     implements EyeDropperLayerScope {
   final GlobalKey _repaintKey = GlobalKey();
   _ScreenshotResult? _currentPicking;
@@ -473,7 +473,7 @@ class _ColorPreviewPainter extends CustomPainter {
 /// Provides access to eye dropper functionality in the widget tree.
 ///
 /// [EyeDropperLayerScope] is an abstract interface that allows widgets to
-/// request color picking functionality from an ancestor [EyeDropperLayer].
+/// request color picking functionality from an ancestor [VNLEyeDropperLayer].
 /// Use the static methods to find the scope in the widget tree.
 abstract class EyeDropperLayerScope {
   /// Prompts the user to pick a color from the screen.
@@ -491,7 +491,7 @@ abstract class EyeDropperLayerScope {
     return Data.maybeFindRoot<EyeDropperLayerScope>(context) ??
         Data.maybeFindMessenger<EyeDropperLayerScope>(context) ??
         (throw FlutterError(
-          'No EyeDropperLayerScope found in context. Make sure to wrap your widget tree with an EyeDropperLayer.',
+          'No EyeDropperLayerScope found in context. Make sure to wrap your widget tree with an VNLEyeDropperLayer.',
         ));
   }
 
@@ -502,7 +502,7 @@ abstract class EyeDropperLayerScope {
     return Data.maybeFind<EyeDropperLayerScope>(context) ??
         Data.maybeFindMessenger<EyeDropperLayerScope>(context) ??
         (throw FlutterError(
-          'No EyeDropperLayerScope found in context. Make sure to wrap your widget tree with an EyeDropperLayer.',
+          'No EyeDropperLayerScope found in context. Make sure to wrap your widget tree with an VNLEyeDropperLayer.',
         ));
   }
 }

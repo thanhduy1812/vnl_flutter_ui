@@ -1,17 +1,17 @@
 import '../../shadcn_flutter.dart';
 
-void _assertNotThemeModeSystem(ThemeMode mode, String label) {
-  if (mode == ThemeMode.system) {
+void _assertNotThemeModeSystem(VNLThemeMode mode, String label) {
+  if (mode == VNLThemeMode.system) {
     final List<DiagnosticsNode> diagnosticList = [];
     diagnosticList.add(ErrorSummary(
-        'ColorSchemes.${label.toLowerCase()}(ThemeMode mode) can only be used with ThemeMode.light or ThemeMode.dark.'));
+        'ColorSchemes.${label.toLowerCase()}(VNLThemeMode mode) can only be used with VNLThemeMode.light or VNLThemeMode.dark.'));
     diagnosticList.add(ErrorDescription(
         'This method is only intended as a helper method to get either ColorSchemes.light$label() or ColorSchemes.dark$label().'));
     diagnosticList.add(ErrorHint('To use system theme mode, do this:\n'
         'VNLookApp(\n'
-        '  theme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(ThemeMode.light)),\n'
-        '  darkTheme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(ThemeMode.dark)),\n'
-        '  themeMode: ThemeMode.system, // optional, default is ThemeMode.system\n'
+        '  theme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(VNLThemeMode.light)),\n'
+        '  darkTheme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(VNLThemeMode.dark)),\n'
+        '  themeMode: VNLThemeMode.system, // optional, default is VNLThemeMode.system\n'
         ')\n'
         'or:\n'
         'VNLookApp(\n'
@@ -20,7 +20,7 @@ void _assertNotThemeModeSystem(ThemeMode mode, String label) {
         ')\n'
         'instead of:\n'
         'VNLookApp(\n'
-        '  theme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(ThemeMode.system)),\n'
+        '  theme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(VNLThemeMode.system)),\n'
         ')'));
     throw FlutterError.fromParts(diagnosticList);
   }
@@ -101,14 +101,14 @@ class LegacyColorSchemes {
 
   /// Returns zinc color scheme for the given [mode].
   ///
-  /// The [mode] must be either [ThemeMode.light] or [ThemeMode.dark].
-  /// [ThemeMode.system] is not supported.
-  static ColorScheme zinc(ThemeMode mode) {
+  /// The [mode] must be either [VNLThemeMode.light] or [VNLThemeMode.dark].
+  /// [VNLThemeMode.system] is not supported.
+  static ColorScheme zinc(VNLThemeMode mode) {
     assert(() {
       _assertNotThemeModeSystem(mode, 'Zinc');
       return true;
     }());
-    return mode == ThemeMode.light ? lightZinc() : darkZinc();
+    return mode == VNLThemeMode.light ? lightZinc() : darkZinc();
   }
 
   /// Returns light slate color scheme.
@@ -181,14 +181,14 @@ class LegacyColorSchemes {
 
   /// Returns slate color scheme for the given [mode].
   ///
-  /// The [mode] must be either [ThemeMode.light] or [ThemeMode.dark].
-  /// [ThemeMode.system] is not supported.
-  static ColorScheme slate(ThemeMode mode) {
+  /// The [mode] must be either [VNLThemeMode.light] or [VNLThemeMode.dark].
+  /// [VNLThemeMode.system] is not supported.
+  static ColorScheme slate(VNLThemeMode mode) {
     assert(() {
       _assertNotThemeModeSystem(mode, 'Slate');
       return true;
     }());
-    return mode == ThemeMode.light ? lightSlate() : darkSlate();
+    return mode == VNLThemeMode.light ? lightSlate() : darkSlate();
   }
 
   /// Returns light stone color scheme.
@@ -258,14 +258,14 @@ class LegacyColorSchemes {
 
   /// Returns stone color scheme for the given [mode].
   ///
-  /// The [mode] must be either [ThemeMode.light] or [ThemeMode.dark].
-  /// [ThemeMode.system] is not supported.
-  static ColorScheme stone(ThemeMode mode) {
+  /// The [mode] must be either [VNLThemeMode.light] or [VNLThemeMode.dark].
+  /// [VNLThemeMode.system] is not supported.
+  static ColorScheme stone(VNLThemeMode mode) {
     assert(() {
       _assertNotThemeModeSystem(mode, 'Stone');
       return true;
     }());
-    return mode == ThemeMode.light ? lightStone() : darkStone();
+    return mode == VNLThemeMode.light ? lightStone() : darkStone();
   }
 
   /// Returns light gray color scheme.
@@ -338,14 +338,14 @@ class LegacyColorSchemes {
 
   /// Returns gray color scheme for the given [mode].
   ///
-  /// The [mode] must be either [ThemeMode.light] or [ThemeMode.dark].
-  /// [ThemeMode.system] is not supported.
-  static ColorScheme gray(ThemeMode mode) {
+  /// The [mode] must be either [VNLThemeMode.light] or [VNLThemeMode.dark].
+  /// [VNLThemeMode.system] is not supported.
+  static ColorScheme gray(VNLThemeMode mode) {
     assert(() {
       _assertNotThemeModeSystem(mode, 'Gray');
       return true;
     }());
-    return mode == ThemeMode.light ? lightGray() : darkGray();
+    return mode == VNLThemeMode.light ? lightGray() : darkGray();
   }
 
   /// Returns light neutral color scheme.
@@ -414,14 +414,14 @@ class LegacyColorSchemes {
 
   /// Returns neutral color scheme for the given [mode].
   ///
-  /// The [mode] must be either [ThemeMode.light] or [ThemeMode.dark].
-  /// [ThemeMode.system] is not supported.
-  static ColorScheme neutral(ThemeMode mode) {
+  /// The [mode] must be either [VNLThemeMode.light] or [VNLThemeMode.dark].
+  /// [VNLThemeMode.system] is not supported.
+  static ColorScheme neutral(VNLThemeMode mode) {
     assert(() {
       _assertNotThemeModeSystem(mode, 'Neutral');
       return true;
     }());
-    return mode == ThemeMode.light ? lightNeutral() : darkNeutral();
+    return mode == VNLThemeMode.light ? lightNeutral() : darkNeutral();
   }
 
   /// Returns light red color scheme.
@@ -490,14 +490,14 @@ class LegacyColorSchemes {
 
   /// Returns red color scheme for the given [mode].
   ///
-  /// The [mode] must be either [ThemeMode.light] or [ThemeMode.dark].
-  /// [ThemeMode.system] is not supported.
-  static ColorScheme red(ThemeMode mode) {
+  /// The [mode] must be either [VNLThemeMode.light] or [VNLThemeMode.dark].
+  /// [VNLThemeMode.system] is not supported.
+  static ColorScheme red(VNLThemeMode mode) {
     assert(() {
       _assertNotThemeModeSystem(mode, 'Red');
       return true;
     }());
-    return mode == ThemeMode.light ? lightRed() : darkRed();
+    return mode == VNLThemeMode.light ? lightRed() : darkRed();
   }
 
   /// Returns light rose color scheme.
@@ -567,14 +567,14 @@ class LegacyColorSchemes {
 
   /// Returns rose color scheme for the given [mode].
   ///
-  /// The [mode] must be either [ThemeMode.light] or [ThemeMode.dark].
-  /// [ThemeMode.system] is not supported.
-  static ColorScheme rose(ThemeMode mode) {
+  /// The [mode] must be either [VNLThemeMode.light] or [VNLThemeMode.dark].
+  /// [VNLThemeMode.system] is not supported.
+  static ColorScheme rose(VNLThemeMode mode) {
     assert(() {
       _assertNotThemeModeSystem(mode, 'Rose');
       return true;
     }());
-    return mode == ThemeMode.light ? lightRose() : darkRose();
+    return mode == VNLThemeMode.light ? lightRose() : darkRose();
   }
 
   /// Returns light orange color scheme.
@@ -644,14 +644,14 @@ class LegacyColorSchemes {
 
   /// Returns orange color scheme for the given [mode].
   ///
-  /// The [mode] must be either [ThemeMode.light] or [ThemeMode.dark].
-  /// [ThemeMode.system] is not supported.
-  static ColorScheme orange(ThemeMode mode) {
+  /// The [mode] must be either [VNLThemeMode.light] or [VNLThemeMode.dark].
+  /// [VNLThemeMode.system] is not supported.
+  static ColorScheme orange(VNLThemeMode mode) {
     assert(() {
       _assertNotThemeModeSystem(mode, 'Orange');
       return true;
     }());
-    return mode == ThemeMode.light ? lightOrange() : darkOrange();
+    return mode == VNLThemeMode.light ? lightOrange() : darkOrange();
   }
 
   /// Returns light green color scheme.
@@ -721,14 +721,14 @@ class LegacyColorSchemes {
 
   /// Returns green color scheme for the given [mode].
   ///
-  /// The [mode] must be either [ThemeMode.light] or [ThemeMode.dark].
-  /// [ThemeMode.system] is not supported.
-  static ColorScheme green(ThemeMode mode) {
+  /// The [mode] must be either [VNLThemeMode.light] or [VNLThemeMode.dark].
+  /// [VNLThemeMode.system] is not supported.
+  static ColorScheme green(VNLThemeMode mode) {
     assert(() {
       _assertNotThemeModeSystem(mode, 'Green');
       return true;
     }());
-    return mode == ThemeMode.light ? lightGreen() : darkGreen();
+    return mode == VNLThemeMode.light ? lightGreen() : darkGreen();
   }
 
   /// Returns light blue color scheme.
@@ -801,14 +801,14 @@ class LegacyColorSchemes {
 
   /// Returns blue color scheme for the given [mode].
   ///
-  /// The [mode] must be either [ThemeMode.light] or [ThemeMode.dark].
-  /// [ThemeMode.system] is not supported.
-  static ColorScheme blue(ThemeMode mode) {
+  /// The [mode] must be either [VNLThemeMode.light] or [VNLThemeMode.dark].
+  /// [VNLThemeMode.system] is not supported.
+  static ColorScheme blue(VNLThemeMode mode) {
     assert(() {
       _assertNotThemeModeSystem(mode, 'Blue');
       return true;
     }());
-    return mode == ThemeMode.light ? lightBlue() : darkBlue();
+    return mode == VNLThemeMode.light ? lightBlue() : darkBlue();
   }
 
   /// Returns light yellow color scheme.
@@ -878,14 +878,14 @@ class LegacyColorSchemes {
 
   /// Returns yellow color scheme for the given [mode].
   ///
-  /// The [mode] must be either [ThemeMode.light] or [ThemeMode.dark].
-  /// [ThemeMode.system] is not supported.
-  static ColorScheme yellow(ThemeMode mode) {
+  /// The [mode] must be either [VNLThemeMode.light] or [VNLThemeMode.dark].
+  /// [VNLThemeMode.system] is not supported.
+  static ColorScheme yellow(VNLThemeMode mode) {
     assert(() {
       _assertNotThemeModeSystem(mode, 'Yellow');
       return true;
     }());
-    return mode == ThemeMode.light ? lightYellow() : darkYellow();
+    return mode == VNLThemeMode.light ? lightYellow() : darkYellow();
   }
 
   /// Returns light violet color scheme.
@@ -957,13 +957,13 @@ class LegacyColorSchemes {
 
   /// Returns violet color scheme for the given [mode].
   ///
-  /// The [mode] must be either [ThemeMode.light] or [ThemeMode.dark].
-  /// [ThemeMode.system] is not supported.
-  static ColorScheme violet(ThemeMode mode) {
+  /// The [mode] must be either [VNLThemeMode.light] or [VNLThemeMode.dark].
+  /// [VNLThemeMode.system] is not supported.
+  static ColorScheme violet(VNLThemeMode mode) {
     assert(() {
       _assertNotThemeModeSystem(mode, 'Violet');
       return true;
     }());
-    return mode == ThemeMode.light ? lightViolet() : darkViolet();
+    return mode == VNLThemeMode.light ? lightViolet() : darkViolet();
   }
 }

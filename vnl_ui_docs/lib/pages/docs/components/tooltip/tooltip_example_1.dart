@@ -13,7 +13,7 @@ class TooltipExample1 extends StatelessWidget {
       tooltip: const VNLTooltipContainer(
         child: Text('This is a tooltip.'),
       ),
-      child: PrimaryButton(
+      child: VNLPrimaryButton(
         onPressed: () {},
         child: const Text('VNLHover over me'),
       ),

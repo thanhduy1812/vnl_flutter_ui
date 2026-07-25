@@ -32,13 +32,13 @@ class DataExample6State extends State<DataExample6> {
               child: const Text('VNLToggle'),
             ),
             const Gap(24),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 setState(() {
                   counter++;
                 });
               },
-              density: ButtonDensity.icon,
+              density: VNLButtonDensity.icon,
               child: const Icon(Icons.add),
             ),
           ],

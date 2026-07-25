@@ -4,7 +4,7 @@ import '../../../shadcn_flutter.dart';
 ///
 /// Defines the visual properties and default behaviors for date picker components
 /// including presentation modes, calendar views, and popover positioning. Applied
-/// globally through [ComponentTheme] or per-instance for customization.
+/// globally through [VNLComponentTheme] or per-instance for customization.
 ///
 /// Supports comprehensive customization of date picker appearance, initial views,
 /// and interaction modes to match application design requirements.
@@ -13,7 +13,7 @@ class VNLDatePickerTheme extends ComponentThemeData {
   ///
   /// Determines whether date selection opens a popover or modal dialog.
   /// When null, uses framework default prompt mode behavior.
-  final PromptMode? mode;
+  final VNLPromptMode? mode;
 
   /// Initial calendar view to display when date picker opens.
   ///
@@ -26,7 +26,7 @@ class VNLDatePickerTheme extends ComponentThemeData {
   ///
   /// Determines the layout style and interaction pattern of the calendar
   /// (grid, list, compact, etc.). When null, uses framework default view type.
-  final CalendarViewType? initialViewType;
+  final VNLCalendarViewType? initialViewType;
 
   /// Alignment point on the popover for anchor attachment.
   ///
@@ -61,9 +61,9 @@ class VNLDatePickerTheme extends ComponentThemeData {
 
   /// Creates a copy of this theme with specified properties overridden.
   VNLDatePickerTheme copyWith({
-    ValueGetter<PromptMode?>? mode,
+    ValueGetter<VNLPromptMode?>? mode,
     ValueGetter<VNLCalendarView?>? initialView,
-    ValueGetter<CalendarViewType?>? initialViewType,
+    ValueGetter<VNLCalendarViewType?>? initialViewType,
     ValueGetter<AlignmentGeometry?>? popoverAlignment,
     ValueGetter<AlignmentGeometry?>? popoverAnchorAlignment,
     ValueGetter<EdgeInsetsGeometry?>? popoverPadding,
@@ -174,7 +174,7 @@ class VNLControlledDatePicker extends StatelessWidget
   final Widget? placeholder;
 
   /// Presentation mode (popover or modal).
-  final PromptMode? mode;
+  final VNLPromptMode? mode;
 
   /// Initial calendar view to display.
   final VNLCalendarView? initialView;
@@ -192,7 +192,7 @@ class VNLControlledDatePicker extends StatelessWidget
   final Widget? dialogTitle;
 
   /// Initial calendar view type.
-  final CalendarViewType? initialViewType;
+  final VNLCalendarViewType? initialViewType;
 
   /// Builder for customizing date cell states.
   final DateStateBuilder? stateBuilder;
@@ -257,7 +257,7 @@ class VNLDatePicker extends StatelessWidget {
   final Widget? placeholder;
 
   /// The display mode for the date picker (popover or dialog).
-  final PromptMode? mode;
+  final VNLPromptMode? mode;
 
   /// The initial calendar view to display.
   final VNLCalendarView? initialView;
@@ -275,7 +275,7 @@ class VNLDatePicker extends StatelessWidget {
   final Widget? dialogTitle;
 
   /// The initial calendar view type (date, month, or year).
-  final CalendarViewType? initialViewType;
+  final VNLCalendarViewType? initialViewType;
 
   /// Builder function to determine the state of each date.
   final DateStateBuilder? stateBuilder;
@@ -303,11 +303,11 @@ class VNLDatePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     VNLookLocalizations localizations = VNLookLocalizations.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLDatePickerTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLDatePickerTheme>(context);
     final resolvedMode = styleValue(
       widgetValue: mode,
       themeValue: compTheme?.mode,
-      defaultValue: PromptMode.dialog,
+      defaultValue: VNLPromptMode.dialog,
     );
     final resolvedAlignment = styleValue(
       widgetValue: popoverAlignment,
@@ -332,7 +332,7 @@ class VNLDatePicker extends StatelessWidget {
     final resolvedInitialViewType = styleValue(
       widgetValue: initialViewType,
       themeValue: compTheme?.initialViewType,
-      defaultValue: CalendarViewType.date,
+      defaultValue: VNLCalendarViewType.date,
     );
     return ObjectFormField(
       dialogTitle: dialogTitle,
@@ -352,7 +352,7 @@ class VNLDatePicker extends StatelessWidget {
         return VNLDatePickerDialog(
           initialView: resolvedInitialView,
           initialViewType: resolvedInitialViewType,
-          selectionMode: CalendarSelectionMode.single,
+          selectionMode: VNLCalendarSelectionMode.single,
           initialValue: handler.value == null
               ? null
               : VNLCalendarValue.single(handler.value!),
@@ -436,7 +436,7 @@ class VNLDateTimeRange {
 /// VNLDateRangePicker(
 ///   value: currentRange,
 ///   onChanged: (range) => setState(() => currentRange = range),
-///   mode: PromptMode.dialog,
+///   mode: VNLPromptMode.dialog,
 /// )
 /// ```
 class VNLDateRangePicker extends StatelessWidget {
@@ -450,13 +450,13 @@ class VNLDateRangePicker extends StatelessWidget {
   final Widget? placeholder;
 
   /// Presentation mode (dialog or popover).
-  final PromptMode mode;
+  final VNLPromptMode mode;
 
   /// Initial calendar view to display.
   final VNLCalendarView? initialView;
 
   /// Initial view type (date, month, or year).
-  final CalendarViewType? initialViewType;
+  final VNLCalendarViewType? initialViewType;
 
   /// Alignment of popover relative to anchor.
   final AlignmentGeometry? popoverAlignment;
@@ -479,9 +479,9 @@ class VNLDateRangePicker extends StatelessWidget {
   /// - [value] (`VNLDateTimeRange?`, required): Current selected range.
   /// - [onChanged] (`ValueChanged<VNLDateTimeRange?>?`, optional): Called when range changes.
   /// - [placeholder] (`Widget?`, optional): Shown when no range selected.
-  /// - [mode] (`PromptMode`, default: `PromptMode.dialog`): Presentation mode.
+  /// - [mode] (`VNLPromptMode`, default: `VNLPromptMode.dialog`): Presentation mode.
   /// - [initialView] (`VNLCalendarView?`, optional): Starting calendar view.
-  /// - [initialViewType] (`CalendarViewType?`, optional): Starting view type.
+  /// - [initialViewType] (`VNLCalendarViewType?`, optional): Starting view type.
   /// - [popoverAlignment] (`AlignmentGeometry?`, optional): VNLPopover alignment.
   /// - [popoverAnchorAlignment] (`AlignmentGeometry?`, optional): Anchor alignment.
   /// - [popoverPadding] (`EdgeInsetsGeometry?`, optional): VNLPopover padding.
@@ -492,7 +492,7 @@ class VNLDateRangePicker extends StatelessWidget {
     required this.value,
     this.onChanged,
     this.placeholder,
-    this.mode = PromptMode.dialog,
+    this.mode = VNLPromptMode.dialog,
     this.initialView,
     this.popoverAlignment,
     this.popoverAnchorAlignment,
@@ -526,11 +526,11 @@ class VNLDateRangePicker extends StatelessWidget {
           builder: (context, constraints) {
             return VNLDatePickerDialog(
               initialView: initialView,
-              initialViewType: initialViewType ?? CalendarViewType.date,
-              selectionMode: CalendarSelectionMode.range,
+              initialViewType: initialViewType ?? VNLCalendarViewType.date,
+              selectionMode: VNLCalendarSelectionMode.range,
               viewMode: constraints.biggest.width < 500
-                  ? CalendarSelectionMode.single
-                  : CalendarSelectionMode.range,
+                  ? VNLCalendarSelectionMode.single
+                  : VNLCalendarSelectionMode.range,
               initialValue: value == null
                   ? null
                   : VNLCalendarValue.range(value.start, value.end),

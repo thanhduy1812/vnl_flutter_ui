@@ -87,17 +87,17 @@ int _getYear(DateTime dateTime) => dateTime.year;
 int _getMonth(DateTime dateTime) => dateTime.month;
 int _getDay(DateTime dateTime) => dateTime.day;
 
-(int? min, int? max) _computeYearValueRange(Map<DatePart, int> values) {
+(int? min, int? max) _computeYearValueRange(Map<VNLDatePart, int> values) {
   return (null, null);
 }
 
-(int? min, int? max) _computeMonthValueRange(Map<DatePart, int> values) {
+(int? min, int? max) _computeMonthValueRange(Map<VNLDatePart, int> values) {
   return (1, 12);
 }
 
-(int? min, int? max) _computeDayValueRange(Map<DatePart, int> values) {
-  final year = values[DatePart.year];
-  final month = values[DatePart.month];
+(int? min, int? max) _computeDayValueRange(Map<VNLDatePart, int> values) {
+  final year = values[VNLDatePart.year];
+  final month = values[VNLDatePart.month];
   if (year == null || month == null) return (1, 31);
   final daysInMonth = DateTime(year, month + 1, 0).day;
   return (1, daysInMonth);
@@ -106,7 +106,7 @@ int _getDay(DateTime dateTime) => dateTime.day;
 /// Represents a part of a date (year, month, or day).
 ///
 /// Provides metadata and operations for individual date components.
-enum DatePart {
+enum VNLDatePart {
   /// Year component (4 digits).
   year(_getYear, _computeYearValueRange, length: 4),
 
@@ -128,10 +128,10 @@ enum DatePart {
   /// Takes a map of already-set date component values and returns the
   /// minimum and maximum valid values for this component, considering
   /// constraints like month lengths or leap years.
-  final (int? min, int? max) Function(Map<DatePart, int> values)
+  final (int? min, int? max) Function(Map<VNLDatePart, int> values)
       computeValueRange;
 
-  const DatePart(this.getter, this.computeValueRange, {this.length = 2});
+  const VNLDatePart(this.getter, this.computeValueRange, {this.length = 2});
 }
 
 int _getDurationDay(Duration duration) => duration.inDays;
@@ -140,20 +140,20 @@ int _getDurationMinute(Duration duration) => duration.inMinutes % 60;
 int _getDurationSecond(Duration duration) => duration.inSeconds % 60;
 
 (int? min, int? max) _computeDurationDayValueRange(
-        Map<DurationPart, int> values) =>
+        Map<VNLDurationPart, int> values) =>
     (0, null);
 (int? min, int? max) _computeDurationHourValueRange(
-        Map<DurationPart, int> values) =>
+        Map<VNLDurationPart, int> values) =>
     (0, 23);
 (int? min, int? max) _computeDurationMinuteValueRange(
-        Map<DurationPart, int> values) =>
+        Map<VNLDurationPart, int> values) =>
     (0, 59);
 (int? min, int? max) _computeDurationSecondValueRange(
-        Map<DurationPart, int> values) =>
+        Map<VNLDurationPart, int> values) =>
     (0, 59);
 
 /// Represents a part of a duration (day, hour, minute, or second).
-enum DurationPart {
+enum VNLDurationPart {
   /// Day component.
   day(_getDurationDay, _computeDurationDayValueRange),
 
@@ -171,25 +171,25 @@ enum DurationPart {
   final int Function(Duration duration) getter;
 
   /// Function that computes the valid value range for this component.
-  final (int? min, int? max) Function(Map<DurationPart, int> values)
+  final (int? min, int? max) Function(Map<VNLDurationPart, int> values)
       computeValueRange;
 
-  const DurationPart(this.getter, this.computeValueRange);
+  const VNLDurationPart(this.getter, this.computeValueRange);
 }
 
 int _getTimeHour(TimeOfDay time) => time.hour;
 int _getTimeMinute(TimeOfDay time) => time.minute;
 int _getTimeSecond(TimeOfDay time) => time.second;
 
-(int? min, int? max) _computeTimeHourValueRange(Map<TimePart, int> values) =>
+(int? min, int? max) _computeTimeHourValueRange(Map<VNLTimePart, int> values) =>
     (0, 23);
-(int? min, int? max) _computeTimeMinuteValueRange(Map<TimePart, int> values) =>
+(int? min, int? max) _computeTimeMinuteValueRange(Map<VNLTimePart, int> values) =>
     (0, 59);
-(int? min, int? max) _computeTimeSecondValueRange(Map<TimePart, int> values) =>
+(int? min, int? max) _computeTimeSecondValueRange(Map<VNLTimePart, int> values) =>
     (0, 59);
 
 /// Represents a part of a time (hour, minute, or second).
-enum TimePart {
+enum VNLTimePart {
   /// Hour component.
   hour(_getTimeHour, _computeTimeHourValueRange),
 
@@ -204,8 +204,8 @@ enum TimePart {
   final int Function(TimeOfDay time) getter;
 
   /// Function that computes the valid value range for this component.
-  final (int? min, int? max) Function(Map<TimePart, int> values)
+  final (int? min, int? max) Function(Map<VNLTimePart, int> values)
       computeValueRange;
 
-  const TimePart(this.getter, this.computeValueRange);
+  const VNLTimePart(this.getter, this.computeValueRange);
 }

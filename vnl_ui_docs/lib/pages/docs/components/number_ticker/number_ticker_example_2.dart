@@ -23,7 +23,7 @@ class _NumberTickerExample2State extends State<NumberTickerExample2> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextFlipper(text: '$_currentNumber').x3Large.mono,
+        VNLTextFlipper(text: '$_currentNumber').x3Large.mono,
         const SizedBox(height: 16),
         VNLButton.primary(
           onPressed: _nextRandomNumber,

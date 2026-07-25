@@ -2,7 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 // VNLookApp.router example using GoRouter for declarative navigation.
-// Defines two routes ('/' and '/about') and renders a simple Scaffold for each.
+// Defines two routes ('/' and '/about') and renders a simple VNLScaffold for each.
 
 class AppExample3 extends StatelessWidget {
   const AppExample3({super.key});
@@ -13,10 +13,10 @@ class AppExample3 extends StatelessWidget {
       routerConfig: GoRouter(routes: [
         GoRoute(
           path: '/',
-          // Home page with AppBar and greeting text.
-          builder: (context, state) => const Scaffold(
+          // Home page with VNLAppBar and greeting text.
+          builder: (context, state) => const VNLScaffold(
             headers: [
-              AppBar(
+              VNLAppBar(
                 title: Text('Shadcn App Example with GoRouter'),
               ),
               VNLDivider(),
@@ -29,9 +29,9 @@ class AppExample3 extends StatelessWidget {
         GoRoute(
           path: '/about',
           // About page demonstrates a second route.
-          builder: (context, state) => const Scaffold(
+          builder: (context, state) => const VNLScaffold(
             headers: [
-              AppBar(
+              VNLAppBar(
                 title: Text('About Page'),
               ),
               VNLDivider(),

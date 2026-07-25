@@ -268,7 +268,7 @@ class DocsPageState extends State<DocsPage> {
         ShadcnDocsPage('VNLSteps', 'steps'),
         ShadcnDocsPage('VNLStepper', 'stepper'),
         ShadcnDocsPage('VNLTimeline', 'timeline'),
-        ShadcnDocsPage('Scaffold', 'scaffold'),
+        ShadcnDocsPage('VNLScaffold', 'scaffold'),
         ShadcnDocsPage('App Bar', 'app_bar'),
         ShadcnDocsPage('VNLCard Image', 'card_image'),
       ],
@@ -292,7 +292,7 @@ class DocsPageState extends State<DocsPage> {
         ShadcnDocsPage('Navigation Sidebar', 'navigation_sidebar'),
         ShadcnDocsPage('Dot Indicator', 'dot_indicator'),
         //
-        ShadcnDocsPage('Switcher', 'switcher'),
+        ShadcnDocsPage('VNLSwitcher', 'switcher'),
       ],
     ),
     ShadcnDocsSection(
@@ -481,7 +481,7 @@ class DocsPageState extends State<DocsPage> {
           );
         },
         style: const VNLButtonStyle.primary(
-          density: ButtonDensity.dense,
+          density: VNLButtonDensity.dense,
           size: VNLButtonSize.small,
         ).copyWith(
           decoration: (context, states, value) {
@@ -532,7 +532,7 @@ class DocsPageState extends State<DocsPage> {
           child: Builder(builder: (context) {
             return VNLStageContainer(
               builder: (context, padding) {
-                return Scaffold(
+                return VNLScaffold(
                   headers: [
                     Container(
                       color: theme.colorScheme.background.scaleAlpha(0.3),
@@ -542,14 +542,14 @@ class DocsPageState extends State<DocsPage> {
                         children: [
                           VNLMediaQueryVisibility(
                             minWidth: breakpointWidth,
-                            alternateChild: AppBar(
+                            alternateChild: VNLAppBar(
                               padding: EdgeInsets.symmetric(
                                 vertical: 12 * theme.scaling,
                                 horizontal: 18 * theme.scaling,
                               ),
                               leading: [
                                 VNLGhostButton(
-                                  density: ButtonDensity.icon,
+                                  density: VNLButtonDensity.icon,
                                   onPressed: () {
                                     _openDrawer(context);
                                   },
@@ -563,7 +563,7 @@ class DocsPageState extends State<DocsPage> {
                                     'https://github.com/sunarya-thito/shadcn_flutter',
                                   ),
                                   child: VNLGhostButton(
-                                    density: ButtonDensity.icon,
+                                    density: VNLButtonDensity.icon,
                                     onPressed: () {
                                       openInNewTab(
                                           'https://github.com/sunarya-thito/shadcn_flutter');
@@ -577,7 +577,7 @@ class DocsPageState extends State<DocsPage> {
                                 ),
                                 // pub.dev icon
                                 VNLGhostButton(
-                                    density: ButtonDensity.icon,
+                                    density: VNLButtonDensity.icon,
                                     onPressed: () {
                                       openInNewTab(
                                           'https://pub.dev/packages/shadcn_flutter');
@@ -705,7 +705,7 @@ class DocsPageState extends State<DocsPage> {
                                                   context
                                                       .goNamed('introduction');
                                                 },
-                                                density: ButtonDensity.compact,
+                                                density: VNLButtonDensity.compact,
                                                 child: const Text('Docs'),
                                               ),
                                               ...widget.navigationItems,
@@ -751,7 +751,7 @@ class DocsPageState extends State<DocsPage> {
                                             onPressed: () {
                                               context.goNamed('introduction');
                                             },
-                                            density: ButtonDensity.compact,
+                                            density: VNLButtonDensity.compact,
                                             child: const Text('Docs'),
                                           ),
                                           ...widget.navigationItems,
@@ -785,8 +785,8 @@ class DocsPageState extends State<DocsPage> {
     );
   }
 
-  AppBar _buildAppBar(EdgeInsets padding, ThemeData theme) {
-    return AppBar(
+  VNLAppBar _buildAppBar(EdgeInsets padding, ThemeData theme) {
+    return VNLAppBar(
       // padding: (breakpointWidth2 < mediaQuerySize.width
       //         ? padding * theme.scaling
       //         : padding.copyWith(
@@ -840,7 +840,7 @@ class DocsPageState extends State<DocsPage> {
         ),
         Gap(8 * theme.scaling),
         VNLGhostButton(
-          density: ButtonDensity.icon,
+          density: VNLButtonDensity.icon,
           onPressed: () {
             openInNewTab('https://github.com/sunarya-thito/shadcn_flutter');
           },
@@ -850,7 +850,7 @@ class DocsPageState extends State<DocsPage> {
         ),
         // pub.dev icon
         VNLGhostButton(
-            density: ButtonDensity.icon,
+            density: VNLButtonDensity.icon,
             onPressed: () {
               openInNewTab('https://pub.dev/packages/shadcn_flutter');
             },
@@ -895,7 +895,7 @@ class DocsPageState extends State<DocsPage> {
                   buildFlavorTag(),
                   const Spacer(),
                   VNLTextButton(
-                    density: ButtonDensity.icon,
+                    density: VNLButtonDensity.icon,
                     size: VNLButtonSize.small,
                     onPressed: () {
                       closeDrawer(context);
@@ -936,7 +936,7 @@ class DocsPageState extends State<DocsPage> {
                                             content: const Text(
                                                 'This page is still under development. Please come back later.'),
                                             actions: [
-                                              PrimaryButton(
+                                              VNLPrimaryButton(
                                                   onPressed: () {
                                                     Navigator.of(context).pop();
                                                   },
@@ -968,7 +968,7 @@ class DocsPageState extends State<DocsPage> {
           ),
         );
       },
-      position: OverlayPosition.left,
+      position: VNLOverlayPosition.left,
     );
   }
 }
@@ -1160,7 +1160,7 @@ class _DocsSidebarButtonState extends State<_DocsSidebarButton> {
             content: const Text(
                 'This page is still under development. Please come back later.'),
             actions: [
-              PrimaryButton(
+              VNLPrimaryButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },

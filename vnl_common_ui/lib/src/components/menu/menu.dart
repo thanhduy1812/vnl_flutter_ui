@@ -5,7 +5,7 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 /// {@template menu_theme}
 /// Styling options for menu widgets such as [VNLMenuGroup] and [VNLMenuButton].
 /// {@endtemplate}
-class MenuTheme extends ComponentThemeData {
+class VNLMenuTheme extends ComponentThemeData {
   /// Default padding applied to each menu item.
   final EdgeInsets? itemPadding;
 
@@ -13,17 +13,17 @@ class MenuTheme extends ComponentThemeData {
   final Offset? subMenuOffset;
 
   /// {@macro menu_theme}
-  const MenuTheme({
+  const VNLMenuTheme({
     this.itemPadding,
     this.subMenuOffset,
   });
 
   /// Creates a copy of this theme but with the given fields replaced.
-  MenuTheme copyWith({
+  VNLMenuTheme copyWith({
     ValueGetter<EdgeInsets?>? itemPadding,
     ValueGetter<Offset?>? subMenuOffset,
   }) {
-    return MenuTheme(
+    return VNLMenuTheme(
       itemPadding: itemPadding == null ? this.itemPadding : itemPadding(),
       subMenuOffset:
           subMenuOffset == null ? this.subMenuOffset : subMenuOffset(),
@@ -36,14 +36,14 @@ class MenuTheme extends ComponentThemeData {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is MenuTheme &&
+    return other is VNLMenuTheme &&
         other.itemPadding == itemPadding &&
         other.subMenuOffset == subMenuOffset;
   }
 
   @override
   String toString() {
-    return 'MenuTheme(itemPadding: $itemPadding, subMenuOffset: $subMenuOffset)';
+    return 'VNLMenuTheme(itemPadding: $itemPadding, subMenuOffset: $subMenuOffset)';
   }
 }
 
@@ -595,7 +595,7 @@ class _MenuButtonState extends State<VNLMenuButton> {
     assert(menuGroupData != null, 'VNLMenuButton must be a child of VNLMenuGroup');
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<MenuTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLMenuTheme>(context);
     final isSheetOverlay = VNLSheetOverlayHandler.isSheetOverlay(context);
     final isDialogOverlay = VNLDialogOverlayHandler.isDialogOverlay(context);
     final isIndependentOverlay = isSheetOverlay || isDialogOverlay;
@@ -656,7 +656,7 @@ class _MenuButtonState extends State<VNLMenuButton> {
 
     return Actions(
       actions: {
-        OpenSubMenuIntent: ContextCallbackAction<OpenSubMenuIntent>(
+        VNLOpenSubMenuIntent: ContextCallbackAction<VNLOpenSubMenuIntent>(
           onInvoke: (intent, [context]) {
             if (widget.subMenu?.isNotEmpty ?? false) {
               openSubMenu(this.context, true);
@@ -678,7 +678,7 @@ class _MenuButtonState extends State<VNLMenuButton> {
           },
         ),
       },
-      child: SubFocus(
+      child: VNLSubFocus(
           enabled: widget.enabled,
           builder: (context, subFocusState) {
             bool hasFocus = subFocusState.isFocused && menuBarData == null;
@@ -1091,7 +1091,7 @@ class _MenuGroupState extends State<VNLMenuGroup> {
   Widget build(BuildContext context) {
     final parentGroupData = Data.maybeOf<VNLMenuGroupData>(context);
     final menubarData = Data.maybeOf<VNLMenubarState>(context);
-    final compTheme = ComponentTheme.maybeOf<MenuTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLMenuTheme>(context);
     final itemPadding =
         widget.itemPadding ?? compTheme?.itemPadding ?? EdgeInsets.zero;
     final subMenuOffset = widget.subMenuOffset ?? compTheme?.subMenuOffset;
@@ -1111,12 +1111,12 @@ class _MenuGroupState extends State<VNLMenuGroup> {
       );
     }
     final direction = Directionality.of(context);
-    return SubFocusScope(
+    return VNLSubFocusScope(
         autofocus: widget.autofocus,
         builder: (context, scope) {
           return Actions(
             actions: {
-              NextMenuFocusIntent: CallbackAction<NextMenuFocusIntent>(
+              VNLNextMenuFocusIntent: CallbackAction<VNLNextMenuFocusIntent>(
                 onInvoke: (intent) {
                   scope.nextFocus(intent.forward
                       ? widget.direction == Axis.horizontal
@@ -1128,8 +1128,8 @@ class _MenuGroupState extends State<VNLMenuGroup> {
                   return;
                 },
               ),
-              DirectionalMenuFocusIntent:
-                  CallbackAction<DirectionalMenuFocusIntent>(
+              VNLDirectionalMenuFocusIntent:
+                  CallbackAction<VNLDirectionalMenuFocusIntent>(
                 onInvoke: (intent) {
                   if (widget.direction == Axis.vertical) {
                     if (intent.direction == TraversalDirection.left) {
@@ -1142,7 +1142,7 @@ class _MenuGroupState extends State<VNLMenuGroup> {
                     } else if (intent.direction == TraversalDirection.right) {
                       if (direction == TextDirection.ltr) {
                         bool? result = scope.invokeActionOnFocused(
-                            const OpenSubMenuIntent()) as bool?;
+                            const VNLOpenSubMenuIntent()) as bool?;
                         if (result != true) {
                           parentGroupData?.root.focusScope
                               .nextFocus(TraversalDirection.right);
@@ -1179,19 +1179,19 @@ class _MenuGroupState extends State<VNLMenuGroup> {
             child: Shortcuts(
               shortcuts: {
                 const SingleActivator(LogicalKeyboardKey.arrowUp):
-                    const DirectionalMenuFocusIntent(TraversalDirection.up),
+                    const VNLDirectionalMenuFocusIntent(TraversalDirection.up),
                 const SingleActivator(LogicalKeyboardKey.arrowDown):
-                    const DirectionalMenuFocusIntent(TraversalDirection.down),
+                    const VNLDirectionalMenuFocusIntent(TraversalDirection.down),
                 const SingleActivator(LogicalKeyboardKey.arrowLeft):
-                    const DirectionalMenuFocusIntent(TraversalDirection.left),
+                    const VNLDirectionalMenuFocusIntent(TraversalDirection.left),
                 const SingleActivator(LogicalKeyboardKey.arrowRight):
-                    const DirectionalMenuFocusIntent(TraversalDirection.right),
+                    const VNLDirectionalMenuFocusIntent(TraversalDirection.right),
                 const SingleActivator(LogicalKeyboardKey.tab):
-                    DirectionalMenuFocusIntent(widget.direction == Axis.vertical
+                    VNLDirectionalMenuFocusIntent(widget.direction == Axis.vertical
                         ? TraversalDirection.down
                         : TraversalDirection.right),
                 const SingleActivator(LogicalKeyboardKey.tab, shift: true):
-                    DirectionalMenuFocusIntent(widget.direction == Axis.vertical
+                    VNLDirectionalMenuFocusIntent(widget.direction == Axis.vertical
                         ? TraversalDirection.up
                         : TraversalDirection.left),
                 const SingleActivator(LogicalKeyboardKey.escape):
@@ -1242,15 +1242,15 @@ class VNLCloseMenuIntent extends Intent {
 /// Intent for opening a submenu via keyboard action.
 ///
 /// Triggers submenu expansion when navigating with keyboard.
-class OpenSubMenuIntent extends Intent {
+class VNLOpenSubMenuIntent extends Intent {
   /// Creates an open submenu intent.
-  const OpenSubMenuIntent();
+  const VNLOpenSubMenuIntent();
 }
 
 /// Intent for moving focus to next/previous menu item.
 ///
 /// Used for keyboard navigation within menus (Tab/Shift+Tab).
-class NextMenuFocusIntent extends Intent {
+class VNLNextMenuFocusIntent extends Intent {
   /// Whether to move focus forward (true) or backward (false).
   final bool forward;
 
@@ -1258,7 +1258,7 @@ class NextMenuFocusIntent extends Intent {
   ///
   /// Parameters:
   /// - [forward] (bool, required): Direction of focus movement
-  const NextMenuFocusIntent(this.forward);
+  const VNLNextMenuFocusIntent(this.forward);
 }
 
 /// Overlay handler specialized for menu popover display.
@@ -1282,8 +1282,8 @@ class VNLMenuOverlayHandler extends VNLOverlayHandler {
     required WidgetBuilder builder,
     Offset? position,
     AlignmentGeometry? anchorAlignment,
-    PopoverConstraint widthConstraint = PopoverConstraint.flexible,
-    PopoverConstraint heightConstraint = PopoverConstraint.flexible,
+    VNLPopoverConstraint widthConstraint = VNLPopoverConstraint.flexible,
+    VNLPopoverConstraint heightConstraint = VNLPopoverConstraint.flexible,
     Key? key,
     bool rootOverlay = true,
     bool modal = true,
@@ -1338,7 +1338,7 @@ class VNLMenuOverlayHandler extends VNLOverlayHandler {
 /// Intent for directional focus traversal within menus.
 ///
 /// Used for arrow key navigation (up, down, left, right) within menu structures.
-class DirectionalMenuFocusIntent extends Intent {
+class VNLDirectionalMenuFocusIntent extends Intent {
   /// Direction of focus traversal.
   final TraversalDirection direction;
 
@@ -1346,5 +1346,5 @@ class DirectionalMenuFocusIntent extends Intent {
   ///
   /// Parameters:
   /// - [direction] (TraversalDirection, required): Traversal direction
-  const DirectionalMenuFocusIntent(this.direction);
+  const VNLDirectionalMenuFocusIntent(this.direction);
 }

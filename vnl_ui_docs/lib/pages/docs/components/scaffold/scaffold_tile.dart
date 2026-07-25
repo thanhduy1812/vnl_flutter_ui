@@ -5,14 +5,14 @@ class ScaffoldTile extends StatelessWidget implements IComponentPage {
   const ScaffoldTile({super.key});
 
   @override
-  String get title => 'Scaffold';
+  String get title => 'VNLScaffold';
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ComponentCard(
       name: 'scaffold',
-      title: 'Scaffold',
+      title: 'VNLScaffold',
       scale: 1.2,
       example: VNLCard(
         child: Container(
@@ -24,7 +24,7 @@ class ScaffoldTile extends StatelessWidget implements IComponentPage {
           ),
           child: Column(
             children: [
-              // AppBar
+              // VNLAppBar
               Container(
                 height: 56,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -41,7 +41,7 @@ class ScaffoldTile extends StatelessWidget implements IComponentPage {
                         color: theme.colorScheme.primaryForeground),
                     const Gap(16),
                     Text(
-                      'Scaffold',
+                      'VNLScaffold',
                       style: TextStyle(
                         color: theme.colorScheme.primaryForeground,
                         fontWeight: FontWeight.bold,
@@ -55,7 +55,7 @@ class ScaffoldTile extends StatelessWidget implements IComponentPage {
                 child: Container(
                   padding: const EdgeInsets.all(16),
                   child: const Center(
-                    child: Text('Scaffold Body Content'),
+                    child: Text('VNLScaffold Body Content'),
                   ),
                 ),
               ),

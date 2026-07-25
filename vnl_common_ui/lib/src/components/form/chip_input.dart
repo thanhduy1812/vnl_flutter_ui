@@ -8,27 +8,27 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 /// and behavior within chip input components.
 typedef ChipWidgetBuilder<T> = Widget Function(BuildContext context, T chip);
 
-/// Theme configuration for [ChipInput] widget styling and behavior.
+/// Theme configuration for [VNLChipInput] widget styling and behavior.
 ///
 /// Defines visual properties and default behaviors for chip input components
 /// including popover constraints and chip rendering preferences. Applied globally
-/// through [ComponentTheme] or per-instance for customization.
-class ChipInputTheme extends ComponentThemeData {
+/// through [VNLComponentTheme] or per-instance for customization.
+class VNLChipInputTheme extends ComponentThemeData {
   /// Whether to render selected items as interactive chip widgets by default.
   ///
   /// When true, selected items appear as dismissible chip widgets with close buttons.
-  /// When false, items appear as simple text tokens. Individual [ChipInput] widgets
+  /// When false, items appear as simple text tokens. Individual [VNLChipInput] widgets
   /// can override this default behavior.
   final bool? useChips;
 
   /// The spacing between chips.
   final double? spacing;
 
-  /// Creates a [ChipInputTheme].
+  /// Creates a [VNLChipInputTheme].
   ///
   /// All parameters are optional and fall back to framework defaults when null.
   /// The theme can be applied globally or to specific chip input instances.
-  const ChipInputTheme({
+  const VNLChipInputTheme({
     this.spacing,
     this.useChips,
   });
@@ -37,12 +37,12 @@ class ChipInputTheme extends ComponentThemeData {
   ///
   /// Each parameter function is called only if provided, allowing selective
   /// overrides while preserving existing values for unspecified properties.
-  ChipInputTheme copyWith({
+  VNLChipInputTheme copyWith({
     ValueGetter<BoxConstraints?>? popoverConstraints,
     ValueGetter<bool?>? useChips,
     ValueGetter<double?>? spacing,
   }) {
-    return ChipInputTheme(
+    return VNLChipInputTheme(
       useChips: useChips == null ? this.useChips : useChips(),
       spacing: spacing == null ? this.spacing : spacing(),
     );
@@ -51,7 +51,7 @@ class ChipInputTheme extends ComponentThemeData {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ChipInputTheme &&
+    return other is VNLChipInputTheme &&
         other.useChips == useChips &&
         other.spacing == spacing;
   }
@@ -71,11 +71,11 @@ class ChipInputTheme extends ComponentThemeData {
 ///
 /// Example:
 /// ```dart
-/// final controller = ChipEditingController<String>(
+/// final controller = VNLChipEditingController<String>(
 ///   initialChips: ['tag1', 'tag2'],
 /// );
 /// ```
-class ChipEditingController<T> extends TextEditingController {
+class VNLChipEditingController<T> extends TextEditingController {
   static const int _chipStart = 0xE000; // Private Use Area start
   static const int _chipEnd = 0xF8FF; // Private Use Area end
   static const int _maxChips = _chipEnd - _chipStart + 1;
@@ -104,7 +104,7 @@ class ChipEditingController<T> extends TextEditingController {
   /// Factory constructor creating a chip editing controller.
   ///
   /// Optionally initializes with [text] and [initialChips].
-  factory ChipEditingController({String? text, List<T>? initialChips}) {
+  factory VNLChipEditingController({String? text, List<T>? initialChips}) {
     StringBuffer buffer = StringBuffer();
     if (initialChips != null) {
       for (int i = 0; i < initialChips.length; i++) {
@@ -114,10 +114,10 @@ class ChipEditingController<T> extends TextEditingController {
     if (text != null) {
       buffer.write(text);
     }
-    return ChipEditingController._internal(buffer.toString());
+    return VNLChipEditingController._internal(buffer.toString());
   }
 
-  ChipEditingController._internal(String text) : super(text: text);
+  VNLChipEditingController._internal(String text) : super(text: text);
 
   @override
   set text(String newText) {
@@ -198,7 +198,7 @@ class ChipEditingController<T> extends TextEditingController {
       TextStyle? style,
       required bool withComposing}) {
     final provider = Data.maybeOf<_ChipProvider<T>>(context);
-    final theme = ComponentTheme.maybeOf<ChipInputTheme>(context);
+    final theme = VNLComponentTheme.maybeOf<VNLChipInputTheme>(context);
     final spacing = theme?.spacing ?? 4.0;
     if (provider != null) {
       final bool composingRegionOutOfRange =
@@ -501,11 +501,11 @@ typedef ChipSubmissionCallback<T> = T? Function(String chipText);
 ///
 /// Allows users to create chip tokens within a text field, useful for
 /// tags, email recipients, or any multi-item input scenario.
-class ChipInput<T> extends TextInputStatefulWidget {
+class VNLChipInput<T> extends TextInputStatefulWidget {
   /// Checks if a code unit represents a chip character.
   static bool isChipUnicode(int codeUnit) {
-    return codeUnit >= ChipEditingController._chipStart &&
-        codeUnit <= ChipEditingController._chipEnd;
+    return codeUnit >= VNLChipEditingController._chipStart &&
+        codeUnit <= VNLChipEditingController._chipEnd;
   }
 
   /// Checks if a string character is a chip character.
@@ -534,10 +534,10 @@ class ChipInput<T> extends TextInputStatefulWidget {
   final bool autoInsertSuggestion;
 
   /// Creates a chip input widget.
-  const ChipInput({
+  const VNLChipInput({
     super.key,
     super.groupId,
-    ChipEditingController<T>? super.controller,
+    VNLChipEditingController<T>? super.controller,
     super.focusNode,
     super.decoration,
     super.padding,
@@ -616,20 +616,20 @@ class ChipInput<T> extends TextInputStatefulWidget {
   });
 
   @override
-  ChipEditingController<T>? get controller =>
-      super.controller as ChipEditingController<T>?;
+  VNLChipEditingController<T>? get controller =>
+      super.controller as VNLChipEditingController<T>?;
 
   @override
-  State<ChipInput<T>> createState() => ChipInputState();
+  State<VNLChipInput<T>> createState() => ChipInputState();
 }
 
-/// State class for [ChipInput].
+/// State class for [VNLChipInput].
 ///
 /// Manages the chip input's internal state and chip rendering.
-class ChipInputState<T> extends State<ChipInput<T>>
-    with FormValueSupplier<List<T>, ChipInput<T>>
+class ChipInputState<T> extends State<VNLChipInput<T>>
+    with FormValueSupplier<List<T>, VNLChipInput<T>>
     implements _ChipProvider<T> {
-  late ChipEditingController<T> _controller;
+  late VNLChipEditingController<T> _controller;
 
   @override
   Widget? buildChip(BuildContext context, T chip) {
@@ -637,7 +637,7 @@ class ChipInputState<T> extends State<ChipInput<T>>
   }
 
   bool get _useChips {
-    final compTheme = ComponentTheme.maybeOf<ChipInputTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLChipInputTheme>(context);
     return styleValue<bool>(
       widgetValue: widget.useChips,
       themeValue: compTheme?.useChips,
@@ -649,7 +649,7 @@ class ChipInputState<T> extends State<ChipInput<T>>
   void initState() {
     super.initState();
     _controller = widget.controller ??
-        ChipEditingController<T>(
+        VNLChipEditingController<T>(
           initialChips: widget.initialChips,
           text: widget.initialValue ?? '',
         );
@@ -678,11 +678,11 @@ class ChipInputState<T> extends State<ChipInput<T>>
   }
 
   @override
-  void didUpdateWidget(covariant ChipInput<T> oldWidget) {
+  void didUpdateWidget(covariant VNLChipInput<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.controller != oldWidget.controller) {
       _controller.removeListener(_onTextChanged);
-      _controller = widget.controller ?? ChipEditingController<T>();
+      _controller = widget.controller ?? VNLChipEditingController<T>();
       _controller.addListener(_onTextChanged);
       formValue = _controller.chips;
     }
@@ -700,13 +700,13 @@ class ChipInputState<T> extends State<ChipInput<T>>
         data: this,
         child: Shortcuts(
           shortcuts: {
-            LogicalKeySet(LogicalKeyboardKey.enter): const ChipSubmitIntent(),
+            LogicalKeySet(LogicalKeyboardKey.enter): const VNLChipSubmitIntent(),
           },
           child: Actions(
             actions: {
               if (widget.autoInsertSuggestion)
-                AutoCompleteIntent: Action.overridable(
-                  defaultAction: CallbackAction<AutoCompleteIntent>(
+                VNLAutoCompleteIntent: Action.overridable(
+                  defaultAction: CallbackAction<VNLAutoCompleteIntent>(
                     onInvoke: (intent) {
                       _controller.insertChipAtCursor(
                           (text) => widget.onChipSubmitted(intent.suggestion));
@@ -716,8 +716,8 @@ class ChipInputState<T> extends State<ChipInput<T>>
                   ),
                   context: context,
                 ),
-              ChipSubmitIntent: Action.overridable(
-                defaultAction: CallbackAction<ChipSubmitIntent>(
+              VNLChipSubmitIntent: Action.overridable(
+                defaultAction: CallbackAction<VNLChipSubmitIntent>(
                   onInvoke: (intent) {
                     _controller.insertChipAtCursor(
                         (text) => widget.onChipSubmitted(text));
@@ -748,7 +748,7 @@ class ChipInputState<T> extends State<ChipInput<T>>
 }
 
 /// Intent for submitting a chip in the chip input.
-class ChipSubmitIntent extends Intent {
+class VNLChipSubmitIntent extends Intent {
   /// Creates a chip submit intent.
-  const ChipSubmitIntent();
+  const VNLChipSubmitIntent();
 }

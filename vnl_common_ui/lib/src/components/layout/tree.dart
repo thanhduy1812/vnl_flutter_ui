@@ -4,14 +4,14 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 /// Theme configuration for [TreeView] appearance and behavior.
 ///
-/// TreeTheme defines the visual styling and behavioral options for tree view
+/// VNLTreeTheme defines the visual styling and behavioral options for tree view
 /// components including branch lines, padding, expand icons, and selection modes.
 /// All properties are optional and fall back to theme defaults when not specified.
 ///
 /// Example:
 /// ```dart
-/// ComponentTheme<TreeTheme>(
-///   data: TreeTheme(
+/// VNLComponentTheme<VNLTreeTheme>(
+///   data: VNLTreeTheme(
 ///     branchLine: VNLBranchLine.path,
 ///     padding: EdgeInsets.all(12),
 ///     expandIcon: true,
@@ -21,7 +21,7 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 ///   child: TreeView(...),
 /// )
 /// ```
-class TreeTheme extends ComponentThemeData {
+class VNLTreeTheme extends ComponentThemeData {
   /// The branch line style for connecting tree nodes.
   ///
   /// Type: `VNLBranchLine?`. If null, uses VNLBranchLine.path. Controls how visual
@@ -66,13 +66,13 @@ class TreeTheme extends ComponentThemeData {
   ///
   /// Example:
   /// ```dart
-  /// TreeTheme(
+  /// VNLTreeTheme(
   ///   branchLine: VNLBranchLine.solid,
   ///   padding: EdgeInsets.all(8),
   ///   allowMultiSelect: true,
   /// )
   /// ```
-  const TreeTheme({
+  const VNLTreeTheme({
     this.branchLine,
     this.padding,
     this.expandIcon,
@@ -89,15 +89,15 @@ class TreeTheme extends ComponentThemeData {
   /// - [allowMultiSelect] (`ValueGetter<bool?>?`, optional): New multi-select setting.
   /// - [recursiveSelection] (`ValueGetter<bool?>?`, optional): New recursive selection setting.
   ///
-  /// Returns: A new [TreeTheme] with updated properties.
-  TreeTheme copyWith({
+  /// Returns: A new [VNLTreeTheme] with updated properties.
+  VNLTreeTheme copyWith({
     ValueGetter<VNLBranchLine?>? branchLine,
     ValueGetter<EdgeInsetsGeometry?>? padding,
     ValueGetter<bool?>? expandIcon,
     ValueGetter<bool?>? allowMultiSelect,
     ValueGetter<bool?>? recursiveSelection,
   }) {
-    return TreeTheme(
+    return VNLTreeTheme(
       branchLine: branchLine == null ? this.branchLine : branchLine(),
       padding: padding == null ? this.padding : padding(),
       expandIcon: expandIcon == null ? this.expandIcon : expandIcon(),
@@ -111,7 +111,7 @@ class TreeTheme extends ComponentThemeData {
 
   @override
   bool operator ==(Object other) =>
-      other is TreeTheme &&
+      other is VNLTreeTheme &&
       other.branchLine == branchLine &&
       other.padding == padding &&
       other.expandIcon == expandIcon &&
@@ -124,7 +124,7 @@ class TreeTheme extends ComponentThemeData {
 
   @override
   String toString() =>
-      'TreeTheme(branchLine: $branchLine, padding: $padding, expandIcon: $expandIcon, allowMultiSelect: $allowMultiSelect, recursiveSelection: $recursiveSelection)';
+      'VNLTreeTheme(branchLine: $branchLine, padding: $padding, expandIcon: $expandIcon, allowMultiSelect: $allowMultiSelect, recursiveSelection: $recursiveSelection)';
 }
 
 /// Abstract base class representing a node in a tree structure.
@@ -461,7 +461,7 @@ class TreeRoot<T> extends TreeNode<T> {
 ///
 /// Used to determine border radius styling for selected tree items
 /// when multiple consecutive items are selected.
-enum SelectionPosition {
+enum VNLSelectionPosition {
   /// First item in a selection group.
   start,
 
@@ -479,7 +479,7 @@ enum SelectionPosition {
 ///
 /// Used to differentiate between programmatic focus changes and
 /// user-initiated focus changes.
-enum FocusChangeReason {
+enum VNLFocusChangeReason {
   /// Focus changed due to focus scope management.
   focusScope,
 
@@ -488,12 +488,12 @@ enum FocusChangeReason {
 }
 
 BorderRadius _borderRadiusFromPosition(
-    SelectionPosition? position, double value) {
-  if (position == SelectionPosition.start) {
+    VNLSelectionPosition? position, double value) {
+  if (position == VNLSelectionPosition.start) {
     return BorderRadius.vertical(top: Radius.circular(value));
-  } else if (position == SelectionPosition.end) {
+  } else if (position == VNLSelectionPosition.end) {
     return BorderRadius.vertical(bottom: Radius.circular(value));
-  } else if (position == SelectionPosition.single) {
+  } else if (position == VNLSelectionPosition.single) {
     return BorderRadius.all(Radius.circular(value));
   }
   return BorderRadius.zero;
@@ -503,7 +503,7 @@ BorderRadius _borderRadiusFromPosition(
 ///
 /// Holds all information needed to display a single tree node including
 /// its position, expansion state, and visual styling.
-class TreeNodeData<T> {
+class VNLTreeNodeData<T> {
   /// The tree node being rendered.
   final TreeNode<T> node;
 
@@ -520,13 +520,13 @@ class TreeNodeData<T> {
   final bool expandIcon;
 
   /// Callback when focus changes for this node.
-  final void Function(FocusChangeReason reason)? onFocusChanged;
+  final void Function(VNLFocusChangeReason reason)? onFocusChanged;
 
   /// Visual position of this node within a selection group.
-  SelectionPosition? selectionPosition;
+  VNLSelectionPosition? selectionPosition;
 
-  /// Creates a [TreeNodeData] with the specified properties.
-  TreeNodeData(this.depth, this.node, this.indentGuide, this.expanded,
+  /// Creates a [VNLTreeNodeData] with the specified properties.
+  VNLTreeNodeData(this.depth, this.node, this.indentGuide, this.expanded,
       this.expandIcon, this.onFocusChanged);
 }
 
@@ -1660,7 +1660,7 @@ class _TreeViewState<T> extends State<TreeView<T>> {
   }
 
   void _onChangeSelectionRange(
-      List<TreeNodeData<T>> children, int start, int end, bool recursive) {
+      List<VNLTreeNodeData<T>> children, int start, int end, bool recursive) {
     if (start > end) {
       final temp = start;
       start = end;
@@ -1681,7 +1681,7 @@ class _TreeViewState<T> extends State<TreeView<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<TreeTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLTreeTheme>(context);
     final branchLine =
         widget.branchLine ?? compTheme?.branchLine ?? VNLBranchLine.path;
     final expandIcon = widget.expandIcon ?? compTheme?.expandIcon ?? true;
@@ -1690,19 +1690,19 @@ class _TreeViewState<T> extends State<TreeView<T>> {
     final recursiveSelection =
         widget.recursiveSelection ?? compTheme?.recursiveSelection ?? true;
     final padding = widget.padding ?? compTheme?.padding;
-    List<TreeNodeData<T>> children = [];
+    List<VNLTreeNodeData<T>> children = [];
     int index = 0;
     _walkFlattened((expanded, node, depth) {
       if (node is! TreeItem<T>) return;
       final int currentIndex = index++;
-      children.add(TreeNodeData(
+      children.add(VNLTreeNodeData(
         depth,
         node,
         branchLine,
         expanded,
         expandIcon,
         (reason) {
-          if (reason == FocusChangeReason.focusScope) {
+          if (reason == VNLFocusChangeReason.focusScope) {
             _startFocusedIndex = currentIndex;
             _currentFocusedIndex = currentIndex;
             return;
@@ -1746,17 +1746,17 @@ class _TreeViewState<T> extends State<TreeView<T>> {
         }
         if (selectedCount == 0) {
           if (isNextSelected) {
-            child.selectionPosition = SelectionPosition.start;
+            child.selectionPosition = VNLSelectionPosition.start;
           } else {
-            child.selectionPosition = SelectionPosition.single;
+            child.selectionPosition = VNLSelectionPosition.single;
             selectedCount = 0;
             continue;
           }
         } else {
           if (isNextSelected) {
-            child.selectionPosition = SelectionPosition.middle;
+            child.selectionPosition = VNLSelectionPosition.middle;
           } else {
-            child.selectionPosition = SelectionPosition.end;
+            child.selectionPosition = VNLSelectionPosition.end;
             selectedCount = 0;
             continue;
           }
@@ -1892,7 +1892,7 @@ class _TreeViewState<T> extends State<TreeView<T>> {
             shrinkWrap: widget.shrinkWrap,
             controller: widget.controller,
             children: children
-                .map((data) => Data<TreeNodeData>.inherit(
+                .map((data) => Data<VNLTreeNodeData>.inherit(
                       data: data,
                       child: Builder(builder: (context) {
                         return widget.builder(
@@ -2262,7 +2262,7 @@ class _TreeItemViewState extends State<VNLTreeItemView> {
   late FocusNode _focusNode;
   final WidgetStatesController _statesController = WidgetStatesController();
 
-  TreeNodeData? _data;
+  VNLTreeNodeData? _data;
 
   @override
   void initState() {
@@ -2289,14 +2289,14 @@ class _TreeItemViewState extends State<VNLTreeItemView> {
 
   void _onFocusChanged() {
     if (_data != null && _focusNode.hasFocus) {
-      _data!.onFocusChanged?.call(FocusChangeReason.focusScope);
+      _data!.onFocusChanged?.call(VNLFocusChangeReason.focusScope);
     }
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    var newData = Data.maybeOf<TreeNodeData>(context);
+    var newData = Data.maybeOf<VNLTreeNodeData>(context);
     if (_data != newData) {
       _data = newData;
       if (_data != null) {
@@ -2489,7 +2489,7 @@ class _TreeItemViewState extends State<VNLTreeItemView> {
                   widget.onPressed!();
                 }
                 _focusNode.requestFocus();
-                _data!.onFocusChanged?.call(FocusChangeReason.userInteraction);
+                _data!.onFocusChanged?.call(VNLFocusChangeReason.userInteraction);
               },
               enabled: widget.onPressed != null ||
                   widget.onDoublePressed != null ||

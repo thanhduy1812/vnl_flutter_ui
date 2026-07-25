@@ -139,7 +139,7 @@ class VNLSteps extends StatelessWidget {
     final densityGap = theme.density.baseGap * scaling;
     final densityContainerPadding =
         theme.density.baseContainerPadding * scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLStepsTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLStepsTheme>(context);
     final indicatorSize = compTheme?.indicatorSize ?? 28 * scaling;
     final spacing = compTheme?.spacing ?? densityGap * 2.25;
     final indicatorColor = compTheme?.indicatorColor ?? theme.colorScheme.muted;

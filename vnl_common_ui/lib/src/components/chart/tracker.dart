@@ -157,11 +157,11 @@ class VNLTrackerData {
 /// corner radius, spacing between segments, and segment height. It enables
 /// consistent tracker styling across an application while allowing customization.
 ///
-/// Used with [ComponentTheme] to apply theme values throughout the widget tree.
+/// Used with [VNLComponentTheme] to apply theme values throughout the widget tree.
 ///
 /// Example:
 /// ```dart
-/// ComponentTheme<VNLTrackerTheme>(
+/// VNLComponentTheme<VNLTrackerTheme>(
 ///   data: VNLTrackerTheme(
 ///     radius: 8.0,
 ///     gap: 2.0,
@@ -349,7 +349,7 @@ class VNLTracker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final trackerTheme = ComponentTheme.maybeOf<VNLTrackerTheme>(context);
+    final trackerTheme = VNLComponentTheme.maybeOf<VNLTrackerTheme>(context);
     final densityGap = theme.density.baseGap * theme.scaling;
     return ClipRRect(
       borderRadius:

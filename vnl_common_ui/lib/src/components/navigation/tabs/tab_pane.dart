@@ -3,14 +3,14 @@ import 'package:vnl_common_ui/src/components/display/fade_scroll.dart';
 
 /// Theme configuration for [TabPane] appearance and layout.
 ///
-/// TabPaneTheme defines the visual styling for tab pane components including
+/// VNLTabPaneTheme defines the visual styling for tab pane components including
 /// borders, background colors, dimensions, and corner rounding. All properties
 /// are optional and fall back to theme defaults when not specified.
 ///
 /// Example:
 /// ```dart
-/// ComponentTheme<TabPaneTheme>(
-///   data: TabPaneTheme(
+/// VNLComponentTheme<VNLTabPaneTheme>(
+///   data: VNLTabPaneTheme(
 ///     borderRadius: BorderRadius.circular(12),
 ///     backgroundColor: VNLColors.white,
 ///     border: BorderSide(color: VNLColors.grey),
@@ -20,7 +20,7 @@ import 'package:vnl_common_ui/src/components/display/fade_scroll.dart';
 /// )
 /// ```
 /// Theme for [TabPane].
-class TabPaneTheme extends ComponentThemeData {
+class VNLTabPaneTheme extends ComponentThemeData {
   /// Border radius for the tab pane container and individual tabs.
   ///
   /// Type: `BorderRadiusGeometry?`. If null, uses the theme's large border radius.
@@ -45,7 +45,7 @@ class TabPaneTheme extends ComponentThemeData {
   /// This determines the vertical space allocated for the tab buttons.
   final double? barHeight;
 
-  /// Creates a [TabPaneTheme].
+  /// Creates a [VNLTabPaneTheme].
   ///
   /// All parameters are optional and allow customization of tab pane appearance.
   ///
@@ -57,14 +57,14 @@ class TabPaneTheme extends ComponentThemeData {
   ///
   /// Example:
   /// ```dart
-  /// const TabPaneTheme(
+  /// const VNLTabPaneTheme(
   ///   borderRadius: BorderRadius.circular(8),
   ///   backgroundColor: VNLColors.white,
   ///   border: BorderSide(color: VNLColors.grey),
   ///   barHeight: 32.0,
   /// )
   /// ```
-  const TabPaneTheme({
+  const VNLTabPaneTheme({
     this.borderRadius,
     this.backgroundColor,
     this.border,
@@ -79,14 +79,14 @@ class TabPaneTheme extends ComponentThemeData {
   /// - [border] (`ValueGetter<BorderSide?>?`, optional): new border getter
   /// - [barHeight] (`ValueGetter<double?>?`, optional): new bar height getter
   ///
-  /// Returns: `TabPaneTheme` — new theme with updated values
-  TabPaneTheme copyWith({
+  /// Returns: `VNLTabPaneTheme` — new theme with updated values
+  VNLTabPaneTheme copyWith({
     ValueGetter<BorderRadiusGeometry?>? borderRadius,
     ValueGetter<Color?>? backgroundColor,
     ValueGetter<BorderSide?>? border,
     ValueGetter<double?>? barHeight,
   }) {
-    return TabPaneTheme(
+    return VNLTabPaneTheme(
       borderRadius: borderRadius == null ? this.borderRadius : borderRadius(),
       backgroundColor:
           backgroundColor == null ? this.backgroundColor : backgroundColor(),
@@ -98,7 +98,7 @@ class TabPaneTheme extends ComponentThemeData {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is TabPaneTheme &&
+    return other is VNLTabPaneTheme &&
         other.borderRadius == borderRadius &&
         other.backgroundColor == backgroundColor &&
         other.border == border &&
@@ -112,23 +112,23 @@ class TabPaneTheme extends ComponentThemeData {
 
 /// Data wrapper for tab pane items that extends sortable functionality.
 ///
-/// TabPaneData extends SortableData to provide drag-and-drop reordering
+/// VNLTabPaneData extends VNLSortableData to provide drag-and-drop reordering
 /// capabilities for tab pane items. Each tab item is wrapped in this data
 /// structure to enable sorting operations.
 ///
 /// Example:
 /// ```dart
-/// TabPaneData<String>('tab_content')
-/// TabPaneData<TabInfo>(TabInfo(title: 'Tab 1', content: widget))
+/// VNLTabPaneData<String>('tab_content')
+/// VNLTabPaneData<TabInfo>(TabInfo(title: 'Tab 1', content: widget))
 /// ```
-class TabPaneData<T> extends SortableData<T> {
-  /// Creates a [TabPaneData] wrapper for tab content.
+class VNLTabPaneData<T> extends VNLSortableData<T> {
+  /// Creates a [VNLTabPaneData] wrapper for tab content.
   ///
   /// Wraps the provided data for use in sortable tab pane operations.
   ///
   /// Parameters:
   /// - [data] (T): The data to associate with this tab item
-  const TabPaneData(super.data);
+  const VNLTabPaneData(super.data);
 }
 
 /// Builder function for creating tab child widgets from tab pane data.
@@ -138,12 +138,12 @@ class TabPaneData<T> extends SortableData<T> {
 ///
 /// Parameters:
 /// - [context] (BuildContext): Build context for theme access
-/// - [item] (`TabPaneData<T>`): The data for this specific tab
+/// - [item] (`VNLTabPaneData<T>`): The data for this specific tab
 /// - [index] (int): Zero-based index of this tab in the list
 ///
 /// Returns: A [TabChild] widget for the tab button
 typedef TabPaneItemBuilder<T> = TabChild Function(
-    BuildContext context, TabPaneData<T> item, int index);
+    BuildContext context, VNLTabPaneData<T> item, int index);
 
 /// A comprehensive tab pane widget with sortable tabs and integrated content display.
 ///
@@ -171,9 +171,9 @@ typedef TabPaneItemBuilder<T> = TabChild Function(
 /// ```dart
 /// TabPane<String>(
 ///   items: [
-///     TabPaneData('tab1'),
-///     TabPaneData('tab2'),
-///     TabPaneData('tab3'),
+///     VNLTabPaneData('tab1'),
+///     VNLTabPaneData('tab2'),
+///     VNLTabPaneData('tab3'),
 ///   ],
 ///   focused: currentTab,
 ///   onFocused: (index) => setState(() => currentTab = index),
@@ -190,9 +190,9 @@ typedef TabPaneItemBuilder<T> = TabChild Function(
 class TabPane<T> extends StatefulWidget {
   /// List of tab data items to display in the tab pane.
   ///
-  /// Type: `List<TabPaneData<T>>`. Each item contains the data for one tab
+  /// Type: `List<VNLTabPaneData<T>>`. Each item contains the data for one tab
   /// and will be passed to the [itemBuilder] to create the visual representation.
-  final List<TabPaneData<T>> items;
+  final List<VNLTabPaneData<T>> items;
 
   /// Builder function to create tab child widgets from data items.
   ///
@@ -202,9 +202,9 @@ class TabPane<T> extends StatefulWidget {
 
   /// Callback invoked when tabs are reordered through drag-and-drop.
   ///
-  /// Type: `ValueChanged<List<TabPaneData<T>>>?`. Called with the new tab
+  /// Type: `ValueChanged<List<VNLTabPaneData<T>>>?`. Called with the new tab
   /// order when sorting operations complete. If null, sorting is disabled.
-  final ValueChanged<List<TabPaneData<T>>>? onSort;
+  final ValueChanged<List<VNLTabPaneData<T>>>? onSort;
 
   /// Index of the currently focused/selected tab.
   ///
@@ -267,12 +267,12 @@ class TabPane<T> extends StatefulWidget {
   ///
   /// Parameters:
   /// - [key] (Key?): Widget identifier for the widget tree
-  /// - [items] (`List<TabPaneData<T>>`, required): Tab data items to display
+  /// - [items] (`List<VNLTabPaneData<T>>`, required): Tab data items to display
   /// - [itemBuilder] (`TabPaneItemBuilder<T>`, required): Builder for tab widgets
   /// - [focused] (int, default: 0): Index of the currently focused tab
   /// - [onFocused] (`ValueChanged<int>`, required): Callback for focus changes
   /// - [child] (Widget, required): Content widget for the main display area
-  /// - [onSort] (`ValueChanged<List<TabPaneData<T>>>?`, optional): Callback for tab reordering
+  /// - [onSort] (`ValueChanged<List<VNLTabPaneData<T>>>?`, optional): Callback for tab reordering
   /// - [leading] (`List<Widget>`, default: []): Widgets before the tab area
   /// - [trailing] (`List<Widget>`, default: []): Widgets after the tab area
   /// - [borderRadius] (BorderRadiusGeometry?, optional): Border radius override
@@ -283,7 +283,7 @@ class TabPane<T> extends StatefulWidget {
   /// Example:
   /// ```dart
   /// TabPane<DocumentTab>(
-  ///   items: documentTabs.map(TabPaneData.new).toList(),
+  ///   items: documentTabs.map(VNLTabPaneData.new).toList(),
   ///   focused: activeDocumentIndex,
   ///   onFocused: switchToDocument,
   ///   onSort: reorderDocuments,
@@ -345,7 +345,7 @@ class TabPaneState<T> extends State<TabPane<T>> {
     final theme = Theme.of(context);
     final densityContentPadding =
         theme.density.baseContentPadding * theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<TabPaneTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLTabPaneTheme>(context);
     final isFocused = data.index == data.selected;
     final backgroundColor = widget.backgroundColor ??
         compTheme?.backgroundColor ??
@@ -391,7 +391,7 @@ class TabPaneState<T> extends State<TabPane<T>> {
     final densityGap = theme.density.baseGap * theme.scaling;
     final densityContainerPadding =
         theme.density.baseContainerPadding * theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<TabPaneTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLTabPaneTheme>(context);
     final BorderRadiusGeometry borderRadius =
         widget.borderRadius ?? compTheme?.borderRadius ?? theme.borderRadiusLg;
     final BorderRadius resolvedBorderRadius =
@@ -448,13 +448,13 @@ class TabPaneState<T> extends State<TabPane<T>> {
                       child: VNLSortableLayer(
                         clipBehavior: Clip.none,
                         lock: true,
-                        child: SortableDropFallback<T>(
+                        child: VNLSortableDropFallback<T>(
                           onAccept: (value) {
-                            if (value is! TabPaneData<T>) {
+                            if (value is! VNLTabPaneData<T>) {
                               return;
                             }
                             bool wasFocused = widget.focused == value.data;
-                            List<TabPaneData<T>> tabs = widget.items;
+                            List<VNLTabPaneData<T>> tabs = widget.items;
                             tabs.swapItem(value, tabs.length);
                             widget.onSort?.call(tabs);
                             if (wasFocused) {
@@ -488,20 +488,20 @@ class TabPaneState<T> extends State<TabPane<T>> {
                                           widget.onFocused(index);
                                         },
                                         onAcceptLeft: (value) {
-                                          if (value is! TabPaneData<T>) {
+                                          if (value is! VNLTabPaneData<T>) {
                                             return;
                                           }
-                                          List<TabPaneData<T>> tabs =
+                                          List<VNLTabPaneData<T>> tabs =
                                               widget.items;
                                           tabs.swapItem(value, index);
                                           widget.onSort?.call(tabs);
                                           widget.onFocused(index);
                                         },
                                         onAcceptRight: (value) {
-                                          if (value is! TabPaneData<T>) {
+                                          if (value is! VNLTabPaneData<T>) {
                                             return;
                                           }
-                                          List<TabPaneData<T>> tabs =
+                                          List<VNLTabPaneData<T>> tabs =
                                               widget.items;
                                           tabs.swapItem(value, index + 1);
                                           widget.onSort?.call(tabs);

@@ -3,8 +3,8 @@ import 'package:vnl_common_ui/vnl_ui.dart';
 /// VNLDatePicker in popover and dialog modes with disabled future dates.
 ///
 /// Demonstrates single-date selection with two different prompt UIs:
-/// - [PromptMode.popover]: inline, anchored overlay.
-/// - [PromptMode.dialog]: modal dialog with a custom [dialogTitle].
+/// - [VNLPromptMode.popover]: inline, anchored overlay.
+/// - [VNLPromptMode.dialog]: modal dialog with a custom [dialogTitle].
 class DatePickerExample1 extends StatefulWidget {
   const DatePickerExample1({super.key});
 
@@ -20,13 +20,13 @@ class _DatePickerExample1State extends State<DatePickerExample1> {
       children: [
         VNLDatePicker(
           value: _value,
-          mode: PromptMode.popover,
+          mode: VNLPromptMode.popover,
           // Disable selecting dates after "today".
           stateBuilder: (date) {
             if (date.isAfter(DateTime.now())) {
-              return DateState.disabled;
+              return VNLDateState.disabled;
             }
-            return DateState.enabled;
+            return VNLDateState.enabled;
           },
           onChanged: (value) {
             setState(() {
@@ -37,14 +37,14 @@ class _DatePickerExample1State extends State<DatePickerExample1> {
         const Gap(16),
         VNLDatePicker(
           value: _value,
-          mode: PromptMode.dialog,
+          mode: VNLPromptMode.dialog,
           // Title shown at the top of the dialog variant.
           dialogTitle: const Text('Select Date'),
           stateBuilder: (date) {
             if (date.isAfter(DateTime.now())) {
-              return DateState.disabled;
+              return VNLDateState.disabled;
             }
-            return DateState.enabled;
+            return VNLDateState.enabled;
           },
           onChanged: (value) {
             setState(() {

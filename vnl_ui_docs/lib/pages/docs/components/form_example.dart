@@ -54,7 +54,7 @@ class _FormExampleState extends State<FormExample> {
       },
       navigationItems: [
         VNLTextButton(
-          density: ButtonDensity.compact,
+          density: VNLButtonDensity.compact,
           onPressed: () {
             context.pushNamed('components');
           },
@@ -100,7 +100,7 @@ class _FormExampleState extends State<FormExample> {
             'The following example shows a form with multiple field types '
             '(VNLTextField, VNLCheckbox, VNLDatePicker, VNLSwitch), each using the correct '
             'typed FormKey alias. Notice how the keys\' generic types (String, '
-            'CheckboxState, DateTime, bool) match each widget\'s reported value.',
+            'VNLCheckboxState, DateTime, bool) match each widget\'s reported value.',
           ).p(),
           const WidgetUsageExample(
             path: 'lib/pages/docs/components/form/form_example_4.dart',
@@ -129,7 +129,7 @@ class _FormExampleState extends State<FormExample> {
             'Each form-capable widget (VNLTextField, VNLCheckbox, VNLDatePicker, etc.) internally '
             'reports its value through the form system. The FormKey\'s generic type must '
             'match what the widget reports. For example, TextFieldKey is just a typedef '
-            'for FormKey<String>, and CheckboxKey is FormKey<CheckboxState>. Using a '
+            'for FormKey<String>, and CheckboxKey is FormKey<VNLCheckboxState>. Using a '
             'plain FormKey or one with the wrong generic type will not work.',
           ).p(),
           const Text(
@@ -164,9 +164,9 @@ class _FormExampleState extends State<FormExample> {
           ).p(),
           const Text(
             'Built-in validators include VNLLengthValidator, VNLNotEmptyValidator, '
-            'NonNullValidator, VNLEmailValidator, VNLURLValidator, VNLRegexValidator, '
-            'VNLSafePasswordValidator, MinValidator, MaxValidator, RangeValidator, '
-            'CompareTo, CompareWith, and ConditionalValidator (supports async). '
+            'VNLNonNullValidator, VNLEmailValidator, VNLURLValidator, VNLRegexValidator, '
+            'VNLSafePasswordValidator, VNLMinValidator, VNLMaxValidator, VNLRangeValidator, '
+            'CompareTo, CompareWith, and VNLConditionalValidator (supports async). '
             'CompareWith enables cross-field validation and automatically '
             're-validates when the referenced field changes.',
           ).p(),
@@ -206,7 +206,7 @@ class _FormExampleState extends State<FormExample> {
             'validation results are displayed — even if a validator ran and '
             'produced an error, it won\'t show unless the mode is in showErrors.',
           ).p(),
-          const Text('FormValidationMode has three values:').p(),
+          const Text('VNLFormValidationMode has three values:').p(),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -372,7 +372,7 @@ class _FormExampleState extends State<FormExample> {
     ('TextAreaKey', 'String', 'VNLTextArea'),
     ('InputKey', 'String', 'Generic text input'),
     ('AutoCompleteKey', 'String', 'VNLAutoComplete'),
-    ('CheckboxKey', 'CheckboxState', 'VNLCheckbox'),
+    ('CheckboxKey', 'VNLCheckboxState', 'VNLCheckbox'),
     ('SwitchKey', 'bool', 'VNLSwitch'),
     ('ToggleKey', 'bool', 'VNLToggle'),
     ('SliderKey', 'VNLSliderValue', 'VNLSlider'),
@@ -387,10 +387,10 @@ class _FormExampleState extends State<FormExample> {
     ('TimeInputKey', 'TimeOfDay', 'VNLTimeInput'),
     ('DurationPickerKey', 'Duration', 'VNLDurationPicker'),
     ('DurationInputKey', 'Duration', 'VNLDurationInput'),
-    ('ColorPickerKey', 'Color', 'ColorPicker'),
+    ('ColorPickerKey', 'Color', 'VNLColorPicker'),
     ('PhoneInputKey', 'VNLPhoneNumber', 'VNLPhoneInput'),
     ('InputOTPKey', 'List<int?>', 'VNLInputOTP'),
-    ('ChipInputKey<T>', 'List<T>', 'ChipInput'),
+    ('ChipInputKey<T>', 'List<T>', 'VNLChipInput'),
     ('NumberInputKey', 'num', 'VNLNumberInput'),
   ];
 
@@ -414,7 +414,7 @@ class _FormExampleState extends State<FormExample> {
   }
 
   static const _controlledEntries = <(String, String, String)>[
-    ('VNLCheckbox', 'VNLControlledCheckbox', 'CheckboxState'),
+    ('VNLCheckbox', 'VNLControlledCheckbox', 'VNLCheckboxState'),
     ('VNLSwitch', 'VNLControlledSwitch', 'bool'),
     ('VNLToggle', 'VNLControlledToggle', 'bool'),
     ('VNLDatePicker', 'VNLControlledDatePicker', 'DateTime?'),
@@ -528,7 +528,7 @@ class _FormExampleState extends State<FormExample> {
 
   static const _validatorEntries = <(String, String)>[
     (
-      'NonNullValidator',
+      'VNLNonNullValidator',
       'Fails if the value is null. Used to require a value.'
     ),
     ('VNLNotEmptyValidator', 'Fails if the string is null or empty.'),
@@ -544,27 +544,27 @@ class _FormExampleState extends State<FormExample> {
       'Checks password for digits, upper/lowercase, special chars.'
     ),
     (
-      'MinValidator',
+      'VNLMinValidator',
       'Checks if a number is greater than (or equal to) a minimum.'
     ),
     (
-      'MaxValidator',
+      'VNLMaxValidator',
       'Checks if a number is less than (or equal to) a maximum.'
     ),
-    ('RangeValidator', 'Checks if a number is within a min/max range.'),
+    ('VNLRangeValidator', 'Checks if a number is within a min/max range.'),
     ('CompareTo', 'Compares a value to a static value (>, <, ==, etc).'),
     (
       'CompareWith',
       'Compares a value to another field\'s value (cross-field).'
     ),
     (
-      'ConditionalValidator',
+      'VNLConditionalValidator',
       'Runs only if a predicate returns true (supports async).'
     ),
     ('ValidationMode', 'Wraps another validator to control when it runs.'),
-    ('CompositeValidator', 'Combines multiple validators (all must pass).'),
-    ('OrValidator', 'Combines validators (at least one must pass).'),
-    ('NotValidator', 'Negates another validator (passes if it fails).'),
+    ('VNLCompositeValidator', 'Combines multiple validators (all must pass).'),
+    ('VNLOrValidator', 'Combines validators (at least one must pass).'),
+    ('VNLNotValidator', 'Negates another validator (passes if it fails).'),
     ('ValidatorBuilder', 'Custom inline validator using a function.'),
   ];
 }

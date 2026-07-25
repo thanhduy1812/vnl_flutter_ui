@@ -5,7 +5,7 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 ///
 /// Specifies which color model and input controls to display in the color picker
 /// interface. Each mode provides different controls optimized for that color space.
-enum ColorPickerMode {
+enum VNLColorPickerMode {
   /// RGB (Red, Green, Blue) color mode.
   rgb,
 
@@ -23,7 +23,7 @@ enum ColorPickerMode {
 ///
 /// Each slider type controls different aspects of the HSV color model,
 /// allowing fine-tuned control over hue, saturation, value, and alpha channels.
-enum HSVColorSliderType {
+enum VNLHSVColorSliderType {
   /// Hue slider only.
   hue,
 
@@ -59,7 +59,7 @@ enum HSVColorSliderType {
 ///
 /// Each slider type controls different aspects of the HSL color model,
 /// allowing fine-tuned control over hue, saturation, luminance, and alpha channels.
-enum HSLColorSliderType {
+enum VNLHSLColorSliderType {
   /// Hue slider only.
   hue,
 
@@ -91,12 +91,12 @@ enum HSLColorSliderType {
   alpha;
 }
 
-/// Theme configuration for [ColorPicker] widget styling and layout.
+/// Theme configuration for [VNLColorPicker] widget styling and layout.
 ///
 /// Defines visual and layout properties for color picker components including
 /// spacing, orientation, and feature availability. Applied globally through
-/// [ComponentTheme] or per-instance.
-class ColorPickerTheme extends ComponentThemeData {
+/// [VNLComponentTheme] or per-instance.
+class VNLColorPickerTheme extends ComponentThemeData {
   /// Spacing between major color picker sections.
   final double? spacing;
 
@@ -112,8 +112,8 @@ class ColorPickerTheme extends ComponentThemeData {
   /// The size of color sliders.
   final double? sliderSize;
 
-  /// Creates a [ColorPickerTheme].
-  const ColorPickerTheme({
+  /// Creates a [VNLColorPickerTheme].
+  const VNLColorPickerTheme({
     this.spacing,
     this.controlSpacing,
     this.orientation,
@@ -122,14 +122,14 @@ class ColorPickerTheme extends ComponentThemeData {
   });
 
   /// Creates a copy of this theme with specified properties overridden.
-  ColorPickerTheme copyWith({
+  VNLColorPickerTheme copyWith({
     ValueGetter<double?>? spacing,
     ValueGetter<double?>? controlSpacing,
     ValueGetter<Axis?>? orientation,
     ValueGetter<bool?>? enableEyeDropper,
     ValueGetter<double?>? sliderSize,
   }) {
-    return ColorPickerTheme(
+    return VNLColorPickerTheme(
       spacing: spacing == null ? this.spacing : spacing(),
       controlSpacing:
           controlSpacing == null ? this.controlSpacing : controlSpacing(),
@@ -143,7 +143,7 @@ class ColorPickerTheme extends ComponentThemeData {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ColorPickerTheme &&
+    return other is VNLColorPickerTheme &&
         other.spacing == spacing &&
         other.controlSpacing == controlSpacing &&
         other.orientation == orientation &&
@@ -158,7 +158,7 @@ class ColorPickerTheme extends ComponentThemeData {
 
 /// A comprehensive color picker widget with multiple color mode support.
 ///
-/// [ColorPicker] provides an interactive interface for selecting colors using
+/// [VNLColorPicker] provides an interactive interface for selecting colors using
 /// various color representation models (RGB, HSL, HSV, HEX). It supports alpha
 /// channel control, eye dropper functionality, and customizable layout.
 ///
@@ -173,17 +173,17 @@ class ColorPickerTheme extends ComponentThemeData {
 ///
 /// Example:
 /// ```dart
-/// ColorPicker(
+/// VNLColorPicker(
 ///   value: VNLColorDerivative.fromColor(VNLColors.blue),
 ///   onChanged: (color) {
 ///     print('Selected: ${color.toColor()}');
 ///   },
 ///   showAlpha: true,
-///   initialMode: ColorPickerMode.hsv,
+///   initialMode: VNLColorPickerMode.hsv,
 ///   enableEyeDropper: true,
 /// )
 /// ```
-class ColorPicker extends StatefulWidget {
+class VNLColorPicker extends StatefulWidget {
   /// The current color value.
   final VNLColorDerivative value;
 
@@ -203,10 +203,10 @@ class ColorPicker extends StatefulWidget {
   final bool initialShowHistory;
 
   /// The initial color picker mode.
-  final ColorPickerMode initialMode;
+  final VNLColorPickerMode initialMode;
 
   /// Called when the color picker mode changes.
-  final ValueChanged<ColorPickerMode>? onModeChanged;
+  final ValueChanged<VNLColorPickerMode>? onModeChanged;
 
   /// Called when the eye dropper button is pressed.
   final VoidCallback? onEyeDropperRequested;
@@ -226,14 +226,14 @@ class ColorPicker extends StatefulWidget {
   /// Size of the color sliders.
   final double? sliderSize;
 
-  /// Creates a [ColorPicker] widget.
-  const ColorPicker({
+  /// Creates a [VNLColorPicker] widget.
+  const VNLColorPicker({
     super.key,
     required this.value,
     this.onChanged,
     this.onChanging,
     this.showAlpha = false,
-    this.initialMode = ColorPickerMode.rgb,
+    this.initialMode = VNLColorPickerMode.rgb,
     this.onModeChanged,
     this.enableEyeDropper,
     this.onEyeDropperRequested,
@@ -246,11 +246,11 @@ class ColorPicker extends StatefulWidget {
   });
 
   @override
-  State<ColorPicker> createState() => _ColorPickerState();
+  State<VNLColorPicker> createState() => _ColorPickerState();
 }
 
-class _ColorPickerState extends State<ColorPicker> {
-  late ColorPickerMode _mode;
+class _ColorPickerState extends State<VNLColorPicker> {
+  late VNLColorPickerMode _mode;
 
   VNLColorDerivative? _changingValue;
 
@@ -284,7 +284,7 @@ class _ColorPickerState extends State<ColorPicker> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final componentTheme = ComponentTheme.maybeOf<ColorPickerTheme>(context);
+    final componentTheme = VNLComponentTheme.maybeOf<VNLColorPickerTheme>(context);
     final spacing = styleValue(
         defaultValue: 12.0,
         themeValue: componentTheme?.spacing,
@@ -299,7 +299,7 @@ class _ColorPickerState extends State<ColorPicker> {
         themeValue: componentTheme?.orientation,
         widgetValue: widget.orientation);
 
-    var colorControls = ColorControls(
+    var colorControls = VNLColorControls(
       value: _effectiveValue,
       onChanged: _onChanged,
       onChanging: _onChanging,
@@ -390,7 +390,7 @@ class _ColorPickerState extends State<ColorPicker> {
   }
 
   List<Widget> buildSliders(BuildContext context) {
-    final componentTheme = ComponentTheme.maybeOf<ColorPickerTheme>(context);
+    final componentTheme = VNLComponentTheme.maybeOf<VNLColorPickerTheme>(context);
     final sliderSize = styleValue(
       defaultValue: 24.0,
       themeValue: componentTheme?.sliderSize,
@@ -404,7 +404,7 @@ class _ColorPickerState extends State<ColorPicker> {
       SizedBox(
         height: orientation == Axis.vertical ? sliderSize : null,
         width: orientation == Axis.horizontal ? sliderSize : null,
-        child: HSVColorSlider(
+        child: VNLHSVColorSlider(
           reverse: orientation == Axis.vertical,
           radius: Theme.of(context).radiusSmRadius,
           value:
@@ -421,14 +421,14 @@ class _ColorPickerState extends State<ColorPicker> {
               _effectiveValue.changeToHSVHue(hue),
             );
           },
-          sliderType: HSVColorSliderType.hue,
+          sliderType: VNLHSVColorSliderType.hue,
         ),
       ),
       if (widget.showAlpha)
         SizedBox(
           height: orientation == Axis.vertical ? sliderSize : null,
           width: orientation == Axis.horizontal ? sliderSize : null,
-          child: HSVColorSlider(
+          child: VNLHSVColorSlider(
             reverse: orientation == Axis.vertical,
             radius: Theme.of(context).radiusSmRadius,
             value: _effectiveValue.toHSVColor(),
@@ -444,7 +444,7 @@ class _ColorPickerState extends State<ColorPicker> {
                 _effectiveValue.changeToOpacity(alpha),
               );
             },
-            sliderType: HSVColorSliderType.alpha,
+            sliderType: VNLHSVColorSliderType.alpha,
           ),
         ),
       if (orientation == Axis.horizontal && widget.showHistoryButton)
@@ -463,15 +463,15 @@ class _ColorPickerState extends State<ColorPicker> {
 
   Widget buildSlider(BuildContext context) {
     return switch (widget.initialMode) {
-      ColorPickerMode.hsl => buildHSLSlider(context),
+      VNLColorPickerMode.hsl => buildHSLSlider(context),
       _ => buildHSVSlider(context),
     };
   }
 
   Widget buildHSVSlider(BuildContext context) {
-    return HSVColorSlider(
+    return VNLHSVColorSlider(
       value: _effectiveValue.toHSVColor(),
-      sliderType: HSVColorSliderType.satVal,
+      sliderType: VNLHSVColorSliderType.satVal,
       radius: Theme.of(context).radiusSmRadius,
       onChanging: (hsvColor) {
         final sat = hsvColor.saturation;
@@ -491,9 +491,9 @@ class _ColorPickerState extends State<ColorPicker> {
   }
 
   Widget buildHSLSlider(BuildContext context) {
-    return HSLColorSlider(
+    return VNLHSLColorSlider(
       color: _effectiveValue.toHSLColor(),
-      sliderType: HSLColorSliderType.satLum,
+      sliderType: VNLHSLColorSliderType.satLum,
       radius: Theme.of(context).radiusSmRadius,
       onChanging: (hslColor) {
         final sat = hslColor.saturation;
@@ -521,7 +521,7 @@ class _ColorPickerState extends State<ColorPicker> {
 ///
 /// Displays inputs for editing colors in RGB, HSL, HSV, or HEX formats
 /// with optional alpha channel and eye dropper tool support.
-class ColorControls extends StatelessWidget {
+class VNLColorControls extends StatelessWidget {
   /// The current color value.
   final VNLColorDerivative value;
 
@@ -532,13 +532,13 @@ class ColorControls extends StatelessWidget {
   final ValueChanged<VNLColorDerivative>? onChanging;
 
   /// Callback invoked when the color picker mode changes.
-  final ValueChanged<ColorPickerMode>? onModeChanged;
+  final ValueChanged<VNLColorPickerMode>? onModeChanged;
 
   /// Whether to show alpha channel controls.
   final bool showAlpha;
 
   /// The current color picker mode (RGB, HSL, HSV, or HEX).
-  final ColorPickerMode mode;
+  final VNLColorPickerMode mode;
 
   /// Spacing between control elements.
   final double? controlSpacing;
@@ -559,14 +559,14 @@ class ColorControls extends StatelessWidget {
   final bool showHistoryButton;
 
   /// Creates color controls.
-  const ColorControls({
+  const VNLColorControls({
     super.key,
     required this.value,
     this.onChanged,
     this.onChanging,
     this.onModeChanged,
     this.showAlpha = false,
-    this.mode = ColorPickerMode.rgb,
+    this.mode = VNLColorPickerMode.rgb,
     this.enableEyeDropper,
     this.onEyeDropperRequested,
     this.controlSpacing,
@@ -577,7 +577,7 @@ class ColorControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ComponentTheme.maybeOf<ColorPickerTheme>(context);
+    final theme = VNLComponentTheme.maybeOf<VNLColorPickerTheme>(context);
     final locale = VNLookLocalizations.of(context);
     final enableEyeDropper = styleValue(
         defaultValue: true,
@@ -588,15 +588,15 @@ class ColorControls extends StatelessWidget {
       themeValue: theme?.controlSpacing,
       widgetValue: this.controlSpacing,
     );
-    String pickerModeToLabel(ColorPickerMode mode) {
+    String pickerModeToLabel(VNLColorPickerMode mode) {
       switch (mode) {
-        case ColorPickerMode.rgb:
+        case VNLColorPickerMode.rgb:
           return locale.colorPickerTabRGB;
-        case ColorPickerMode.hsl:
+        case VNLColorPickerMode.hsl:
           return locale.colorPickerTabHSL;
-        case ColorPickerMode.hsv:
+        case VNLColorPickerMode.hsv:
           return locale.colorPickerTabHSV;
-        case ColorPickerMode.hex:
+        case VNLColorPickerMode.hex:
           return locale.colorPickerTabHEX;
       }
     }
@@ -637,7 +637,7 @@ class ColorControls extends StatelessWidget {
               expands: true,
               children: [
                 Expanded(
-                  child: Select<ColorPickerMode>(
+                  child: Select<VNLColorPickerMode>(
                     value: mode,
                     itemBuilder: (context, value) {
                       return Text(pickerModeToLabel(value));
@@ -649,7 +649,7 @@ class ColorControls extends StatelessWidget {
                     },
                     popup: SelectPopup.noVirtualization(
                       items: VNLSelectItemList(children: [
-                        for (var mode in ColorPickerMode.values)
+                        for (var mode in VNLColorPickerMode.values)
                           SelectItemButton(
                               value: mode,
                               child: Text(pickerModeToLabel(mode))),
@@ -669,10 +669,10 @@ class ColorControls extends StatelessWidget {
   /// Builds the input widgets based on the current color picker mode.
   List<Widget> buildInputs(BuildContext context) {
     return switch (mode) {
-      ColorPickerMode.rgb => buildRGBInputs(context),
-      ColorPickerMode.hsl => buildHSLInputs(context),
-      ColorPickerMode.hsv => buildHSVInputs(context),
-      ColorPickerMode.hex => buildHEXInputs(context),
+      VNLColorPickerMode.rgb => buildRGBInputs(context),
+      VNLColorPickerMode.hsl => buildHSLInputs(context),
+      VNLColorPickerMode.hsv => buildHSVInputs(context),
+      VNLColorPickerMode.hex => buildHEXInputs(context),
     };
   }
 

@@ -21,13 +21,13 @@ class DataExample5State extends State<DataExample5> {
           children: [
             Text('Current Value: $counter - Rebuild Count: $rebuildCount'),
             const Gap(24),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 setState(() {
                   counter++;
                 });
               },
-              density: ButtonDensity.icon,
+              density: VNLButtonDensity.icon,
               child: const Icon(Icons.add),
             )
           ],
@@ -92,11 +92,11 @@ class _MostInnerWidgetState extends State<MostInnerWidget> {
             children: [
               Text('MostInnerWidget Data: $parentCounter - Rebuild Count: $mostInnerRebuildCount'),
               const Gap(24),
-              PrimaryButton(
+              VNLPrimaryButton(
                 onPressed: () {
                   setState(() {});
                 },
-                density: ButtonDensity.icon,
+                density: VNLButtonDensity.icon,
                 child: const Icon(Icons.refresh),
               ),
             ],

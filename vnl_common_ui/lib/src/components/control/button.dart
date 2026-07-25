@@ -1600,49 +1600,49 @@ class VNLButtonSize {
 ///
 /// Takes the base padding and returns modified padding appropriate for the
 /// desired button density level.
-typedef DensityModifier = EdgeInsets Function(EdgeInsets padding);
+typedef VNLDensityModifier = EdgeInsets Function(EdgeInsets padding);
 
 /// Defines the padding density for button components.
 ///
-/// [ButtonDensity] controls how much internal padding buttons have, affecting
+/// [VNLButtonDensity] controls how much internal padding buttons have, affecting
 /// their overall size and touch target area. Different density levels are
 /// appropriate for different use cases and layout constraints.
 ///
 /// Example:
 /// ```dart
 /// VNLButton.primary(
-///   style: VNLButtonStyle.primary().copyWith(density: ButtonDensity.compact),
+///   style: VNLButtonStyle.primary().copyWith(density: VNLButtonDensity.compact),
 ///   child: Text('Compact VNLButton'),
 /// );
 /// ```
-class ButtonDensity {
+class VNLButtonDensity {
   /// Function that modifies base padding to achieve the desired density.
-  final DensityModifier modifier;
+  final VNLDensityModifier modifier;
 
-  /// Creates a [ButtonDensity] with the specified padding modifier.
-  const ButtonDensity(this.modifier);
+  /// Creates a [VNLButtonDensity] with the specified padding modifier.
+  const VNLButtonDensity(this.modifier);
 
   /// Standard padding density (no modification).
-  static const ButtonDensity normal = ButtonDensity(_densityNormal);
+  static const VNLButtonDensity normal = VNLButtonDensity(_densityNormal);
 
   /// Increased padding for more comfortable touch targets.
-  static const ButtonDensity comfortable = ButtonDensity(_densityComfortable);
+  static const VNLButtonDensity comfortable = VNLButtonDensity(_densityComfortable);
 
   /// Square padding suitable for icon-only buttons.
-  static const ButtonDensity icon = ButtonDensity(_densityIcon);
+  static const VNLButtonDensity icon = VNLButtonDensity(_densityIcon);
 
   /// Comfortable square padding for icon-only buttons.
-  static const ButtonDensity iconComfortable =
-      ButtonDensity(_densityIconComfortable);
+  static const VNLButtonDensity iconComfortable =
+      VNLButtonDensity(_densityIconComfortable);
 
   /// Dense square padding for compact icon buttons.
-  static const ButtonDensity iconDense = ButtonDensity(_densityIconDense);
+  static const VNLButtonDensity iconDense = VNLButtonDensity(_densityIconDense);
 
   /// Reduced padding for tighter layouts (50% of normal).
-  static const ButtonDensity dense = ButtonDensity(_densityDense);
+  static const VNLButtonDensity dense = VNLButtonDensity(_densityDense);
 
   /// Minimal padding for very compact layouts (zero padding).
-  static const ButtonDensity compact = ButtonDensity(_densityCompact);
+  static const VNLButtonDensity compact = VNLButtonDensity(_densityCompact);
 }
 
 EdgeInsets _densityNormal(EdgeInsets padding) {
@@ -1679,9 +1679,9 @@ EdgeInsets _densityComfortable(EdgeInsets padding) {
 
 /// Defines the shape style for button components.
 ///
-/// [ButtonShape] determines the border radius and overall shape of buttons,
+/// [VNLButtonShape] determines the border radius and overall shape of buttons,
 /// allowing for rectangular buttons with rounded corners or fully circular buttons.
-enum ButtonShape {
+enum VNLButtonShape {
   /// Rectangular button with theme-appropriate rounded corners.
   rectangle,
 
@@ -1761,13 +1761,13 @@ abstract class VNLAbstractButtonStyle {
 /// // Create a large primary button
 /// const VNLButtonStyle.primary(
 ///   size: VNLButtonSize.large,
-///   density: ButtonDensity.comfortable,
+///   density: VNLButtonDensity.comfortable,
 /// )
 ///
 /// // Create a small outline button with circular shape
 /// const VNLButtonStyle.outline(
 ///   size: VNLButtonSize.small,
-///   shape: ButtonShape.circle,
+///   shape: VNLButtonShape.circle,
 /// )
 /// ```
 class VNLButtonStyle implements VNLAbstractButtonStyle {
@@ -1778,23 +1778,23 @@ class VNLButtonStyle implements VNLAbstractButtonStyle {
   final VNLButtonSize size;
 
   /// The density configuration affecting spacing and compactness.
-  final ButtonDensity density;
+  final VNLButtonDensity density;
 
   /// The shape configuration (rectangle or circle).
-  final ButtonShape shape;
+  final VNLButtonShape shape;
 
   /// Creates a custom [VNLButtonStyle] with the specified variance and modifiers.
   ///
   /// Parameters:
   /// - [variance] (required): The base button style variant
   /// - [size]: The button size. Defaults to [VNLButtonSize.normal]
-  /// - [density]: The button density. Defaults to [ButtonDensity.normal]
-  /// - [shape]: The button shape. Defaults to [ButtonShape.rectangle]
+  /// - [density]: The button density. Defaults to [VNLButtonDensity.normal]
+  /// - [shape]: The button shape. Defaults to [VNLButtonShape.rectangle]
   const VNLButtonStyle({
     required this.variance,
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
   });
 
   /// Creates a primary button style with prominent filled appearance.
@@ -1803,8 +1803,8 @@ class VNLButtonStyle implements VNLAbstractButtonStyle {
   /// ideal for the main action on a screen.
   const VNLButtonStyle.primary({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.primary;
 
   /// Creates a secondary button style with muted appearance.
@@ -1813,8 +1813,8 @@ class VNLButtonStyle implements VNLAbstractButtonStyle {
   /// for supporting or alternative actions.
   const VNLButtonStyle.secondary({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.secondary;
 
   /// Creates an outline button style with border and no background.
@@ -1823,8 +1823,8 @@ class VNLButtonStyle implements VNLAbstractButtonStyle {
   /// clear but subtle appearance for secondary actions.
   const VNLButtonStyle.outline({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.outline;
 
   /// Creates a ghost button style with minimal visual presence.
@@ -1833,8 +1833,8 @@ class VNLButtonStyle implements VNLAbstractButtonStyle {
   /// them ideal for tertiary actions.
   const VNLButtonStyle.ghost({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.ghost;
 
   /// Creates a link button style resembling a text hyperlink.
@@ -1843,8 +1843,8 @@ class VNLButtonStyle implements VNLAbstractButtonStyle {
   /// used for navigation or inline actions.
   const VNLButtonStyle.link({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.link;
 
   /// Creates a text-only button style with no background or border.
@@ -1853,8 +1853,8 @@ class VNLButtonStyle implements VNLAbstractButtonStyle {
   /// button style for unobtrusive actions.
   const VNLButtonStyle.text({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.text;
 
   /// Creates a destructive button style for delete/remove actions.
@@ -1863,8 +1863,8 @@ class VNLButtonStyle implements VNLAbstractButtonStyle {
   /// that remove or delete data.
   const VNLButtonStyle.destructive({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.destructive;
 
   /// Creates a fixed-size button style with consistent dimensions.
@@ -1873,8 +1873,8 @@ class VNLButtonStyle implements VNLAbstractButtonStyle {
   /// for icon buttons or grid layouts.
   const VNLButtonStyle.fixed({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.fixed;
 
   /// Creates a menu button style for dropdown menu triggers.
@@ -1883,8 +1883,8 @@ class VNLButtonStyle implements VNLAbstractButtonStyle {
   /// spacing and styling for menu contexts.
   const VNLButtonStyle.menu({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.menu;
 
   /// Creates a menubar button style for menubar items.
@@ -1893,8 +1893,8 @@ class VNLButtonStyle implements VNLAbstractButtonStyle {
   /// padding and hover effects.
   const VNLButtonStyle.menubar({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.menubar;
 
   /// Creates a muted button style with subdued appearance.
@@ -1903,67 +1903,67 @@ class VNLButtonStyle implements VNLAbstractButtonStyle {
   /// remaining functional.
   const VNLButtonStyle.muted({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.muted;
 
   /// Creates a primary icon button style with compact icon density.
   ///
   /// Icon buttons are optimized for displaying icons without text, using
-  /// [ButtonDensity.icon] for appropriate spacing.
+  /// [VNLButtonDensity.icon] for appropriate spacing.
   const VNLButtonStyle.primaryIcon({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.icon,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.icon,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.primary;
 
   /// Creates a secondary icon button style with compact icon density.
   const VNLButtonStyle.secondaryIcon({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.icon,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.icon,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.secondary;
 
   /// Creates an outline icon button style with compact icon density.
   const VNLButtonStyle.outlineIcon({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.icon,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.icon,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.outline;
 
   /// Creates a ghost icon button style with compact icon density.
   const VNLButtonStyle.ghostIcon({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.icon,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.icon,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.ghost;
 
   /// Creates a link icon button style with compact icon density.
   const VNLButtonStyle.linkIcon({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.icon,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.icon,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.link;
 
   /// Creates a text icon button style with compact icon density.
   const VNLButtonStyle.textIcon({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.icon,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.icon,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.text;
 
   /// Creates a destructive icon button style with compact icon density.
   const VNLButtonStyle.destructiveIcon({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.icon,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.icon,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.destructive;
 
   /// Creates a fixed icon button style with compact icon density.
   const VNLButtonStyle.fixedIcon({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.icon,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.icon,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.fixed;
 
   /// Creates a card button style with elevated appearance.
@@ -1972,13 +1972,13 @@ class VNLButtonStyle implements VNLAbstractButtonStyle {
   /// card-like appearance suitable for content-heavy layouts.
   const VNLButtonStyle.card({
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
   }) : variance = VNLButtonVariance.card;
 
   @override
   ButtonStateProperty<Decoration> get decoration {
-    if (shape == ButtonShape.circle) {
+    if (shape == VNLButtonShape.circle) {
       return _resolveCircleDecoration;
     }
     return variance.decoration;
@@ -2000,7 +2000,7 @@ class VNLButtonStyle implements VNLAbstractButtonStyle {
       );
     } else if (decoration is ShapeDecoration) {
       return decoration.copyWith(
-        shape: shape == ButtonShape.circle ? const CircleBorder() : null,
+        shape: shape == VNLButtonShape.circle ? const CircleBorder() : null,
       );
     } else {
       throw Exception('Unsupported decoration type ${decoration.runtimeType}');
@@ -2014,7 +2014,7 @@ class VNLButtonStyle implements VNLAbstractButtonStyle {
 
   @override
   ButtonStateProperty<EdgeInsetsGeometry> get padding {
-    if (size == VNLButtonSize.normal && density == ButtonDensity.normal) {
+    if (size == VNLButtonSize.normal && density == VNLButtonDensity.normal) {
       return variance.padding;
     }
     return _resolvePadding;
@@ -2080,7 +2080,7 @@ class VNLButtonStyle implements VNLAbstractButtonStyle {
 /// current states, and the default value, allowing for context-aware and
 /// state-dependent style modifications.
 ///
-/// Implementations include [PrimaryButtonTheme], [VNLSecondaryButtonTheme],
+/// Implementations include [VNLPrimaryButtonTheme], [VNLSecondaryButtonTheme],
 /// [VNLOutlineButtonTheme], and others for each button variant.
 abstract class VNLButtonTheme extends ComponentThemeData {
   /// Optional decoration override (background, border, shadows).
@@ -2138,7 +2138,7 @@ abstract class VNLButtonTheme extends ComponentThemeData {
 ///
 /// [ComponentThemeButtonStyle] implements [VNLAbstractButtonStyle] and provides
 /// automatic theme integration by looking up theme overrides from the widget tree's
-/// [ComponentTheme]. If a theme override is found, it's applied; otherwise, the
+/// [VNLComponentTheme]. If a theme override is found, it's applied; otherwise, the
 /// fallback style is used.
 ///
 /// This enables global button style customization through the theme system while
@@ -2146,7 +2146,7 @@ abstract class VNLButtonTheme extends ComponentThemeData {
 ///
 /// Example:
 /// ```dart
-/// const ComponentThemeButtonStyle<PrimaryButtonTheme>(
+/// const ComponentThemeButtonStyle<VNLPrimaryButtonTheme>(
 ///   fallback: VNLButtonVariance.primary,
 /// )
 /// ```
@@ -2165,7 +2165,7 @@ class ComponentThemeButtonStyle<T extends VNLButtonTheme>
   ///
   /// Returns the theme instance if found in the widget tree, or `null` if not present.
   T? find(BuildContext context) {
-    return ComponentTheme.maybeOf<T>(context);
+    return VNLComponentTheme.maybeOf<T>(context);
   }
 
   @override
@@ -2360,22 +2360,22 @@ extension DecorationExtension on Decoration {
 
 /// Theme configuration for primary button styling.
 ///
-/// [PrimaryButtonTheme] extends [VNLButtonTheme] to provide theme-level customization
+/// [VNLPrimaryButtonTheme] extends [VNLButtonTheme] to provide theme-level customization
 /// for primary buttons. It can be registered in the component theme system to
 /// override default primary button styles throughout the application.
 ///
 /// Example:
 /// ```dart
-/// PrimaryButtonTheme(
+/// VNLPrimaryButtonTheme(
 ///   decoration: (context, states, defaultValue) {
 ///     // Customize primary button decoration
 ///     return customDecoration;
 ///   },
 /// )
 /// ```
-class PrimaryButtonTheme extends VNLButtonTheme {
-  /// Creates a [PrimaryButtonTheme] with optional style property delegates.
-  const PrimaryButtonTheme(
+class VNLPrimaryButtonTheme extends VNLButtonTheme {
+  /// Creates a [VNLPrimaryButtonTheme] with optional style property delegates.
+  const VNLPrimaryButtonTheme(
       {super.decoration,
       super.mouseCursor,
       super.padding,
@@ -2384,7 +2384,7 @@ class PrimaryButtonTheme extends VNLButtonTheme {
       super.margin});
 
   /// Creates a copy of this theme with selectively replaced properties.
-  PrimaryButtonTheme copyWith({
+  VNLPrimaryButtonTheme copyWith({
     ValueGetter<ButtonStatePropertyDelegate<Decoration>?>? decoration,
     ValueGetter<ButtonStatePropertyDelegate<MouseCursor>?>? mouseCursor,
     ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? padding,
@@ -2392,7 +2392,7 @@ class PrimaryButtonTheme extends VNLButtonTheme {
     ValueGetter<ButtonStatePropertyDelegate<IconThemeData>?>? iconTheme,
     ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? margin,
   }) {
-    return PrimaryButtonTheme(
+    return VNLPrimaryButtonTheme(
       decoration: decoration == null ? this.decoration : decoration(),
       mouseCursor: mouseCursor == null ? this.mouseCursor : mouseCursor(),
       padding: padding == null ? this.padding : padding(),
@@ -2611,9 +2611,9 @@ class VNLDestructiveButtonTheme extends VNLButtonTheme {
 ///
 /// Provides theme-level customization for fixed buttons. Fixed buttons maintain
 /// consistent dimensions regardless of content.
-class FixedButtonTheme extends VNLButtonTheme {
-  /// Creates a [FixedButtonTheme] with optional style property delegates.
-  const FixedButtonTheme(
+class VNLFixedButtonTheme extends VNLButtonTheme {
+  /// Creates a [VNLFixedButtonTheme] with optional style property delegates.
+  const VNLFixedButtonTheme(
       {super.decoration,
       super.mouseCursor,
       super.padding,
@@ -2622,7 +2622,7 @@ class FixedButtonTheme extends VNLButtonTheme {
       super.margin});
 
   /// Creates a copy of this theme with selectively replaced properties.
-  FixedButtonTheme copyWith({
+  VNLFixedButtonTheme copyWith({
     ValueGetter<ButtonStatePropertyDelegate<Decoration>?>? decoration,
     ValueGetter<ButtonStatePropertyDelegate<MouseCursor>?>? mouseCursor,
     ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? padding,
@@ -2630,7 +2630,7 @@ class FixedButtonTheme extends VNLButtonTheme {
     ValueGetter<ButtonStatePropertyDelegate<IconThemeData>?>? iconTheme,
     ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? margin,
   }) {
-    return FixedButtonTheme(
+    return VNLFixedButtonTheme(
       decoration: decoration == null ? this.decoration : decoration(),
       mouseCursor: mouseCursor == null ? this.mouseCursor : mouseCursor(),
       padding: padding == null ? this.padding : padding(),
@@ -2679,9 +2679,9 @@ class VNLMenuButtonTheme extends VNLButtonTheme {
 ///
 /// Provides theme-level customization for menubar buttons. VNLMenubar buttons are
 /// optimized for horizontal menu bars with appropriate padding and hover effects.
-class MenubarButtonTheme extends VNLButtonTheme {
-  /// Creates a [MenubarButtonTheme] with optional style property delegates.
-  const MenubarButtonTheme(
+class VNLMenubarButtonTheme extends VNLButtonTheme {
+  /// Creates a [VNLMenubarButtonTheme] with optional style property delegates.
+  const VNLMenubarButtonTheme(
       {super.decoration,
       super.mouseCursor,
       super.padding,
@@ -2690,7 +2690,7 @@ class MenubarButtonTheme extends VNLButtonTheme {
       super.margin});
 
   /// Creates a copy of this theme with selectively replaced properties.
-  MenubarButtonTheme copyWith({
+  VNLMenubarButtonTheme copyWith({
     ValueGetter<ButtonStatePropertyDelegate<Decoration>?>? decoration,
     ValueGetter<ButtonStatePropertyDelegate<MouseCursor>?>? mouseCursor,
     ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? padding,
@@ -2698,7 +2698,7 @@ class MenubarButtonTheme extends VNLButtonTheme {
     ValueGetter<ButtonStatePropertyDelegate<IconThemeData>?>? iconTheme,
     ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? margin,
   }) {
-    return MenubarButtonTheme(
+    return VNLMenubarButtonTheme(
       decoration: decoration == null ? this.decoration : decoration(),
       mouseCursor: mouseCursor == null ? this.mouseCursor : mouseCursor(),
       padding: padding == null ? this.padding : padding(),
@@ -2713,9 +2713,9 @@ class MenubarButtonTheme extends VNLButtonTheme {
 ///
 /// Provides theme-level customization for muted buttons. Muted buttons use
 /// low-contrast colors for minimal visual impact while remaining functional.
-class MutedButtonTheme extends VNLButtonTheme {
-  /// Creates a [MutedButtonTheme] with optional style property delegates.
-  const MutedButtonTheme(
+class VNLMutedButtonTheme extends VNLButtonTheme {
+  /// Creates a [VNLMutedButtonTheme] with optional style property delegates.
+  const VNLMutedButtonTheme(
       {super.decoration,
       super.mouseCursor,
       super.padding,
@@ -2724,7 +2724,7 @@ class MutedButtonTheme extends VNLButtonTheme {
       super.margin});
 
   /// Creates a copy of this theme with selectively replaced properties.
-  MutedButtonTheme copyWith({
+  VNLMutedButtonTheme copyWith({
     ValueGetter<ButtonStatePropertyDelegate<Decoration>?>? decoration,
     ValueGetter<ButtonStatePropertyDelegate<MouseCursor>?>? mouseCursor,
     ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? padding,
@@ -2732,7 +2732,7 @@ class MutedButtonTheme extends VNLButtonTheme {
     ValueGetter<ButtonStatePropertyDelegate<IconThemeData>?>? iconTheme,
     ValueGetter<ButtonStatePropertyDelegate<EdgeInsetsGeometry>?>? margin,
   }) {
-    return MutedButtonTheme(
+    return VNLMutedButtonTheme(
       decoration: decoration == null ? this.decoration : decoration(),
       mouseCursor: mouseCursor == null ? this.mouseCursor : mouseCursor(),
       padding: padding == null ? this.padding : padding(),
@@ -2800,7 +2800,7 @@ class VNLButtonVariance implements VNLAbstractButtonStyle {
   ///
   /// Features high-contrast styling suitable for the main action on a screen.
   static const VNLAbstractButtonStyle primary =
-      ComponentThemeButtonStyle<PrimaryButtonTheme>(
+      ComponentThemeButtonStyle<VNLPrimaryButtonTheme>(
     fallback: VNLButtonVariance(
       decoration: _buttonPrimaryDecoration,
       mouseCursor: _buttonMouseCursor,
@@ -2905,7 +2905,7 @@ class VNLButtonVariance implements VNLAbstractButtonStyle {
   ///
   /// Features fixed sizing regardless of content, suitable for icon buttons.
   static const VNLAbstractButtonStyle fixed =
-      ComponentThemeButtonStyle<FixedButtonTheme>(
+      ComponentThemeButtonStyle<VNLFixedButtonTheme>(
     fallback: VNLButtonVariance(
       decoration: _buttonTextDecoration,
       mouseCursor: _buttonMouseCursor,
@@ -2935,7 +2935,7 @@ class VNLButtonVariance implements VNLAbstractButtonStyle {
   ///
   /// Features optimized padding and styling for menubar contexts.
   static const VNLAbstractButtonStyle menubar =
-      ComponentThemeButtonStyle<MenubarButtonTheme>(
+      ComponentThemeButtonStyle<VNLMenubarButtonTheme>(
     fallback: VNLButtonVariance(
       decoration: _buttonMenuDecoration,
       mouseCursor: _buttonMouseCursor,
@@ -2950,7 +2950,7 @@ class VNLButtonVariance implements VNLAbstractButtonStyle {
   ///
   /// Features low-contrast styling for minimal visual impact.
   static const VNLAbstractButtonStyle muted =
-      ComponentThemeButtonStyle<MutedButtonTheme>(
+      ComponentThemeButtonStyle<VNLMutedButtonTheme>(
     fallback: VNLButtonVariance(
       decoration: _buttonTextDecoration,
       mouseCursor: _buttonMouseCursor,
@@ -3919,7 +3919,7 @@ IconThemeData _buttonStaticIconTheme(
 
 /// Convenience widget for creating a primary button.
 ///
-/// [PrimaryButton] is a simplified wrapper around [VNLButton] that automatically
+/// [VNLPrimaryButton] is a simplified wrapper around [VNLButton] that automatically
 /// applies the primary button style. It provides a cleaner API for the common
 /// case of creating primary buttons without manually specifying the style.
 ///
@@ -3928,14 +3928,14 @@ IconThemeData _buttonStaticIconTheme(
 ///
 /// Example:
 /// ```dart
-/// PrimaryButton(
+/// VNLPrimaryButton(
 ///   onPressed: () => submitForm(),
 ///   leading: Icon(Icons.check),
 ///   child: Text('Submit'),
 /// )
 /// ```
 // Backward compatibility
-class PrimaryButton extends StatelessWidget {
+class VNLPrimaryButton extends StatelessWidget {
   /// The widget displayed as the button's main content.
   final Widget child;
 
@@ -3957,11 +3957,11 @@ class PrimaryButton extends StatelessWidget {
   /// Size variant of the button (defaults to [VNLButtonSize.normal]).
   final VNLButtonSize size;
 
-  /// Density variant affecting spacing (defaults to [ButtonDensity.normal]).
-  final ButtonDensity density;
+  /// VNLDensity variant affecting spacing (defaults to [VNLButtonDensity.normal]).
+  final VNLButtonDensity density;
 
-  /// Shape of the button (defaults to [ButtonShape.rectangle]).
-  final ButtonShape shape;
+  /// Shape of the button (defaults to [VNLButtonShape.rectangle]).
+  final VNLButtonShape shape;
 
   /// Focus node for keyboard focus management.
   final FocusNode? focusNode;
@@ -4024,7 +4024,7 @@ class PrimaryButton extends StatelessWidget {
   final GestureLongPressUpCallback? onTertiaryLongPress;
 
   /// Creates a primary button with the specified properties.
-  const PrimaryButton({
+  const VNLPrimaryButton({
     super.key,
     required this.child,
     this.onPressed,
@@ -4033,8 +4033,8 @@ class PrimaryButton extends StatelessWidget {
     this.trailing,
     this.alignment,
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
     this.focusNode,
     this.disableTransition = false,
     this.onHover,
@@ -4094,7 +4094,7 @@ class PrimaryButton extends StatelessWidget {
 /// Convenience widget for creating a secondary button.
 ///
 /// A simplified wrapper around [VNLButton.secondary] with the same properties
-/// as [PrimaryButton] but using secondary button styling for supporting actions.
+/// as [VNLPrimaryButton] but using secondary button styling for supporting actions.
 class VNLSecondaryButton extends StatelessWidget {
   /// The widget to display as the button's content.
   final Widget child;
@@ -4117,11 +4117,11 @@ class VNLSecondaryButton extends StatelessWidget {
   /// Size variant of the button (defaults to [VNLButtonSize.normal]).
   final VNLButtonSize size;
 
-  /// Density variant affecting spacing (defaults to [ButtonDensity.normal]).
-  final ButtonDensity density;
+  /// VNLDensity variant affecting spacing (defaults to [VNLButtonDensity.normal]).
+  final VNLButtonDensity density;
 
-  /// Shape of the button (defaults to [ButtonShape.rectangle]).
-  final ButtonShape shape;
+  /// Shape of the button (defaults to [VNLButtonShape.rectangle]).
+  final VNLButtonShape shape;
 
   /// Focus node for keyboard focus management.
   final FocusNode? focusNode;
@@ -4193,8 +4193,8 @@ class VNLSecondaryButton extends StatelessWidget {
     this.trailing,
     this.alignment,
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
     this.focusNode,
     this.disableTransition = false,
     this.onHover,
@@ -4254,7 +4254,7 @@ class VNLSecondaryButton extends StatelessWidget {
 /// Convenience widget for creating an outline button.
 ///
 /// A simplified wrapper around [VNLButton.outline] with the same properties
-/// as [PrimaryButton] but using outline button styling with a visible border.
+/// as [VNLPrimaryButton] but using outline button styling with a visible border.
 class VNLOutlineButton extends StatelessWidget {
   /// The widget to display as the button's content.
   final Widget child;
@@ -4277,11 +4277,11 @@ class VNLOutlineButton extends StatelessWidget {
   /// Size variant of the button (defaults to [VNLButtonSize.normal]).
   final VNLButtonSize size;
 
-  /// Density variant affecting spacing (defaults to [ButtonDensity.normal]).
-  final ButtonDensity density;
+  /// VNLDensity variant affecting spacing (defaults to [VNLButtonDensity.normal]).
+  final VNLButtonDensity density;
 
-  /// Shape of the button (defaults to [ButtonShape.rectangle]).
-  final ButtonShape shape;
+  /// Shape of the button (defaults to [VNLButtonShape.rectangle]).
+  final VNLButtonShape shape;
 
   /// Focus node for keyboard focus management.
   final FocusNode? focusNode;
@@ -4353,8 +4353,8 @@ class VNLOutlineButton extends StatelessWidget {
     this.trailing,
     this.alignment,
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
     this.focusNode,
     this.disableTransition = false,
     this.onHover,
@@ -4414,7 +4414,7 @@ class VNLOutlineButton extends StatelessWidget {
 /// Convenience widget for creating a ghost button.
 ///
 /// A simplified wrapper around [VNLButton.ghost] with the same properties
-/// as [PrimaryButton] but using ghost button styling with minimal visual presence.
+/// as [VNLPrimaryButton] but using ghost button styling with minimal visual presence.
 class VNLGhostButton extends StatelessWidget {
   /// The widget to display as the button's content.
   final Widget child;
@@ -4437,11 +4437,11 @@ class VNLGhostButton extends StatelessWidget {
   /// Size variant of the button (defaults to [VNLButtonSize.normal]).
   final VNLButtonSize size;
 
-  /// Density variant affecting spacing (defaults to [ButtonDensity.normal]).
-  final ButtonDensity density;
+  /// VNLDensity variant affecting spacing (defaults to [VNLButtonDensity.normal]).
+  final VNLButtonDensity density;
 
-  /// Shape of the button (defaults to [ButtonShape.rectangle]).
-  final ButtonShape shape;
+  /// Shape of the button (defaults to [VNLButtonShape.rectangle]).
+  final VNLButtonShape shape;
 
   /// Focus node for keyboard focus management.
   final FocusNode? focusNode;
@@ -4513,8 +4513,8 @@ class VNLGhostButton extends StatelessWidget {
     this.trailing,
     this.alignment,
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
     this.focusNode,
     this.disableTransition = false,
     this.onHover,
@@ -4574,7 +4574,7 @@ class VNLGhostButton extends StatelessWidget {
 /// Convenience widget for creating a link button.
 ///
 /// A simplified wrapper around [VNLButton.link] with the same properties
-/// as [PrimaryButton] but using link button styling that resembles a hyperlink.
+/// as [VNLPrimaryButton] but using link button styling that resembles a hyperlink.
 class VNLLinkButton extends StatelessWidget {
   /// The widget to display as the button's content.
   final Widget child;
@@ -4597,11 +4597,11 @@ class VNLLinkButton extends StatelessWidget {
   /// Size variant of the button (defaults to [VNLButtonSize.normal]).
   final VNLButtonSize size;
 
-  /// Density variant affecting spacing (defaults to [ButtonDensity.normal]).
-  final ButtonDensity density;
+  /// VNLDensity variant affecting spacing (defaults to [VNLButtonDensity.normal]).
+  final VNLButtonDensity density;
 
-  /// Shape of the button (defaults to [ButtonShape.rectangle]).
-  final ButtonShape shape;
+  /// Shape of the button (defaults to [VNLButtonShape.rectangle]).
+  final VNLButtonShape shape;
 
   /// Focus node for keyboard focus management.
   final FocusNode? focusNode;
@@ -4673,8 +4673,8 @@ class VNLLinkButton extends StatelessWidget {
     this.trailing,
     this.alignment,
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
     this.focusNode,
     this.disableTransition = false,
     this.onHover,
@@ -4734,7 +4734,7 @@ class VNLLinkButton extends StatelessWidget {
 /// Convenience widget for creating a text button.
 ///
 /// A simplified wrapper around [VNLButton.text] with the same properties
-/// as [PrimaryButton] but using text button styling with minimal styling.
+/// as [VNLPrimaryButton] but using text button styling with minimal styling.
 class VNLTextButton extends StatelessWidget {
   /// The widget to display as the button's content.
   final Widget child;
@@ -4757,11 +4757,11 @@ class VNLTextButton extends StatelessWidget {
   /// Size variant of the button (defaults to [VNLButtonSize.normal]).
   final VNLButtonSize size;
 
-  /// Density variant affecting spacing (defaults to [ButtonDensity.normal]).
-  final ButtonDensity density;
+  /// VNLDensity variant affecting spacing (defaults to [VNLButtonDensity.normal]).
+  final VNLButtonDensity density;
 
-  /// Shape of the button (defaults to [ButtonShape.rectangle]).
-  final ButtonShape shape;
+  /// Shape of the button (defaults to [VNLButtonShape.rectangle]).
+  final VNLButtonShape shape;
 
   /// Focus node for keyboard focus management.
   final FocusNode? focusNode;
@@ -4833,8 +4833,8 @@ class VNLTextButton extends StatelessWidget {
     this.trailing,
     this.alignment,
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
     this.focusNode,
     this.disableTransition = false,
     this.onHover,
@@ -4876,7 +4876,7 @@ class VNLTextButton extends StatelessWidget {
 /// Convenience widget for creating a destructive button.
 ///
 /// A simplified wrapper around [VNLButton.destructive] with the same properties
-/// as [PrimaryButton] but using destructive button styling for dangerous actions.
+/// as [VNLPrimaryButton] but using destructive button styling for dangerous actions.
 class VNLDestructiveButton extends StatelessWidget {
   /// The widget to display as the button's content.
   final Widget child;
@@ -4899,11 +4899,11 @@ class VNLDestructiveButton extends StatelessWidget {
   /// Size variant of the button (defaults to [VNLButtonSize.normal]).
   final VNLButtonSize size;
 
-  /// Density variant affecting spacing (defaults to [ButtonDensity.normal]).
-  final ButtonDensity density;
+  /// VNLDensity variant affecting spacing (defaults to [VNLButtonDensity.normal]).
+  final VNLButtonDensity density;
 
-  /// Shape of the button (defaults to [ButtonShape.rectangle]).
-  final ButtonShape shape;
+  /// Shape of the button (defaults to [VNLButtonShape.rectangle]).
+  final VNLButtonShape shape;
 
   /// Focus node for keyboard focus management.
   final FocusNode? focusNode;
@@ -4975,8 +4975,8 @@ class VNLDestructiveButton extends StatelessWidget {
     this.trailing,
     this.alignment,
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
     this.focusNode,
     this.disableTransition = false,
     this.onHover,
@@ -5037,7 +5037,7 @@ class VNLDestructiveButton extends StatelessWidget {
 /// Convenience widget for creating a tab button.
 ///
 /// A simplified wrapper around [VNLButton] with the same properties
-/// as [PrimaryButton] but using tab button styling for tabbed navigation.
+/// as [VNLPrimaryButton] but using tab button styling for tabbed navigation.
 class VNLTabButton extends StatelessWidget {
   /// The widget to display as the button's content.
   final Widget child;
@@ -5060,11 +5060,11 @@ class VNLTabButton extends StatelessWidget {
   /// Size variant of the button (defaults to [VNLButtonSize.normal]).
   final VNLButtonSize size;
 
-  /// Density variant affecting spacing (defaults to [ButtonDensity.normal]).
-  final ButtonDensity density;
+  /// VNLDensity variant affecting spacing (defaults to [VNLButtonDensity.normal]).
+  final VNLButtonDensity density;
 
-  /// Shape of the button (defaults to [ButtonShape.rectangle]).
-  final ButtonShape shape;
+  /// Shape of the button (defaults to [VNLButtonShape.rectangle]).
+  final VNLButtonShape shape;
 
   /// Focus node for keyboard focus management.
   final FocusNode? focusNode;
@@ -5136,8 +5136,8 @@ class VNLTabButton extends StatelessWidget {
     this.trailing,
     this.alignment,
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
     this.focusNode,
     this.disableTransition = false,
     this.onHover,
@@ -5270,17 +5270,17 @@ class VNLCardButton extends StatelessWidget {
   /// sizes include small, normal, large, and extra large variants.
   final VNLButtonSize size;
 
-  /// Density setting affecting button compactness.
+  /// VNLDensity setting affecting button compactness.
   ///
   /// Controls spacing and padding to create more or less compact
   /// appearance. Useful for dense interfaces or accessibility needs.
-  final ButtonDensity density;
+  final VNLButtonDensity density;
 
   /// Shape configuration for the button's appearance.
   ///
   /// Defines border radius and corner styling. Options include
   /// rectangle, rounded corners, and circular shapes.
-  final ButtonShape shape;
+  final VNLButtonShape shape;
 
   /// Focus node for keyboard navigation and accessibility.
   ///
@@ -5369,8 +5369,8 @@ class VNLCardButton extends StatelessWidget {
   /// - [onPressed] (VoidCallback?, optional): Primary action when button is pressed
   /// - [enabled] (bool?, optional): Whether button accepts input (null uses onPressed)
   /// - [size] (VNLButtonSize, default: normal): Size variant for button dimensions
-  /// - [density] (ButtonDensity, default: normal): Spacing density setting
-  /// - [shape] (ButtonShape, default: rectangle): Border radius and corner styling
+  /// - [density] (VNLButtonDensity, default: normal): Spacing density setting
+  /// - [shape] (VNLButtonShape, default: rectangle): Border radius and corner styling
   ///
   /// Example:
   /// ```dart
@@ -5390,8 +5390,8 @@ class VNLCardButton extends StatelessWidget {
     this.trailing,
     this.alignment,
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.normal,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.normal,
+    this.shape = VNLButtonShape.rectangle,
     this.focusNode,
     this.disableTransition = false,
     this.onHover,
@@ -5475,11 +5475,11 @@ class VNLIconButton extends StatelessWidget {
   /// Size variant of the button (defaults to [VNLButtonSize.normal]).
   final VNLButtonSize size;
 
-  /// Density variant affecting spacing (defaults to [ButtonDensity.icon]).
-  final ButtonDensity density;
+  /// VNLDensity variant affecting spacing (defaults to [VNLButtonDensity.icon]).
+  final VNLButtonDensity density;
 
-  /// Shape of the button (defaults to [ButtonShape.rectangle]).
-  final ButtonShape shape;
+  /// Shape of the button (defaults to [VNLButtonShape.rectangle]).
+  final VNLButtonShape shape;
 
   /// Focus node for keyboard focus management.
   final FocusNode? focusNode;
@@ -5555,8 +5555,8 @@ class VNLIconButton extends StatelessWidget {
     this.trailing,
     this.alignment,
     this.size = VNLButtonSize.normal,
-    this.density = ButtonDensity.icon,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.icon,
+    this.shape = VNLButtonShape.rectangle,
     this.focusNode,
     this.disableTransition = false,
     this.onHover,
@@ -5610,8 +5610,8 @@ class VNLIconButton extends StatelessWidget {
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
     this.variance = VNLButtonVariance.primary,
-    this.density = ButtonDensity.icon,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.icon,
+    this.shape = VNLButtonShape.rectangle,
   });
 
   /// Creates an icon button with secondary styling.
@@ -5645,8 +5645,8 @@ class VNLIconButton extends StatelessWidget {
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
     this.variance = VNLButtonVariance.secondary,
-    this.density = ButtonDensity.icon,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.icon,
+    this.shape = VNLButtonShape.rectangle,
   });
 
   /// Creates an icon button with outline styling.
@@ -5680,8 +5680,8 @@ class VNLIconButton extends StatelessWidget {
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
     this.variance = VNLButtonVariance.outline,
-    this.density = ButtonDensity.icon,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.icon,
+    this.shape = VNLButtonShape.rectangle,
   });
 
   /// Creates an icon button with ghost styling.
@@ -5715,8 +5715,8 @@ class VNLIconButton extends StatelessWidget {
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
     this.variance = VNLButtonVariance.ghost,
-    this.density = ButtonDensity.icon,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.icon,
+    this.shape = VNLButtonShape.rectangle,
   });
 
   /// Creates an icon button with link styling.
@@ -5750,8 +5750,8 @@ class VNLIconButton extends StatelessWidget {
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
     this.variance = VNLButtonVariance.link,
-    this.density = ButtonDensity.icon,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.icon,
+    this.shape = VNLButtonShape.rectangle,
   });
 
   /// Creates an icon button with text styling.
@@ -5785,8 +5785,8 @@ class VNLIconButton extends StatelessWidget {
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
     this.variance = VNLButtonVariance.text,
-    this.density = ButtonDensity.icon,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.icon,
+    this.shape = VNLButtonShape.rectangle,
   });
 
   /// Creates an icon button with destructive styling.
@@ -5820,8 +5820,8 @@ class VNLIconButton extends StatelessWidget {
     this.onSecondaryLongPress,
     this.onTertiaryLongPress,
     this.variance = VNLButtonVariance.destructive,
-    this.density = ButtonDensity.icon,
-    this.shape = ButtonShape.rectangle,
+    this.density = VNLButtonDensity.icon,
+    this.shape = VNLButtonShape.rectangle,
   });
 
   @override
@@ -5882,7 +5882,7 @@ class VNLIconButton extends StatelessWidget {
 ///   },
 ///   child: Column(
 ///     children: [
-///       PrimaryButton(child: Text('Red VNLButton')),
+///       VNLPrimaryButton(child: Text('Red VNLButton')),
 ///       VNLSecondaryButton(child: Text('Also Red')),
 ///     ],
 ///   ),

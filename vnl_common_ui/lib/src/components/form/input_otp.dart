@@ -57,7 +57,7 @@ class _InputOTPSpacing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLInputOTPTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLInputOTPTheme>(context);
     return SizedBox(width: compTheme?.spacing ?? theme.scaling * 8);
   }
 }
@@ -540,7 +540,7 @@ class _OTPCharacterInputState extends State<_OTPCharacterInput> {
               key: _key,
               child: Opacity(
                 opacity: _value == null ? 1 : 0,
-                child: ComponentTheme(
+                child: VNLComponentTheme(
                   data: const VNLFocusOutlineTheme(
                     border: Border.fromBorderSide(BorderSide.none),
                   ),
@@ -962,7 +962,7 @@ class _InputOTPState extends State<VNLInputOTP>
             )));
       }
     }
-    final compTheme = ComponentTheme.maybeOf<VNLInputOTPTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLInputOTPTheme>(context);
     return SizedBox(
       height: compTheme?.height ?? theme.scaling * 36,
       child: IntrinsicWidth(

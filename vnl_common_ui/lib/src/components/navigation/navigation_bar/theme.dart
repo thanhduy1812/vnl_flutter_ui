@@ -6,12 +6,12 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 /// [VNLNavigationBar] widgets, including background colors, alignment, spacing,
 /// label presentation, and padding. These properties can be set at the theme level
 /// to provide consistent styling across the application.
-class NavigationBarTheme extends ComponentThemeData {
+class VNLNavigationBarTheme extends ComponentThemeData {
   /// Background color of the navigation bar.
   final Color? backgroundColor;
 
   /// Alignment of navigation items.
-  final NavigationBarAlignment? alignment;
+  final VNLNavigationBarAlignment? alignment;
 
   /// Layout direction (horizontal or vertical).
   final Axis? direction;
@@ -20,29 +20,29 @@ class NavigationBarTheme extends ComponentThemeData {
   final double? spacing;
 
   /// Type of label display (e.g., always show, hide, etc.).
-  final NavigationLabelType? labelType;
+  final VNLNavigationLabelType? labelType;
 
   /// Position of labels relative to icons.
-  final NavigationLabelPosition? labelPosition;
+  final VNLNavigationLabelPosition? labelPosition;
 
   /// Size variant for labels.
-  final NavigationLabelSize? labelSize;
+  final VNLNavigationLabelSize? labelSize;
 
   /// Internal padding of the navigation bar.
   final EdgeInsetsGeometry? padding;
 
-  /// Creates a [NavigationBarTheme].
+  /// Creates a [VNLNavigationBarTheme].
   ///
   /// Parameters:
   /// - [backgroundColor] (`Color?`, optional): Background color.
-  /// - [alignment] (`NavigationBarAlignment?`, optional): Item alignment.
+  /// - [alignment] (`VNLNavigationBarAlignment?`, optional): Item alignment.
   /// - [direction] (`Axis?`, optional): Layout direction.
   /// - [spacing] (`double?`, optional): Item spacing.
-  /// - [labelType] (`NavigationLabelType?`, optional): VNLLabel display type.
-  /// - [labelPosition] (`NavigationLabelPosition?`, optional): VNLLabel position.
-  /// - [labelSize] (`NavigationLabelSize?`, optional): VNLLabel size.
+  /// - [labelType] (`VNLNavigationLabelType?`, optional): VNLLabel display type.
+  /// - [labelPosition] (`VNLNavigationLabelPosition?`, optional): VNLLabel position.
+  /// - [labelSize] (`VNLNavigationLabelSize?`, optional): VNLLabel size.
   /// - [padding] (`EdgeInsetsGeometry?`, optional): Internal padding.
-  const NavigationBarTheme({
+  const VNLNavigationBarTheme({
     this.backgroundColor,
     this.alignment,
     this.direction,
@@ -57,26 +57,26 @@ class NavigationBarTheme extends ComponentThemeData {
   ///
   /// Parameters:
   /// - [backgroundColor] (`ValueGetter<Color?>?`, optional): New background color.
-  /// - [alignment] (`ValueGetter<NavigationBarAlignment?>?`, optional): New alignment.
+  /// - [alignment] (`ValueGetter<VNLNavigationBarAlignment?>?`, optional): New alignment.
   /// - [direction] (`ValueGetter<Axis?>?`, optional): New direction.
   /// - [spacing] (`ValueGetter<double?>?`, optional): New spacing.
-  /// - [labelType] (`ValueGetter<NavigationLabelType?>?`, optional): New label type.
-  /// - [labelPosition] (`ValueGetter<NavigationLabelPosition?>?`, optional): New label position.
-  /// - [labelSize] (`ValueGetter<NavigationLabelSize?>?`, optional): New label size.
+  /// - [labelType] (`ValueGetter<VNLNavigationLabelType?>?`, optional): New label type.
+  /// - [labelPosition] (`ValueGetter<VNLNavigationLabelPosition?>?`, optional): New label position.
+  /// - [labelSize] (`ValueGetter<VNLNavigationLabelSize?>?`, optional): New label size.
   /// - [padding] (`ValueGetter<EdgeInsetsGeometry?>?`, optional): New padding.
   ///
-  /// Returns: A new [NavigationBarTheme] with updated properties.
-  NavigationBarTheme copyWith({
+  /// Returns: A new [VNLNavigationBarTheme] with updated properties.
+  VNLNavigationBarTheme copyWith({
     ValueGetter<Color?>? backgroundColor,
-    ValueGetter<NavigationBarAlignment?>? alignment,
+    ValueGetter<VNLNavigationBarAlignment?>? alignment,
     ValueGetter<Axis?>? direction,
     ValueGetter<double?>? spacing,
-    ValueGetter<NavigationLabelType?>? labelType,
-    ValueGetter<NavigationLabelPosition?>? labelPosition,
-    ValueGetter<NavigationLabelSize?>? labelSize,
+    ValueGetter<VNLNavigationLabelType?>? labelType,
+    ValueGetter<VNLNavigationLabelPosition?>? labelPosition,
+    ValueGetter<VNLNavigationLabelSize?>? labelSize,
     ValueGetter<EdgeInsetsGeometry?>? padding,
   }) {
-    return NavigationBarTheme(
+    return VNLNavigationBarTheme(
       backgroundColor:
           backgroundColor == null ? this.backgroundColor : backgroundColor(),
       alignment: alignment == null ? this.alignment : alignment(),
@@ -92,7 +92,7 @@ class NavigationBarTheme extends ComponentThemeData {
 
   @override
   bool operator ==(Object other) {
-    return other is NavigationBarTheme &&
+    return other is VNLNavigationBarTheme &&
         other.backgroundColor == backgroundColor &&
         other.alignment == alignment &&
         other.direction == direction &&

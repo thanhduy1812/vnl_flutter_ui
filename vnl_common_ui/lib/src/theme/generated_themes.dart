@@ -2,18 +2,18 @@
 
 import '../../shadcn_flutter.dart';
 
-void _assertNotThemeModeSystem(ThemeMode mode, String label) {
-  if (mode == ThemeMode.system) {
+void _assertNotThemeModeSystem(VNLThemeMode mode, String label) {
+  if (mode == VNLThemeMode.system) {
     final List<DiagnosticsNode> diagnosticList = [];
     diagnosticList.add(ErrorSummary(
-        'ColorSchemes.${label.toLowerCase()}(ThemeMode mode) can only be used with ThemeMode.light or ThemeMode.dark.'));
+        'ColorSchemes.${label.toLowerCase()}(VNLThemeMode mode) can only be used with VNLThemeMode.light or VNLThemeMode.dark.'));
     diagnosticList.add(ErrorDescription(
         'This method is only intended as a helper method to get either ColorSchemes.light$label() or ColorSchemes.dark$label().'));
     diagnosticList.add(ErrorHint('To use system theme mode, do this:\n'
         'VNLookApp(\n'
-        '  theme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(ThemeMode.light)),\n'
-        '  darkTheme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(ThemeMode.dark)),\n'
-        '  themeMode: ThemeMode.system, // optional, default is ThemeMode.system\n'
+        '  theme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(VNLThemeMode.light)),\n'
+        '  darkTheme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(VNLThemeMode.dark)),\n'
+        '  themeMode: VNLThemeMode.system, // optional, default is VNLThemeMode.system\n'
         ')\n'
         'or:\n'
         'VNLookApp(\n'
@@ -22,7 +22,7 @@ void _assertNotThemeModeSystem(ThemeMode mode, String label) {
         ')\n'
         'instead of:\n'
         'VNLookApp(\n'
-        '  theme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(ThemeMode.system)),\n'
+        '  theme: ThemeData(colorScheme: ColorSchemes.${label.toLowerCase()}(VNLThemeMode.system)),\n'
         ')'));
     throw FlutterError.fromParts(diagnosticList);
   }
@@ -86,12 +86,12 @@ class ColorSchemes {
     chart5: Color(0xFFE23670),
   );
 
-  static ColorScheme gray(ThemeMode mode) {
+  static ColorScheme gray(VNLThemeMode mode) {
     assert(() {
       _assertNotThemeModeSystem(mode, 'Gray');
       return true;
     }());
-    return mode == ThemeMode.light ? lightGray : darkGray;
+    return mode == VNLThemeMode.light ? lightGray : darkGray;
   }
 
   static const ColorScheme lightNeutral = ColorScheme(
@@ -150,12 +150,12 @@ class ColorSchemes {
     chart5: Color(0xFFE23670),
   );
 
-  static ColorScheme neutral(ThemeMode mode) {
+  static ColorScheme neutral(VNLThemeMode mode) {
     assert(() {
       _assertNotThemeModeSystem(mode, 'Neutral');
       return true;
     }());
-    return mode == ThemeMode.light ? lightNeutral : darkNeutral;
+    return mode == VNLThemeMode.light ? lightNeutral : darkNeutral;
   }
 
   static const ColorScheme lightSlate = ColorScheme(
@@ -214,12 +214,12 @@ class ColorSchemes {
     chart5: Color(0xFFE23670),
   );
 
-  static ColorScheme slate(ThemeMode mode) {
+  static ColorScheme slate(VNLThemeMode mode) {
     assert(() {
       _assertNotThemeModeSystem(mode, 'Slate');
       return true;
     }());
-    return mode == ThemeMode.light ? lightSlate : darkSlate;
+    return mode == VNLThemeMode.light ? lightSlate : darkSlate;
   }
 
   static const ColorScheme lightStone = ColorScheme(
@@ -278,12 +278,12 @@ class ColorSchemes {
     chart5: Color(0xFFE23670),
   );
 
-  static ColorScheme stone(ThemeMode mode) {
+  static ColorScheme stone(VNLThemeMode mode) {
     assert(() {
       _assertNotThemeModeSystem(mode, 'Stone');
       return true;
     }());
-    return mode == ThemeMode.light ? lightStone : darkStone;
+    return mode == VNLThemeMode.light ? lightStone : darkStone;
   }
 
   static const ColorScheme lightZinc = ColorScheme(
@@ -342,11 +342,11 @@ class ColorSchemes {
     chart5: Color(0xFFE23670),
   );
 
-  static ColorScheme zinc(ThemeMode mode) {
+  static ColorScheme zinc(VNLThemeMode mode) {
     assert(() {
       _assertNotThemeModeSystem(mode, 'Zinc');
       return true;
     }());
-    return mode == ThemeMode.light ? lightZinc : darkZinc;
+    return mode == VNLThemeMode.light ? lightZinc : darkZinc;
   }
 }

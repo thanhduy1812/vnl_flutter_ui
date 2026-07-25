@@ -90,7 +90,7 @@ class AdaptiveScaling {
 }
 
 /// A widget that applies adaptive scaling to its descendants.
-class AdaptiveScaler extends StatelessWidget {
+class VNLAdaptiveScaler extends StatelessWidget {
   /// Gets the default adaptive scaling for the current context.
   ///
   /// Returns [AdaptiveScaling.mobile] for iOS/Android platforms,
@@ -120,12 +120,12 @@ class AdaptiveScaler extends StatelessWidget {
   /// The widget below this widget in the tree.
   final Widget child;
 
-  /// Creates an [AdaptiveScaler].
+  /// Creates an [VNLAdaptiveScaler].
   ///
   /// Parameters:
   /// - [scaling] (`AdaptiveScaling`, required): Scaling factors to apply.
   /// - [child] (`Widget`, required): Child widget.
-  const AdaptiveScaler({
+  const VNLAdaptiveScaler({
     super.key,
     required this.scaling,
     required this.child,
@@ -172,8 +172,8 @@ class ThemeData {
   /// Default setting for feedback on mobile platforms (e.g., iOS, Android, Fuchsia).
   final bool? enableFeedback;
 
-  /// Density settings that scale spacing and padding.
-  final Density density;
+  /// VNLDensity settings that scale spacing and padding.
+  final VNLDensity density;
 
   /// Creates a [ThemeData] with light color scheme.
   ///
@@ -196,7 +196,7 @@ class ThemeData {
     this.surfaceOpacity,
     this.enableFeedback,
     this.surfaceBlur,
-    this.density = Density.defaultDensity,
+    this.density = VNLDensity.defaultDensity,
   }) : _platform = platform;
 
   /// Creates a [ThemeData] with dark color scheme.
@@ -219,7 +219,7 @@ class ThemeData {
     TargetPlatform? platform,
     this.surfaceOpacity,
     this.surfaceBlur,
-    this.density = Density.defaultDensity,
+    this.density = VNLDensity.defaultDensity,
     this.enableFeedback,
   }) : _platform = platform;
 
@@ -230,7 +230,7 @@ class ThemeData {
   TargetPlatform? get specifiedPlatform => _platform;
 
   double get _densityRadiusScale {
-    final base = Density.defaultDensity.baseContentPadding;
+    final base = VNLDensity.defaultDensity.baseContentPadding;
     if (base == 0) {
       return 1;
     }
@@ -309,7 +309,7 @@ class ThemeData {
     ValueGetter<double>? surfaceOpacity,
     ValueGetter<double>? surfaceBlur,
     ValueGetter<bool?>? enableFeedback,
-    ValueGetter<Density>? density,
+    ValueGetter<VNLDensity>? density,
   }) {
     return ThemeData(
       colorScheme: colorScheme == null ? this.colorScheme : colorScheme(),
@@ -350,7 +350,7 @@ class ThemeData {
       surfaceOpacity: lerpDouble(a.surfaceOpacity, b.surfaceOpacity, t),
       surfaceBlur: lerpDouble(a.surfaceBlur, b.surfaceBlur, t),
       enableFeedback: t < 0.5 ? a.enableFeedback : b.enableFeedback,
-      density: Density.lerp(a.density, b.density, t),
+      density: VNLDensity.lerp(a.density, b.density, t),
     );
   }
 
@@ -457,21 +457,21 @@ class ThemeDataTween extends Tween<ThemeData> {
 }
 
 /// A widget that animates theme changes over time.
-class AnimatedTheme extends ImplicitlyAnimatedWidget {
+class VNLAnimatedTheme extends ImplicitlyAnimatedWidget {
   /// The target theme data to animate to.
   final ThemeData data;
 
   /// The widget below this widget in the tree.
   final Widget child;
 
-  /// Creates an [AnimatedTheme].
+  /// Creates an [VNLAnimatedTheme].
   ///
   /// Parameters:
   /// - [data] (`ThemeData`, required): Target theme.
   /// - [duration] (`Duration`, required): Animation duration.
   /// - [curve] (`Curve`, optional): Animation curve.
   /// - [child] (`Widget`, required): Child widget.
-  const AnimatedTheme({
+  const VNLAnimatedTheme({
     super.key,
     required this.data,
     required super.duration,
@@ -480,10 +480,10 @@ class AnimatedTheme extends ImplicitlyAnimatedWidget {
   });
 
   @override
-  AnimatedWidgetBaseState<AnimatedTheme> createState() => _AnimatedThemeState();
+  AnimatedWidgetBaseState<VNLAnimatedTheme> createState() => _AnimatedThemeState();
 }
 
-class _AnimatedThemeState extends AnimatedWidgetBaseState<AnimatedTheme> {
+class _AnimatedThemeState extends AnimatedWidgetBaseState<VNLAnimatedTheme> {
   ThemeDataTween? _data;
 
   @override
@@ -718,21 +718,21 @@ abstract class ComponentThemeData {
 ///
 /// Example:
 /// ```dart
-/// ComponentTheme<VNLButtonTheme>(
+/// VNLComponentTheme<VNLButtonTheme>(
 ///   data: VNLButtonTheme(backgroundColor: VNLColors.blue),
 ///   child: MyButton(),
 /// )
 /// ```
-class ComponentTheme<T extends ComponentThemeData> extends InheritedTheme {
+class VNLComponentTheme<T extends ComponentThemeData> extends InheritedTheme {
   /// The component theme data to provide to descendants.
   final T data;
 
-  /// Creates a [ComponentTheme].
+  /// Creates a [VNLComponentTheme].
   ///
   /// Parameters:
   /// - [data] (`T`, required): Theme data for this component type.
   /// - [child] (`Widget`, required): Child widget.
-  const ComponentTheme({
+  const VNLComponentTheme({
     super.key,
     required this.data,
     required super.child,
@@ -740,13 +740,13 @@ class ComponentTheme<T extends ComponentThemeData> extends InheritedTheme {
 
   @override
   Widget wrap(BuildContext context, Widget child) {
-    ComponentTheme<T>? ancestorTheme =
-        context.findAncestorWidgetOfExactType<ComponentTheme<T>>();
+    VNLComponentTheme<T>? ancestorTheme =
+        context.findAncestorWidgetOfExactType<VNLComponentTheme<T>>();
     // if it's the same type, we don't need to wrap it
     if (identical(this, ancestorTheme)) {
       return child;
     }
-    return ComponentTheme<T>(
+    return VNLComponentTheme<T>(
       data: data,
       child: child,
     );
@@ -754,23 +754,23 @@ class ComponentTheme<T extends ComponentThemeData> extends InheritedTheme {
 
   /// Gets the component theme data of type `T` from the closest ancestor.
   ///
-  /// Throws if no [ComponentTheme] of type `T` is found.
+  /// Throws if no [VNLComponentTheme] of type `T` is found.
   ///
   /// Returns: `T` — the component theme data.
   static T of<T extends ComponentThemeData>(BuildContext context) {
     final data = maybeOf<T>(context);
-    assert(data != null, 'No ComponentTheme<$T> found in context');
+    assert(data != null, 'No VNLComponentTheme<$T> found in context');
     return data!;
   }
 
   /// Gets the component theme data of type `T` from the closest ancestor.
   ///
-  /// Returns `null` if no [ComponentTheme] of type `T` is found.
+  /// Returns `null` if no [VNLComponentTheme] of type `T` is found.
   ///
   /// Returns: `T?` — the component theme data, or null.
   static T? maybeOf<T extends ComponentThemeData>(BuildContext context) {
     final widget =
-        context.dependOnInheritedWidgetOfExactType<ComponentTheme<T>>();
+        context.dependOnInheritedWidgetOfExactType<VNLComponentTheme<T>>();
     if (widget == null) {
       return null;
     }
@@ -778,7 +778,7 @@ class ComponentTheme<T extends ComponentThemeData> extends InheritedTheme {
   }
 
   @override
-  bool updateShouldNotify(covariant ComponentTheme<T> oldWidget) {
+  bool updateShouldNotify(covariant VNLComponentTheme<T> oldWidget) {
     return oldWidget.data != data;
   }
 }
@@ -788,7 +788,7 @@ class ComponentTheme<T extends ComponentThemeData> extends InheritedTheme {
 /// - `system`: Follow system theme preference
 /// - `light`: Always use light theme
 /// - `dark`: Always use dark theme
-enum ThemeMode {
+enum VNLThemeMode {
   /// Follow the system theme (light or dark based on device settings).
   system,
 

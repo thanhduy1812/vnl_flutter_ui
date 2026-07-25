@@ -28,7 +28,7 @@ class FormExample5 extends StatelessWidget {
                 title: const Text('Success'),
                 content: const Text('Password is valid!'),
                 actions: [
-                  PrimaryButton(
+                  VNLPrimaryButton(
                     onPressed: () => Navigator.of(context).pop(),
                     child: const Text('Close'),
                   ),
@@ -54,8 +54,8 @@ class FormExample5 extends StatelessWidget {
                         requireLowercase: false,
                       ),
                   showErrors: const {
-                    FormValidationMode.changed,
-                    FormValidationMode.submitted,
+                    VNLFormValidationMode.changed,
+                    VNLFormValidationMode.submitted,
                   },
                   child: const VNLTextField(obscureText: true),
                 ),
@@ -70,8 +70,8 @@ class FormExample5 extends StatelessWidget {
                     message: 'Passwords do not match',
                   ),
                   showErrors: {
-                    FormValidationMode.changed,
-                    FormValidationMode.submitted,
+                    VNLFormValidationMode.changed,
+                    VNLFormValidationMode.submitted,
                   },
                   child: VNLTextField(obscureText: true),
                 ),

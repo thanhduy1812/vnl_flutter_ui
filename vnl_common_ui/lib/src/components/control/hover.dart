@@ -177,7 +177,7 @@ class _HoverActivityState extends State<VNLHoverActivity>
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<VNLHoverTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLHoverTheme>(context);
     final debounceDuration = styleValue(
         widgetValue: widget.debounceDuration,
         themeValue: compTheme?.debounceDuration,
@@ -325,7 +325,7 @@ class _HoverState extends State<VNLHover> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final platform = Theme.of(context).platform;
-    final compTheme = ComponentTheme.maybeOf<VNLHoverTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLHoverTheme>(context);
     _waitDur = styleValue(
         widgetValue: widget.waitDuration,
         themeValue: compTheme?.waitDuration,

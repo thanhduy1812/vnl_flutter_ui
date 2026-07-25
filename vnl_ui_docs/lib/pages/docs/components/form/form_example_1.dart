@@ -44,7 +44,7 @@ class _FormExample1State extends State<FormExample1> {
                   ],
                 ),
                 actions: [
-                  PrimaryButton(
+                  VNLPrimaryButton(
                     onPressed: () => Navigator.of(context).pop(),
                     child: const Text('Close'),
                   ),
@@ -91,7 +91,7 @@ class _FormExample1State extends State<FormExample1> {
             VNLFormErrorBuilder(
               builder: (context, errors, child) {
                 // Disable the submit button while there are validation errors.
-                return PrimaryButton(
+                return VNLPrimaryButton(
                   onPressed: errors.isEmpty ? () => context.submitForm() : null,
                   child: const Text('Submit'),
                 );

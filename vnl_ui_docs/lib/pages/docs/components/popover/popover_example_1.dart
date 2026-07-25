@@ -11,7 +11,7 @@ class PopoverExample1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return PrimaryButton(
+    return VNLPrimaryButton(
       onPressed: () {
         showPopover(
           context: context,
@@ -70,7 +70,7 @@ class PopoverExample1 extends StatelessWidget {
                         spacing: 8,
                       ),
                     ).withPadding(vertical: 16),
-                    PrimaryButton(
+                    VNLPrimaryButton(
                       onPressed: () {
                         // Close the popover and resolve the returned future.
                         closeOverlay(context);

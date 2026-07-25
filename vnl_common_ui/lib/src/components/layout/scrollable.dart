@@ -207,7 +207,7 @@ class VNLScrollableClient extends StatelessWidget {
     assert(axisDirectionToAxis(horizontalDetails.direction) == Axis.horizontal,
         'TwoDimensionalScrollView.horizontalDetails are not Axis.horizontal.');
 
-    final compTheme = ComponentTheme.maybeOf<VNLScrollableClientTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLScrollableClientTheme>(context);
     final diag = diagonalDragBehavior ??
         compTheme?.diagonalDragBehavior ??
         DiagonalDragBehavior.none;
@@ -302,7 +302,7 @@ class VNLScrollableClientViewport extends TwoDimensionalViewport {
     required super.horizontalAxisDirection,
     required super.delegate,
     required super.mainAxis,
-    super.cacheExtent,
+    super.scrollCacheExtent,
     super.clipBehavior = Clip.hardEdge,
     required this.overscroll,
   });
@@ -317,7 +317,7 @@ class VNLScrollableClientViewport extends TwoDimensionalViewport {
       delegate: delegate,
       mainAxis: mainAxis,
       childManager: context as TwoDimensionalChildManager,
-      cacheExtent: cacheExtent,
+      scrollCacheExtent: scrollCacheExtent,
       clipBehavior: clipBehavior,
       overscroll: overscroll,
     );
@@ -340,7 +340,7 @@ class VNLRenderScrollableClientViewport extends RenderTwoDimensionalViewport {
     required super.delegate,
     required super.mainAxis,
     required super.childManager,
-    super.cacheExtent,
+    super.scrollCacheExtent,
     super.clipBehavior = Clip.hardEdge,
     required this.overscroll,
   });
@@ -398,7 +398,7 @@ class _ScrollableClientChildVicinity extends ChildVicinity {
 /// Applies a fade mask at the scroll edges of [child].
 ///
 /// Useful for indicating overflow in scrollables without showing scrollbars.
-class FadedScrollableViewport extends StatefulWidget {
+class VNLFadedScrollableViewport extends StatefulWidget {
   /// The scrollable content to fade.
   final Widget child;
 
@@ -408,8 +408,8 @@ class FadedScrollableViewport extends StatefulWidget {
   /// Size of the fade gradient along the scroll axis.
   final double fadeSize;
 
-  /// Creates a [FadedScrollableViewport].
-  const FadedScrollableViewport({
+  /// Creates a [VNLFadedScrollableViewport].
+  const VNLFadedScrollableViewport({
     super.key,
     this.fadeExtent = 20.0,
     this.fadeSize = 50.0,
@@ -417,11 +417,11 @@ class FadedScrollableViewport extends StatefulWidget {
   });
 
   @override
-  State<FadedScrollableViewport> createState() =>
+  State<VNLFadedScrollableViewport> createState() =>
       _FadedScrollableViewportState();
 }
 
-class _FadedScrollableViewportState extends State<FadedScrollableViewport> {
+class _FadedScrollableViewportState extends State<VNLFadedScrollableViewport> {
   double _scrollOffset = 0.0;
   double _scrollExtent = 0.0;
   Axis _scrollAxis = Axis.vertical;

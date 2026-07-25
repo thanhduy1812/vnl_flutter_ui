@@ -2,22 +2,22 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 /// A slider widget for adjusting HSV color components.
 ///
-/// [HSVColorSlider] provides an interactive slider for modifying different
+/// [VNLHSVColorSlider] provides an interactive slider for modifying different
 /// aspects of an HSV color (hue, saturation, value, and combinations).
 /// The slider displays a gradient representing the selected color channel(s)
 /// and allows users to drag to adjust values.
 ///
 /// Example:
 /// ```dart
-/// HSVColorSlider(
+/// VNLHSVColorSlider(
 ///   value: HSVColor.fromColor(VNLColors.blue),
-///   sliderType: HSVColorSliderType.hue,
+///   sliderType: VNLHSVColorSliderType.hue,
 ///   onChanged: (newColor) {
 ///     print('New hue: ${newColor.hue}');
 ///   },
 /// )
 /// ```
-class HSVColorSlider extends StatefulWidget {
+class VNLHSVColorSlider extends StatefulWidget {
   /// The current HSV color value.
   final HSVColor value;
 
@@ -28,7 +28,7 @@ class HSVColorSlider extends StatefulWidget {
   final ValueChanged<HSVColor>? onChanged;
 
   /// The type of HSV component(s) this slider controls.
-  final HSVColorSliderType sliderType;
+  final VNLHSVColorSliderType sliderType;
 
   /// Whether to reverse the slider direction.
   final bool reverse;
@@ -39,8 +39,8 @@ class HSVColorSlider extends StatefulWidget {
   /// Padding around the slider.
   final EdgeInsets padding;
 
-  /// Creates an [HSVColorSlider].
-  const HSVColorSlider({
+  /// Creates an [VNLHSVColorSlider].
+  const VNLHSVColorSlider({
     super.key,
     required this.value,
     this.onChanging,
@@ -52,10 +52,10 @@ class HSVColorSlider extends StatefulWidget {
   });
 
   @override
-  State<HSVColorSlider> createState() => _HSVColorSliderState();
+  State<VNLHSVColorSlider> createState() => _HSVColorSliderState();
 }
 
-class _HSVColorSliderState extends State<HSVColorSlider> {
+class _HSVColorSliderState extends State<VNLHSVColorSlider> {
   late double _currentHorizontal;
   late double _currentVertical;
   late double _hue;
@@ -83,70 +83,70 @@ class _HSVColorSliderState extends State<HSVColorSlider> {
             (size.height - widget.padding.vertical))
         .clamp(0, 1);
     if (widget.reverse) {
-      if (widget.sliderType == HSVColorSliderType.hueSat) {
+      if (widget.sliderType == VNLHSVColorSliderType.hueSat) {
         _hue = _currentHorizontal * 360;
         _saturation = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.hueVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueVal) {
         _hue = _currentHorizontal * 360;
         _value = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.hueAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueAlpha) {
         _hue = _currentHorizontal * 360;
         _alpha = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.satVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satVal) {
         _saturation = _currentHorizontal;
         _value = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.satAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satAlpha) {
         _saturation = _currentHorizontal;
         _alpha = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.valAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.valAlpha) {
         _value = _currentHorizontal;
         _alpha = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hue) {
         _hue = _currentHorizontal * 360;
-      } else if (widget.sliderType == HSVColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.sat) {
         _saturation = _currentHorizontal;
-      } else if (widget.sliderType == HSVColorSliderType.val) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.val) {
         _value = _currentHorizontal;
-      } else if (widget.sliderType == HSVColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.alpha) {
         _alpha = _currentHorizontal;
       }
     } else {
-      if (widget.sliderType == HSVColorSliderType.hueSat) {
+      if (widget.sliderType == VNLHSVColorSliderType.hueSat) {
         _hue = _currentVertical * 360;
         _saturation = _currentHorizontal;
-      } else if (widget.sliderType == HSVColorSliderType.hueVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueVal) {
         _hue = _currentVertical * 360;
         _value = _currentHorizontal;
-      } else if (widget.sliderType == HSVColorSliderType.hueAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueAlpha) {
         _hue = _currentVertical * 360;
         _alpha = _currentHorizontal;
-      } else if (widget.sliderType == HSVColorSliderType.satVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satVal) {
         _saturation = _currentVertical;
         _value = _currentHorizontal;
-      } else if (widget.sliderType == HSVColorSliderType.satAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satAlpha) {
         _saturation = _currentVertical;
         _alpha = _currentHorizontal;
-      } else if (widget.sliderType == HSVColorSliderType.valAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.valAlpha) {
         _value = _currentVertical;
         _alpha = _currentHorizontal;
-      } else if (widget.sliderType == HSVColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hue) {
         _hue = _currentVertical * 360;
-      } else if (widget.sliderType == HSVColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.sat) {
         _saturation = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.val) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.val) {
         _value = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.alpha) {
         _alpha = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.valAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.valAlpha) {
         _value = _currentHorizontal;
         _alpha = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hue) {
         _hue = _currentVertical * 360;
-      } else if (widget.sliderType == HSVColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.sat) {
         _saturation = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.val) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.val) {
         _value = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.alpha) {
         _alpha = _currentVertical;
       }
     }
@@ -159,7 +159,7 @@ class _HSVColorSliderState extends State<HSVColorSlider> {
   }
 
   @override
-  void didUpdateWidget(covariant HSVColorSlider oldWidget) {
+  void didUpdateWidget(covariant VNLHSVColorSlider oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.value != widget.value) {
       HSVColor hsv = widget.value;
@@ -173,10 +173,10 @@ class _HSVColorSliderState extends State<HSVColorSlider> {
   }
 
   bool get isSingleChannel {
-    return widget.sliderType == HSVColorSliderType.hue ||
-        widget.sliderType == HSVColorSliderType.sat ||
-        widget.sliderType == HSVColorSliderType.val ||
-        widget.sliderType == HSVColorSliderType.alpha;
+    return widget.sliderType == VNLHSVColorSliderType.hue ||
+        widget.sliderType == VNLHSVColorSliderType.sat ||
+        widget.sliderType == VNLHSVColorSliderType.val ||
+        widget.sliderType == VNLHSVColorSliderType.alpha;
   }
 
   @override
@@ -321,47 +321,47 @@ class _HSVColorSliderState extends State<HSVColorSlider> {
   double get vertical {
     HSVColor hsv = widget.value;
     if (widget.reverse) {
-      if (widget.sliderType == HSVColorSliderType.hueSat) {
+      if (widget.sliderType == VNLHSVColorSliderType.hueSat) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.hueVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueVal) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.hueAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueAlpha) {
         return hsv.alpha;
-      } else if (widget.sliderType == HSVColorSliderType.satVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satVal) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.satAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satAlpha) {
         return hsv.alpha;
-      } else if (widget.sliderType == HSVColorSliderType.valAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.valAlpha) {
         return hsv.alpha;
-      } else if (widget.sliderType == HSVColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hue) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.sat) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.val) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.val) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.alpha) {
         return hsv.alpha;
       }
     } else {
-      if (widget.sliderType == HSVColorSliderType.hueSat) {
+      if (widget.sliderType == VNLHSVColorSliderType.hueSat) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.hueVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueVal) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.hueAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueAlpha) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.satVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satVal) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.satAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satAlpha) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.valAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.valAlpha) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hue) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.sat) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.val) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.val) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.alpha) {
         return hsv.alpha;
       }
     }
@@ -371,47 +371,47 @@ class _HSVColorSliderState extends State<HSVColorSlider> {
   double get horizontal {
     HSVColor hsv = widget.value;
     if (widget.reverse) {
-      if (widget.sliderType == HSVColorSliderType.hueSat) {
+      if (widget.sliderType == VNLHSVColorSliderType.hueSat) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.hueVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueVal) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.hueAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueAlpha) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.satVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satVal) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.satAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satAlpha) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.valAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.valAlpha) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hue) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.sat) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.val) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.val) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.alpha) {
         return hsv.alpha;
       }
     } else {
-      if (widget.sliderType == HSVColorSliderType.hueSat) {
+      if (widget.sliderType == VNLHSVColorSliderType.hueSat) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.hueVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueVal) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.hueAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueAlpha) {
         return hsv.alpha;
-      } else if (widget.sliderType == HSVColorSliderType.satVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satVal) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.satAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satAlpha) {
         return hsv.alpha;
-      } else if (widget.sliderType == HSVColorSliderType.valAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.valAlpha) {
         return hsv.alpha;
-      } else if (widget.sliderType == HSVColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hue) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.sat) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.val) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.val) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.alpha) {
         return hsv.alpha;
       }
     }
@@ -426,7 +426,7 @@ class _HSVColorSliderState extends State<HSVColorSlider> {
 /// gradient updates based on the current color and slider configuration.
 class HSVColorSliderPainter extends CustomPainter {
   /// The type of slider being painted.
-  final HSVColorSliderType sliderType;
+  final VNLHSVColorSliderType sliderType;
 
   /// The current HSV color.
   final HSVColor color;
@@ -449,7 +449,7 @@ class HSVColorSliderPainter extends CustomPainter {
     pp.style = PaintingStyle.fill;
     var canvasHeight = size.height;
     var canvasWidth = size.width;
-    if (sliderType == HSVColorSliderType.hueSat) {
+    if (sliderType == VNLHSVColorSliderType.hueSat) {
       // if reverse, then its sat hue
       if (reverse) {
         double width = canvasWidth / 360;
@@ -486,7 +486,7 @@ class HSVColorSliderPainter extends CustomPainter {
           }
         }
       }
-    } else if (sliderType == HSVColorSliderType.hueVal) {
+    } else if (sliderType == VNLHSVColorSliderType.hueVal) {
       // if reverse, then its val hue
       if (reverse) {
         double width = canvasWidth / 360;
@@ -523,7 +523,7 @@ class HSVColorSliderPainter extends CustomPainter {
           }
         }
       }
-    } else if (sliderType == HSVColorSliderType.satVal) {
+    } else if (sliderType == VNLHSVColorSliderType.satVal) {
       // if reverse, then its val sat
       if (reverse) {
         double width = canvasWidth / 100;
@@ -558,7 +558,7 @@ class HSVColorSliderPainter extends CustomPainter {
           }
         }
       }
-    } else if (sliderType == HSVColorSliderType.hueAlpha) {
+    } else if (sliderType == VNLHSVColorSliderType.hueAlpha) {
       // if reverse, then its alpha hue
       if (reverse) {
         double width = canvasWidth / 360;
@@ -595,7 +595,7 @@ class HSVColorSliderPainter extends CustomPainter {
           }
         }
       }
-    } else if (sliderType == HSVColorSliderType.satAlpha) {
+    } else if (sliderType == VNLHSVColorSliderType.satAlpha) {
       // if reverse, then its alpha sat
       if (reverse) {
         double width = canvasWidth / 100;
@@ -632,7 +632,7 @@ class HSVColorSliderPainter extends CustomPainter {
           }
         }
       }
-    } else if (sliderType == HSVColorSliderType.valAlpha) {
+    } else if (sliderType == VNLHSVColorSliderType.valAlpha) {
       // if reverse, then its alpha val
       if (reverse) {
         double width = canvasWidth / 100;
@@ -669,7 +669,7 @@ class HSVColorSliderPainter extends CustomPainter {
           }
         }
       }
-    } else if (sliderType == HSVColorSliderType.hue) {
+    } else if (sliderType == VNLHSVColorSliderType.hue) {
       if (reverse) {
         double width = canvasWidth / 360;
         for (var i = 0; i < 360; i++) {
@@ -697,7 +697,7 @@ class HSVColorSliderPainter extends CustomPainter {
           );
         }
       }
-    } else if (sliderType == HSVColorSliderType.sat) {
+    } else if (sliderType == VNLHSVColorSliderType.sat) {
       if (reverse) {
         double width = canvasWidth / 100;
         for (var i = 0; i < 100; i++) {
@@ -725,7 +725,7 @@ class HSVColorSliderPainter extends CustomPainter {
           );
         }
       }
-    } else if (sliderType == HSVColorSliderType.val) {
+    } else if (sliderType == VNLHSVColorSliderType.val) {
       if (reverse) {
         double width = canvasWidth / 100;
         for (var i = 0; i < 100; i++) {
@@ -753,7 +753,7 @@ class HSVColorSliderPainter extends CustomPainter {
           );
         }
       }
-    } else if (sliderType == HSVColorSliderType.alpha) {
+    } else if (sliderType == VNLHSVColorSliderType.alpha) {
       if (reverse) {
         double width = canvasWidth / 100;
         for (var i = 0; i < 100; i++) {
@@ -790,30 +790,30 @@ class HSVColorSliderPainter extends CustomPainter {
         oldDelegate.sliderType != sliderType) {
       return true;
     }
-    if (sliderType == HSVColorSliderType.hueSat) {
+    if (sliderType == VNLHSVColorSliderType.hueSat) {
       return oldDelegate.color.value != color.value;
-    } else if (sliderType == HSVColorSliderType.hueVal) {
+    } else if (sliderType == VNLHSVColorSliderType.hueVal) {
       return oldDelegate.color.saturation != color.saturation;
-    } else if (sliderType == HSVColorSliderType.satVal) {
+    } else if (sliderType == VNLHSVColorSliderType.satVal) {
       return oldDelegate.color.hue != color.hue;
-    } else if (sliderType == HSVColorSliderType.alpha) {
+    } else if (sliderType == VNLHSVColorSliderType.alpha) {
       return oldDelegate.color.value != color.value ||
           oldDelegate.color.saturation != color.saturation ||
           oldDelegate.color.hue != color.hue;
-    } else if (sliderType == HSVColorSliderType.hue) {
+    } else if (sliderType == VNLHSVColorSliderType.hue) {
       return oldDelegate.color.saturation != color.saturation ||
           oldDelegate.color.value != color.value;
-    } else if (sliderType == HSVColorSliderType.sat) {
+    } else if (sliderType == VNLHSVColorSliderType.sat) {
       return oldDelegate.color.hue != color.hue ||
           oldDelegate.color.value != color.value;
-    } else if (sliderType == HSVColorSliderType.val) {
+    } else if (sliderType == VNLHSVColorSliderType.val) {
       return oldDelegate.color.hue != color.hue ||
           oldDelegate.color.saturation != color.saturation;
-    } else if (sliderType == HSVColorSliderType.hueAlpha) {
+    } else if (sliderType == VNLHSVColorSliderType.hueAlpha) {
       return oldDelegate.color.value != color.value;
-    } else if (sliderType == HSVColorSliderType.satAlpha) {
+    } else if (sliderType == VNLHSVColorSliderType.satAlpha) {
       return oldDelegate.color.hue != color.hue;
-    } else if (sliderType == HSVColorSliderType.valAlpha) {
+    } else if (sliderType == VNLHSVColorSliderType.valAlpha) {
       return oldDelegate.color.hue != color.hue;
     }
     return false;

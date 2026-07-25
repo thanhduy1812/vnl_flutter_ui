@@ -7,7 +7,7 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 /// Theme configuration for [VNLFormattedInput] widget styling.
 ///
 /// Defines visual properties for formatted input components including
-/// height and padding. Applied globally through [ComponentTheme] or per-instance.
+/// height and padding. Applied globally through [VNLComponentTheme] or per-instance.
 class VNLFormattedInputTheme extends ComponentThemeData {
   /// The height of the formatted input.
   final double? height;
@@ -508,7 +508,7 @@ class _EditablePartWidgetState extends State<_EditablePartWidget> {
         key: TextFieldKey(data.partIndex),
         child: SizedBox(
           width: widget.width,
-          child: ComponentTheme(
+          child: VNLComponentTheme(
             data: const VNLFocusOutlineTheme(
               border: Border.fromBorderSide(BorderSide.none),
             ),
@@ -916,7 +916,7 @@ class _FormattedInputState extends State<VNLFormattedInput> {
         }
       }
     }
-    final compTheme = ComponentTheme.maybeOf<VNLFormattedInputTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLFormattedInputTheme>(context);
     return SizedBox(
       height: (compTheme?.height ?? kTextFieldHeight) * theme.scaling, // 32 + 2
       child: TextFieldTapRegion(
@@ -1290,7 +1290,7 @@ class _FormattedObjectInputState<T> extends State<FormattedObjectInput<T>> {
                 },
                 child: VNLIconButton.text(
                   icon: popoverIcon,
-                  density: ButtonDensity.compact,
+                  density: VNLButtonDensity.compact,
                   onPressed: _openPopover,
                 )));
   }

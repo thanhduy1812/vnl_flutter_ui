@@ -63,7 +63,7 @@ class IconsPageState extends State<IconsPage> {
             ),
           ),
           actions: [
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },

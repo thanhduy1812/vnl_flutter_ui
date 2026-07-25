@@ -298,7 +298,7 @@ double degToRad(double deg) => deg * (pi / 180);
 double radToDeg(double rad) => rad * (180 / pi);
 
 /// The direction for sorting.
-enum SortDirection {
+enum VNLSortDirection {
   /// No sorting applied.
   none,
 
@@ -740,7 +740,7 @@ bool isMobile(TargetPlatform platform) {
 /// Applies previously captured inherited themes and data to the widget tree.
 /// This is useful for maintaining theme and data context when moving widgets
 /// across different parts of the tree.
-class CapturedWrapper extends StatefulWidget {
+class VNLCapturedWrapper extends StatefulWidget {
   /// Captured theme data to apply.
   final CapturedThemes? themes;
 
@@ -750,13 +750,13 @@ class CapturedWrapper extends StatefulWidget {
   /// The child widget to wrap.
   final Widget child;
 
-  /// Creates a [CapturedWrapper].
+  /// Creates a [VNLCapturedWrapper].
   ///
   /// Parameters:
   /// - [themes] (`CapturedThemes?`, optional): Themes to apply.
   /// - [data] (`CapturedData?`, optional): Data to apply.
   /// - [child] (`Widget`, required): Child widget.
-  const CapturedWrapper({
+  const VNLCapturedWrapper({
     super.key,
     this.themes,
     this.data,
@@ -764,10 +764,10 @@ class CapturedWrapper extends StatefulWidget {
   });
 
   @override
-  State<CapturedWrapper> createState() => _CapturedWrapperState();
+  State<VNLCapturedWrapper> createState() => _CapturedWrapperState();
 }
 
-class _CapturedWrapperState extends State<CapturedWrapper> {
+class _CapturedWrapperState extends State<VNLCapturedWrapper> {
   final GlobalKey _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
@@ -821,19 +821,19 @@ double wrapDouble(double value, double min, double max) {
 }
 
 /// A widget that detects changes in the widget tree.
-class WidgetTreeChangeDetector extends StatefulWidget {
+class VNLWidgetTreeChangeDetector extends StatefulWidget {
   /// The child widget to monitor.
   final Widget child;
 
   /// Callback invoked when the widget tree changes.
   final void Function() onWidgetTreeChange;
 
-  /// Creates a [WidgetTreeChangeDetector].
+  /// Creates a [VNLWidgetTreeChangeDetector].
   ///
   /// Parameters:
   /// - [child] (`Widget`, required): Child widget.
   /// - [onWidgetTreeChange] (`VoidCallback`, required): Change callback.
-  const WidgetTreeChangeDetector({
+  const VNLWidgetTreeChangeDetector({
     super.key,
     required this.child,
     required this.onWidgetTreeChange,
@@ -844,8 +844,8 @@ class WidgetTreeChangeDetector extends StatefulWidget {
       WidgetTreeChangeDetectorState();
 }
 
-/// State for [WidgetTreeChangeDetector].
-class WidgetTreeChangeDetectorState extends State<WidgetTreeChangeDetector> {
+/// State for [VNLWidgetTreeChangeDetector].
+class WidgetTreeChangeDetectorState extends State<VNLWidgetTreeChangeDetector> {
   @override
   void initState() {
     super.initState();
@@ -2075,7 +2075,7 @@ class BiDirectionalConvert<A, B> {
 ///
 /// Maintains bidirectional synchronization between two value notifiers
 /// with different types using a [BiDirectionalConvert].
-class ConvertedController<F, T> extends ChangeNotifier
+class VNLConvertedController<F, T> extends ChangeNotifier
     implements ComponentController<T> {
   final ValueNotifier<F> _other;
   final BiDirectionalConvert<F, T> _convert;
@@ -2083,12 +2083,12 @@ class ConvertedController<F, T> extends ChangeNotifier
   T _value;
   bool _isUpdating = false;
 
-  /// Creates a [ConvertedController].
+  /// Creates a [VNLConvertedController].
   ///
   /// Parameters:
   /// - [other] (`ValueNotifier<F>`, required): Source value notifier.
   /// - [convert] (`BiDirectionalConvert<F, T>`, required): Bidirectional converter.
-  ConvertedController(
+  VNLConvertedController(
       ValueNotifier<F> other, BiDirectionalConvert<F, T> convert)
       : _other = other,
         _convert = convert,
@@ -2187,28 +2187,28 @@ class ContextCallbackAction<T extends Intent> extends ContextAction<T> {
 
 /// A widget that filters duplicate Flutter errors, logging each unique error only once.
 ///
-/// Wrap your app or subtree with [ErrorFilter] to avoid repeated error logs for the same error.
+/// Wrap your app or subtree with [VNLErrorFilter] to avoid repeated error logs for the same error.
 ///
 /// Example:
 /// ```dart
-/// ErrorFilter(
+/// VNLErrorFilter(
 ///   child: MyApp(),
 /// )
 /// ```
-class ErrorFilter extends StatefulWidget {
+class VNLErrorFilter extends StatefulWidget {
   /// Child widget to wrap with error filtering.
   final Widget child;
-  /// Creates an [ErrorFilter].
+  /// Creates an [VNLErrorFilter].
   ///
   /// Parameters:
   /// - [child] (`Widget`, required): Child widget to wrap.
-  const ErrorFilter({super.key, required this.child});
+  const VNLErrorFilter({super.key, required this.child});
 
   @override
-  State<ErrorFilter> createState() => _ErrorFilterState();
+  State<VNLErrorFilter> createState() => _ErrorFilterState();
 }
 
-class _ErrorFilterState extends State<ErrorFilter> {
+class _ErrorFilterState extends State<VNLErrorFilter> {
   /// Tracks hashes of logged errors to avoid duplicate logs.
   final Set<int> _loggedErrors = {};
 

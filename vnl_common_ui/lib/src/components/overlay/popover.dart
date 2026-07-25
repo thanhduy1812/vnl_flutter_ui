@@ -20,8 +20,8 @@ class VNLPopoverOverlayHandler extends VNLOverlayHandler {
     required WidgetBuilder builder,
     ui.Offset? position,
     AlignmentGeometry? anchorAlignment,
-    PopoverConstraint widthConstraint = PopoverConstraint.flexible,
-    PopoverConstraint heightConstraint = PopoverConstraint.flexible,
+    VNLPopoverConstraint widthConstraint = VNLPopoverConstraint.flexible,
+    VNLPopoverConstraint heightConstraint = VNLPopoverConstraint.flexible,
     Key? key,
     bool rootOverlay = true,
     bool modal = true,
@@ -204,8 +204,8 @@ class VNLPopoverOverlayWidget extends StatefulWidget {
     required this.builder,
     required this.animation,
     required this.anchorAlignment,
-    this.widthConstraint = PopoverConstraint.flexible,
-    this.heightConstraint = PopoverConstraint.flexible,
+    this.widthConstraint = VNLPopoverConstraint.flexible,
+    this.heightConstraint = VNLPopoverConstraint.flexible,
     this.anchorSize,
     // this.route,
     this.onTapOutside,
@@ -250,10 +250,10 @@ class VNLPopoverOverlayWidget extends StatefulWidget {
   final Animation<double> animation;
 
   /// Width constraint mode for the popover.
-  final PopoverConstraint widthConstraint;
+  final VNLPopoverConstraint widthConstraint;
 
   /// Height constraint mode for the popover.
-  final PopoverConstraint heightConstraint;
+  final VNLPopoverConstraint heightConstraint;
 
   // final PopoverRoute? route;
 
@@ -321,7 +321,7 @@ typedef PopoverFutureVoidCallback<T> = Future<T> Function(T value);
 /// - `anchorFixedSize`: Match anchor's exact size
 /// - `anchorMinSize`: Use anchor size as minimum
 /// - `anchorMaxSize`: Use anchor size as maximum
-enum PopoverConstraint {
+enum VNLPopoverConstraint {
   /// Size flexibly based on content and available space
   flexible,
 
@@ -350,8 +350,8 @@ class VNLPopoverOverlayWidgetState extends State<VNLPopoverOverlayWidget>
   late Offset? _offset;
   late AlignmentGeometry _alignment;
   late AlignmentGeometry _anchorAlignment;
-  late PopoverConstraint _widthConstraint;
-  late PopoverConstraint _heightConstraint;
+  late VNLPopoverConstraint _widthConstraint;
+  late VNLPopoverConstraint _heightConstraint;
   late EdgeInsetsGeometry? _margin;
   Size? _anchorSize;
   late bool _follow;
@@ -482,10 +482,10 @@ class VNLPopoverOverlayWidgetState extends State<VNLPopoverOverlayWidget>
   AlignmentGeometry get alignment => _alignment;
 
   /// Gets the width constraint strategy.
-  PopoverConstraint get widthConstraint => _widthConstraint;
+  VNLPopoverConstraint get widthConstraint => _widthConstraint;
 
   /// Gets the height constraint strategy.
-  PopoverConstraint get heightConstraint => _heightConstraint;
+  VNLPopoverConstraint get heightConstraint => _heightConstraint;
 
   /// Gets the position offset.
   Offset? get offset => _offset;
@@ -556,7 +556,7 @@ class VNLPopoverOverlayWidgetState extends State<VNLPopoverOverlayWidget>
   }
 
   @override
-  set widthConstraint(PopoverConstraint value) {
+  set widthConstraint(VNLPopoverConstraint value) {
     if (_widthConstraint != value) {
       setState(() {
         _widthConstraint = value;
@@ -565,7 +565,7 @@ class VNLPopoverOverlayWidgetState extends State<VNLPopoverOverlayWidget>
   }
 
   @override
-  set heightConstraint(PopoverConstraint value) {
+  set heightConstraint(VNLPopoverConstraint value) {
     if (_heightConstraint != value) {
       setState(() {
         _heightConstraint = value;
@@ -801,8 +801,8 @@ class OverlayPopoverEntry<T> implements OverlayCompleter<T> {
 /// - [builder] (`WidgetBuilder`, required): Builds popover content.
 /// - [position] (`Offset?`, optional): Explicit position.
 /// - [anchorAlignment] (`AlignmentGeometry?`, optional): Anchor alignment point.
-/// - [widthConstraint] (`PopoverConstraint`, optional): Width constraint mode. Default: flexible.
-/// - [heightConstraint] (`PopoverConstraint`, optional): Height constraint mode. Default: flexible.
+/// - [widthConstraint] (`VNLPopoverConstraint`, optional): Width constraint mode. Default: flexible.
+/// - [heightConstraint] (`VNLPopoverConstraint`, optional): Height constraint mode. Default: flexible.
 /// - [key] (`Key?`, optional): Widget key.
 /// - [rootOverlay] (`bool`, optional): Use root overlay. Default: true.
 /// - [modal] (`bool`, optional): Modal behavior. Default: true.
@@ -839,8 +839,8 @@ OverlayCompleter<T?> showPopover<T>({
   required WidgetBuilder builder,
   Offset? position,
   AlignmentGeometry? anchorAlignment,
-  PopoverConstraint widthConstraint = PopoverConstraint.flexible,
-  PopoverConstraint heightConstraint = PopoverConstraint.flexible,
+  VNLPopoverConstraint widthConstraint = VNLPopoverConstraint.flexible,
+  VNLPopoverConstraint heightConstraint = VNLPopoverConstraint.flexible,
   Key? key,
   bool rootOverlay = true,
   bool modal = true,
@@ -1083,8 +1083,8 @@ class VNLPopoverController extends ChangeNotifier {
   /// - [builder] (WidgetBuilder, required): VNLPopover content builder
   /// - [alignment] (AlignmentGeometry, required): VNLPopover alignment
   /// - [anchorAlignment] (AlignmentGeometry?): Anchor alignment
-  /// - [widthConstraint] (PopoverConstraint): Width constraint, defaults to flexible
-  /// - [heightConstraint] (PopoverConstraint): Height constraint, defaults to flexible
+  /// - [widthConstraint] (VNLPopoverConstraint): Width constraint, defaults to flexible
+  /// - [heightConstraint] (VNLPopoverConstraint): Height constraint, defaults to flexible
   /// - [modal] (bool): Modal behavior, defaults to true
   /// - [closeOthers] (bool): Close other popovers, defaults to true
   /// - [offset] (Offset?): Position offset
@@ -1109,8 +1109,8 @@ class VNLPopoverController extends ChangeNotifier {
     required WidgetBuilder builder,
     required AlignmentGeometry alignment,
     AlignmentGeometry? anchorAlignment,
-    PopoverConstraint widthConstraint = PopoverConstraint.flexible,
-    PopoverConstraint heightConstraint = PopoverConstraint.flexible,
+    VNLPopoverConstraint widthConstraint = VNLPopoverConstraint.flexible,
+    VNLPopoverConstraint heightConstraint = VNLPopoverConstraint.flexible,
     bool modal = true,
     bool closeOthers = true,
     Offset? offset,
@@ -1217,13 +1217,13 @@ class VNLPopoverController extends ChangeNotifier {
     }
   }
 
-  set widthConstraint(PopoverConstraint value) {
+  set widthConstraint(VNLPopoverConstraint value) {
     for (VNLPopover key in _openPopovers) {
       key.currentState?.widthConstraint = value;
     }
   }
 
-  set heightConstraint(PopoverConstraint value) {
+  set heightConstraint(VNLPopoverConstraint value) {
     for (VNLPopover key in _openPopovers) {
       key.currentState?.heightConstraint = value;
     }
@@ -1296,10 +1296,10 @@ class VNLPopoverLayout extends SingleChildRenderObjectWidget {
   final Size? anchorSize;
 
   /// Width constraint strategy.
-  final PopoverConstraint widthConstraint;
+  final VNLPopoverConstraint widthConstraint;
 
   /// Height constraint strategy.
-  final PopoverConstraint heightConstraint;
+  final VNLPopoverConstraint heightConstraint;
 
   /// Additional offset from computed position.
   final Offset? offset;
@@ -1432,8 +1432,8 @@ class VNLPopoverLayoutRender extends RenderShiftedBox {
   Alignment _anchorAlignment;
   Offset? _position;
   Size? _anchorSize;
-  PopoverConstraint _widthConstraint;
-  PopoverConstraint _heightConstraint;
+  VNLPopoverConstraint _widthConstraint;
+  VNLPopoverConstraint _heightConstraint;
   Offset? _offset;
   EdgeInsets _margin;
   double _scale;
@@ -1454,8 +1454,8 @@ class VNLPopoverLayoutRender extends RenderShiftedBox {
     required Alignment alignment,
     required Offset? position,
     required Alignment anchorAlignment,
-    required PopoverConstraint widthConstraint,
-    required PopoverConstraint heightConstraint,
+    required VNLPopoverConstraint widthConstraint,
+    required VNLPopoverConstraint heightConstraint,
     Size? anchorSize,
     Offset? offset,
     EdgeInsets margin = const EdgeInsets.all(8),
@@ -1593,33 +1593,33 @@ class VNLPopoverLayoutRender extends RenderShiftedBox {
     double maxWidth = constraints.maxWidth;
     double minHeight = 0;
     double maxHeight = constraints.maxHeight;
-    if (_widthConstraint == PopoverConstraint.anchorFixedSize) {
+    if (_widthConstraint == VNLPopoverConstraint.anchorFixedSize) {
       assert(_anchorSize != null, 'anchorSize must not be null');
       minWidth = _anchorSize!.width;
       maxWidth = _anchorSize!.width;
-    } else if (_widthConstraint == PopoverConstraint.anchorMinSize) {
+    } else if (_widthConstraint == VNLPopoverConstraint.anchorMinSize) {
       assert(_anchorSize != null, 'anchorSize must not be null');
       minWidth = _anchorSize!.width;
-    } else if (_widthConstraint == PopoverConstraint.anchorMaxSize) {
+    } else if (_widthConstraint == VNLPopoverConstraint.anchorMaxSize) {
       assert(_anchorSize != null, 'anchorSize must not be null');
       maxWidth = _anchorSize!.width;
-    } else if (_widthConstraint == PopoverConstraint.intrinsic) {
+    } else if (_widthConstraint == VNLPopoverConstraint.intrinsic) {
       double intrinsicWidth = child!.getMaxIntrinsicWidth(double.infinity);
       if (intrinsicWidth.isFinite) {
         maxWidth = max(minWidth, intrinsicWidth);
       }
     }
-    if (_heightConstraint == PopoverConstraint.anchorFixedSize) {
+    if (_heightConstraint == VNLPopoverConstraint.anchorFixedSize) {
       assert(_anchorSize != null, 'anchorSize must not be null');
       minHeight = _anchorSize!.height;
       maxHeight = _anchorSize!.height;
-    } else if (_heightConstraint == PopoverConstraint.anchorMinSize) {
+    } else if (_heightConstraint == VNLPopoverConstraint.anchorMinSize) {
       assert(_anchorSize != null, 'anchorSize must not be null');
       minHeight = _anchorSize!.height;
-    } else if (_heightConstraint == PopoverConstraint.anchorMaxSize) {
+    } else if (_heightConstraint == VNLPopoverConstraint.anchorMaxSize) {
       assert(_anchorSize != null, 'anchorSize must not be null');
       maxHeight = _anchorSize!.height;
-    } else if (_heightConstraint == PopoverConstraint.intrinsic) {
+    } else if (_heightConstraint == VNLPopoverConstraint.intrinsic) {
       double intrinsicHeight = child!.getMaxIntrinsicHeight(double.infinity);
       if (intrinsicHeight.isFinite) {
         maxHeight = max(minHeight, intrinsicHeight);

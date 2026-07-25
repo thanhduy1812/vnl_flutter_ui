@@ -4,7 +4,7 @@ import '../../../shadcn_flutter.dart';
 ///
 /// Provides visual styling properties for alert components including padding,
 /// background color, and border color. These properties can be overridden at
-/// the widget level or applied globally via [ComponentTheme].
+/// the widget level or applied globally via [VNLComponentTheme].
 ///
 /// The theme integrates with the overall design system by using appropriate
 /// color schemes and scaling factors from [ThemeData].
@@ -216,7 +216,7 @@ class VNLAlert extends StatelessWidget {
 
   Widget _build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLAlertTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLAlertTheme>(context);
     final scaling = theme.scaling;
     final densityContentPadding = theme.density.baseContentPadding * scaling;
     var scheme = theme.colorScheme;

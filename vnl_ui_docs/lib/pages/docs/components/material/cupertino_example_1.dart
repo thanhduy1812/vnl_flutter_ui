@@ -45,7 +45,7 @@ class _CupertinoExample1State extends State<CupertinoExample1> {
                   const Text(
                       'You can also use shadcn_flutter widgets inside Material widgets'),
                   const shadcnui.Gap(16),
-                  shadcnui.PrimaryButton(
+                  shadcnui.VNLPrimaryButton(
                     onPressed: () {
                       // Show a native Cupertino dialog
                       showCupertinoDialog(
@@ -80,7 +80,7 @@ class _CupertinoExample1State extends State<CupertinoExample1> {
                             content:
                                 const Text('This is shadcn_flutter dialog'),
                             actions: [
-                              shadcnui.PrimaryButton(
+                              shadcnui.VNLPrimaryButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },

@@ -15,7 +15,7 @@ typedef AutoCompleteCompleter = String Function(String suggestion);
 /// that displays suggestions. All properties are optional and will fall back
 /// to sensible defaults when not specified.
 ///
-/// This theme can be applied globally through [ComponentTheme] or passed
+/// This theme can be applied globally through [VNLComponentTheme] or passed
 /// directly to individual [VNLAutoComplete] widgets for per-instance customization.
 class VNLAutoCompleteTheme extends ComponentThemeData {
   /// Constraints applied to the autocomplete popover container.
@@ -28,7 +28,7 @@ class VNLAutoCompleteTheme extends ComponentThemeData {
   ///
   /// Determines how the popover width relates to its anchor (the text field).
   /// Options include matching anchor width, flexible sizing, or fixed dimensions.
-  final PopoverConstraint? popoverWidthConstraint;
+  final VNLPopoverConstraint? popoverWidthConstraint;
 
   /// Alignment point on the anchor widget where the popover attaches.
   ///
@@ -45,8 +45,8 @@ class VNLAutoCompleteTheme extends ComponentThemeData {
   /// Default mode for how suggestions are applied to text fields.
   ///
   /// Controls the text replacement strategy when a suggestion is selected.
-  /// Defaults to [AutoCompleteMode.replaceWord] when null.
-  final AutoCompleteMode? mode;
+  /// Defaults to [VNLAutoCompleteMode.replaceWord] when null.
+  final VNLAutoCompleteMode? mode;
 
   /// Creates an [AutoCompleteTheme].
   ///
@@ -65,10 +65,10 @@ class VNLAutoCompleteTheme extends ComponentThemeData {
   /// overrides while preserving existing values for unspecified properties.
   VNLAutoCompleteTheme copyWith({
     ValueGetter<BoxConstraints?>? popoverConstraints,
-    ValueGetter<PopoverConstraint?>? popoverWidthConstraint,
+    ValueGetter<VNLPopoverConstraint?>? popoverWidthConstraint,
     ValueGetter<AlignmentDirectional?>? popoverAnchorAlignment,
     ValueGetter<AlignmentDirectional?>? popoverAlignment,
-    ValueGetter<AutoCompleteMode?>? mode,
+    ValueGetter<VNLAutoCompleteMode?>? mode,
   }) {
     return VNLAutoCompleteTheme(
       popoverConstraints: popoverConstraints == null
@@ -124,7 +124,7 @@ class VNLAutoCompleteTheme extends ComponentThemeData {
 /// ```dart
 /// VNLAutoComplete(
 ///   suggestions: ['apple', 'apricot', 'banana', 'cherry'],
-///   mode: AutoCompleteMode.replaceWord,
+///   mode: VNLAutoCompleteMode.replaceWord,
 ///   child: VNLTextField(
 ///     decoration: InputDecoration(
 ///       hintText: 'Type to search fruits...',
@@ -157,7 +157,7 @@ class VNLAutoComplete extends StatefulWidget {
   ///
   /// Overrides the theme default. Determines how popover width relates to
   /// the anchor widget. When null, uses theme value or matches anchor width.
-  final PopoverConstraint? popoverWidthConstraint;
+  final VNLPopoverConstraint? popoverWidthConstraint;
 
   /// Alignment point on the anchor widget for popover attachment.
   ///
@@ -174,8 +174,8 @@ class VNLAutoComplete extends StatefulWidget {
   /// Text replacement strategy when a suggestion is selected.
   ///
   /// Overrides the theme default. Controls how selected suggestions modify
-  /// the text field content. When null, uses theme or [AutoCompleteMode.replaceWord].
-  final AutoCompleteMode? mode;
+  /// the text field content. When null, uses theme or [VNLAutoCompleteMode.replaceWord].
+  final VNLAutoCompleteMode? mode;
 
   /// Function to customize suggestion text before application.
   ///
@@ -194,17 +194,17 @@ class VNLAutoComplete extends StatefulWidget {
   /// - [suggestions] (`List<String>`, required): available autocomplete options
   /// - [child] (Widget, required): widget to receive autocomplete functionality
   /// - [popoverConstraints] (BoxConstraints?, optional): popover size limits
-  /// - [popoverWidthConstraint] (PopoverConstraint?, optional): width strategy
+  /// - [popoverWidthConstraint] (VNLPopoverConstraint?, optional): width strategy
   /// - [popoverAnchorAlignment] (AlignmentDirectional?, optional): anchor point
   /// - [popoverAlignment] (AlignmentDirectional?, optional): popover align point
-  /// - [mode] (AutoCompleteMode?, optional): text replacement strategy
+  /// - [mode] (VNLAutoCompleteMode?, optional): text replacement strategy
   /// - [completer] (AutoCompleteCompleter, default: identity): suggestion processor
   ///
   /// Example:
   /// ```dart
   /// VNLAutoComplete(
   ///   suggestions: suggestions,
-  ///   mode: AutoCompleteMode.append,
+  ///   mode: VNLAutoCompleteMode.append,
   ///   completer: (text) => '$text ',
   ///   child: VNLTextField(),
   /// )
@@ -281,15 +281,15 @@ class _AutoCompleteItemState extends State<_AutoCompleteItem> {
 ///
 /// Used by the autocomplete system to handle suggestion selections
 /// with different modes of completion.
-class AutoCompleteIntent extends Intent {
+class VNLAutoCompleteIntent extends Intent {
   /// The suggestion text to be completed.
   final String suggestion;
 
   /// The mode determining how the completion should be applied.
-  final AutoCompleteMode mode;
+  final VNLAutoCompleteMode mode;
 
   /// Creates an autocomplete intent with the specified suggestion and mode.
-  const AutoCompleteIntent(this.suggestion, this.mode);
+  const VNLAutoCompleteIntent(this.suggestion, this.mode);
 }
 
 class _AutoCompleteState extends State<VNLAutoComplete> {
@@ -298,12 +298,12 @@ class _AutoCompleteState extends State<VNLAutoComplete> {
   final VNLPopoverController _popoverController = VNLPopoverController();
   bool _isFocused = false;
 
-  AutoCompleteMode get _mode {
-    final compTheme = ComponentTheme.maybeOf<VNLAutoCompleteTheme>(context);
+  VNLAutoCompleteMode get _mode {
+    final compTheme = VNLComponentTheme.maybeOf<VNLAutoCompleteTheme>(context);
     return styleValue(
       widgetValue: widget.mode,
       themeValue: compTheme?.mode,
-      defaultValue: AutoCompleteMode.replaceWord,
+      defaultValue: VNLAutoCompleteMode.replaceWord,
     );
   }
 
@@ -328,7 +328,7 @@ class _AutoCompleteState extends State<VNLAutoComplete> {
       _popoverController.close();
     } else if (!_popoverController.hasOpenPopover &&
         _suggestions.value.isNotEmpty) {
-      final compTheme = ComponentTheme.maybeOf<VNLAutoCompleteTheme>(context);
+      final compTheme = VNLComponentTheme.maybeOf<VNLAutoCompleteTheme>(context);
       _selectedIndex.value = -1;
       _popoverController.show(
         context: context,
@@ -336,7 +336,7 @@ class _AutoCompleteState extends State<VNLAutoComplete> {
         builder: (context) {
           final theme = Theme.of(context);
           final densityGap = theme.density.baseGap * theme.scaling;
-          final compTheme = ComponentTheme.maybeOf<VNLAutoCompleteTheme>(context);
+          final compTheme = VNLComponentTheme.maybeOf<VNLAutoCompleteTheme>(context);
           final popoverConstraints = styleValue<BoxConstraints>(
             widgetValue: widget.popoverConstraints,
             themeValue: compTheme?.popoverConstraints,
@@ -374,7 +374,7 @@ class _AutoCompleteState extends State<VNLAutoComplete> {
         widthConstraint: styleValue(
             widgetValue: widget.popoverWidthConstraint,
             themeValue: compTheme?.popoverWidthConstraint,
-            defaultValue: PopoverConstraint.anchorFixedSize),
+            defaultValue: VNLPopoverConstraint.anchorFixedSize),
         anchorAlignment: styleValue(
             widgetValue: widget.popoverAnchorAlignment,
             themeValue: compTheme?.popoverAnchorAlignment,
@@ -398,7 +398,7 @@ class _AutoCompleteState extends State<VNLAutoComplete> {
       suggestion,
     );
     invokeActionOnFocusedWidget(
-      AutoCompleteIntent(suggestion, _mode),
+      VNLAutoCompleteIntent(suggestion, _mode),
     );
   }
 
@@ -481,7 +481,7 @@ class _AutoCompleteState extends State<VNLAutoComplete> {
 /// Defines how selected autocomplete suggestions modify the existing text
 /// field content. Each mode provides different behavior for integrating
 /// suggestions with current text.
-enum AutoCompleteMode {
+enum VNLAutoCompleteMode {
   /// Appends the suggestion to the current text field content.
   ///
   /// Adds the selected suggestion at the current cursor position without

@@ -6,11 +6,11 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 /// padding, iconography, and layout alignment. It enables consistent collapsible
 /// styling across an application while allowing per-instance customization.
 ///
-/// Used with [ComponentTheme] to apply theme values throughout the widget tree.
+/// Used with [VNLComponentTheme] to apply theme values throughout the widget tree.
 ///
 /// Example:
 /// ```dart
-/// ComponentTheme<VNLCollapsibleTheme>(
+/// VNLComponentTheme<VNLCollapsibleTheme>(
 ///   data: VNLCollapsibleTheme(
 ///     padding: 12.0,
 ///     iconExpanded: Icons.keyboard_arrow_up,
@@ -288,7 +288,7 @@ class VNLCollapsibleState extends State<VNLCollapsible> {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<VNLCollapsibleTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLCollapsibleTheme>(context);
 
     return Data.inherit(
       data:
@@ -399,7 +399,7 @@ class VNLCollapsibleTrigger extends StatelessWidget {
     final densityContentPadding = theme.density.baseContentPadding * scaling;
     final state = Data.of<VNLCollapsibleStateData>(context);
 
-    final compTheme = ComponentTheme.maybeOf<VNLCollapsibleTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLCollapsibleTheme>(context);
 
     return Row(mainAxisSize: MainAxisSize.min, children: [
       Expanded(child: child.small().semiBold()),

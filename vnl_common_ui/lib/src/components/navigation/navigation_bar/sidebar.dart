@@ -21,7 +21,7 @@ import 'misc.dart';
 /// ```dart
 /// VNLNavigationSidebar(
 ///   backgroundColor: VNLColors.grey.shade50,
-///   labelType: NavigationLabelType.all,
+///   labelType: VNLNavigationLabelType.all,
 ///   selectedKey: ValueKey('dashboard'),
 ///   onSelected: (key) => _navigateToPage(key),
 ///   children: [
@@ -73,19 +73,19 @@ class VNLNavigationSidebar extends StatefulWidget {
   ///
   /// Determines how labels are presented in the sidebar. Sidebars typically
   /// use expanded label types to show comprehensive navigation information.
-  final NavigationLabelType labelType;
+  final VNLNavigationLabelType labelType;
 
   /// Position of labels relative to icons within items.
   ///
   /// Controls label placement within each navigation item. Sidebars
   /// commonly position labels to the end (right in LTR layouts) of icons.
-  final NavigationLabelPosition labelPosition;
+  final VNLNavigationLabelPosition labelPosition;
 
   /// Size variant for label text and item dimensions.
   ///
   /// Affects text size and overall item scale. Larger sizes improve
   /// accessibility and visual prominence in sidebar contexts.
-  final NavigationLabelSize labelSize;
+  final VNLNavigationLabelSize labelSize;
 
   /// Internal padding applied within the navigation sidebar.
   ///
@@ -145,9 +145,9 @@ class VNLNavigationSidebar extends StatefulWidget {
   ///
   /// Parameters:
   /// - [children] (`List<Widget>`, required): Navigation destinations
-  /// - [labelType] (NavigationLabelType, default: expanded): VNLLabel display behavior
-  /// - [labelPosition] (NavigationLabelPosition, default: end): VNLLabel positioning
-  /// - [labelSize] (NavigationLabelSize, default: large): Size variant for items
+  /// - [labelType] (VNLNavigationLabelType, default: expanded): VNLLabel display behavior
+  /// - [labelPosition] (VNLNavigationLabelPosition, default: end): VNLLabel positioning
+  /// - [labelSize] (VNLNavigationLabelSize, default: large): Size variant for items
   /// - [selectedKey] (Key?, optional): Currently selected item key
   /// - [onSelected] (`ValueChanged<Key?>?`, optional): Selection change callback
   /// - [expanded] (bool, default: true): Whether to fill available width
@@ -155,9 +155,9 @@ class VNLNavigationSidebar extends StatefulWidget {
     super.key,
     this.backgroundColor,
     this.spacing,
-    this.labelType = NavigationLabelType.expanded,
-    this.labelPosition = NavigationLabelPosition.end,
-    this.labelSize = NavigationLabelSize.large,
+    this.labelType = VNLNavigationLabelType.expanded,
+    this.labelPosition = VNLNavigationLabelPosition.end,
+    this.labelSize = VNLNavigationLabelSize.large,
     this.padding,
     this.constraints,
     this.selectedKey,
@@ -216,7 +216,7 @@ class _NavigationSidebarState extends State<VNLNavigationSidebar> {
     const direction = Axis.vertical;
     return Data.inherit(
       data: VNLNavigationControlData(
-        containerType: NavigationContainerType.sidebar,
+        containerType: VNLNavigationContainerType.sidebar,
         parentLabelType: widget.labelType,
         parentLabelPosition: widget.labelPosition,
         parentLabelSize: widget.labelSize,
@@ -291,7 +291,7 @@ class _NavigationSidebarState extends State<VNLNavigationSidebar> {
   ) {
     return Data.inherit(
       data: VNLNavigationControlData(
-        containerType: NavigationContainerType.sidebar,
+        containerType: VNLNavigationContainerType.sidebar,
         parentLabelType: widget.labelType,
         parentLabelPosition: widget.labelPosition,
         parentLabelSize: widget.labelSize,

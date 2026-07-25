@@ -18,17 +18,17 @@ class CheckboxTile extends StatelessWidget implements IComponentPage {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             VNLCheckbox(
-              state: CheckboxState.checked,
+              state: VNLCheckboxState.checked,
               trailing: const Text('Checked'),
               onChanged: (value) {},
             ),
             VNLCheckbox(
-              state: CheckboxState.indeterminate,
+              state: VNLCheckboxState.indeterminate,
               trailing: const Text('Indeterminate'),
               onChanged: (value) {},
             ),
             VNLCheckbox(
-              state: CheckboxState.unchecked,
+              state: VNLCheckboxState.unchecked,
               trailing: const Text('Unchecked'),
               onChanged: (value) {},
             ),

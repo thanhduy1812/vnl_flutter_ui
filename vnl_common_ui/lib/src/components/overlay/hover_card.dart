@@ -251,7 +251,7 @@ class _HoverCardState extends State<VNLHoverCard> {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<VNLHoverCardTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLHoverCardTheme>(context);
     final debounce = styleValue(
         widgetValue: widget.debounce,
         themeValue: compTheme?.debounce,

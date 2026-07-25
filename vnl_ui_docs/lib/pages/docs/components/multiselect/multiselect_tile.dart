@@ -25,7 +25,7 @@ class MultiselectTile extends StatelessWidget implements IComponentPage {
                   child: Row(
                     children: [
                       VNLCheckbox(
-                        state: CheckboxState.checked,
+                        state: VNLCheckboxState.checked,
                         onChanged: (value) {},
                       ),
                       const Gap(12),
@@ -38,7 +38,7 @@ class MultiselectTile extends StatelessWidget implements IComponentPage {
                   child: Row(
                     children: [
                       VNLCheckbox(
-                        state: CheckboxState.unchecked,
+                        state: VNLCheckboxState.unchecked,
                         onChanged: (value) {},
                       ),
                       const Gap(12),
@@ -51,7 +51,7 @@ class MultiselectTile extends StatelessWidget implements IComponentPage {
                   child: Row(
                     children: [
                       VNLCheckbox(
-                        state: CheckboxState.checked,
+                        state: VNLCheckboxState.checked,
                         onChanged: (value) {},
                       ),
                       const Gap(12),

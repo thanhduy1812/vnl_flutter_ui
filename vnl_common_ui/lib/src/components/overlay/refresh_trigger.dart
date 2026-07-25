@@ -25,7 +25,7 @@ typedef FutureVoidCallback = Future<void> Function();
 ///
 /// Example usage:
 /// ```dart
-/// ComponentTheme(
+/// VNLComponentTheme(
 ///   data: VNLRefreshTriggerTheme(
 ///     minExtent: 100.0,
 ///     maxExtent: 200.0,
@@ -122,7 +122,7 @@ class VNLRefreshTriggerTheme extends ComponentThemeData {
 ///
 /// You can customize the appearance and behavior using [RefreshTriggerTheme]:
 /// ```dart
-/// ComponentTheme(
+/// VNLComponentTheme(
 ///   data: VNLRefreshTriggerTheme(
 ///     minExtent: 100.0,
 ///     maxExtent: 200.0,
@@ -390,16 +390,16 @@ class _DefaultRefreshIndicatorState extends State<VNLDefaultRefreshIndicator> {
   Widget build(BuildContext context) {
     Widget child;
     switch (widget.stage.stage) {
-      case TriggerStage.refreshing:
+      case VNLTriggerStage.refreshing:
         child = buildRefreshingContent(context);
         break;
-      case TriggerStage.completed:
+      case VNLTriggerStage.completed:
         child = buildCompletedContent(context);
         break;
-      case TriggerStage.pulling:
+      case VNLTriggerStage.pulling:
         child = buildPullingContent(context);
         break;
-      case TriggerStage.idle:
+      case VNLTriggerStage.idle:
         child = buildIdleContent(context);
         break;
     }
@@ -407,7 +407,7 @@ class _DefaultRefreshIndicatorState extends State<VNLDefaultRefreshIndicator> {
     final densityGap = theme.density.baseGap * theme.scaling;
     return Center(
       child: VNLSurfaceCard(
-        padding: widget.stage.stage == TriggerStage.pulling
+        padding: widget.stage.stage == VNLTriggerStage.pulling
             ? EdgeInsets.all(densityGap * 0.5)
             : EdgeInsets.symmetric(
                 horizontal: densityGap * 1.5,
@@ -445,7 +445,7 @@ class VNLRefreshTriggerState extends State<VNLRefreshTrigger>
   double _currentExtent = 0;
   bool _scrolling = false;
   ScrollDirection _userScrollDirection = ScrollDirection.idle;
-  TriggerStage _stage = TriggerStage.idle;
+  VNLTriggerStage _stage = VNLTriggerStage.idle;
   Future<void>? _currentFuture;
   int _currentFutureCount = 0;
 
@@ -470,7 +470,7 @@ class VNLRefreshTriggerState extends State<VNLRefreshTrigger>
 
   void _updateThemeValues() {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLRefreshTriggerTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLRefreshTriggerTheme>(context);
     final densityContainerPadding =
         theme.density.baseContainerPadding * theme.scaling;
 
@@ -549,7 +549,7 @@ class VNLRefreshTriggerState extends State<VNLRefreshTrigger>
           _scrolling = false;
           refresh();
         } else {
-          _stage = TriggerStage.idle;
+          _stage = VNLTriggerStage.idle;
           _currentExtent = 0;
         }
       });
@@ -561,7 +561,7 @@ class VNLRefreshTriggerState extends State<VNLRefreshTrigger>
                 axisDirection == AxisDirection.right)
             ? -delta
             : delta;
-        if (_stage == TriggerStage.pulling) {
+        if (_stage == VNLTriggerStage.pulling) {
           final forward = normalizedDelta > 0;
           if ((forward && _userScrollDirection == ScrollDirection.forward) ||
               (!forward && _userScrollDirection == ScrollDirection.reverse)) {
@@ -580,7 +580,7 @@ class VNLRefreshTriggerState extends State<VNLRefreshTrigger>
               });
             }
           }
-        } else if (_stage == TriggerStage.idle &&
+        } else if (_stage == VNLTriggerStage.idle &&
             (widget.reverse
                 ? notification.metrics.extentAfter == 0
                 : notification.metrics.extentBefore == 0) &&
@@ -588,7 +588,7 @@ class VNLRefreshTriggerState extends State<VNLRefreshTrigger>
           setState(() {
             _currentExtent = 0;
             _scrolling = true;
-            _stage = TriggerStage.pulling;
+            _stage = VNLTriggerStage.pulling;
           });
         }
       }
@@ -601,11 +601,11 @@ class VNLRefreshTriggerState extends State<VNLRefreshTrigger>
           ? -notification.overscroll
           : notification.overscroll;
       if (overscroll > 0) {
-        if (_stage == TriggerStage.idle) {
+        if (_stage == VNLTriggerStage.idle) {
           setState(() {
             _currentExtent = 0;
             _scrolling = true;
-            _stage = TriggerStage.pulling;
+            _stage = VNLTriggerStage.pulling;
           });
         } else {
           setState(() {
@@ -642,14 +642,14 @@ class VNLRefreshTriggerState extends State<VNLRefreshTrigger>
       }
       setState(() {
         _currentFuture = null;
-        _stage = TriggerStage.completed;
+        _stage = VNLTriggerStage.completed;
         // Future.delayed works the same
         Timer(_completeDuration, () {
           if (!mounted) {
             return;
           }
           setState(() {
-            _stage = TriggerStage.idle;
+            _stage = VNLTriggerStage.idle;
             _currentExtent = 0;
           });
         });
@@ -658,9 +658,9 @@ class VNLRefreshTriggerState extends State<VNLRefreshTrigger>
   }
 
   Future<void> _refresh([FutureVoidCallback? refresh]) {
-    if (_stage != TriggerStage.refreshing) {
+    if (_stage != VNLTriggerStage.refreshing) {
       setState(() {
-        _stage = TriggerStage.refreshing;
+        _stage = VNLTriggerStage.refreshing;
       });
     }
     refresh ??= widget.onRefresh;
@@ -673,8 +673,8 @@ class VNLRefreshTriggerState extends State<VNLRefreshTrigger>
     return NotificationListener<ScrollNotification>(
       onNotification: _handleScrollNotification,
       child: AnimatedValueBuilder.animation(
-        value: _stage == TriggerStage.refreshing ||
-                _stage == TriggerStage.completed
+        value: _stage == VNLTriggerStage.refreshing ||
+                _stage == VNLTriggerStage.completed
             ? _minExtent
             : _currentExtent,
         duration: _scrolling ? Duration.zero : kDefaultDuration,
@@ -733,7 +733,7 @@ class VNLRefreshTriggerState extends State<VNLRefreshTrigger>
 /// - [pulling]: User is pulling but hasn't reached min extent
 /// - [refreshing]: Refresh callback is executing
 /// - [completed]: Refresh completed, showing completion state
-enum TriggerStage {
+enum VNLTriggerStage {
   /// Idle state, no refresh in progress.
   idle,
 
@@ -753,7 +753,7 @@ enum TriggerStage {
 /// to indicator builders for rendering appropriate UI.
 class VNLRefreshTriggerStage {
   /// Current stage of the refresh lifecycle.
-  final TriggerStage stage;
+  final VNLTriggerStage stage;
 
   /// Animated pull extent value.
   ///

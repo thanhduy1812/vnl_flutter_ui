@@ -8,12 +8,12 @@ class SortableExample2 extends StatefulWidget {
 }
 
 class _SortableExample2State extends State<SortableExample2> {
-  List<SortableData<String>> names = [
-    const SortableData('James'),
-    const SortableData('John'),
-    const SortableData('Robert'),
-    const SortableData('Michael'),
-    const SortableData('William'),
+  List<VNLSortableData<String>> names = [
+    const VNLSortableData('James'),
+    const VNLSortableData('John'),
+    const VNLSortableData('Robert'),
+    const VNLSortableData('Michael'),
+    const VNLSortableData('William'),
   ];
 
   @override
@@ -21,7 +21,7 @@ class _SortableExample2State extends State<SortableExample2> {
     return VNLSortableLayer(
       // With lock enabled, the drag overlay is constrained within the layer.
       lock: true,
-      child: SortableDropFallback<int>(
+      child: VNLSortableDropFallback<int>(
         // Dropping outside specific edge targets appends the item to the end.
         onAccept: (value) {
           setState(() {

@@ -87,7 +87,7 @@ class VNLMediaQueryVisibility extends StatelessWidget {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final compTheme =
-        ComponentTheme.maybeOf<VNLMediaQueryVisibilityTheme>(context);
+        VNLComponentTheme.maybeOf<VNLMediaQueryVisibilityTheme>(context);
     final size = mediaQuery.size.width;
     final minWidth = styleValue(
         widgetValue: this.minWidth,

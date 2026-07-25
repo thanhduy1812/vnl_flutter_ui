@@ -44,9 +44,9 @@ class AppExample2 extends StatelessWidget {
               fontFamily: 'FiraCode',
             ),
           )),
-      home: Scaffold(
+      home: VNLScaffold(
         headers: [
-          AppBar(
+          VNLAppBar(
             title: Text('Shadcn App Example'),
           ),
           VNLDivider(),

@@ -30,7 +30,7 @@ class _ItemPickerExample4State extends State<ItemPickerExample4> {
   int selectedColor = 0;
   @override
   Widget build(BuildContext context) {
-    return PrimaryButton(
+    return VNLPrimaryButton(
       onPressed: () {
         showItemPickerDialog<NamedColor>(
           context,

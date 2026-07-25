@@ -209,7 +209,7 @@ class VNLDotIndicator extends StatelessWidget {
     final theme = Theme.of(context);
     final directionality = Directionality.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLDotIndicatorTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLDotIndicatorTheme>(context);
     final spacing = styleValue(
         widgetValue: this.spacing,
         themeValue: compTheme?.spacing,
@@ -336,7 +336,7 @@ class VNLActiveDotItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLDotIndicatorTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLDotIndicatorTheme>(context);
     final scaling = theme.scaling;
     final size = styleValue(
         widgetValue: this.size,
@@ -399,7 +399,7 @@ class VNLInactiveDotItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLDotIndicatorTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLDotIndicatorTheme>(context);
     final scaling = theme.scaling;
     final size = styleValue(
         widgetValue: this.size,

@@ -11,7 +11,7 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 ///
 /// Example:
 /// ```dart
-/// ComponentTheme<VNLMenubarTheme>(
+/// VNLComponentTheme<VNLMenubarTheme>(
 ///   data: VNLMenubarTheme(
 ///     border: true,
 ///     backgroundColor: VNLColors.white,
@@ -250,7 +250,7 @@ class VNLMenubarState extends State<VNLMenubar> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final densityGap = theme.density.baseGap * theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLMenubarTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLMenubarTheme>(context);
     final bool border = compTheme?.border ?? widget.border;
     final borderColor = compTheme?.borderColor ?? theme.colorScheme.border;
     final backgroundColor =

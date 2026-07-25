@@ -20,7 +20,7 @@ class ButtonTile extends StatelessWidget implements IComponentPage {
             spacing: 16,
             runSpacing: 16,
             children: [
-              PrimaryButton(
+              VNLPrimaryButton(
                 onPressed: () {},
                 child: const Text('Primary'),
               ),

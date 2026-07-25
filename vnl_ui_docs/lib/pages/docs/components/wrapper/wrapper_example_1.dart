@@ -16,10 +16,10 @@ class WrapperExample1 extends StatelessWidget {
     return const shadcn.VNLookLayer(
       theme: shadcn.ThemeData(),
       darkTheme: shadcn.ThemeData.dark(),
-      child: shadcn.Scaffold(
+      child: shadcn.VNLScaffold(
         headers: [
-          shadcn.AppBar(
-            title: Text('Shadcn UI Wrapper Example'),
+          shadcn.VNLAppBar(
+            title: Text('Shadcn UI VNLWrapper Example'),
           ),
           shadcn.VNLDivider(),
         ],

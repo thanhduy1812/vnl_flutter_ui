@@ -8,7 +8,7 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 ///
 /// Example:
 /// ```dart
-/// ComponentTheme<VNLTabListTheme>(
+/// VNLComponentTheme<VNLTabListTheme>(
 ///   data: VNLTabListTheme(
 ///     borderColor: VNLColors.grey,
 ///     borderWidth: 2.0,
@@ -203,7 +203,7 @@ class VNLTabList extends StatelessWidget {
     Widget child,
   ) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLTabListTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLTabListTheme>(context);
     final indicatorColor = styleValue(
       defaultValue: theme.colorScheme.primary,
       themeValue: compTheme?.indicatorColor,
@@ -238,7 +238,7 @@ class VNLTabList extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLTabListTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLTabListTheme>(context);
     final borderColor = styleValue(
       defaultValue: theme.colorScheme.border,
       themeValue: compTheme?.borderColor,

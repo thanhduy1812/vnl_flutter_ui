@@ -4,15 +4,15 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 /// Theme configuration for [VNLStepper] components.
 ///
 /// Defines default values for stepper direction, size, and visual variant.
-/// Applied through [ComponentTheme] to provide consistent styling across
+/// Applied through [VNLComponentTheme] to provide consistent styling across
 /// stepper widgets in the application.
 ///
 /// Example:
 /// ```dart
-/// ComponentTheme(
+/// VNLComponentTheme(
 ///   data: VNLStepperTheme(
 ///     direction: Axis.vertical,
-///     size: StepSize.large,
+///     size: VNLStepSize.large,
 ///     variant: VNLStepVariant.circle,
 ///   ),
 ///   child: MyApp(),
@@ -23,7 +23,7 @@ class VNLStepperTheme extends ComponentThemeData {
   final Axis? direction;
 
   /// Size variant for step indicators.
-  final StepSize? size;
+  final VNLStepSize? size;
 
   /// Visual variant for step presentation.
   final VNLStepVariant? variant;
@@ -35,14 +35,14 @@ class VNLStepperTheme extends ComponentThemeData {
   ///
   /// Parameters:
   /// - [direction] (Axis?): horizontal or vertical layout
-  /// - [size] (StepSize?): step indicator size (small, medium, large)
+  /// - [size] (VNLStepSize?): step indicator size (small, medium, large)
   /// - [variant] (VNLStepVariant?): visual style (circle, circleAlt, line)
   const VNLStepperTheme({this.direction, this.size, this.variant});
 
   /// Creates a copy of this theme with optionally overridden properties.
   VNLStepperTheme copyWith({
     ValueGetter<Axis?>? direction,
-    ValueGetter<StepSize?>? size,
+    ValueGetter<VNLStepSize?>? size,
     ValueGetter<VNLStepVariant?>? variant,
   }) {
     return VNLStepperTheme(
@@ -69,7 +69,7 @@ class VNLStepperTheme extends ComponentThemeData {
 ///
 /// Currently supports failed state indication, with potential for
 /// expansion to include additional states like completed, active, etc.
-enum StepState {
+enum VNLStepState {
   /// Indicates a step has failed validation or encountered an error.
   failed,
 }
@@ -84,12 +84,12 @@ enum StepState {
 /// ```dart
 /// final value = VNLStepperValue(
 ///   currentStep: 2,
-///   stepStates: {1: StepState.failed},
+///   stepStates: {1: VNLStepState.failed},
 /// );
 /// ```
 class VNLStepperValue {
   /// Map of step indices to their special states.
-  final Map<int, StepState> stepStates;
+  final Map<int, VNLStepState> stepStates;
 
   /// Index of the currently active step (0-based).
   final int currentStep;
@@ -97,7 +97,7 @@ class VNLStepperValue {
   /// Creates a [VNLStepperValue].
   ///
   /// Parameters:
-  /// - [stepStates] (`Map<int, StepState>`, required): step states by index
+  /// - [stepStates] (`Map<int, VNLStepState>`, required): step states by index
   /// - [currentStep] (int, required): currently active step index
   VNLStepperValue({
     required this.stepStates,
@@ -186,12 +186,12 @@ typedef StepSizeBuilder = Widget Function(BuildContext context, Widget child);
 /// Example:
 /// ```dart
 /// VNLStepper(
-///   size: StepSize.large,
+///   size: VNLStepSize.large,
 ///   steps: mySteps,
 ///   controller: controller,
 /// );
 /// ```
-enum StepSize {
+enum VNLStepSize {
   /// Small step indicators with compact text and icons.
   small(_smallSize, kSmallStepIndicatorSize),
 
@@ -207,7 +207,7 @@ enum StepSize {
   /// Builder function that applies size-appropriate styling.
   final StepSizeBuilder wrapper;
 
-  const StepSize(this.wrapper, this.size);
+  const VNLStepSize(this.wrapper, this.size);
 }
 
 /// Applies small text and icon sizing to the child widget.
@@ -842,7 +842,7 @@ const kLargeStepIndicatorSize = 44.0;
 /// steps and array-style access to individual steps.
 class VNLStepProperties {
   /// Size configuration for step indicators.
-  final StepSize size;
+  final VNLStepSize size;
 
   /// List of steps in the stepper.
   final List<VNLStep> steps;
@@ -870,7 +870,7 @@ class VNLStepProperties {
   }
 
   /// Returns true if any step has a failed state.
-  bool get hasFailure => state.value.stepStates.containsValue(StepState.failed);
+  bool get hasFailure => state.value.stepStates.containsValue(VNLStepState.failed);
 
   @override
   bool operator ==(Object other) {
@@ -904,7 +904,7 @@ class VNLStepProperties {
 /// controller.nextStep();
 ///
 /// // Mark step as failed
-/// controller.setStatus(1, StepState.failed);
+/// controller.setStatus(1, VNLStepState.failed);
 ///
 /// // Jump to specific step
 /// controller.jumpToStep(3);
@@ -916,18 +916,18 @@ class VNLStepperController extends ValueNotifier<VNLStepperValue> {
   /// Creates a [VNLStepperController].
   ///
   /// Parameters:
-  /// - [stepStates] (`Map<int, StepState>?`): initial step states (default: empty)
+  /// - [stepStates] (`Map<int, VNLStepState>?`): initial step states (default: empty)
   /// - [currentStep] (int?): initial active step index (default: 0)
   ///
   /// Example:
   /// ```dart
   /// final controller = VNLStepperController(
   ///   currentStep: 1,
-  ///   stepStates: {0: StepState.failed},
+  ///   stepStates: {0: VNLStepState.failed},
   /// );
   /// ```
   VNLStepperController({
-    Map<int, StepState>? stepStates,
+    Map<int, VNLStepState>? stepStates,
     int? currentStep,
   }) : super(VNLStepperValue(
           stepStates: stepStates ?? {},
@@ -974,18 +974,18 @@ class VNLStepperController extends ValueNotifier<VNLStepperValue> {
   ///
   /// Parameters:
   /// - [step] (int): zero-based step index to modify
-  /// - [state] (StepState?): new state, or null to clear
+  /// - [state] (VNLStepState?): new state, or null to clear
   ///
   /// Example:
   /// ```dart
   /// // Mark step as failed
-  /// controller.setStatus(2, StepState.failed);
+  /// controller.setStatus(2, VNLStepState.failed);
   ///
   /// // Clear step state
   /// controller.setStatus(2, null);
   /// ```
-  void setStatus(int step, StepState? state) {
-    Map<int, StepState> newStates = Map.from(value.stepStates);
+  void setStatus(int step, VNLStepState? state) {
+    Map<int, VNLStepState> newStates = Map.from(value.stepStates);
     if (state == null) {
       newStates.remove(step);
     } else {
@@ -1024,7 +1024,7 @@ class VNLStepperController extends ValueNotifier<VNLStepperValue> {
 ///
 /// Uses a [VNLStepperController] for state management and navigation. VNLSteps are
 /// defined using [VNLStep] objects, and visual presentation is controlled by
-/// [VNLStepVariant] and [StepSize] configurations.
+/// [VNLStepVariant] and [VNLStepSize] configurations.
 ///
 /// The stepper automatically handles step indicators, connecting lines or
 /// progress bars, and animated content transitions between steps.
@@ -1037,7 +1037,7 @@ class VNLStepperController extends ValueNotifier<VNLStepperValue> {
 ///   controller: controller,
 ///   direction: Axis.vertical,
 ///   variant: VNLStepVariant.circle,
-///   size: StepSize.medium,
+///   size: VNLStepSize.medium,
 ///   steps: [
 ///     VNLStep(
 ///       title: Text('Personal Info'),
@@ -1065,7 +1065,7 @@ class VNLStepper extends StatelessWidget {
   final Axis? direction;
 
   /// Size variant for step indicators.
-  final StepSize? size;
+  final VNLStepSize? size;
 
   /// Visual variant for step presentation.
   final VNLStepVariant? variant;
@@ -1079,7 +1079,7 @@ class VNLStepper extends StatelessWidget {
   /// - [controller] (VNLStepperController, required): manages state and navigation
   /// - [steps] (`List<VNLStep>`, required): list of steps to display
   /// - [direction] (Axis?): horizontal or vertical layout (default: horizontal)
-  /// - [size] (StepSize?): step indicator size (default: medium)
+  /// - [size] (VNLStepSize?): step indicator size (default: medium)
   /// - [variant] (VNLStepVariant?): visual style (default: circle)
   ///
   /// Example:
@@ -1089,7 +1089,7 @@ class VNLStepper extends StatelessWidget {
   /// VNLStepper(
   ///   controller: controller,
   ///   direction: Axis.vertical,
-  ///   size: StepSize.large,
+  ///   size: VNLStepSize.large,
   ///   variant: VNLStepVariant.line,
   ///   steps: [
   ///     VNLStep(title: Text('VNLStep 1')),
@@ -1109,9 +1109,9 @@ class VNLStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<VNLStepperTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLStepperTheme>(context);
     final dir = direction ?? compTheme?.direction ?? Axis.horizontal;
-    final sz = size ?? compTheme?.size ?? StepSize.medium;
+    final sz = size ?? compTheme?.size ?? VNLStepSize.medium;
     final varnt = variant ?? compTheme?.variant ?? VNLStepVariant.circle;
     var stepProperties = VNLStepProperties(
         size: sz, steps: steps, state: controller, direction: dir);
@@ -1220,14 +1220,14 @@ class VNLStepNumber extends StatelessWidget {
             DefaultTextStyle.merge(
               style: TextStyle(
                 color: properties.state.value.stepStates[stepIndex] ==
-                        StepState.failed
+                        VNLStepState.failed
                     ? theme.colorScheme.destructive
                     : theme.colorScheme.primary,
               ).merge(theme.typography.medium),
               child: IconTheme.merge(
                 data: IconThemeData(
                   color: properties.state.value.stepStates[stepIndex] ==
-                          StepState.failed
+                          VNLStepState.failed
                       ? theme.colorScheme.destructive
                       : properties.state.value.currentStep > stepIndex
                           ? theme.colorScheme.background
@@ -1252,7 +1252,7 @@ class VNLStepNumber extends StatelessWidget {
                               ? BoxShape.rectangle
                               : BoxShape.circle,
                           color: properties.state.value.stepStates[stepIndex] ==
-                                  StepState.failed
+                                  VNLStepState.failed
                               ? theme.colorScheme.destructive
                               : properties.state.value.currentStep > stepIndex
                                   ? theme.colorScheme.primary
@@ -1266,7 +1266,7 @@ class VNLStepNumber extends StatelessWidget {
                           border: Border.all(
                             color:
                                 properties.state.value.stepStates[stepIndex] ==
-                                        StepState.failed
+                                        VNLStepState.failed
                                     ? theme.colorScheme.destructive
                                     : properties.state.value.currentStep >=
                                             stepIndex
@@ -1279,7 +1279,7 @@ class VNLStepNumber extends StatelessWidget {
                     ),
                     child: Center(
                       child: properties.state.value.stepStates[stepIndex] ==
-                              StepState.failed
+                              VNLStepState.failed
                           ? const Icon(
                               Icons.close,
                               color: VNLColors.white,

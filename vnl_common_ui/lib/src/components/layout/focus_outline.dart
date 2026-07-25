@@ -146,7 +146,7 @@ class VNLFocusOutline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<VNLFocusOutlineTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLFocusOutlineTheme>(context);
     final double align = styleValue(
       defaultValue: 3.0,
       themeValue: compTheme?.align,

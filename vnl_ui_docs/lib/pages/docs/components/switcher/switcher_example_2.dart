@@ -13,7 +13,7 @@ class _SwitcherExample2State extends State<SwitcherExample2> {
   final _loginController = VNLFormController();
   @override
   Widget build(BuildContext context) {
-    return Switcher(
+    return VNLSwitcher(
       // VNLToggle between login (index 0) and register (index 1) forms.
       index: _isRegister ? 1 : 0,
       onIndexChanged: (index) {
@@ -38,8 +38,8 @@ class _SwitcherExample2State extends State<SwitcherExample2> {
                   label: const Text('Email'),
                   validator: const VNLEmailValidator() & const VNLNotEmptyValidator(),
                   showErrors: const {
-                    FormValidationMode.changed,
-                    FormValidationMode.submitted,
+                    VNLFormValidationMode.changed,
+                    VNLFormValidationMode.submitted,
                   },
                   child: VNLTextField(
                     initialValue:
@@ -54,8 +54,8 @@ class _SwitcherExample2State extends State<SwitcherExample2> {
                   label: Text('Password'),
                   validator: VNLNotEmptyValidator(),
                   showErrors: {
-                    FormValidationMode.changed,
-                    FormValidationMode.submitted,
+                    VNLFormValidationMode.changed,
+                    VNLFormValidationMode.submitted,
                   },
                   child: VNLTextField(obscureText: true),
                 ),
@@ -89,8 +89,8 @@ class _SwitcherExample2State extends State<SwitcherExample2> {
                   label: const Text('Email'),
                   validator: const VNLEmailValidator() & const VNLNotEmptyValidator(),
                   showErrors: const {
-                    FormValidationMode.changed,
-                    FormValidationMode.submitted,
+                    VNLFormValidationMode.changed,
+                    VNLFormValidationMode.submitted,
                   },
                   child: VNLTextField(
                     initialValue: _registerController
@@ -107,8 +107,8 @@ class _SwitcherExample2State extends State<SwitcherExample2> {
                       min: 6,
                       message: 'Password must be at least 6 characters'),
                   showErrors: {
-                    FormValidationMode.changed,
-                    FormValidationMode.submitted,
+                    VNLFormValidationMode.changed,
+                    VNLFormValidationMode.submitted,
                   },
                   child: VNLTextField(obscureText: true),
                 ),
@@ -118,8 +118,8 @@ class _SwitcherExample2State extends State<SwitcherExample2> {
                   validator: CompareWith.equal(TextFieldKey(#password),
                       message: 'Passwords do not match'),
                   showErrors: {
-                    FormValidationMode.changed,
-                    FormValidationMode.submitted,
+                    VNLFormValidationMode.changed,
+                    VNLFormValidationMode.submitted,
                   },
                   child: VNLTextField(obscureText: true),
                 ),

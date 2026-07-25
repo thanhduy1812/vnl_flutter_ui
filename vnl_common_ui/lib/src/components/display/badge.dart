@@ -6,7 +6,7 @@ import 'package:vnl_common_ui/vnl_ui.dart';
 /// badge types including [VNLPrimaryBadge], [VNLSecondaryBadge], [VNLOutlineBadge],
 /// and [VNLDestructiveBadge]. Each badge style can have its own button styling
 /// configuration to provide consistent appearance across the application.
-class BadgeTheme extends ComponentThemeData {
+class VNLBadgeTheme extends ComponentThemeData {
   /// Style for [VNLPrimaryBadge].
   final VNLAbstractButtonStyle? primaryStyle;
 
@@ -19,8 +19,8 @@ class BadgeTheme extends ComponentThemeData {
   /// Style for [VNLDestructiveBadge].
   final VNLAbstractButtonStyle? destructiveStyle;
 
-  /// Creates a [BadgeTheme].
-  const BadgeTheme({
+  /// Creates a [VNLBadgeTheme].
+  const VNLBadgeTheme({
     this.primaryStyle,
     this.secondaryStyle,
     this.outlineStyle,
@@ -28,13 +28,13 @@ class BadgeTheme extends ComponentThemeData {
   });
 
   /// Returns a copy of this theme with the given fields replaced.
-  BadgeTheme copyWith({
+  VNLBadgeTheme copyWith({
     ValueGetter<VNLAbstractButtonStyle?>? primaryStyle,
     ValueGetter<VNLAbstractButtonStyle?>? secondaryStyle,
     ValueGetter<VNLAbstractButtonStyle?>? outlineStyle,
     ValueGetter<VNLAbstractButtonStyle?>? destructiveStyle,
   }) {
-    return BadgeTheme(
+    return VNLBadgeTheme(
       primaryStyle: primaryStyle == null ? this.primaryStyle : primaryStyle(),
       secondaryStyle:
           secondaryStyle == null ? this.secondaryStyle : secondaryStyle(),
@@ -47,7 +47,7 @@ class BadgeTheme extends ComponentThemeData {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is BadgeTheme &&
+    return other is VNLBadgeTheme &&
         other.primaryStyle == primaryStyle &&
         other.secondaryStyle == secondaryStyle &&
         other.outlineStyle == outlineStyle &&
@@ -131,13 +131,13 @@ class VNLPrimaryBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<BadgeTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLBadgeTheme>(context);
     final baseStyle = style ??
         compTheme?.primaryStyle ??
         const VNLButtonStyle.primary(
           size: VNLButtonSize.small,
-          density: ButtonDensity.dense,
-          shape: ButtonShape.rectangle,
+          density: VNLButtonDensity.dense,
+          shape: VNLButtonShape.rectangle,
         ).copyWith(
           textStyle: (context, states, value) {
             return value.copyWith(fontWeight: FontWeight.w500);
@@ -188,13 +188,13 @@ class VNLSecondaryBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<BadgeTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLBadgeTheme>(context);
     final baseStyle = style ??
         compTheme?.secondaryStyle ??
         const VNLButtonStyle.secondary(
           size: VNLButtonSize.small,
-          density: ButtonDensity.dense,
-          shape: ButtonShape.rectangle,
+          density: VNLButtonDensity.dense,
+          shape: VNLButtonShape.rectangle,
         ).copyWith(
           textStyle: (context, states, value) {
             return value.copyWith(fontWeight: FontWeight.w500);
@@ -245,13 +245,13 @@ class VNLOutlineBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<BadgeTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLBadgeTheme>(context);
     final baseStyle = style ??
         compTheme?.outlineStyle ??
         const VNLButtonStyle.outline(
           size: VNLButtonSize.small,
-          density: ButtonDensity.dense,
-          shape: ButtonShape.rectangle,
+          density: VNLButtonDensity.dense,
+          shape: VNLButtonShape.rectangle,
         ).copyWith(
           textStyle: (context, states, value) {
             return value.copyWith(fontWeight: FontWeight.w500);
@@ -302,13 +302,13 @@ class VNLDestructiveBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<BadgeTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLBadgeTheme>(context);
     final baseStyle = style ??
         compTheme?.destructiveStyle ??
         const VNLButtonStyle.destructive(
           size: VNLButtonSize.small,
-          density: ButtonDensity.dense,
-          shape: ButtonShape.rectangle,
+          density: VNLButtonDensity.dense,
+          shape: VNLButtonShape.rectangle,
         ).copyWith(
           textStyle: (context, states, value) {
             return value.copyWith(fontWeight: FontWeight.w500);

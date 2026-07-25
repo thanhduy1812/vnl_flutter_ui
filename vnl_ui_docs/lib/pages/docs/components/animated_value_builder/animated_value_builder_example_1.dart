@@ -44,7 +44,7 @@ class _AnimatedValueBuilderExample1State
           },
         ),
         const Gap(32),
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             setState(() {
               // Move to the next color cyclically to trigger a new animation.

@@ -1,6 +1,6 @@
 import 'package:vnl_common_ui/shadcn_flutter.dart';
 
-/// Callback function type for building SubFocusScope widgets.
+/// Callback function type for building VNLSubFocusScope widgets.
 ///
 /// Receives the build context and the scope state for managing focus
 /// within the scope's widget tree.
@@ -23,7 +23,7 @@ typedef SubFocusScopeBuilder = Widget Function(
 /// - **Focus State Management**: Tracks and updates focus state across widget rebuilds
 /// - **Scroll Integration**: Ensures focused elements remain visible in scrollable areas
 ///
-/// The scope maintains a list of attached [SubFocus] widgets and manages which
+/// The scope maintains a list of attached [VNLSubFocus] widgets and manages which
 /// one currently has focus. It handles focus traversal, action routing, and
 /// ensures focused widgets remain visible through scroll positioning.
 ///
@@ -36,17 +36,17 @@ typedef SubFocusScopeBuilder = Widget Function(
 ///
 /// Example:
 /// ```dart
-/// SubFocusScope(
+/// VNLSubFocusScope(
 ///   autofocus: true,
 ///   builder: (context, state) => Column(
 ///     children: [
-///       SubFocus(
+///       VNLSubFocus(
 ///         builder: (context, focusState) => Container(
 ///           color: focusState.isFocused ? VNLColors.blue : VNLColors.grey,
 ///           child: Text('Item 1'),
 ///         ),
 ///       ),
-///       SubFocus(
+///       VNLSubFocus(
 ///         builder: (context, focusState) => Container(
 ///           color: focusState.isFocused ? VNLColors.blue : VNLColors.grey,
 ///           child: Text('Item 2'),
@@ -56,7 +56,7 @@ typedef SubFocusScopeBuilder = Widget Function(
 ///   ),
 /// )
 /// ```
-class SubFocusScope extends StatefulWidget {
+class VNLSubFocusScope extends StatefulWidget {
   /// Builder function that creates the widget tree for this scope.
   ///
   /// Called with the build context and the scope's state for managing
@@ -66,7 +66,7 @@ class SubFocusScope extends StatefulWidget {
 
   /// Whether the first child should automatically receive focus.
   ///
-  /// When `true`, the first attached [SubFocus] widget will automatically
+  /// When `true`, the first attached [VNLSubFocus] widget will automatically
   /// gain focus when the scope is built. Defaults to `false`.
   final bool autofocus;
 
@@ -75,15 +75,15 @@ class SubFocusScope extends StatefulWidget {
   /// Parameters:
   /// - [builder]: Widget builder with scope state (optional)
   /// - [autofocus]: Auto-focus first child (defaults to `false`)
-  const SubFocusScope({super.key, this.builder, this.autofocus = false});
+  const VNLSubFocusScope({super.key, this.builder, this.autofocus = false});
 
   @override
-  State<SubFocusScope> createState() => _SubFocusScopeState();
+  State<VNLSubFocusScope> createState() => _SubFocusScopeState();
 }
 
 /// Mixin providing focus scope state management capabilities.
 ///
-/// Defines the interface for interacting with a [SubFocusScope], including
+/// Defines the interface for interacting with a [VNLSubFocusScope], including
 /// methods for focus management, child attachment/detachment, and action routing.
 ///
 /// This mixin is implemented by internal scope state classes and provides
@@ -115,7 +115,7 @@ mixin SubFocusScopeState {
 
   /// Retrieves the nearest [SubFocusScopeState] from the widget tree.
   ///
-  /// Searches up the widget tree for an ancestor [SubFocusScope] and
+  /// Searches up the widget tree for an ancestor [VNLSubFocusScope] and
   /// returns its state. Returns `null` if no scope is found.
   ///
   /// Parameters:
@@ -128,7 +128,7 @@ mixin SubFocusScopeState {
 
   /// Detaches a child focus state from this scope.
   ///
-  /// Called when a [SubFocus] widget is disposed or removed from the tree.
+  /// Called when a [VNLSubFocus] widget is disposed or removed from the tree.
   /// Removes the child from the scope's managed focus list.
   ///
   /// Parameters:
@@ -137,7 +137,7 @@ mixin SubFocusScopeState {
 
   /// Attaches a child focus state to this scope.
   ///
-  /// Called when a [SubFocus] widget is initialized. Adds the child to
+  /// Called when a [VNLSubFocus] widget is initialized. Adds the child to
   /// the scope's managed focus list and may auto-focus it if configured.
   ///
   /// Parameters:
@@ -170,7 +170,7 @@ mixin SubFocusScopeState {
   bool unfocus(SubFocusState child);
 }
 
-class _SubFocusScopeState extends State<SubFocusScope> with SubFocusScopeState {
+class _SubFocusScopeState extends State<VNLSubFocusScope> with SubFocusScopeState {
   final List<SubFocusState> _attachedStates = [];
   SubFocusState? _currentState;
   bool _active = true;
@@ -206,7 +206,7 @@ class _SubFocusScopeState extends State<SubFocusScope> with SubFocusScopeState {
   bool attach(SubFocusState state) {
     assert(
       !_attachedStates.contains(state),
-      'SubFocusState is already attached to this SubFocusScope.',
+      'SubFocusState is already attached to this VNLSubFocusScope.',
     );
     _attachedStates.add(state);
     if (widget.autofocus) {
@@ -368,11 +368,11 @@ class _SubFocusScopeState extends State<SubFocusScope> with SubFocusScopeState {
   }
 }
 
-/// Callback function type for building SubFocus widgets.
+/// Callback function type for building VNLSubFocus widgets.
 ///
 /// Receives the build context and focus state for creating widgets that
 /// respond to focus changes and user interactions.
-/// Callback function type for building SubFocus widgets.
+/// Callback function type for building VNLSubFocus widgets.
 ///
 /// Receives the build context and the focus state for managing focus
 /// presentation and behavior within the widget.
@@ -387,10 +387,10 @@ typedef SubFocusBuilder = Widget Function(
   SubFocusState state,
 );
 
-/// Individual focusable widget within a SubFocusScope hierarchy.
+/// Individual focusable widget within a VNLSubFocusScope hierarchy.
 ///
 /// Creates a single focusable element that can receive keyboard focus and respond
-/// to user interactions within a [SubFocusScope]. Provides focus state information
+/// to user interactions within a [VNLSubFocusScope]. Provides focus state information
 /// and handles focus-related behaviors like visibility scrolling and action routing.
 ///
 /// Key Features:
@@ -414,7 +414,7 @@ typedef SubFocusBuilder = Widget Function(
 ///
 /// Example:
 /// ```dart
-/// SubFocus(
+/// VNLSubFocus(
 ///   enabled: true,
 ///   builder: (context, state) => GestureDetector(
 ///     onTap: () => state.requestFocus(),
@@ -436,7 +436,7 @@ typedef SubFocusBuilder = Widget Function(
 ///   ),
 /// )
 /// ```
-class SubFocus extends StatefulWidget {
+class VNLSubFocus extends StatefulWidget {
   /// Builder function that creates the widget tree with focus state.
   ///
   /// Called with the build context and focus state, allowing the widget
@@ -454,15 +454,15 @@ class SubFocus extends StatefulWidget {
   /// Parameters:
   /// - [builder]: Widget builder with focus state (required)
   /// - [enabled]: Whether focus is enabled (defaults to `true`)
-  const SubFocus({super.key, required this.builder, this.enabled = true});
+  const VNLSubFocus({super.key, required this.builder, this.enabled = true});
 
   @override
-  State<SubFocus> createState() => _SubFocusState();
+  State<VNLSubFocus> createState() => _SubFocusState();
 }
 
 /// Mixin providing focus state and control capabilities for focusable widgets.
 ///
-/// Defines the interface for interacting with a [SubFocus] widget, including
+/// Defines the interface for interacting with a [VNLSubFocus] widget, including
 /// methods for focus management, visibility control, and action handling.
 ///
 /// This mixin is implemented by internal focus state classes and provides
@@ -536,7 +536,7 @@ mixin SubFocusState {
   bool unfocus();
 }
 
-class _SubFocusState extends State<SubFocus> with SubFocusState {
+class _SubFocusState extends State<VNLSubFocus> with SubFocusState {
   SubFocusScopeState? _scope;
   bool _focused = false;
   bool _active = true;
@@ -563,7 +563,7 @@ class _SubFocusState extends State<SubFocus> with SubFocusState {
   }
 
   @override
-  void didUpdateWidget(covariant SubFocus oldWidget) {
+  void didUpdateWidget(covariant VNLSubFocus oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.enabled != widget.enabled) {
       if (widget.enabled) {

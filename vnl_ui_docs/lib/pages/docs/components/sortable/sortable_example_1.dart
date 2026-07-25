@@ -9,19 +9,19 @@ class SortableExample1 extends StatefulWidget {
 
 class _SortableExample1State extends State<SortableExample1> {
   // Two separate lists for demonstrating cross-list drag-and-drop.
-  List<SortableData<String>> invited = [
-    const SortableData('James'),
-    const SortableData('John'),
-    const SortableData('Robert'),
-    const SortableData('Michael'),
-    const SortableData('William'),
+  List<VNLSortableData<String>> invited = [
+    const VNLSortableData('James'),
+    const VNLSortableData('John'),
+    const VNLSortableData('Robert'),
+    const VNLSortableData('Michael'),
+    const VNLSortableData('William'),
   ];
-  List<SortableData<String>> reserved = [
-    const SortableData('David'),
-    const SortableData('Richard'),
-    const SortableData('Joseph'),
-    const SortableData('Thomas'),
-    const SortableData('Charles'),
+  List<VNLSortableData<String>> reserved = [
+    const VNLSortableData('David'),
+    const VNLSortableData('Richard'),
+    const VNLSortableData('Joseph'),
+    const VNLSortableData('Thomas'),
+    const VNLSortableData('Charles'),
   ];
 
   @override
@@ -40,7 +40,7 @@ class _SortableExample1State extends State<SortableExample1> {
           children: [
             Expanded(
               child: VNLCard(
-                child: SortableDropFallback<String>(
+                child: VNLSortableDropFallback<String>(
                   // If dropped into empty space in this list, append to the end.
                   onAccept: (value) {
                     setState(() {
@@ -78,7 +78,7 @@ class _SortableExample1State extends State<SortableExample1> {
             gap(12),
             Expanded(
               child: VNLCard(
-                child: SortableDropFallback<String>(
+                child: VNLSortableDropFallback<String>(
                   // Same behavior for the second list.
                   onAccept: (value) {
                     setState(() {

@@ -470,20 +470,20 @@ final class _HSLColor extends VNLColorDerivative {
 
 /// An abstract base class representing a color gradient with multiple color stops.
 ///
-/// [ColorGradient] provides a common interface for working with gradients that can
+/// [VNLColorGradient] provides a common interface for working with gradients that can
 /// have colors added, modified, or removed at specific positions. This is useful
 /// for creating custom gradient pickers and editors.
 ///
 /// Implementations should handle the gradient type (linear, radial, sweep, etc.)
 /// and provide methods to manipulate color stops and their positions.
-abstract class ColorGradient {
-  /// Creates a const [ColorGradient].
-  const ColorGradient();
+abstract class VNLColorGradient {
+  /// Creates a const [VNLColorGradient].
+  const VNLColorGradient();
 
   /// Creates a copy of this gradient with optional modifications.
   ///
-  /// Returns: A new [ColorGradient] instance.
-  ColorGradient copyWith();
+  /// Returns: A new [VNLColorGradient] instance.
+  VNLColorGradient copyWith();
 
   /// Changes the color at the specified [index].
   ///
@@ -491,8 +491,8 @@ abstract class ColorGradient {
   /// - [index]: The zero-based index of the color stop to modify.
   /// - [color]: The new color for the stop.
   ///
-  /// Returns: A new [ColorGradient] with the updated color.
-  ColorGradient changeColorAt(int index, VNLColorDerivative color);
+  /// Returns: A new [VNLColorGradient] with the updated color.
+  VNLColorGradient changeColorAt(int index, VNLColorDerivative color);
 
   /// Changes the position of the color stop at the specified [index].
   ///
@@ -500,8 +500,8 @@ abstract class ColorGradient {
   /// - [index]: The zero-based index of the color stop to modify.
   /// - [position]: The new position for the stop, typically ranging from 0.0 to 1.0.
   ///
-  /// Returns: A new [ColorGradient] with the updated position.
-  ColorGradient changePositionAt(int index, double position);
+  /// Returns: A new [VNLColorGradient] with the updated position.
+  VNLColorGradient changePositionAt(int index, double position);
 
   /// Changes both the color and position at the specified [index].
   ///
@@ -510,8 +510,8 @@ abstract class ColorGradient {
   /// - [color]: The new color for the stop.
   /// - [position]: The new position for the stop, typically ranging from 0.0 to 1.0.
   ///
-  /// Returns: A new [ColorGradient] with both values updated.
-  ColorGradient changeColorAndPositionAt(
+  /// Returns: A new [VNLColorGradient] with both values updated.
+  VNLColorGradient changeColorAndPositionAt(
       int index, VNLColorDerivative color, double position);
 
   /// Inserts a new color stop at a specific position in the gradient.
@@ -523,7 +523,7 @@ abstract class ColorGradient {
   /// - [textDirection]: The text direction for resolving directional alignments.
   ///
   /// Returns: A record containing the updated gradient and the index where the color was inserted.
-  ({ColorGradient gradient, int index}) insertColorAt(VNLColorDerivative color,
+  ({VNLColorGradient gradient, int index}) insertColorAt(VNLColorDerivative color,
       Offset position, Size size, TextDirection textDirection);
 
   /// Converts this color gradient to a Flutter [Gradient].
@@ -539,20 +539,20 @@ abstract class ColorGradient {
 ///
 /// Example:
 /// ```dart
-/// const stop = ColorStop(
+/// const stop = VNLColorStop(
 ///   color: VNLColorDerivative.fromColor(VNLColors.blue),
 ///   position: 0.5, // Middle of the gradient
 /// );
 /// ```
-class ColorStop {
+class VNLColorStop {
   /// The color at this stop.
   final VNLColorDerivative color;
 
   /// The position of this stop along the gradient, typically from 0.0 to 1.0.
   final double position;
 
-  /// Creates a [ColorStop] with the specified [color] and [position].
-  const ColorStop({
+  /// Creates a [VNLColorStop] with the specified [color] and [position].
+  const VNLColorStop({
     required this.color,
     required this.position,
   });
@@ -588,9 +588,9 @@ abstract class GradientAngleGeometry {
 
   /// Converts this to a non-directional gradient angle.
   ///
-  /// Returns: A [GradientAngle] based on this angle.
-  GradientAngle toNonDirectional() {
-    return GradientAngle(angle);
+  /// Returns: A [VNLGradientAngle] based on this angle.
+  VNLGradientAngle toNonDirectional() {
+    return VNLGradientAngle(angle);
   }
 }
 
@@ -641,18 +641,18 @@ class DirectionalGradientAngle extends GradientAngleGeometry {
 ///
 /// Example:
 /// ```dart
-/// const angle = GradientAngle(pi / 4); // 45 degrees
+/// const angle = VNLGradientAngle(pi / 4); // 45 degrees
 /// final begin = angle.begin;
 /// final end = angle.end;
 /// ```
-class GradientAngle extends GradientAngleGeometry {
+class VNLGradientAngle extends GradientAngleGeometry {
   @override
 
   /// The angle of the gradient in radians.
   final double angle;
 
-  /// Creates a [GradientAngle] with the specified [angle] in radians.
-  const GradientAngle(this.angle);
+  /// Creates a [VNLGradientAngle] with the specified [angle] in radians.
+  const VNLGradientAngle(this.angle);
 
   @override
 
@@ -673,25 +673,25 @@ class GradientAngle extends GradientAngleGeometry {
   }
 }
 
-/// A linear gradient implementation of [ColorGradient].
+/// A linear gradient implementation of [VNLColorGradient].
 ///
-/// [LinearColorGradient] represents a gradient that transitions linearly between
+/// [VNLLinearColorGradient] represents a gradient that transitions linearly between
 /// colors along a specified angle. It supports multiple color stops and different
 /// tile modes for how the gradient repeats beyond its bounds.
 ///
 /// Example:
 /// ```dart
-/// final gradient = LinearColorGradient(
+/// final gradient = VNLLinearColorGradient(
 ///   colors: [
-///     ColorStop(color: VNLColorDerivative.fromColor(VNLColors.red), position: 0.0),
-///     ColorStop(color: VNLColorDerivative.fromColor(VNLColors.blue), position: 1.0),
+///     VNLColorStop(color: VNLColorDerivative.fromColor(VNLColors.red), position: 0.0),
+///     VNLColorStop(color: VNLColorDerivative.fromColor(VNLColors.blue), position: 1.0),
 ///   ],
-///   angle: const GradientAngle(0.0),
+///   angle: const VNLGradientAngle(0.0),
 /// );
 /// ```
-class LinearColorGradient extends ColorGradient {
+class VNLLinearColorGradient extends VNLColorGradient {
   /// The list of color stops in the gradient.
-  final List<ColorStop> colors;
+  final List<VNLColorStop> colors;
 
   /// The angle of the gradient.
   final GradientAngleGeometry angle;
@@ -699,20 +699,20 @@ class LinearColorGradient extends ColorGradient {
   /// How the gradient repeats beyond its bounds.
   final TileMode tileMode;
 
-  /// Creates a [LinearColorGradient] with the specified parameters.
-  const LinearColorGradient({
+  /// Creates a [VNLLinearColorGradient] with the specified parameters.
+  const VNLLinearColorGradient({
     required this.colors,
     this.angle = const DirectionalGradientAngle(0),
     this.tileMode = TileMode.clamp,
   });
 
   @override
-  LinearColorGradient copyWith({
-    List<ColorStop>? colors,
+  VNLLinearColorGradient copyWith({
+    List<VNLColorStop>? colors,
     GradientAngleGeometry? angle,
     TileMode? tileMode,
   }) {
-    return LinearColorGradient(
+    return VNLLinearColorGradient(
       colors: colors ?? this.colors,
       angle: angle ?? this.angle,
       tileMode: tileMode ?? this.tileMode,
@@ -720,9 +720,9 @@ class LinearColorGradient extends ColorGradient {
   }
 
   @override
-  LinearColorGradient changeColorAt(int index, VNLColorDerivative color) {
-    List<ColorStop> newColors = List.from(colors);
-    newColors[index] = ColorStop(
+  VNLLinearColorGradient changeColorAt(int index, VNLColorDerivative color) {
+    List<VNLColorStop> newColors = List.from(colors);
+    newColors[index] = VNLColorStop(
       color: color,
       position: newColors[index].position,
     );
@@ -730,9 +730,9 @@ class LinearColorGradient extends ColorGradient {
   }
 
   @override
-  LinearColorGradient changePositionAt(int index, double position) {
-    List<ColorStop> newColors = List.from(colors);
-    newColors[index] = ColorStop(
+  VNLLinearColorGradient changePositionAt(int index, double position) {
+    List<VNLColorStop> newColors = List.from(colors);
+    newColors[index] = VNLColorStop(
       color: newColors[index].color,
       position: position,
     );
@@ -740,10 +740,10 @@ class LinearColorGradient extends ColorGradient {
   }
 
   @override
-  LinearColorGradient changeColorAndPositionAt(
+  VNLLinearColorGradient changeColorAndPositionAt(
       int index, VNLColorDerivative color, double position) {
-    List<ColorStop> newColors = List.from(colors);
-    newColors[index] = ColorStop(
+    List<VNLColorStop> newColors = List.from(colors);
+    newColors[index] = VNLColorStop(
       color: color,
       position: position,
     );
@@ -751,7 +751,7 @@ class LinearColorGradient extends ColorGradient {
   }
 
   @override
-  ({LinearColorGradient gradient, int index}) insertColorAt(
+  ({VNLLinearColorGradient gradient, int index}) insertColorAt(
       VNLColorDerivative color,
       Offset position,
       Size size,
@@ -766,7 +766,7 @@ class LinearColorGradient extends ColorGradient {
     final t =
         ((px - alignBegin.x) * dx + (py - alignBegin.y) * dy) / lengthSquared;
     final pos = t.clamp(0.0, 1.0);
-    List<ColorStop> newColors = List.from(colors);
+    List<VNLColorStop> newColors = List.from(colors);
     int insertIndex = 0;
     for (int i = 0; i < newColors.length; i++) {
       if (newColors[i].position < pos) {
@@ -775,7 +775,7 @@ class LinearColorGradient extends ColorGradient {
     }
     newColors.insert(
       insertIndex,
-      ColorStop(color: color, position: pos),
+      VNLColorStop(color: color, position: pos),
     );
     return (
       gradient: copyWith(colors: newColors),
@@ -798,9 +798,9 @@ class LinearColorGradient extends ColorGradient {
 /// A radial gradient for color values.
 ///
 /// Creates a circular gradient radiating from a center point.
-class RadialColorGradient extends ColorGradient {
+class VNLRadialColorGradient extends VNLColorGradient {
   /// The color stops defining the gradient.
-  final List<ColorStop> colors;
+  final List<VNLColorStop> colors;
 
   /// How the gradient tiles beyond its bounds.
   final TileMode tileMode;
@@ -818,7 +818,7 @@ class RadialColorGradient extends ColorGradient {
   final double focalRadius;
 
   /// Creates a radial color gradient.
-  const RadialColorGradient({
+  const VNLRadialColorGradient({
     required this.colors,
     this.tileMode = TileMode.clamp,
     this.center = Alignment.center,
@@ -828,15 +828,15 @@ class RadialColorGradient extends ColorGradient {
   });
 
   @override
-  RadialColorGradient copyWith({
-    List<ColorStop>? colors,
+  VNLRadialColorGradient copyWith({
+    List<VNLColorStop>? colors,
     TileMode? tileMode,
     AlignmentGeometry? center,
     AlignmentGeometry? focal,
     double? radius,
     double? focalRadius,
   }) {
-    return RadialColorGradient(
+    return VNLRadialColorGradient(
       colors: colors ?? this.colors,
       tileMode: tileMode ?? this.tileMode,
       center: center ?? this.center,
@@ -847,9 +847,9 @@ class RadialColorGradient extends ColorGradient {
   }
 
   @override
-  RadialColorGradient changeColorAt(int index, VNLColorDerivative color) {
-    List<ColorStop> newColors = List.from(colors);
-    newColors[index] = ColorStop(
+  VNLRadialColorGradient changeColorAt(int index, VNLColorDerivative color) {
+    List<VNLColorStop> newColors = List.from(colors);
+    newColors[index] = VNLColorStop(
       color: color,
       position: newColors[index].position,
     );
@@ -857,9 +857,9 @@ class RadialColorGradient extends ColorGradient {
   }
 
   @override
-  RadialColorGradient changePositionAt(int index, double position) {
-    List<ColorStop> newColors = List.from(colors);
-    newColors[index] = ColorStop(
+  VNLRadialColorGradient changePositionAt(int index, double position) {
+    List<VNLColorStop> newColors = List.from(colors);
+    newColors[index] = VNLColorStop(
       color: newColors[index].color,
       position: position,
     );
@@ -867,10 +867,10 @@ class RadialColorGradient extends ColorGradient {
   }
 
   @override
-  RadialColorGradient changeColorAndPositionAt(
+  VNLRadialColorGradient changeColorAndPositionAt(
       int index, VNLColorDerivative color, double position) {
-    List<ColorStop> newColors = List.from(colors);
-    newColors[index] = ColorStop(
+    List<VNLColorStop> newColors = List.from(colors);
+    newColors[index] = VNLColorStop(
       color: color,
       position: position,
     );
@@ -878,7 +878,7 @@ class RadialColorGradient extends ColorGradient {
   }
 
   @override
-  ({RadialColorGradient gradient, int index}) insertColorAt(
+  ({VNLRadialColorGradient gradient, int index}) insertColorAt(
       VNLColorDerivative color,
       Offset position,
       Size size,
@@ -891,7 +891,7 @@ class RadialColorGradient extends ColorGradient {
     final dist =
         sqrt(dx * dx + dy * dy) / sqrt(2); // max distance in square is sqrt(2)
     final pos = dist.clamp(0.0, 1.0);
-    List<ColorStop> newColors = List.from(colors);
+    List<VNLColorStop> newColors = List.from(colors);
     int insertIndex = 0;
     for (int i = 0; i < newColors.length; i++) {
       if (newColors[i].position < pos) {
@@ -900,7 +900,7 @@ class RadialColorGradient extends ColorGradient {
     }
     newColors.insert(
       insertIndex,
-      ColorStop(color: color, position: pos),
+      VNLColorStop(color: color, position: pos),
     );
     return (
       gradient: copyWith(colors: newColors),
@@ -925,9 +925,9 @@ class RadialColorGradient extends ColorGradient {
 /// A sweep (angular/conical) gradient for color values.
 ///
 /// Creates a gradient that sweeps around a center point.
-class SweepColorGradient extends ColorGradient {
+class VNLSweepColorGradient extends VNLColorGradient {
   /// The color stops defining the gradient.
-  final List<ColorStop> colors;
+  final List<VNLColorStop> colors;
 
   /// How the gradient tiles beyond its bounds.
   final TileMode tileMode;
@@ -942,7 +942,7 @@ class SweepColorGradient extends ColorGradient {
   final double endAngle;
 
   /// Creates a sweep color gradient.
-  const SweepColorGradient({
+  const VNLSweepColorGradient({
     required this.colors,
     this.tileMode = TileMode.clamp,
     this.center = Alignment.center,
@@ -951,14 +951,14 @@ class SweepColorGradient extends ColorGradient {
   });
 
   @override
-  SweepColorGradient copyWith({
-    List<ColorStop>? colors,
+  VNLSweepColorGradient copyWith({
+    List<VNLColorStop>? colors,
     TileMode? tileMode,
     AlignmentGeometry? center,
     double? startAngle,
     double? endAngle,
   }) {
-    return SweepColorGradient(
+    return VNLSweepColorGradient(
       colors: colors ?? this.colors,
       tileMode: tileMode ?? this.tileMode,
       center: center ?? this.center,
@@ -968,9 +968,9 @@ class SweepColorGradient extends ColorGradient {
   }
 
   @override
-  SweepColorGradient changeColorAt(int index, VNLColorDerivative color) {
-    List<ColorStop> newColors = List.from(colors);
-    newColors[index] = ColorStop(
+  VNLSweepColorGradient changeColorAt(int index, VNLColorDerivative color) {
+    List<VNLColorStop> newColors = List.from(colors);
+    newColors[index] = VNLColorStop(
       color: color,
       position: newColors[index].position,
     );
@@ -978,9 +978,9 @@ class SweepColorGradient extends ColorGradient {
   }
 
   @override
-  SweepColorGradient changePositionAt(int index, double position) {
-    List<ColorStop> newColors = List.from(colors);
-    newColors[index] = ColorStop(
+  VNLSweepColorGradient changePositionAt(int index, double position) {
+    List<VNLColorStop> newColors = List.from(colors);
+    newColors[index] = VNLColorStop(
       color: newColors[index].color,
       position: position,
     );
@@ -988,10 +988,10 @@ class SweepColorGradient extends ColorGradient {
   }
 
   @override
-  SweepColorGradient changeColorAndPositionAt(
+  VNLSweepColorGradient changeColorAndPositionAt(
       int index, VNLColorDerivative color, double position) {
-    List<ColorStop> newColors = List.from(colors);
-    newColors[index] = ColorStop(
+    List<VNLColorStop> newColors = List.from(colors);
+    newColors[index] = VNLColorStop(
       color: color,
       position: position,
     );
@@ -999,7 +999,7 @@ class SweepColorGradient extends ColorGradient {
   }
 
   @override
-  ({SweepColorGradient gradient, int index}) insertColorAt(
+  ({VNLSweepColorGradient gradient, int index}) insertColorAt(
       VNLColorDerivative color,
       Offset position,
       Size size,
@@ -1016,7 +1016,7 @@ class SweepColorGradient extends ColorGradient {
     }
     final totalAngle = endAngle - startAngle;
     final pos = ((normalizedAngle - startAngle) / totalAngle).clamp(0.0, 1.0);
-    List<ColorStop> newColors = List.from(colors);
+    List<VNLColorStop> newColors = List.from(colors);
     int insertIndex = 0;
     for (int i = 0; i < newColors.length; i++) {
       if (newColors[i].position < pos) {
@@ -1025,7 +1025,7 @@ class SweepColorGradient extends ColorGradient {
     }
     newColors.insert(
       insertIndex,
-      ColorStop(color: color, position: pos),
+      VNLColorStop(color: color, position: pos),
     );
     return (
       gradient: copyWith(colors: newColors),

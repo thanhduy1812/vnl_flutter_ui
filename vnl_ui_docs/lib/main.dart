@@ -162,19 +162,19 @@ void main() async {
     }
   }
   final densityKey = prefs.getString('density');
-  final densityOptions = <String, Density>{
-    'Compact': Density.compactDensity,
-    'Reduced': Density.reducedDensity,
-    'Default': Density.defaultDensity,
-    'Spacious': Density.spaciousDensity,
+  final densityOptions = <String, VNLDensity>{
+    'Compact': VNLDensity.compactDensity,
+    'Reduced': VNLDensity.reducedDensity,
+    'Default': VNLDensity.defaultDensity,
+    'Spacious': VNLDensity.spaciousDensity,
   };
-  final initialDensity = densityOptions[densityKey] ?? Density.defaultDensity;
+  final initialDensity = densityOptions[densityKey] ?? VNLDensity.defaultDensity;
   double initialRadius = prefs.getDouble('radius') ?? 0.5;
   double initialScaling = prefs.getDouble('scaling') ?? 1.0;
   double initialSurfaceOpacity = prefs.getDouble('surfaceOpacity') ?? 1.0;
   double initialSurfaceBlur = prefs.getDouble('surfaceBlur') ?? 0.0;
   String initialPath = prefs.getString('initialPath') ?? '/';
-  runApp(ErrorFilter(
+  runApp(VNLErrorFilter(
     child: MyApp(
       initialColorScheme:
           initialColorScheme ?? colorSchemes['dark-slate-base']!,
@@ -191,7 +191,7 @@ void main() async {
 class MyApp extends StatefulWidget {
   final ColorScheme initialColorScheme;
   final double initialRadius;
-  final Density initialDensity;
+  final VNLDensity initialDensity;
   final double initialScaling;
   final double initialSurfaceOpacity;
   final double initialSurfaceBlur;
@@ -816,7 +816,7 @@ class MyAppState extends State<MyApp> {
   ];
   late ColorScheme colorScheme;
   late double radius;
-  late Density density;
+  late VNLDensity density;
   late double scaling;
   late double surfaceOpacity;
   late double surfaceBlur;
@@ -874,7 +874,7 @@ class MyAppState extends State<MyApp> {
     });
   }
 
-  void changeDensity(Density density) {
+  void changeDensity(VNLDensity density) {
     setState(() {
       this.density = density;
       SharedPreferences.getInstance().then((prefs) {
@@ -938,10 +938,10 @@ class MyAppState extends State<MyApp> {
     );
   }
 
-  String _densityKeyFromValue(Density density) {
-    if (density == Density.compactDensity) return 'Compact';
-    if (density == Density.reducedDensity) return 'Reduced';
-    if (density == Density.spaciousDensity) return 'Spacious';
+  String _densityKeyFromValue(VNLDensity density) {
+    if (density == VNLDensity.compactDensity) return 'Compact';
+    if (density == VNLDensity.reducedDensity) return 'Reduced';
+    if (density == VNLDensity.spaciousDensity) return 'Spacious';
     return 'Default';
   }
 }

@@ -12,7 +12,7 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 ///
 /// The theme supports advanced features like stacking behavior, expansion modes,
 /// and sophisticated animation timing for professional toast experiences.
-class ToastTheme extends ComponentThemeData {
+class VNLToastTheme extends ComponentThemeData {
   /// Maximum number of toast notifications to stack visually.
   ///
   /// Type: `int?`. If null, defaults to 3 stacked entries. Controls how many
@@ -27,9 +27,9 @@ class ToastTheme extends ComponentThemeData {
 
   /// Behavior mode for toast stack expansion.
   ///
-  /// Type: `ExpandMode?`. If null, defaults to [ExpandMode.expandOnHover].
+  /// Type: `VNLExpandMode?`. If null, defaults to [VNLExpandMode.expandOnHover].
   /// Controls when stacked toasts expand to show multiple entries simultaneously.
-  final ExpandMode? expandMode;
+  final VNLExpandMode? expandMode;
 
   /// Offset for collapsed toast positioning.
   ///
@@ -79,7 +79,7 @@ class ToastTheme extends ComponentThemeData {
   /// by theme. Defines the maximum/minimum dimensions for toast content.
   final BoxConstraints? toastConstraints;
 
-  /// Creates a [ToastTheme].
+  /// Creates a [VNLToastTheme].
   ///
   /// All parameters are optional and can be null to use intelligent defaults
   /// that integrate with the current theme's design system and provide
@@ -87,14 +87,14 @@ class ToastTheme extends ComponentThemeData {
   ///
   /// Example:
   /// ```dart
-  /// const ToastTheme(
+  /// const VNLToastTheme(
   ///   maxStackedEntries: 5,
-  ///   expandMode: ExpandMode.expandOnHover,
+  ///   expandMode: VNLExpandMode.expandOnHover,
   ///   spacing: 12.0,
   ///   collapsedScale: 0.95,
   /// );
   /// ```
-  const ToastTheme({
+  const VNLToastTheme({
     this.maxStackedEntries,
     this.padding,
     this.expandMode,
@@ -127,10 +127,10 @@ class ToastTheme extends ComponentThemeData {
   /// );
   /// ```
 
-  ToastTheme copyWith({
+  VNLToastTheme copyWith({
     ValueGetter<int?>? maxStackedEntries,
     ValueGetter<EdgeInsetsGeometry?>? padding,
-    ValueGetter<ExpandMode?>? expandMode,
+    ValueGetter<VNLExpandMode?>? expandMode,
     ValueGetter<Offset?>? collapsedOffset,
     ValueGetter<double?>? collapsedScale,
     ValueGetter<Curve?>? expandingCurve,
@@ -140,7 +140,7 @@ class ToastTheme extends ComponentThemeData {
     ValueGetter<double?>? spacing,
     ValueGetter<BoxConstraints?>? toastConstraints,
   }) {
-    return ToastTheme(
+    return VNLToastTheme(
       maxStackedEntries: maxStackedEntries == null
           ? this.maxStackedEntries
           : maxStackedEntries(),
@@ -182,7 +182,7 @@ class ToastTheme extends ComponentThemeData {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ToastTheme &&
+    return other is VNLToastTheme &&
         other.maxStackedEntries == maxStackedEntries &&
         other.padding == padding &&
         other.expandMode == expandMode &&
@@ -198,7 +198,7 @@ class ToastTheme extends ComponentThemeData {
 
   @override
   String toString() {
-    return 'ToastTheme(maxStackedEntries: $maxStackedEntries, padding: $padding, expandMode: $expandMode, collapsedOffset: $collapsedOffset, collapsedScale: $collapsedScale, expandingCurve: $expandingCurve, expandingDuration: $expandingDuration, collapsedOpacity: $collapsedOpacity, entryOpacity: $entryOpacity, spacing: $spacing, toastConstraints: $toastConstraints)';
+    return 'VNLToastTheme(maxStackedEntries: $maxStackedEntries, padding: $padding, expandMode: $expandMode, collapsedOffset: $collapsedOffset, collapsedScale: $collapsedScale, expandingCurve: $expandingCurve, expandingDuration: $expandingDuration, collapsedOpacity: $collapsedOpacity, entryOpacity: $entryOpacity, spacing: $spacing, toastConstraints: $toastConstraints)';
   }
 }
 
@@ -228,7 +228,7 @@ typedef ToastBuilder = Widget Function(
 /// Parameters:
 /// - [context] (BuildContext, required): The build context for theme and data capture
 /// - [builder] (ToastBuilder, required): Function that builds the toast content widget
-/// - [location] (ToastLocation, default: bottomRight): Screen position for the toast
+/// - [location] (VNLToastLocation, default: bottomRight): Screen position for the toast
 /// - [dismissible] (bool, default: true): Whether users can dismiss via gesture
 /// - [curve] (Curve, default: easeOutCubic): Animation curve for entry/exit transitions
 /// - [entryDuration] (Duration, default: 500ms): Duration for toast entry animation
@@ -250,7 +250,7 @@ typedef ToastBuilder = Widget Function(
 ///     message: 'Operation completed successfully',
 ///     onDismiss: overlay.close,
 ///   ),
-///   location: ToastLocation.topRight,
+///   location: VNLToastLocation.topRight,
 ///   showDuration: Duration(seconds: 3),
 /// );
 /// ```
@@ -258,7 +258,7 @@ typedef ToastBuilder = Widget Function(
 VNLToastOverlay showToast({
   required BuildContext context,
   required ToastBuilder builder,
-  ToastLocation location = ToastLocation.bottomRight,
+  VNLToastLocation location = VNLToastLocation.bottomRight,
   bool dismissible = true,
   Curve curve = Curves.easeOutCubic,
   Duration entryDuration = const Duration(milliseconds: 500),
@@ -291,14 +291,14 @@ VNLToastOverlay showToast({
 
 /// Screen position enumeration for toast notification placement.
 ///
-/// ToastLocation defines six standard positions around the screen edges where
+/// VNLToastLocation defines six standard positions around the screen edges where
 /// toast notifications can appear. Each location includes alignment information
 /// for both the toast container and the stacking direction of multiple toasts.
 ///
 /// The enum ensures consistent positioning behavior across different screen
 /// sizes and orientations while providing intuitive placement options for
 /// various UI patterns and user experience requirements.
-enum ToastLocation {
+enum VNLToastLocation {
   /// Top-left corner with downward stacking.
   ///
   /// Toasts appear in the top-left area with new toasts stacking below existing ones.
@@ -365,12 +365,12 @@ enum ToastLocation {
   /// are added to the stack relative to existing toast notifications.
   final AlignmentGeometry childrenAlignment;
 
-  /// Creates a [ToastLocation] with specified alignment properties.
+  /// Creates a [VNLToastLocation] with specified alignment properties.
   ///
   /// Parameters:
   /// - [alignment] (AlignmentGeometry, required): Screen positioning for the toast stack
   /// - [childrenAlignment] (AlignmentGeometry, required): Stacking direction for multiple toasts
-  const ToastLocation({
+  const VNLToastLocation({
     required this.alignment,
     required this.childrenAlignment,
   });
@@ -378,10 +378,10 @@ enum ToastLocation {
 
 /// Expansion behavior modes for toast notification stacks.
 ///
-/// ExpandMode controls when and how stacked toast notifications expand to
+/// VNLExpandMode controls when and how stacked toast notifications expand to
 /// show multiple entries simultaneously. Different modes provide various
 /// user interaction patterns for managing multiple notifications.
-enum ExpandMode {
+enum VNLExpandMode {
   /// Toast stack is always expanded, showing all notifications simultaneously.
   ///
   /// All stacked toasts remain visible and fully sized at all times.
@@ -436,7 +436,7 @@ enum ExpandMode {
 /// ```dart
 /// VNLToastLayer(
 ///   maxStackedEntries: 4,
-///   expandMode: ExpandMode.expandOnHover,
+///   expandMode: VNLExpandMode.expandOnHover,
 ///   child: MyAppContent(),
 /// );
 /// ```
@@ -461,9 +461,9 @@ class VNLToastLayer extends StatefulWidget {
 
   /// Behavior for toast stack expansion interactions.
   ///
-  /// Type: `ExpandMode`, default: [ExpandMode.expandOnHover]. Controls when
+  /// Type: `VNLExpandMode`, default: [VNLExpandMode.expandOnHover]. Controls when
   /// stacked toasts expand to show multiple entries simultaneously.
-  final ExpandMode expandMode;
+  final VNLExpandMode expandMode;
 
   /// Position offset for collapsed toast entries.
   ///
@@ -523,7 +523,7 @@ class VNLToastLayer extends StatefulWidget {
   /// - [child] (Widget, required): Content to wrap with toast capabilities
   /// - [maxStackedEntries] (int, default: 3): Maximum visible toast count
   /// - [padding] (EdgeInsetsGeometry?, optional): Toast area padding override
-  /// - [expandMode] (ExpandMode, default: expandOnHover): Stack expansion behavior
+  /// - [expandMode] (VNLExpandMode, default: expandOnHover): Stack expansion behavior
   /// - [collapsedOffset] (Offset?, optional): Background toast positioning offset
   /// - [collapsedScale] (double, default: 0.9): Background toast size reduction
   /// - [expandingCurve] (Curve, default: easeOutCubic): Expansion animation curve
@@ -537,7 +537,7 @@ class VNLToastLayer extends StatefulWidget {
   /// ```dart
   /// VNLToastLayer(
   ///   maxStackedEntries: 5,
-  ///   expandMode: ExpandMode.expandOnTap,
+  ///   expandMode: VNLExpandMode.expandOnTap,
   ///   spacing: 12.0,
   ///   child: MaterialApp(home: HomePage()),
   /// );
@@ -547,7 +547,7 @@ class VNLToastLayer extends StatefulWidget {
     required this.child,
     this.maxStackedEntries = 3,
     this.padding,
-    this.expandMode = ExpandMode.expandOnHover,
+    this.expandMode = VNLExpandMode.expandOnHover,
     this.collapsedOffset,
     this.collapsedScale = 0.9,
     this.expandingCurve = Curves.easeOutCubic,
@@ -569,13 +569,13 @@ class _ToastLocationData {
 }
 
 class _ToastLayerState extends State<VNLToastLayer> {
-  final Map<ToastLocation, _ToastLocationData> entries = {
-    ToastLocation.topLeft: _ToastLocationData(),
-    ToastLocation.topCenter: _ToastLocationData(),
-    ToastLocation.topRight: _ToastLocationData(),
-    ToastLocation.bottomLeft: _ToastLocationData(),
-    ToastLocation.bottomCenter: _ToastLocationData(),
-    ToastLocation.bottomRight: _ToastLocationData(),
+  final Map<VNLToastLocation, _ToastLocationData> entries = {
+    VNLToastLocation.topLeft: _ToastLocationData(),
+    VNLToastLocation.topCenter: _ToastLocationData(),
+    VNLToastLocation.topRight: _ToastLocationData(),
+    VNLToastLocation.bottomLeft: _ToastLocationData(),
+    VNLToastLocation.bottomCenter: _ToastLocationData(),
+    VNLToastLocation.bottomRight: _ToastLocationData(),
   };
 
   void _triggerEntryClosing() {
@@ -614,7 +614,7 @@ class _ToastLayerState extends State<VNLToastLayer> {
     final scaling = theme.scaling;
     final baseGap = theme.density.baseGap;
     final baseContainerPadding = theme.density.baseContainerPadding;
-    final compTheme = ComponentTheme.maybeOf<ToastTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLToastTheme>(context);
     final maxStackedEntries =
         compTheme?.maxStackedEntries ?? widget.maxStackedEntries;
     final expandMode = compTheme?.expandMode ?? widget.expandMode;
@@ -658,7 +658,7 @@ class _ToastLayerState extends State<VNLToastLayer> {
           VNLToastEntryLayout(
             key: entry.key,
             entry: entry.entry,
-            expanded: expanding || expandMode == ExpandMode.alwaysExpanded,
+            expanded: expanding || expandMode == VNLExpandMode.alwaysExpanded,
             visible: toastIndex < maxStackedEntries,
             dismissible: entry.entry.dismissible,
             previousAlignment: location.childrenAlignment,
@@ -714,7 +714,7 @@ class _ToastLayerState extends State<VNLToastLayer> {
                   hitTestBehavior: HitTestBehavior.deferToChild,
                   onEnter: (event) {
                     locationEntry.value._hoverCount++;
-                    if (expandMode == ExpandMode.expandOnHover) {
+                    if (expandMode == VNLExpandMode.expandOnHover) {
                       setState(() {
                         locationEntry.value._expanding = true;
                       });
@@ -837,7 +837,7 @@ class VNLToastEntry {
   final ToastBuilder builder;
 
   /// Position where the toast should appear.
-  final ToastLocation location;
+  final VNLToastLocation location;
 
   /// Whether the toast can be dismissed by user interaction.
   ///

@@ -78,7 +78,7 @@ class ItemPicker<T> extends StatelessWidget {
   ///
   /// Controls whether the picker appears as a modal dialog or a popover
   /// dropdown. Defaults to dialog mode for better item visibility.
-  final PromptMode? mode;
+  final VNLPromptMode? mode;
 
   /// Size constraints for the picker interface container.
   ///
@@ -100,7 +100,7 @@ class ItemPicker<T> extends StatelessWidget {
   /// - [layout] (VNLItemPickerLayout?, optional): Arrangement style for items
   /// - [placeholder] (Widget?, optional): Content shown when no item is selected
   /// - [title] (Widget?, optional): Title for the picker interface
-  /// - [mode] (PromptMode?, optional): Presentation style (dialog or popover)
+  /// - [mode] (VNLPromptMode?, optional): Presentation style (dialog or popover)
   /// - [constraints] (BoxConstraints?, optional): Size constraints for the picker
   ///
   /// Example:
@@ -108,7 +108,7 @@ class ItemPicker<T> extends StatelessWidget {
   /// ItemPicker<IconData>(
   ///   items: ItemList([Icons.home, Icons.star, Icons.favorite]),
   ///   layout: VNLItemPickerLayout.grid,
-  ///   mode: PromptMode.dialog,
+  ///   mode: VNLPromptMode.dialog,
   ///   builder: (context, icon, selected) => Icon(icon),
   ///   onChanged: (icon) => updateIcon(icon),
   /// );
@@ -129,7 +129,7 @@ class ItemPicker<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final layout = this.layout ?? VNLItemPickerLayout.grid;
-    final mode = this.mode ?? PromptMode.dialog;
+    final mode = this.mode ?? VNLPromptMode.dialog;
     final constraints = this.constraints;
     return ObjectFormField(
         value: value,
@@ -140,7 +140,7 @@ class ItemPicker<T> extends StatelessWidget {
         mode: mode,
         decorate: false,
         editorBuilder: (context, handler) {
-          if (mode == PromptMode.dialog) {
+          if (mode == VNLPromptMode.dialog) {
             final theme = Theme.of(context);
             return VNLModalBackdrop(
               borderRadius: theme.borderRadiusXl,

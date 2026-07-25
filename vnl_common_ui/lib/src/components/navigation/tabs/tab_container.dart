@@ -129,7 +129,7 @@ mixin TabChild on Widget {
 /// of type [T] rather than positional indices.
 ///
 /// Type parameter [T] is the type of the key used to identify this tab.
-mixin KeyedTabChild<T> on TabChild {
+mixin VNLKeyedTabChild<T> on TabChild {
   /// The unique key identifying this tab.
   ///
   /// Used instead of positional index for tab selection and tracking.
@@ -170,12 +170,12 @@ class VNLTabChildWidget extends StatelessWidget with TabChild {
 
 /// A keyed tab child widget identified by a custom key value.
 ///
-/// Extends [VNLTabChildWidget] with [KeyedTabChild] to support tab identification
+/// Extends [VNLTabChildWidget] with [VNLKeyedTabChild] to support tab identification
 /// via custom keys rather than positional indices. The key value determines
 /// tab selection and tracking.
 ///
 /// Type parameter [T] is the type of the key value.
-class KeyedTabChildWidget<T> extends VNLTabChildWidget with KeyedTabChild<T> {
+class KeyedTabChildWidget<T> extends VNLTabChildWidget with VNLKeyedTabChild<T> {
   /// Creates a keyed tab child widget.
   ///
   /// Parameters:
@@ -225,7 +225,7 @@ class VNLTabItem extends StatelessWidget with TabChild {
 /// A keyed tab item widget.
 ///
 /// Similar to [VNLTabItem] but includes a unique key for identification.
-class KeyedTabItem<T> extends VNLTabItem with KeyedTabChild<T> {
+class KeyedTabItem<T> extends VNLTabItem with VNLKeyedTabChild<T> {
   /// Creates a [KeyedTabItem].
   ///
   /// Parameters:
@@ -302,7 +302,7 @@ class VNLTabContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<VNLTabContainerTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLTabContainerTheme>(context);
     final tabBuilder = builder ??
         compTheme?.builder ??
         (context, children) => Column(children: children);

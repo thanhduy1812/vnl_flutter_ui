@@ -15,7 +15,7 @@ class DrawerTile extends StatelessWidget implements IComponentPage {
       scale: 1,
       example: VNLDrawerWrapper(
         stackIndex: 0,
-        position: OverlayPosition.bottom,
+        position: VNLOverlayPosition.bottom,
         size: const Size(300, 300),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

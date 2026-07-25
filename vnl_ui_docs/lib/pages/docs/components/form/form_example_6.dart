@@ -27,7 +27,7 @@ class FormExample6 extends StatelessWidget {
                 title: const Text('Submitted'),
                 content: Text('Email: ${_emailKey[values]}'),
                 actions: [
-                  PrimaryButton(
+                  VNLPrimaryButton(
                     onPressed: () => Navigator.of(context).pop(),
                     child: const Text('Close'),
                   ),
@@ -51,18 +51,18 @@ class FormExample6 extends StatelessWidget {
                   //  2. "Already taken" check only runs on submit
                   validator: const VNLEmailValidator() &
                       ValidationMode(
-                        ConditionalValidator((value) async {
+                        VNLConditionalValidator((value) async {
                           await Future.delayed(const Duration(seconds: 1));
                           return !_takenEmails.contains(value);
                         }, message: 'Email already taken'),
                         // This validator only RUNS on submit
-                        mode: {FormValidationMode.submitted},
+                        mode: {VNLFormValidationMode.submitted},
                       ),
                   // Error messages only VISIBLE after change or submit
                   // (not on initial load, so the form starts clean)
                   showErrors: const {
-                    FormValidationMode.changed,
-                    FormValidationMode.submitted,
+                    VNLFormValidationMode.changed,
+                    VNLFormValidationMode.submitted,
                   },
                   child: const VNLTextField(),
                 ),

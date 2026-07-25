@@ -36,7 +36,7 @@ class _FormExample3State extends State<FormExample3> {
                   },
                 ))),
                 actions: [
-                  PrimaryButton(
+                  VNLPrimaryButton(
                     onPressed: () => Navigator.of(context).pop(),
                     child: const Text('Close'),
                   ),
@@ -59,13 +59,13 @@ class _FormExample3State extends State<FormExample3> {
                   // but only run the async validator on submit.
                   validator: const VNLLengthValidator(min: 4) &
                       ValidationMode(
-                        ConditionalValidator((value) async {
+                        VNLConditionalValidator((value) async {
                           // simulate a network delay for example purpose
                           await Future.delayed(const Duration(seconds: 1));
                           return !_dummyData.contains(value);
                         }, message: 'Username already taken'),
                         // only validate when the form is submitted
-                        mode: {FormValidationMode.submitted},
+                        mode: {VNLFormValidationMode.submitted},
                       ),
                   child: const VNLTextField(
                     initialValue: 'sunarya-thito',
@@ -75,7 +75,7 @@ class _FormExample3State extends State<FormExample3> {
                   key: _passwordKey,
                   label: const Text('Password'),
                   validator: const VNLLengthValidator(min: 8),
-                  showErrors: const {FormValidationMode.submitted, FormValidationMode.changed},
+                  showErrors: const {VNLFormValidationMode.submitted, VNLFormValidationMode.changed},
                   child: const VNLTextField(
                     obscureText: true,
                   ),
@@ -83,7 +83,7 @@ class _FormExample3State extends State<FormExample3> {
                 FormField<String>(
                   key: _confirmPasswordKey,
                   label: const Text('Confirm Password'),
-                  showErrors: const {FormValidationMode.submitted, FormValidationMode.changed},
+                  showErrors: const {VNLFormValidationMode.submitted, VNLFormValidationMode.changed},
                   validator: CompareWith.equal(_passwordKey, message: 'Passwords do not match'),
                   child: const VNLTextField(
                     obscureText: true,

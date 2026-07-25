@@ -183,7 +183,7 @@ class VNLMenuPopup extends StatelessWidget {
     final densityGap = theme.density.baseGap * theme.scaling;
     final densityContentPadding =
         theme.density.baseContentPadding * theme.scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLMenuPopupTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLMenuPopupTheme>(context);
     final isSheetOverlay = VNLSheetOverlayHandler.isSheetOverlay(context);
     final isDialogOverlay = VNLDialogOverlayHandler.isDialogOverlay(context);
     final pad = styleValue(

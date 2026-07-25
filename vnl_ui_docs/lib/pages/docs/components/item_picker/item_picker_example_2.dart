@@ -5,7 +5,7 @@ class ItemPickerExample2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PrimaryButton(
+    return VNLPrimaryButton(
       onPressed: () {
         // Dialog variant of the item picker for a more prominent selection flow.
         showItemPickerDialog<int>(

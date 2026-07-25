@@ -60,10 +60,10 @@ mixin OverlayHandlerStateMixin<T extends StatefulWidget> on State<T> {
   set anchorAlignment(AlignmentGeometry value) {}
 
   /// Updates the width constraint.
-  set widthConstraint(PopoverConstraint value) {}
+  set widthConstraint(VNLPopoverConstraint value) {}
 
   /// Updates the height constraint.
-  set heightConstraint(PopoverConstraint value) {}
+  set heightConstraint(VNLPopoverConstraint value) {}
 
   /// Updates the margin.
   set margin(EdgeInsets value) {}
@@ -133,8 +133,8 @@ abstract class VNLOverlayHandler {
   /// - [builder] (WidgetBuilder, required): Overlay content builder
   /// - [position] (Offset?): Explicit position (overrides alignment)
   /// - [anchorAlignment] (AlignmentGeometry?): Anchor alignment
-  /// - [widthConstraint] (PopoverConstraint): Width constraint, defaults to flexible
-  /// - [heightConstraint] (PopoverConstraint): Height constraint, defaults to flexible
+  /// - [widthConstraint] (VNLPopoverConstraint): Width constraint, defaults to flexible
+  /// - [heightConstraint] (VNLPopoverConstraint): Height constraint, defaults to flexible
   /// - [key] (Key?): Widget key
   /// - [rootOverlay] (bool): Use root overlay, defaults to true
   /// - [modal] (bool): Modal behavior, defaults to true
@@ -162,8 +162,8 @@ abstract class VNLOverlayHandler {
     required WidgetBuilder builder,
     Offset? position,
     AlignmentGeometry? anchorAlignment,
-    PopoverConstraint widthConstraint = PopoverConstraint.flexible,
-    PopoverConstraint heightConstraint = PopoverConstraint.flexible,
+    VNLPopoverConstraint widthConstraint = VNLPopoverConstraint.flexible,
+    VNLPopoverConstraint heightConstraint = VNLPopoverConstraint.flexible,
     Key? key,
     bool rootOverlay = true,
     bool modal = true,
@@ -241,8 +241,8 @@ abstract class VNLOverlayManager implements VNLOverlayHandler {
     AlignmentGeometry alignment = Alignment.center,
     Offset? position,
     AlignmentGeometry? anchorAlignment,
-    PopoverConstraint widthConstraint = PopoverConstraint.flexible,
-    PopoverConstraint heightConstraint = PopoverConstraint.flexible,
+    VNLPopoverConstraint widthConstraint = VNLPopoverConstraint.flexible,
+    VNLPopoverConstraint heightConstraint = VNLPopoverConstraint.flexible,
     Key? key,
     bool rootOverlay = true,
     bool modal = true,
@@ -278,8 +278,8 @@ abstract class VNLOverlayManager implements VNLOverlayHandler {
     AlignmentGeometry alignment = Alignment.center,
     Offset? position,
     AlignmentGeometry? anchorAlignment,
-    PopoverConstraint widthConstraint = PopoverConstraint.flexible,
-    PopoverConstraint heightConstraint = PopoverConstraint.flexible,
+    VNLPopoverConstraint widthConstraint = VNLPopoverConstraint.flexible,
+    VNLPopoverConstraint heightConstraint = VNLPopoverConstraint.flexible,
     Key? key,
     bool rootOverlay = true,
     bool modal = true,
@@ -315,8 +315,8 @@ abstract class VNLOverlayManager implements VNLOverlayHandler {
     AlignmentGeometry alignment = Alignment.center,
     Offset? position,
     AlignmentGeometry? anchorAlignment,
-    PopoverConstraint widthConstraint = PopoverConstraint.flexible,
-    PopoverConstraint heightConstraint = PopoverConstraint.flexible,
+    VNLPopoverConstraint widthConstraint = VNLPopoverConstraint.flexible,
+    VNLPopoverConstraint heightConstraint = VNLPopoverConstraint.flexible,
     Key? key,
     bool rootOverlay = true,
     bool modal = true,
@@ -391,8 +391,8 @@ class _OverlayManagerLayerState extends State<VNLOverlayManagerLayer> implements
     AlignmentGeometry alignment = Alignment.center,
     Offset? position,
     AlignmentGeometry? anchorAlignment,
-    PopoverConstraint widthConstraint = PopoverConstraint.flexible,
-    PopoverConstraint heightConstraint = PopoverConstraint.flexible,
+    VNLPopoverConstraint widthConstraint = VNLPopoverConstraint.flexible,
+    VNLPopoverConstraint heightConstraint = VNLPopoverConstraint.flexible,
     Key? key,
     bool rootOverlay = true,
     bool modal = true,
@@ -450,8 +450,8 @@ class _OverlayManagerLayerState extends State<VNLOverlayManagerLayer> implements
     AlignmentGeometry alignment = Alignment.center,
     Offset? position,
     AlignmentGeometry? anchorAlignment,
-    PopoverConstraint widthConstraint = PopoverConstraint.flexible,
-    PopoverConstraint heightConstraint = PopoverConstraint.flexible,
+    VNLPopoverConstraint widthConstraint = VNLPopoverConstraint.flexible,
+    VNLPopoverConstraint heightConstraint = VNLPopoverConstraint.flexible,
     Key? key,
     bool rootOverlay = true,
     bool modal = true,
@@ -509,8 +509,8 @@ class _OverlayManagerLayerState extends State<VNLOverlayManagerLayer> implements
     AlignmentGeometry alignment = Alignment.center,
     Offset? position,
     AlignmentGeometry? anchorAlignment,
-    PopoverConstraint widthConstraint = PopoverConstraint.flexible,
-    PopoverConstraint heightConstraint = PopoverConstraint.flexible,
+    VNLPopoverConstraint widthConstraint = VNLPopoverConstraint.flexible,
+    VNLPopoverConstraint heightConstraint = VNLPopoverConstraint.flexible,
     Key? key,
     bool rootOverlay = true,
     bool modal = true,

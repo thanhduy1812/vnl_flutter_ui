@@ -362,7 +362,7 @@ class _SwitchState extends State<VNLSwitch> with FormValueSupplier<bool, VNLSwit
     final theme = Theme.of(context);
     final scaling = theme.scaling;
     final densityGap = theme.density.baseGap * scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLSwitchTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLSwitchTheme>(context);
     final gap = styleValue(
         widgetValue: widget.gap,
         themeValue: compTheme?.gap,

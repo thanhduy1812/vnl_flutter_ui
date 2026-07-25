@@ -25,7 +25,7 @@ class _NumberInputExample3State extends State<NumberInputExample3> {
             features: const [
               // Increment button on the left, decrement button on the right.
               VNLInputFeature.incrementButton(
-                  position: InputFeaturePosition.leading),
+                  position: VNLInputFeaturePosition.leading),
               VNLInputFeature.decrementButton(),
             ],
             submitFormatters: [

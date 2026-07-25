@@ -86,7 +86,7 @@ class VNLFadeScroll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<VNLFadeScrollTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLFadeScrollTheme>(context);
     final startOffset = styleValue(
         widgetValue: this.startOffset,
         themeValue: compTheme?.startOffset,

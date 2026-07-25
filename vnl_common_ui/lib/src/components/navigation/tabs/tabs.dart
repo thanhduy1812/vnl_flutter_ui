@@ -183,7 +183,7 @@ class VNLTabs extends StatelessWidget {
     final scaling = theme.scaling;
     final densityGap = theme.density.baseGap * scaling;
     final densityContentPadding = theme.density.baseContentPadding * scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLTabsTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLTabsTheme>(context);
     final tabPadding = styleValue(
       defaultValue: EdgeInsets.symmetric(
         horizontal: densityContentPadding,
@@ -224,7 +224,7 @@ class VNLTabs extends StatelessWidget {
     final theme = Theme.of(context);
     final scaling = theme.scaling;
     final densityGap = theme.density.baseGap * scaling;
-    final compTheme = ComponentTheme.maybeOf<VNLTabsTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLTabsTheme>(context);
     final containerPadding = styleValue(
       defaultValue: EdgeInsets.all(densityGap * 0.5),
       themeValue: compTheme?.containerPadding,

@@ -9,7 +9,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 ///
 /// The theme enables consistent skeleton styling across the application while
 /// allowing for customization of animation characteristics and visual appearance.
-class SkeletonTheme extends ComponentThemeData {
+class VNLSkeletonTheme extends ComponentThemeData {
   /// The duration of one complete pulse animation cycle.
   ///
   /// Type: `Duration?`. If null, defaults to 1 second for a natural breathing
@@ -34,21 +34,21 @@ class SkeletonTheme extends ComponentThemeData {
   /// fade transitions when toggling skeleton visibility on/off.
   final bool? enableSwitchAnimation;
 
-  /// Creates a [SkeletonTheme].
+  /// Creates a [VNLSkeletonTheme].
   ///
   /// All parameters are optional and can be null to use intelligent defaults
   /// that integrate with the current theme's color scheme and design system.
   ///
   /// Example:
   /// ```dart
-  /// const SkeletonTheme(
+  /// const VNLSkeletonTheme(
   ///   duration: Duration(milliseconds: 800),
   ///   fromColor: VNLColors.grey.withOpacity(0.1),
   ///   toColor: VNLColors.grey.withOpacity(0.2),
   ///   enableSwitchAnimation: true,
   /// );
   /// ```
-  const SkeletonTheme({
+  const VNLSkeletonTheme({
     this.duration,
     this.fromColor,
     this.toColor,
@@ -56,13 +56,13 @@ class SkeletonTheme extends ComponentThemeData {
   });
 
   /// Returns a copy of this theme with the given fields replaced.
-  SkeletonTheme copyWith({
+  VNLSkeletonTheme copyWith({
     ValueGetter<Duration?>? duration,
     ValueGetter<Color?>? fromColor,
     ValueGetter<Color?>? toColor,
     ValueGetter<bool?>? enableSwitchAnimation,
   }) {
-    return SkeletonTheme(
+    return VNLSkeletonTheme(
       duration: duration == null ? this.duration : duration(),
       fromColor: fromColor == null ? this.fromColor : fromColor(),
       toColor: toColor == null ? this.toColor : toColor(),
@@ -75,7 +75,7 @@ class SkeletonTheme extends ComponentThemeData {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is SkeletonTheme &&
+    return other is VNLSkeletonTheme &&
         other.duration == duration &&
         other.fromColor == fromColor &&
         other.toColor == toColor &&
@@ -89,12 +89,12 @@ class SkeletonTheme extends ComponentThemeData {
 
 /// A configuration layer that provides Skeletonizer setup with theme integration.
 ///
-/// ShadcnSkeletonizerConfigLayer acts as a bridge between the shadcn theme system
+/// VNLShadcnSkeletonizerConfigLayer acts as a bridge between the shadcn theme system
 /// and the underlying Skeletonizer package, ensuring skeleton loading effects
 /// are consistent with the overall design system. This widget wraps content
 /// with properly configured skeleton animation settings.
 ///
-/// The component automatically resolves theme values from [SkeletonTheme] and
+/// The component automatically resolves theme values from [VNLSkeletonTheme] and
 /// applies appropriate defaults based on the current theme's color scheme and
 /// scaling factors. It creates a [SkeletonizerConfig] with [PulseEffect] for
 /// smooth, accessible loading animations.
@@ -104,12 +104,12 @@ class SkeletonTheme extends ComponentThemeData {
 ///
 /// Example:
 /// ```dart
-/// ShadcnSkeletonizerConfigLayer(
+/// VNLShadcnSkeletonizerConfigLayer(
 ///   theme: Theme.of(context),
 ///   child: YourContentWidget(),
 /// );
 /// ```
-class ShadcnSkeletonizerConfigLayer extends StatelessWidget {
+class VNLShadcnSkeletonizerConfigLayer extends StatelessWidget {
   /// The theme data used for skeleton configuration.
   ///
   /// Type: `ThemeData`, required. Provides color scheme, scaling factors,
@@ -146,7 +146,7 @@ class ShadcnSkeletonizerConfigLayer extends StatelessWidget {
   /// behavior when toggling skeleton visibility.
   final bool? enableSwitchAnimation;
 
-  /// Creates a [ShadcnSkeletonizerConfigLayer].
+  /// Creates a [VNLShadcnSkeletonizerConfigLayer].
   ///
   /// The [theme] and [child] parameters are required for proper skeleton
   /// configuration and content wrapping. Override parameters allow for
@@ -162,13 +162,13 @@ class ShadcnSkeletonizerConfigLayer extends StatelessWidget {
   ///
   /// Example:
   /// ```dart
-  /// ShadcnSkeletonizerConfigLayer(
+  /// VNLShadcnSkeletonizerConfigLayer(
   ///   theme: Theme.of(context),
   ///   duration: Duration(milliseconds: 1200),
   ///   child: MyContentWidget(),
   /// );
   /// ```
-  const ShadcnSkeletonizerConfigLayer({
+  const VNLShadcnSkeletonizerConfigLayer({
     super.key,
     required this.theme,
     required this.child,
@@ -180,7 +180,7 @@ class ShadcnSkeletonizerConfigLayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<SkeletonTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLSkeletonTheme>(context);
     final durationValue = styleValue(
       widgetValue: duration,
       themeValue: compTheme?.duration,

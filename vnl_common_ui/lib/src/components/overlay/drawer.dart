@@ -29,7 +29,7 @@ typedef DrawerBuilder = Widget Function(BuildContext context, Size extraSize,
 /// ```dart
 /// ComponentThemeData(
 ///   data: {
-///     DrawerTheme: DrawerTheme(
+///     VNLDrawerTheme: VNLDrawerTheme(
 ///       surfaceOpacity: 0.9,
 ///       barrierColor: VNLColors.black54,
 ///       showDragHandle: true,
@@ -38,7 +38,7 @@ typedef DrawerBuilder = Widget Function(BuildContext context, Size extraSize,
 ///   child: MyApp(),
 /// )
 /// ```
-class DrawerTheme extends ComponentThemeData {
+class VNLDrawerTheme extends ComponentThemeData {
   /// Surface opacity for backdrop effects.
   final double? surfaceOpacity;
 
@@ -54,7 +54,7 @@ class DrawerTheme extends ComponentThemeData {
   /// Size of the drag handle when displayed.
   final Size? dragHandleSize;
 
-  /// Creates a [DrawerTheme].
+  /// Creates a [VNLDrawerTheme].
   ///
   /// All parameters are optional and will use system defaults when null.
   ///
@@ -67,13 +67,13 @@ class DrawerTheme extends ComponentThemeData {
   ///
   /// Example:
   /// ```dart
-  /// const DrawerTheme(
+  /// const VNLDrawerTheme(
   ///   surfaceOpacity: 0.95,
   ///   showDragHandle: true,
   ///   barrierColor: Color.fromRGBO(0, 0, 0, 0.7),
   /// )
   /// ```
-  const DrawerTheme({
+  const VNLDrawerTheme({
     this.surfaceOpacity,
     this.surfaceBlur,
     this.barrierColor,
@@ -90,15 +90,15 @@ class DrawerTheme extends ComponentThemeData {
   /// - [showDragHandle] (`ValueGetter<bool?>?`, optional): New show drag handle setting.
   /// - [dragHandleSize] (`ValueGetter<Size?>?`, optional): New drag handle size.
   ///
-  /// Returns: A new [DrawerTheme] with updated properties.
-  DrawerTheme copyWith({
+  /// Returns: A new [VNLDrawerTheme] with updated properties.
+  VNLDrawerTheme copyWith({
     ValueGetter<double?>? surfaceOpacity,
     ValueGetter<double?>? surfaceBlur,
     ValueGetter<Color?>? barrierColor,
     ValueGetter<bool?>? showDragHandle,
     ValueGetter<Size?>? dragHandleSize,
   }) {
-    return DrawerTheme(
+    return VNLDrawerTheme(
       surfaceOpacity:
           surfaceOpacity == null ? this.surfaceOpacity : surfaceOpacity(),
       surfaceBlur: surfaceBlur == null ? this.surfaceBlur : surfaceBlur(),
@@ -112,7 +112,7 @@ class DrawerTheme extends ComponentThemeData {
 
   @override
   bool operator ==(Object other) =>
-      other is DrawerTheme &&
+      other is VNLDrawerTheme &&
       other.surfaceOpacity == surfaceOpacity &&
       other.surfaceBlur == surfaceBlur &&
       other.barrierColor == barrierColor &&
@@ -125,7 +125,7 @@ class DrawerTheme extends ComponentThemeData {
 
   @override
   String toString() =>
-      'DrawerTheme(surfaceOpacity: $surfaceOpacity, surfaceBlur: $surfaceBlur, barrierColor: $barrierColor, showDragHandle: $showDragHandle, dragHandleSize: $dragHandleSize)';
+      'VNLDrawerTheme(surfaceOpacity: $surfaceOpacity, surfaceBlur: $surfaceBlur, barrierColor: $barrierColor, showDragHandle: $showDragHandle, dragHandleSize: $dragHandleSize)';
 }
 
 /// Opens a drawer overlay with comprehensive customization options.
@@ -144,7 +144,7 @@ class DrawerTheme extends ComponentThemeData {
 /// Parameters:
 /// - [context] (BuildContext, required): build context for overlay creation
 /// - [builder] (WidgetBuilder, required): function that builds drawer content
-/// - [position] (OverlayPosition, required): side from which drawer slides in
+/// - [position] (VNLOverlayPosition, required): side from which drawer slides in
 /// - [expands] (bool, default: false): whether drawer should expand to fill available space
 /// - [draggable] (bool, default: true): whether drawer can be dragged to dismiss
 /// - [barrierDismissible] (bool, default: true): whether tapping barrier dismisses drawer
@@ -169,7 +169,7 @@ class DrawerTheme extends ComponentThemeData {
 /// ```dart
 /// final completer = openDrawerOverlay<String>(
 ///   context: context,
-///   position: OverlayPosition.left,
+///   position: VNLOverlayPosition.left,
 ///   builder: (context) => DrawerContent(),
 ///   draggable: true,
 ///   barrierDismissible: true,
@@ -179,7 +179,7 @@ class DrawerTheme extends ComponentThemeData {
 DrawerOverlayCompleter<T?> openDrawerOverlay<T>({
   required BuildContext context,
   required WidgetBuilder builder,
-  required OverlayPosition position,
+  required VNLOverlayPosition position,
   bool expands = false,
   bool draggable = true,
   bool barrierDismissible = true,
@@ -197,7 +197,7 @@ DrawerOverlayCompleter<T?> openDrawerOverlay<T>({
   BoxConstraints? constraints,
   AlignmentGeometry? alignment,
 }) {
-  final theme = ComponentTheme.maybeOf<DrawerTheme>(context);
+  final theme = VNLComponentTheme.maybeOf<VNLDrawerTheme>(context);
   showDragHandle ??= theme?.showDragHandle ?? true;
   surfaceOpacity ??= theme?.surfaceOpacity;
   surfaceBlur ??= theme?.surfaceBlur;
@@ -253,7 +253,7 @@ DrawerOverlayCompleter<T?> openDrawerOverlay<T>({
 /// Parameters:
 /// - [context] (BuildContext, required): build context for overlay creation
 /// - [builder] (WidgetBuilder, required): function that builds sheet content
-/// - [position] (OverlayPosition, required): side from which sheet slides in
+/// - [position] (VNLOverlayPosition, required): side from which sheet slides in
 /// - [barrierDismissible] (bool, default: true): whether tapping barrier dismisses sheet
 /// - [transformBackdrop] (bool, default: false): whether to transform backdrop
 /// - [backdropBuilder] (WidgetBuilder?, optional): custom backdrop builder
@@ -271,7 +271,7 @@ DrawerOverlayCompleter<T?> openDrawerOverlay<T>({
 /// ```dart
 /// final completer = openSheetOverlay<bool>(
 ///   context: context,
-///   position: OverlayPosition.bottom,
+///   position: VNLOverlayPosition.bottom,
 ///   builder: (context) => BottomSheetContent(),
 ///   draggable: true,
 /// );
@@ -279,7 +279,7 @@ DrawerOverlayCompleter<T?> openDrawerOverlay<T>({
 DrawerOverlayCompleter<T?> openSheetOverlay<T>({
   required BuildContext context,
   required WidgetBuilder builder,
-  required OverlayPosition position,
+  required VNLOverlayPosition position,
   bool barrierDismissible = true,
   bool transformBackdrop = false,
   WidgetBuilder? backdropBuilder,
@@ -290,7 +290,7 @@ DrawerOverlayCompleter<T?> openSheetOverlay<T>({
   BoxConstraints? constraints,
   AlignmentGeometry? alignment,
 }) {
-  final theme = ComponentTheme.maybeOf<DrawerTheme>(context);
+  final theme = VNLComponentTheme.maybeOf<VNLDrawerTheme>(context);
   barrierColor ??= theme?.barrierColor;
   return openRawDrawer<T>(
     context: context,
@@ -333,14 +333,14 @@ DrawerOverlayCompleter<T?> openSheetOverlay<T>({
 /// ```dart
 /// final result = await openDrawer<String>(
 ///   context: context,
-///   position: OverlayPosition.left,
+///   position: VNLOverlayPosition.left,
 ///   builder: (context) => MyDrawerContent(),
 /// );
 /// ```
 Future<T?> openDrawer<T>({
   required BuildContext context,
   required WidgetBuilder builder,
-  required OverlayPosition position,
+  required VNLOverlayPosition position,
   bool expands = false,
   bool draggable = true,
   bool barrierDismissible = true,
@@ -391,14 +391,14 @@ Future<T?> openDrawer<T>({
 /// ```dart
 /// final accepted = await openSheet<bool>(
 ///   context: context,
-///   position: OverlayPosition.bottom,
+///   position: VNLOverlayPosition.bottom,
 ///   builder: (context) => ConfirmationSheet(),
 /// );
 /// ```
 Future<T?> openSheet<T>({
   required BuildContext context,
   required WidgetBuilder builder,
-  required OverlayPosition position,
+  required VNLOverlayPosition position,
   bool barrierDismissible = true,
   bool transformBackdrop = false,
   Color? barrierColor,
@@ -429,7 +429,7 @@ Future<T?> openSheet<T>({
 /// Handles sizing, positioning, drag interactions, and animations.
 class VNLDrawerWrapper extends StatefulWidget {
   /// Position of the drawer on screen.
-  final OverlayPosition position;
+  final VNLOverlayPosition position;
 
   /// Content widget displayed in the drawer.
   final Widget child;
@@ -518,17 +518,17 @@ class _DrawerWrapperState extends State<VNLDrawerWrapper>
   late AnimationController _controller;
   late ControlledAnimation _extraOffset;
 
-  OverlayPosition get resolvedPosition {
+  VNLOverlayPosition get resolvedPosition {
     var position = widget.position;
-    if (position == OverlayPosition.start) {
+    if (position == VNLOverlayPosition.start) {
       return Directionality.of(context) == TextDirection.ltr
-          ? OverlayPosition.left
-          : OverlayPosition.right;
+          ? VNLOverlayPosition.left
+          : VNLOverlayPosition.right;
     }
-    if (position == OverlayPosition.end) {
+    if (position == VNLOverlayPosition.end) {
       return Directionality.of(context) == TextDirection.ltr
-          ? OverlayPosition.right
-          : OverlayPosition.left;
+          ? VNLOverlayPosition.right
+          : VNLOverlayPosition.left;
     }
     return position;
   }
@@ -546,8 +546,8 @@ class _DrawerWrapperState extends State<VNLDrawerWrapper>
 
   double? get expandingHeight {
     switch (resolvedPosition) {
-      case OverlayPosition.left:
-      case OverlayPosition.right:
+      case VNLOverlayPosition.left:
+      case VNLOverlayPosition.right:
         return double.infinity;
       default:
         return null;
@@ -556,8 +556,8 @@ class _DrawerWrapperState extends State<VNLDrawerWrapper>
 
   double? get expandingWidth {
     switch (resolvedPosition) {
-      case OverlayPosition.top:
-      case OverlayPosition.bottom:
+      case VNLOverlayPosition.top:
+      case VNLOverlayPosition.bottom:
         return double.infinity;
       default:
         return null;
@@ -567,8 +567,8 @@ class _DrawerWrapperState extends State<VNLDrawerWrapper>
   Widget buildDraggableBar(ThemeData theme) {
     final densityGap = theme.density.baseGap * theme.scaling;
     switch (resolvedPosition) {
-      case OverlayPosition.left:
-      case OverlayPosition.right:
+      case VNLOverlayPosition.left:
+      case VNLOverlayPosition.right:
         return Container(
           width: widget.dragHandleSize?.width ?? densityGap * 0.75,
           height: widget.dragHandleSize?.height ?? densityGap * 12.5,
@@ -577,8 +577,8 @@ class _DrawerWrapperState extends State<VNLDrawerWrapper>
             borderRadius: theme.borderRadiusXxl,
           ),
         );
-      case OverlayPosition.top:
-      case OverlayPosition.bottom:
+      case VNLOverlayPosition.top:
+      case VNLOverlayPosition.bottom:
         return Container(
           width: widget.dragHandleSize?.width ?? densityGap * 12.5,
           height: widget.dragHandleSize?.height ?? densityGap * 0.75,
@@ -603,7 +603,7 @@ class _DrawerWrapperState extends State<VNLDrawerWrapper>
       Widget child, ThemeData theme) {
     final densityGap = theme.density.baseGap * theme.scaling;
     switch (resolvedPosition) {
-      case OverlayPosition.left:
+      case VNLOverlayPosition.left:
         return GestureDetector(
           behavior: HitTestBehavior.translucent,
           onHorizontalDragUpdate: (details) {
@@ -667,7 +667,7 @@ class _DrawerWrapperState extends State<VNLDrawerWrapper>
             ],
           ),
         );
-      case OverlayPosition.right:
+      case VNLOverlayPosition.right:
         return GestureDetector(
           behavior: HitTestBehavior.translucent,
           onHorizontalDragUpdate: (details) {
@@ -731,7 +731,7 @@ class _DrawerWrapperState extends State<VNLDrawerWrapper>
             ],
           ),
         );
-      case OverlayPosition.top:
+      case VNLOverlayPosition.top:
         return GestureDetector(
           behavior: HitTestBehavior.translucent,
           onVerticalDragUpdate: (details) {
@@ -794,7 +794,7 @@ class _DrawerWrapperState extends State<VNLDrawerWrapper>
             ],
           ),
         );
-      case OverlayPosition.bottom:
+      case VNLOverlayPosition.bottom:
         return GestureDetector(
           behavior: HitTestBehavior.translucent,
           onVerticalDragUpdate: (details) {
@@ -887,28 +887,28 @@ class _DrawerWrapperState extends State<VNLDrawerWrapper>
 
   Border getBorder(ThemeData theme) {
     switch (resolvedPosition) {
-      case OverlayPosition.left:
+      case VNLOverlayPosition.left:
         // top, right, bottom
         return Border(
           right: BorderSide(color: theme.colorScheme.border),
           top: BorderSide(color: theme.colorScheme.border),
           bottom: BorderSide(color: theme.colorScheme.border),
         );
-      case OverlayPosition.right:
+      case VNLOverlayPosition.right:
         // top, left, bottom
         return Border(
           left: BorderSide(color: theme.colorScheme.border),
           top: BorderSide(color: theme.colorScheme.border),
           bottom: BorderSide(color: theme.colorScheme.border),
         );
-      case OverlayPosition.top:
+      case VNLOverlayPosition.top:
         // left, right, bottom
         return Border(
           left: BorderSide(color: theme.colorScheme.border),
           right: BorderSide(color: theme.colorScheme.border),
           bottom: BorderSide(color: theme.colorScheme.border),
         );
-      case OverlayPosition.bottom:
+      case VNLOverlayPosition.bottom:
         // left, right, top
         return Border(
           left: BorderSide(color: theme.colorScheme.border),
@@ -922,22 +922,22 @@ class _DrawerWrapperState extends State<VNLDrawerWrapper>
 
   BorderRadiusGeometry getBorderRadius(double radius) {
     switch (resolvedPosition) {
-      case OverlayPosition.left:
+      case VNLOverlayPosition.left:
         return BorderRadius.only(
           topRight: Radius.circular(radius),
           bottomRight: Radius.circular(radius),
         );
-      case OverlayPosition.right:
+      case VNLOverlayPosition.right:
         return BorderRadius.only(
           topLeft: Radius.circular(radius),
           bottomLeft: Radius.circular(radius),
         );
-      case OverlayPosition.top:
+      case VNLOverlayPosition.top:
         return BorderRadius.only(
           bottomLeft: Radius.circular(radius),
           bottomRight: Radius.circular(radius),
         );
-      case OverlayPosition.bottom:
+      case VNLOverlayPosition.bottom:
         return BorderRadius.only(
           topLeft: Radius.circular(radius),
           topRight: Radius.circular(radius),
@@ -1054,7 +1054,7 @@ Future<void> closeSheet(BuildContext context) {
   return closeDrawer(context);
 }
 
-/// Wrapper widget for sheet overlays.
+/// VNLWrapper widget for sheet overlays.
 ///
 /// Extends [VNLDrawerWrapper] with sheet-specific defaults (no drag, no expansion).
 /// Sheets are simplified drawers without backdrop transformation.
@@ -1087,13 +1087,13 @@ class _SheetWrapperState extends _DrawerWrapperState {
   @override
   Border getBorder(ThemeData theme) {
     switch (resolvedPosition) {
-      case OverlayPosition.left:
+      case VNLOverlayPosition.left:
         return Border(right: BorderSide(color: theme.colorScheme.border));
-      case OverlayPosition.right:
+      case VNLOverlayPosition.right:
         return Border(left: BorderSide(color: theme.colorScheme.border));
-      case OverlayPosition.top:
+      case VNLOverlayPosition.top:
         return Border(bottom: BorderSide(color: theme.colorScheme.border));
-      case OverlayPosition.bottom:
+      case VNLOverlayPosition.bottom:
         return Border(top: BorderSide(color: theme.colorScheme.border));
       default:
         throw UnimplementedError('Unknown position');
@@ -1108,16 +1108,16 @@ class _SheetWrapperState extends _DrawerWrapperState {
     double marginLeft = 0;
     double marginRight = 0;
     switch (resolvedPosition) {
-      case OverlayPosition.left:
+      case VNLOverlayPosition.left:
         marginRight = mediaPadding.right;
         break;
-      case OverlayPosition.right:
+      case VNLOverlayPosition.right:
         marginLeft = mediaPadding.left;
         break;
-      case OverlayPosition.top:
+      case VNLOverlayPosition.top:
         marginBottom = mediaPadding.bottom;
         break;
-      case OverlayPosition.bottom:
+      case VNLOverlayPosition.bottom:
         marginTop = mediaPadding.top;
         break;
       default:
@@ -1140,22 +1140,22 @@ class _SheetWrapperState extends _DrawerWrapperState {
     double paddingLeft = 0;
     double paddingRight = 0;
     switch (resolvedPosition) {
-      case OverlayPosition.left:
+      case VNLOverlayPosition.left:
         paddingTop = mediaPadding.top;
         paddingBottom = mediaPadding.bottom;
         paddingLeft = mediaPadding.left;
         break;
-      case OverlayPosition.right:
+      case VNLOverlayPosition.right:
         paddingTop = mediaPadding.top;
         paddingBottom = mediaPadding.bottom;
         paddingRight = mediaPadding.right;
         break;
-      case OverlayPosition.top:
+      case VNLOverlayPosition.top:
         paddingLeft = mediaPadding.left;
         paddingRight = mediaPadding.right;
         paddingTop = mediaPadding.top;
         break;
-      case OverlayPosition.bottom:
+      case VNLOverlayPosition.bottom:
         paddingLeft = mediaPadding.left;
         paddingRight = mediaPadding.right;
         paddingBottom = mediaPadding.bottom;
@@ -1199,7 +1199,7 @@ class _SheetWrapperState extends _DrawerWrapperState {
 }
 
 /// Position for overlay components like drawers and sheets.
-enum OverlayPosition {
+enum VNLOverlayPosition {
   /// Positioned on the left edge
   left,
 
@@ -1299,7 +1299,7 @@ class _DrawerOverlayWrapperState extends State<_DrawerOverlayWrapper>
 /// - [key] (`Key?`, optional): Widget key.
 /// - [context] (`BuildContext`, required): Build context.
 /// - [builder] (`DrawerBuilder`, required): Drawer content builder.
-/// - [position] (`OverlayPosition`, required): Drawer position on screen.
+/// - [position] (`VNLOverlayPosition`, required): Drawer position on screen.
 /// - [transformBackdrop] (`bool`, default: `true`): Whether to transform backdrop.
 /// - [useRootDrawerOverlay] (`bool`, default: `true`): Use root overlay.
 /// - [modal] (`bool`, default: `true`): Whether drawer is modal.
@@ -1317,7 +1317,7 @@ DrawerOverlayCompleter<T?> openRawDrawer<T>({
   Key? key,
   required BuildContext context,
   required DrawerBuilder builder,
-  required OverlayPosition position,
+  required VNLOverlayPosition position,
   bool transformBackdrop = true,
   bool useRootDrawerOverlay = true,
   bool modal = true,
@@ -1762,7 +1762,7 @@ class DrawerEntryWidget<T> extends StatefulWidget {
   final Completer<T> completer;
 
   /// Position of the drawer (left, right, top, bottom, start, end).
-  final OverlayPosition position;
+  final VNLOverlayPosition position;
 
   /// Index of this drawer in the stack.
   final int stackIndex;
@@ -1873,33 +1873,33 @@ class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>>
     Offset startFractionalOffset;
     var position = widget.position;
     final textDirection = Directionality.of(context);
-    if (position == OverlayPosition.start) {
+    if (position == VNLOverlayPosition.start) {
       position = textDirection == TextDirection.ltr
-          ? OverlayPosition.left
-          : OverlayPosition.right;
-    } else if (position == OverlayPosition.end) {
+          ? VNLOverlayPosition.left
+          : VNLOverlayPosition.right;
+    } else if (position == VNLOverlayPosition.end) {
       position = textDirection == TextDirection.ltr
-          ? OverlayPosition.right
-          : OverlayPosition.left;
+          ? VNLOverlayPosition.right
+          : VNLOverlayPosition.left;
     }
-    bool padTop = widget.useSafeArea && position != OverlayPosition.top;
-    bool padBottom = widget.useSafeArea && position != OverlayPosition.bottom;
-    bool padLeft = widget.useSafeArea && position != OverlayPosition.left;
-    bool padRight = widget.useSafeArea && position != OverlayPosition.right;
+    bool padTop = widget.useSafeArea && position != VNLOverlayPosition.top;
+    bool padBottom = widget.useSafeArea && position != VNLOverlayPosition.bottom;
+    bool padLeft = widget.useSafeArea && position != VNLOverlayPosition.left;
+    bool padRight = widget.useSafeArea && position != VNLOverlayPosition.right;
     switch (position) {
-      case OverlayPosition.left:
+      case VNLOverlayPosition.left:
         alignment = Alignment.centerLeft;
         startFractionalOffset = const Offset(-1, 0);
         break;
-      case OverlayPosition.right:
+      case VNLOverlayPosition.right:
         alignment = Alignment.centerRight;
         startFractionalOffset = const Offset(1, 0);
         break;
-      case OverlayPosition.top:
+      case VNLOverlayPosition.top:
         alignment = Alignment.topCenter;
         startFractionalOffset = const Offset(0, -1);
         break;
-      case OverlayPosition.bottom:
+      case VNLOverlayPosition.bottom:
         alignment = Alignment.bottomCenter;
         startFractionalOffset = const Offset(0, 1);
         break;
@@ -1908,7 +1908,7 @@ class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>>
     }
     return FocusScope(
       node: _focusScopeNode,
-      child: CapturedWrapper(
+      child: VNLCapturedWrapper(
         themes: widget.themes,
         data: widget.data,
         child: Data.inherit(
@@ -1934,13 +1934,13 @@ class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>>
             Size additionalSize;
             Offset additionalOffset;
             bool insetTop =
-                widget.useSafeArea && position == OverlayPosition.top;
+                widget.useSafeArea && position == VNLOverlayPosition.top;
             bool insetBottom =
-                widget.useSafeArea && position == OverlayPosition.bottom;
+                widget.useSafeArea && position == VNLOverlayPosition.bottom;
             bool insetLeft =
-                widget.useSafeArea && position == OverlayPosition.left;
+                widget.useSafeArea && position == VNLOverlayPosition.left;
             bool insetRight =
-                widget.useSafeArea && position == OverlayPosition.right;
+                widget.useSafeArea && position == VNLOverlayPosition.right;
             MediaQueryData mediaQueryData = MediaQuery.of(context);
             EdgeInsets padding =
                 mediaQueryData.padding + mediaQueryData.viewInsets;
@@ -1949,19 +1949,19 @@ class DrawerEntryWidgetState<T> extends State<DrawerEntryWidget<T>>
               additionalOffset = Offset.zero;
             } else {
               switch (position) {
-                case OverlayPosition.left:
+                case VNLOverlayPosition.left:
                   additionalSize = Size(extraSize.width / 2, 0);
                   additionalOffset = Offset(-additionalSize.width, 0);
                   break;
-                case OverlayPosition.right:
+                case VNLOverlayPosition.right:
                   additionalSize = Size(extraSize.width / 2, 0);
                   additionalOffset = Offset(additionalSize.width, 0);
                   break;
-                case OverlayPosition.top:
+                case VNLOverlayPosition.top:
                   additionalSize = Size(0, extraSize.height / 2);
                   additionalOffset = Offset(0, -additionalSize.height);
                   break;
-                case OverlayPosition.bottom:
+                case VNLOverlayPosition.bottom:
                   additionalSize = Size(0, extraSize.height / 2);
                   additionalOffset = Offset(0, additionalSize.height);
                   break;
@@ -2096,7 +2096,7 @@ class DrawerOverlayEntry<T> {
   final Completer<T> completer;
 
   /// Position of the drawer.
-  final OverlayPosition position;
+  final VNLOverlayPosition position;
 
   /// Whether tapping the barrier dismisses the drawer.
   final bool barrierDismissible;
@@ -2196,7 +2196,7 @@ class VNLSheetOverlayHandler extends VNLOverlayHandler {
   }
 
   /// Position where the sheet appears.
-  final OverlayPosition position;
+  final VNLOverlayPosition position;
 
   /// Optional barrier color for the modal backdrop.
   final Color? barrierColor;
@@ -2204,10 +2204,10 @@ class VNLSheetOverlayHandler extends VNLOverlayHandler {
   /// Creates a sheet overlay handler.
   ///
   /// Parameters:
-  /// - [position] (OverlayPosition): Sheet position, defaults to bottom
+  /// - [position] (VNLOverlayPosition): Sheet position, defaults to bottom
   /// - [barrierColor] (Color?): Optional barrier color
   const VNLSheetOverlayHandler({
-    this.position = OverlayPosition.bottom,
+    this.position = VNLOverlayPosition.bottom,
     this.barrierColor,
   });
 
@@ -2229,8 +2229,8 @@ class VNLSheetOverlayHandler extends VNLOverlayHandler {
     required WidgetBuilder builder,
     Offset? position,
     AlignmentGeometry? anchorAlignment,
-    PopoverConstraint widthConstraint = PopoverConstraint.flexible,
-    PopoverConstraint heightConstraint = PopoverConstraint.flexible,
+    VNLPopoverConstraint widthConstraint = VNLPopoverConstraint.flexible,
+    VNLPopoverConstraint heightConstraint = VNLPopoverConstraint.flexible,
     Key? key,
     bool rootOverlay = true,
     bool modal = true,

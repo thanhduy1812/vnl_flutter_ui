@@ -84,7 +84,7 @@ class _ResizableExample4State extends State<ResizableExample4> {
           spacing: 16,
           runSpacing: 16,
           children: [
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 // Restore all panes to their initial sizes.
                 controller1.size = 80;
@@ -95,53 +95,53 @@ class _ResizableExample4State extends State<ResizableExample4> {
               },
               child: const Text('Reset'),
             ),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 // Attempt to grow pane 2 (controller3) by +20px.
                 controller3.tryExpandSize(20);
               },
               child: const Text('Expand Panel 2'),
             ),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 // Attempt to shrink pane 2 (controller3) by -20px.
                 controller3.tryExpandSize(-20);
               },
               child: const Text('Shrink Panel 2'),
             ),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 // Modify another pane's size incrementally.
                 controller2.tryExpandSize(20);
               },
               child: const Text('Expand Panel 1'),
             ),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 controller2.tryExpandSize(-20);
               },
               child: const Text('Shrink Panel 1'),
             ),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 controller5.tryExpandSize(20);
               },
               child: const Text('Expand Panel 4'),
             ),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 controller5.tryExpandSize(-20);
               },
               child: const Text('Shrink Panel 4'),
             ),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 // Collapse reduces the pane to its 'collapsedSize'.
                 controller5.tryCollapse();
               },
               child: const Text('Collapse Panel 4'),
             ),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 // Expand restores from the collapsed state.
                 controller5.tryExpand();

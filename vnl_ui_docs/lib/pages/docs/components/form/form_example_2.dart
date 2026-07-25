@@ -14,7 +14,7 @@ class _FormExample2State extends State<FormExample2> {
   final _passwordKey = const TextFieldKey(#password);
   final _confirmPasswordKey = const TextFieldKey(#confirmPassword);
   final _agreeKey = const CheckboxKey(#agree);
-  CheckboxState state = CheckboxState.unchecked;
+  VNLCheckboxState state = VNLCheckboxState.unchecked;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -25,7 +25,7 @@ class _FormExample2State extends State<FormExample2> {
           String? username = _usernameKey[values];
           String? password = _passwordKey[values];
           String? confirmPassword = _confirmPasswordKey[values];
-          CheckboxState? agree = _agreeKey[values];
+          VNLCheckboxState? agree = _agreeKey[values];
           // or just encode the whole map to JSON directly
           String json = jsonEncode(values.map((key, value) {
             return MapEntry(key.key, value);
@@ -47,7 +47,7 @@ class _FormExample2State extends State<FormExample2> {
                   ],
                 ),
                 actions: [
-                  PrimaryButton(
+                  VNLPrimaryButton(
                     onPressed: () => Navigator.of(context).pop(),
                     child: const Text('Close'),
                   ),
@@ -70,8 +70,8 @@ class _FormExample2State extends State<FormExample2> {
                   validator: const VNLLengthValidator(min: 4),
                   // Show validation messages when the value changes and after submit.
                   showErrors: const {
-                    FormValidationMode.changed,
-                    FormValidationMode.submitted
+                    VNLFormValidationMode.changed,
+                    VNLFormValidationMode.submitted
                   },
                   child: const VNLTextField(),
                 ),
@@ -81,8 +81,8 @@ class _FormExample2State extends State<FormExample2> {
                   validator: const VNLLengthValidator(min: 8),
                   // Same validation visibility behavior for password.
                   showErrors: const {
-                    FormValidationMode.changed,
-                    FormValidationMode.submitted
+                    VNLFormValidationMode.changed,
+                    VNLFormValidationMode.submitted
                   },
                   child: const VNLTextField(
                     obscureText: true,
@@ -95,8 +95,8 @@ class _FormExample2State extends State<FormExample2> {
                       message: 'Passwords do not match'),
                   // Mirror validation visibility on confirm.
                   showErrors: const {
-                    FormValidationMode.changed,
-                    FormValidationMode.submitted
+                    VNLFormValidationMode.changed,
+                    VNLFormValidationMode.submitted
                   },
                   child: const VNLTextField(
                     obscureText: true,
@@ -105,12 +105,12 @@ class _FormExample2State extends State<FormExample2> {
                 FormInline(
                   key: _agreeKey,
                   label: const Text('I agree to the terms and conditions'),
-                  validator: const CompareTo.equal(CheckboxState.checked,
+                  validator: const CompareTo.equal(VNLCheckboxState.checked,
                       message: 'You must agree to the terms and conditions'),
                   // Inline field with a trailing checkbox and same visibility behavior.
                   showErrors: const {
-                    FormValidationMode.changed,
-                    FormValidationMode.submitted
+                    VNLFormValidationMode.changed,
+                    VNLFormValidationMode.submitted
                   },
                   child: Align(
                     alignment: AlignmentDirectional.centerEnd,
@@ -128,7 +128,7 @@ class _FormExample2State extends State<FormExample2> {
             const Gap(24),
             VNLFormErrorBuilder(
               builder: (context, errors, child) {
-                return PrimaryButton(
+                return VNLPrimaryButton(
                   onPressed: errors.isEmpty ? () => context.submitForm() : null,
                   child: const Text('Submit'),
                 );

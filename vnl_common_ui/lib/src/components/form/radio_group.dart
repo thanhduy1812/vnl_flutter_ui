@@ -168,7 +168,7 @@ class VNLRadio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLRadioTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLRadioTheme>(context);
     final size = styleValue<double>(
         widgetValue: this.size,
         themeValue: compTheme?.size,
@@ -390,7 +390,7 @@ class RadioCard<T> extends StatefulWidget {
 }
 
 /// Theme data for the [RadioCard] widget.
-class RadioCardTheme extends ComponentThemeData {
+class VNLRadioCardTheme extends ComponentThemeData {
   /// The cursor to use when the radio card is enabled.
   final MouseCursor? enabledCursor;
 
@@ -422,7 +422,7 @@ class RadioCardTheme extends ComponentThemeData {
   final Color? selectedBorderColor;
 
   /// Theme data for the [RadioCard] widget.
-  const RadioCardTheme({
+  const VNLRadioCardTheme({
     this.enabledCursor,
     this.disabledCursor,
     this.hoverColor,
@@ -437,11 +437,11 @@ class RadioCardTheme extends ComponentThemeData {
 
   @override
   String toString() {
-    return 'RadioCardTheme(enabledCursor: $enabledCursor, disabledCursor: $disabledCursor, hoverColor: $hoverColor, color: $color, borderWidth: $borderWidth, selectedBorderWidth: $selectedBorderWidth, borderRadius: $borderRadius, padding: $padding, borderColor: $borderColor, selectedBorderColor: $selectedBorderColor)';
+    return 'VNLRadioCardTheme(enabledCursor: $enabledCursor, disabledCursor: $disabledCursor, hoverColor: $hoverColor, color: $color, borderWidth: $borderWidth, selectedBorderWidth: $selectedBorderWidth, borderRadius: $borderRadius, padding: $padding, borderColor: $borderColor, selectedBorderColor: $selectedBorderColor)';
   }
 
-  /// Creates a copy of this [RadioCardTheme] but with the given fields replaced with the new values.
-  RadioCardTheme copyWith({
+  /// Creates a copy of this [VNLRadioCardTheme] but with the given fields replaced with the new values.
+  VNLRadioCardTheme copyWith({
     ValueGetter<MouseCursor?>? enabledCursor,
     ValueGetter<MouseCursor?>? disabledCursor,
     ValueGetter<Color?>? hoverColor,
@@ -453,7 +453,7 @@ class RadioCardTheme extends ComponentThemeData {
     ValueGetter<Color?>? borderColor,
     ValueGetter<Color?>? selectedBorderColor,
   }) {
-    return RadioCardTheme(
+    return VNLRadioCardTheme(
       enabledCursor:
           enabledCursor != null ? enabledCursor() : this.enabledCursor,
       disabledCursor:
@@ -477,7 +477,7 @@ class RadioCardTheme extends ComponentThemeData {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is RadioCardTheme &&
+    return other is VNLRadioCardTheme &&
         other.enabledCursor == enabledCursor &&
         other.disabledCursor == disabledCursor &&
         other.hoverColor == hoverColor &&
@@ -531,7 +531,7 @@ class _RadioCardState<T> extends State<RadioCard<T>> {
     final densityGap = theme.density.baseGap * theme.scaling;
     final densityContainerPadding =
         theme.density.baseContainerPadding * theme.scaling;
-    final componentTheme = ComponentTheme.maybeOf<RadioCardTheme>(context);
+    final componentTheme = VNLComponentTheme.maybeOf<VNLRadioCardTheme>(context);
     final groupData = Data.maybeOf<RadioGroupData<T>>(context);
     final group = Data.maybeOf<RadioGroupState<T>>(context);
     assert(groupData != null,
@@ -673,7 +673,7 @@ class _RadioCardState<T> extends State<RadioCard<T>> {
 ///
 /// Example:
 /// ```dart
-/// final controller = RadioGroupController<String>('option1');
+/// final controller = VNLRadioGroupController<String>('option1');
 ///
 /// // Listen to changes
 /// controller.addListener(() {
@@ -683,16 +683,16 @@ class _RadioCardState<T> extends State<RadioCard<T>> {
 /// // Update selection
 /// controller.value = 'option2';
 /// ```
-class RadioGroupController<T> extends ValueNotifier<T?>
+class VNLRadioGroupController<T> extends ValueNotifier<T?>
     with ComponentController<T?> {
-  /// Creates a [RadioGroupController] with an optional initial value.
+  /// Creates a [VNLRadioGroupController] with an optional initial value.
   ///
   /// The [value] parameter sets the initial selected option. Can be null
   /// to start with no selection.
   ///
   /// Parameters:
   /// - [value] (T?, optional): Initial selected value
-  RadioGroupController([super.value]);
+  VNLRadioGroupController([super.value]);
 }
 
 /// Reactive radio button group with automatic state management and exclusivity.
@@ -713,7 +713,7 @@ class RadioGroupController<T> extends ValueNotifier<T?>
 ///
 /// **Controller-based (recommended for complex state):**
 /// ```dart
-/// final controller = RadioGroupController<String>('small');
+/// final controller = VNLRadioGroupController<String>('small');
 ///
 /// ControlledRadioGroup<String>(
 ///   controller: controller,
@@ -752,7 +752,7 @@ class ControlledRadioGroup<T> extends StatelessWidget
   @override
   final bool enabled;
   @override
-  final RadioGroupController<T?>? controller;
+  final VNLRadioGroupController<T?>? controller;
 
   /// Child widget containing the radio buttons.
   ///
@@ -768,7 +768,7 @@ class ControlledRadioGroup<T> extends StatelessWidget
   /// patterns with automatic mutual exclusion between radio options.
   ///
   /// Parameters:
-  /// - [controller] (`RadioGroupController<T>?`, optional): external state controller
+  /// - [controller] (`VNLRadioGroupController<T>?`, optional): external state controller
   /// - [initialValue] (T?, optional): starting selection when no controller
   /// - [onChanged] (`ValueChanged<T?>?`, optional): selection change callback
   /// - [enabled] (bool, default: true): whether radio group is interactive

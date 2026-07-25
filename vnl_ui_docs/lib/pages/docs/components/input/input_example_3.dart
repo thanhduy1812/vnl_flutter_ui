@@ -32,7 +32,7 @@ class InputExample3 extends StatelessWidget {
             ),
             // Password toggle configured with `hold` mode: press-and-hold to peek,
             // release to hide again.
-            VNLInputFeature.passwordToggle(mode: PasswordPeekMode.hold),
+            VNLInputFeature.passwordToggle(mode: VNLPasswordPeekMode.hold),
           ],
         ),
       ],

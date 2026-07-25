@@ -16,7 +16,7 @@ class ColorPickerTile extends StatelessWidget implements IComponentPage {
       reverse: true,
       reverseVertical: true,
       example: VNLCard(
-        child: ColorPicker(
+        child: VNLColorPicker(
           value: VNLColorDerivative.fromColor(material.Colors.blue),
         ),
       ),

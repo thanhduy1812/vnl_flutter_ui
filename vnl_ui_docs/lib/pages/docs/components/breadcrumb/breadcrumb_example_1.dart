@@ -16,13 +16,13 @@ class BreadcrumbExample1 extends StatelessWidget {
       children: [
         VNLTextButton(
           onPressed: () {},
-          density: ButtonDensity.compact,
+          density: VNLButtonDensity.compact,
           child: const Text('Home'),
         ),
         const VNLMoreDots(),
         VNLTextButton(
           onPressed: () {},
-          density: ButtonDensity.compact,
+          density: VNLButtonDensity.compact,
           child: const Text('Components'),
         ),
         // Final segment as a non-interactive label.

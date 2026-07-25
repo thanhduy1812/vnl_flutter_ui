@@ -213,7 +213,7 @@ class VNLCircularProgressIndicator extends StatelessWidget {
     final iconThemeData = IconTheme.of(context);
     final theme = Theme.of(context);
     final compTheme =
-        ComponentTheme.maybeOf<VNLCircularProgressIndicatorTheme>(context);
+        VNLComponentTheme.maybeOf<VNLCircularProgressIndicatorTheme>(context);
 
     final effectiveSize = styleValue(
         widgetValue: size,

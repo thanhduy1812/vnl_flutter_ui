@@ -5,22 +5,22 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 
 /// A widget that constrains the width of its child based on a factor and aligns it.
 ///
-/// This widget is used by [ChatBubble] to limit the width of the bubble relative to
+/// This widget is used by [VNLChatBubble] to limit the width of the bubble relative to
 /// the available width and to align it within that space.
 ///
 /// Parameters:
 /// - [widthFactor] (`double`, required): The fraction of the available width that the child should occupy.
 /// - [alignment] (`AxisAlignmentGeometry`, required): The alignment of the child within the available space.
 /// - [child] (`Widget`, required): The widget below this widget in the tree.
-class ChatConstrainedBox extends SingleChildRenderObjectWidget {
+class VNLChatConstrainedBox extends SingleChildRenderObjectWidget {
   /// The fraction of the available width that the child should occupy.
   final double widthFactor;
 
   /// The alignment of the child within the available space.
   final AxisAlignmentGeometry alignment;
 
-  /// Creates a [ChatConstrainedBox].
-  const ChatConstrainedBox({
+  /// Creates a [VNLChatConstrainedBox].
+  const VNLChatConstrainedBox({
     required this.widthFactor,
     required this.alignment,
     required super.child,
@@ -48,7 +48,7 @@ class ChatConstrainedBox extends SingleChildRenderObjectWidget {
 
 /// A render object that constrains the width of its child and aligns it.
 ///
-/// This render object implements the layout logic for [ChatConstrainedBox].
+/// This render object implements the layout logic for [VNLChatConstrainedBox].
 class RenderChatConstrainedBox extends RenderShiftedBox {
   double _widthFactor;
   AxisAlignment _alignment;
@@ -131,8 +131,8 @@ class RenderChatConstrainedBox extends RenderShiftedBox {
   }
 }
 
-/// Defines the theme for a [ChatGroup].
-class ChatGroupTheme extends ComponentThemeData {
+/// Defines the theme for a [VNLChatGroup].
+class VNLChatGroupTheme extends ComponentThemeData {
   /// The spacing between chat bubbles in the group.
   final double? spacing;
 
@@ -142,13 +142,13 @@ class ChatGroupTheme extends ComponentThemeData {
   /// The spacing between the avatar and the chat bubbles.
   final double? avatarSpacing;
 
-  /// Creates a [ChatGroupTheme].
+  /// Creates a [VNLChatGroupTheme].
   ///
   /// Parameters:
   /// - [spacing] (`double?`, optional): The spacing between chat bubbles in the group.
   /// - [avatarAlignment] (`AxisAlignmentGeometry?`, optional): The alignment of the avatar relative to the chat bubbles.
   /// - [avatarSpacing] (`double?`, optional): The spacing between the avatar and the chat bubbles.
-  const ChatGroupTheme({
+  const VNLChatGroupTheme({
     this.spacing,
     this.avatarAlignment,
     this.avatarSpacing,
@@ -162,13 +162,13 @@ class ChatGroupTheme extends ComponentThemeData {
   /// - [avatarSpacing] (`ValueGetter<double?>?`, optional): New avatar spacing value.
   ///
   /// Returns:
-  /// A new [ChatGroupTheme] with the specified values updated.
-  ChatGroupTheme copyWith({
+  /// A new [VNLChatGroupTheme] with the specified values updated.
+  VNLChatGroupTheme copyWith({
     ValueGetter<double?>? spacing,
     ValueGetter<AxisAlignmentGeometry?>? avatarAlignment,
     ValueGetter<double?>? avatarSpacing,
   }) {
-    return ChatGroupTheme(
+    return VNLChatGroupTheme(
       spacing: spacing == null ? this.spacing : spacing(),
       avatarAlignment:
           avatarAlignment == null ? this.avatarAlignment : avatarAlignment(),
@@ -179,13 +179,13 @@ class ChatGroupTheme extends ComponentThemeData {
 
   @override
   String toString() {
-    return 'ChatGroupTheme(spacing: $spacing, avatarAlignment: $avatarAlignment, avatarSpacing: $avatarSpacing)';
+    return 'VNLChatGroupTheme(spacing: $spacing, avatarAlignment: $avatarAlignment, avatarSpacing: $avatarSpacing)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ChatGroupTheme &&
+    return other is VNLChatGroupTheme &&
         other.spacing == spacing &&
         other.avatarAlignment == avatarAlignment &&
         other.avatarSpacing == avatarSpacing;
@@ -197,8 +197,8 @@ class ChatGroupTheme extends ComponentThemeData {
   }
 }
 
-/// Defines the theme for [ChatBubble]s.
-class ChatTheme extends ComponentThemeData {
+/// Defines the theme for [VNLChatBubble]s.
+class VNLChatTheme extends ComponentThemeData {
   /// The background color of the chat bubble.
   final Color? color;
 
@@ -206,7 +206,7 @@ class ChatTheme extends ComponentThemeData {
   final AxisAlignmentGeometry? alignment;
 
   /// The type of the chat bubble (e.g., plain, tailed).
-  final ChatBubbleType? type;
+  final VNLChatBubbleType? type;
 
   /// The border radius of the chat bubble.
   final BorderRadiusGeometry? borderRadius;
@@ -220,17 +220,17 @@ class ChatTheme extends ComponentThemeData {
   /// The width factor of the chat bubble.
   final double? widthFactor;
 
-  /// Creates a [ChatTheme].
+  /// Creates a [VNLChatTheme].
   ///
   /// Parameters:
   /// - [color] (`Color?`, optional): The background color of the chat bubble.
   /// - [alignment] (`AxisAlignmentGeometry?`, optional): The alignment of the chat bubble.
-  /// - [type] (`ChatBubbleType?`, optional): The type of the chat bubble (e.g., plain, tailed).
+  /// - [type] (`VNLChatBubbleType?`, optional): The type of the chat bubble (e.g., plain, tailed).
   /// - [borderRadius] (`BorderRadiusGeometry?`, optional): The border radius of the chat bubble.
   /// - [padding] (`EdgeInsetsGeometry?`, optional): The padding inside the chat bubble.
   /// - [border] (`BorderSide?`, optional): The border of the chat bubble.
   /// - [widthFactor] (`double?`, optional): The width factor of the chat bubble.
-  const ChatTheme({
+  const VNLChatTheme({
     this.color,
     this.alignment,
     this.type,
@@ -245,23 +245,23 @@ class ChatTheme extends ComponentThemeData {
   /// Parameters:
   /// - [color] (`ValueGetter<Color?>?`, optional): New color value.
   /// - [alignment] (`ValueGetter<AxisAlignmentGeometry?>?`, optional): New alignment value.
-  /// - [type] (`ValueGetter<ChatBubbleType?>?`, optional): New type value.
+  /// - [type] (`ValueGetter<VNLChatBubbleType?>?`, optional): New type value.
   /// - [borderRadius] (`ValueGetter<BorderRadiusGeometry?>?`, optional): New border radius value.
   /// - [padding] (`ValueGetter<EdgeInsetsGeometry?>?`, optional): New padding value.
   /// - [border] (`ValueGetter<BorderSide?>?`, optional): New border value.
   ///
   /// Returns:
-  /// A new [ChatTheme] with the specified values updated.
-  ChatTheme copyWith({
+  /// A new [VNLChatTheme] with the specified values updated.
+  VNLChatTheme copyWith({
     ValueGetter<Color?>? color,
     ValueGetter<AxisAlignmentGeometry?>? alignment,
-    ValueGetter<ChatBubbleType?>? type,
+    ValueGetter<VNLChatBubbleType?>? type,
     ValueGetter<BorderRadiusGeometry?>? borderRadius,
     ValueGetter<EdgeInsetsGeometry?>? padding,
     ValueGetter<BorderSide?>? border,
     ValueGetter<double?>? widthFactor,
   }) {
-    return ChatTheme(
+    return VNLChatTheme(
       color: color == null ? this.color : color(),
       alignment: alignment == null ? this.alignment : alignment(),
       type: type == null ? this.type : type(),
@@ -274,13 +274,13 @@ class ChatTheme extends ComponentThemeData {
 
   @override
   String toString() {
-    return 'ChatTheme(color: $color, alignment: $alignment, type: $type, borderRadius: $borderRadius, padding: $padding, border: $border, widthFactor: $widthFactor)';
+    return 'VNLChatTheme(color: $color, alignment: $alignment, type: $type, borderRadius: $borderRadius, padding: $padding, border: $border, widthFactor: $widthFactor)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ChatTheme &&
+    return other is VNLChatTheme &&
         other.color == color &&
         other.alignment == alignment &&
         other.type == type &&
@@ -297,22 +297,22 @@ class ChatTheme extends ComponentThemeData {
   }
 }
 
-/// A widget that groups multiple [ChatBubble]s together.
+/// A widget that groups multiple [VNLChatBubble]s together.
 ///
 /// This widget handles the layout and styling of a group of chat bubbles,
 /// including avatar positioning and spacing.
 ///
 /// Example:
 /// ```dart
-/// ChatGroup(
+/// VNLChatGroup(
 ///   avatarPrefix: VNLAvatar(child: Text('A')),
 ///   children: [
-///     ChatBubble(child: Text('Hello')),
-///     ChatBubble(child: Text('How are you?')),
+///     VNLChatBubble(child: Text('Hello')),
+///     VNLChatBubble(child: Text('How are you?')),
 ///   ],
 /// )
 /// ```
-class ChatGroup extends StatelessWidget {
+class VNLChatGroup extends StatelessWidget {
   /// The widget to display before the chat bubbles (e.g., an avatar).
   final Widget? avatarPrefix;
 
@@ -329,7 +329,7 @@ class ChatGroup extends StatelessWidget {
   final Color? color;
 
   /// The type of the chat bubbles.
-  final ChatBubbleType? type;
+  final VNLChatBubbleType? type;
 
   /// The border radius of the chat bubbles.
   final BorderRadiusGeometry? borderRadius;
@@ -349,13 +349,13 @@ class ChatGroup extends StatelessWidget {
   /// The spacing between the avatar and the chat bubbles.
   final double? avatarSpacing;
 
-  /// Creates a [ChatGroup].
+  /// Creates a [VNLChatGroup].
   ///
   /// Parameters:
   /// - [children] (`List<Widget>`, required): The list of chat bubbles to display.
   /// - [alignment] (`AxisAlignmentGeometry?`, optional): The alignment of the chat bubbles within the group.
   /// - [color] (`Color?`, optional): The background color of the chat bubbles.
-  /// - [type] (`ChatBubbleType?`, optional): The type of the chat bubbles.
+  /// - [type] (`VNLChatBubbleType?`, optional): The type of the chat bubbles.
   /// - [borderRadius] (`BorderRadiusGeometry?`, optional): The border radius of the chat bubbles.
   /// - [padding] (`EdgeInsetsGeometry?`, optional): The padding inside the chat bubbles.
   /// - [border] (`BorderSide?`, optional): The border of the chat bubbles.
@@ -364,7 +364,7 @@ class ChatGroup extends StatelessWidget {
   /// - [avatarSuffix] (`Widget?`, optional): The widget to display after the chat bubbles.
   /// - [avatarAlignment] (`AxisAlignmentGeometry?`, optional): The alignment of the avatar.
   /// - [avatarSpacing] (`double?`, optional): The spacing between the avatar and the chat bubbles.
-  const ChatGroup({
+  const VNLChatGroup({
     super.key,
     required this.children,
     this.alignment,
@@ -383,7 +383,7 @@ class ChatGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<ChatTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLChatTheme>(context);
     final color = styleValue(
         widgetValue: this.color,
         themeValue: compTheme?.color,
@@ -391,8 +391,8 @@ class ChatGroup extends StatelessWidget {
     final type = styleValue(
         widgetValue: this.type,
         themeValue: compTheme?.type,
-        defaultValue: ChatBubbleType.tail);
-    final groupTheme = ComponentTheme.maybeOf<ChatGroupTheme>(context);
+        defaultValue: VNLChatBubbleType.tail);
+    final groupTheme = VNLComponentTheme.maybeOf<VNLChatGroupTheme>(context);
     final avatarAlignment = styleValue(
       widgetValue: this.avatarAlignment,
       themeValue: groupTheme?.avatarAlignment,
@@ -400,7 +400,7 @@ class ChatGroup extends StatelessWidget {
     )
         .resolve(Directionality.maybeOf(context) ?? TextDirection.ltr)
         .asVerticalAlignment(AxisAlignment.center);
-    return ComponentTheme<ChatTheme>(
+    return VNLComponentTheme<VNLChatTheme>(
       data: compTheme?.copyWith(
             alignment: alignment == null ? null : () => alignment,
             border: border == null ? null : () => border,
@@ -409,7 +409,7 @@ class ChatGroup extends StatelessWidget {
             padding: padding == null ? null : () => padding,
             type: this.type == null ? null : () => this.type,
           ) ??
-          ChatTheme(
+          VNLChatTheme(
             alignment: alignment,
             border: border,
             borderRadius: borderRadius,
@@ -441,7 +441,7 @@ class ChatGroup extends StatelessWidget {
                 children: [
                   for (int i = 0; i < children.length; i++)
                     Data.inherit(
-                      data: ChatBubbleData(
+                      data: VNLChatBubbleData(
                         index: i,
                         length: children.length,
                       ),
@@ -462,39 +462,39 @@ class ChatGroup extends StatelessWidget {
   }
 }
 
-/// Defines the type of a [ChatBubble].
+/// Defines the type of a [VNLChatBubble].
 ///
 /// This abstract class allows for different visual styles of chat bubbles,
 /// such as plain bubbles or bubbles with tails.
-abstract class ChatBubbleType {
+abstract class VNLChatBubbleType {
   /// A plain bubble with no tail.
-  static const plain = PlainChatBubbleType();
+  static const plain = VNLPlainChatBubbleType();
 
   /// A bubble with an external triangular tail.
-  static const tail = TailChatBubbleType();
+  static const tail = VNLTailChatBubbleType();
 
   /// A bubble with one sharp corner instead of rounded.
-  static const sharpCorner = SharpCornerChatBubbleType();
+  static const sharpCorner = VNLSharpCornerChatBubbleType();
 
-  /// Creates a [ChatBubbleType].
-  const ChatBubbleType();
+  /// Creates a [VNLChatBubbleType].
+  const VNLChatBubbleType();
 
   /// Wraps the child widget with the bubble styling.
   ///
   /// Parameters:
   /// - [context] (`BuildContext`, required): The build context.
   /// - [child] (`Widget`, required): The child widget to wrap.
-  /// - [data] (`ChatBubbleData`, required): The data associated with the bubble.
-  /// - [chat] (`ChatBubble`, required): The chat bubble widget itself.
+  /// - [data] (`VNLChatBubbleData`, required): The data associated with the bubble.
+  /// - [chat] (`VNLChatBubble`, required): The chat bubble widget itself.
   ///
   /// Returns:
   /// A [Widget] that wraps the child with the bubble styling.
   Widget wrap(
-      BuildContext context, Widget child, ChatBubbleData data, ChatBubble chat);
+      BuildContext context, Widget child, VNLChatBubbleData data, VNLChatBubble chat);
 }
 
-/// Defines the corner of a [ChatBubble] where a tail might be attached.
-enum ChatBubbleCorner {
+/// Defines the corner of a [VNLChatBubble] where a tail might be attached.
+enum VNLChatBubbleCorner {
   /// The top-left corner.
   topLeft,
 
@@ -508,11 +508,11 @@ enum ChatBubbleCorner {
   bottomRight;
 }
 
-/// Defines the directional corner of a [ChatBubble].
+/// Defines the directional corner of a [VNLChatBubble].
 ///
 /// This is used to support RTL languages by defining corners in terms of
 /// start and end instead of left and right.
-enum ChatBubbleCornerDirectional {
+enum VNLChatBubbleCornerDirectional {
   /// The top-start corner (top-left in LTR, top-right in RTL).
   topStart,
 
@@ -525,36 +525,36 @@ enum ChatBubbleCornerDirectional {
   /// The bottom-end corner (bottom-right in LTR, bottom-left in RTL).
   bottomEnd;
 
-  /// Resolves the directional corner to a concrete [ChatBubbleCorner] based on the text direction.
-  ChatBubbleCorner resolve(TextDirection direction) {
+  /// Resolves the directional corner to a concrete [VNLChatBubbleCorner] based on the text direction.
+  VNLChatBubbleCorner resolve(TextDirection direction) {
     return switch ((this, direction)) {
-      (ChatBubbleCornerDirectional.topStart, TextDirection.ltr) =>
-        ChatBubbleCorner.topLeft,
-      (ChatBubbleCornerDirectional.topStart, TextDirection.rtl) =>
-        ChatBubbleCorner.topRight,
-      (ChatBubbleCornerDirectional.topEnd, TextDirection.ltr) =>
-        ChatBubbleCorner.topRight,
-      (ChatBubbleCornerDirectional.topEnd, TextDirection.rtl) =>
-        ChatBubbleCorner.topLeft,
-      (ChatBubbleCornerDirectional.bottomStart, TextDirection.ltr) =>
-        ChatBubbleCorner.bottomLeft,
-      (ChatBubbleCornerDirectional.bottomStart, TextDirection.rtl) =>
-        ChatBubbleCorner.bottomRight,
-      (ChatBubbleCornerDirectional.bottomEnd, TextDirection.ltr) =>
-        ChatBubbleCorner.bottomRight,
-      (ChatBubbleCornerDirectional.bottomEnd, TextDirection.rtl) =>
-        ChatBubbleCorner.bottomLeft,
+      (VNLChatBubbleCornerDirectional.topStart, TextDirection.ltr) =>
+        VNLChatBubbleCorner.topLeft,
+      (VNLChatBubbleCornerDirectional.topStart, TextDirection.rtl) =>
+        VNLChatBubbleCorner.topRight,
+      (VNLChatBubbleCornerDirectional.topEnd, TextDirection.ltr) =>
+        VNLChatBubbleCorner.topRight,
+      (VNLChatBubbleCornerDirectional.topEnd, TextDirection.rtl) =>
+        VNLChatBubbleCorner.topLeft,
+      (VNLChatBubbleCornerDirectional.bottomStart, TextDirection.ltr) =>
+        VNLChatBubbleCorner.bottomLeft,
+      (VNLChatBubbleCornerDirectional.bottomStart, TextDirection.rtl) =>
+        VNLChatBubbleCorner.bottomRight,
+      (VNLChatBubbleCornerDirectional.bottomEnd, TextDirection.ltr) =>
+        VNLChatBubbleCorner.bottomRight,
+      (VNLChatBubbleCornerDirectional.bottomEnd, TextDirection.rtl) =>
+        VNLChatBubbleCorner.bottomLeft,
     };
   }
 }
 
-/// A [ChatBubbleType] that makes one corner sharp instead of rounded.
+/// A [VNLChatBubbleType] that makes one corner sharp instead of rounded.
 ///
 /// This style modifies the border radius of one corner to create a pointed
 /// corner effect, similar to a speech bubble tail.
-class SharpCornerChatBubbleType extends ChatBubbleType {
+class VNLSharpCornerChatBubbleType extends VNLChatBubbleType {
   /// The corner where the tail should be applied.
-  final ChatBubbleCornerDirectional? corner;
+  final VNLChatBubbleCornerDirectional? corner;
 
   /// The border radius of the bubble.
   final BorderRadiusGeometry? borderRadius;
@@ -565,14 +565,14 @@ class SharpCornerChatBubbleType extends ChatBubbleType {
   /// The behavior determining when to show the tail.
   final TailBehavior? tailBehavior;
 
-  /// Creates a [SharpCornerChatBubbleType].
+  /// Creates a [VNLSharpCornerChatBubbleType].
   ///
   /// Parameters:
-  /// - [corner] (`ChatBubbleCornerDirectional?`, optional): The corner that should be sharp.
+  /// - [corner] (`VNLChatBubbleCornerDirectional?`, optional): The corner that should be sharp.
   /// - [borderRadius] (`BorderRadiusGeometry?`, optional): The border radius of the bubble.
   /// - [padding] (`EdgeInsetsGeometry?`, optional): The padding inside the bubble.
   /// - [tailBehavior] (`TailBehavior?`, optional): The behavior determining when to show the sharp corner.
-  const SharpCornerChatBubbleType({
+  const VNLSharpCornerChatBubbleType({
     this.corner,
     this.borderRadius,
     this.padding,
@@ -582,20 +582,20 @@ class SharpCornerChatBubbleType extends ChatBubbleType {
   /// Creates a copy of this bubble type with the given fields replaced with the new values.
   ///
   /// Parameters:
-  /// - [corner] (`ValueGetter<ChatBubbleCornerDirectional?>?`, optional): New corner value.
+  /// - [corner] (`ValueGetter<VNLChatBubbleCornerDirectional?>?`, optional): New corner value.
   /// - [borderRadius] (`ValueGetter<BorderRadiusGeometry?>?`, optional): New border radius value.
   /// - [padding] (`ValueGetter<EdgeInsetsGeometry?>?`, optional): New padding value.
   /// - [tailBehavior] (`ValueGetter<TailBehavior?>?`, optional): New tail behavior value.
   ///
   /// Returns:
-  /// A new [SharpCornerChatBubbleType] with the specified values updated.
-  SharpCornerChatBubbleType copyWith({
-    ValueGetter<ChatBubbleCornerDirectional?>? corner,
+  /// A new [VNLSharpCornerChatBubbleType] with the specified values updated.
+  VNLSharpCornerChatBubbleType copyWith({
+    ValueGetter<VNLChatBubbleCornerDirectional?>? corner,
     ValueGetter<BorderRadiusGeometry?>? borderRadius,
     ValueGetter<EdgeInsetsGeometry?>? padding,
     ValueGetter<TailBehavior?>? tailBehavior,
   }) {
-    return SharpCornerChatBubbleType(
+    return VNLSharpCornerChatBubbleType(
       corner: corner == null ? this.corner : corner(),
       borderRadius: borderRadius == null ? this.borderRadius : borderRadius(),
       padding: padding == null ? this.padding : padding(),
@@ -604,11 +604,11 @@ class SharpCornerChatBubbleType extends ChatBubbleType {
   }
 
   @override
-  Widget wrap(BuildContext context, Widget child, ChatBubbleData data,
-      ChatBubble chat) {
+  Widget wrap(BuildContext context, Widget child, VNLChatBubbleData data,
+      VNLChatBubble chat) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<ChatTheme>(context);
-    final compTailTheme = ComponentTheme.maybeOf<ChatTailTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLChatTheme>(context);
+    final compTailTheme = VNLComponentTheme.maybeOf<VNLChatTailTheme>(context);
     final textDirection = Directionality.maybeOf(context) ?? TextDirection.ltr;
     final padding = styleValue(
       widgetValue: this.padding,
@@ -632,7 +632,7 @@ class SharpCornerChatBubbleType extends ChatBubbleType {
         themeValue: compTailTheme?.tailBehavior,
         defaultValue: TailBehavior.last);
     if (tailBehavior.wrapWithTail(data)) {
-      ChatBubbleCorner? corner = this.corner?.resolve(textDirection);
+      VNLChatBubbleCorner? corner = this.corner?.resolve(textDirection);
       if (corner == null) {
         // guess corner based on alignment
         final alignment = styleValue(
@@ -641,22 +641,22 @@ class SharpCornerChatBubbleType extends ChatBubbleType {
           defaultValue: AxisAlignmentDirectional.end,
         ).resolve(textDirection);
         if (alignment.value > 0) {
-          corner = ChatBubbleCorner.bottomRight;
+          corner = VNLChatBubbleCorner.bottomRight;
         } else {
-          corner = ChatBubbleCorner.bottomLeft;
+          corner = VNLChatBubbleCorner.bottomLeft;
         }
       }
       switch (corner) {
-        case ChatBubbleCorner.topLeft:
+        case VNLChatBubbleCorner.topLeft:
           radius = radius.copyWith(topLeft: Radius.zero);
           break;
-        case ChatBubbleCorner.topRight:
+        case VNLChatBubbleCorner.topRight:
           radius = radius.copyWith(topRight: Radius.zero);
           break;
-        case ChatBubbleCorner.bottomLeft:
+        case VNLChatBubbleCorner.bottomLeft:
           radius = radius.copyWith(bottomLeft: Radius.zero);
           break;
-        case ChatBubbleCorner.bottomRight:
+        case VNLChatBubbleCorner.bottomRight:
           radius = radius.copyWith(bottomRight: Radius.zero);
           break;
       }
@@ -672,8 +672,8 @@ class SharpCornerChatBubbleType extends ChatBubbleType {
   }
 }
 
-/// A simple [ChatBubbleType] with no tail.
-class PlainChatBubbleType extends ChatBubbleType {
+/// A simple [VNLChatBubbleType] with no tail.
+class VNLPlainChatBubbleType extends VNLChatBubbleType {
   /// The border radius of the bubble.
   final BorderRadiusGeometry? borderRadius;
 
@@ -683,22 +683,22 @@ class PlainChatBubbleType extends ChatBubbleType {
   /// The padding inside the bubble.
   final EdgeInsetsGeometry? padding;
 
-  /// Creates a [PlainChatBubbleType].
+  /// Creates a [VNLPlainChatBubbleType].
   ///
   /// Parameters:
   /// - [borderRadius] (`BorderRadiusGeometry?`, optional): The border radius of the bubble.
   /// - [border] (`BorderSide?`, optional): The border of the bubble.
   /// - [padding] (`EdgeInsetsGeometry?`, optional): The padding inside the bubble.
-  const PlainChatBubbleType({
+  const VNLPlainChatBubbleType({
     this.borderRadius,
     this.border,
     this.padding,
   });
   @override
-  Widget wrap(BuildContext context, Widget child, ChatBubbleData data,
-      ChatBubble chat) {
+  Widget wrap(BuildContext context, Widget child, VNLChatBubbleData data,
+      VNLChatBubble chat) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<ChatTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLChatTheme>(context);
     final border = styleValue(
       widgetValue: this.border,
       themeValue: compTheme?.border,
@@ -738,7 +738,7 @@ class PlainChatBubbleType extends ChatBubbleType {
   }
 }
 
-/// Defines when a tail should be shown on a [ChatBubble].
+/// Defines when a tail should be shown on a [VNLChatBubble].
 abstract class TailBehavior {
   /// Shows a tail on the first bubble in a group.
   static const first = _ChatTailBehavior(_first);
@@ -748,26 +748,26 @@ abstract class TailBehavior {
 
   /// Shows a tail on the last bubble in a group.
   static const last = _ChatTailBehavior(_last);
-  static bool _first(ChatBubbleData data) => data.index == 0;
-  static bool _middle(ChatBubbleData data) =>
+  static bool _first(VNLChatBubbleData data) => data.index == 0;
+  static bool _middle(VNLChatBubbleData data) =>
       data.index == (data.length - 1) ~/ 2;
-  static bool _last(ChatBubbleData data) => data.index == data.length - 1;
+  static bool _last(VNLChatBubbleData data) => data.index == data.length - 1;
 
   /// Determines whether the bubble at the given index should have a tail.
-  bool wrapWithTail(ChatBubbleData data);
+  bool wrapWithTail(VNLChatBubbleData data);
 }
 
 class _ChatTailBehavior implements TailBehavior {
-  final bool Function(ChatBubbleData data) shouldHaveTail;
+  final bool Function(VNLChatBubbleData data) shouldHaveTail;
   const _ChatTailBehavior(this.shouldHaveTail);
   @override
-  bool wrapWithTail(ChatBubbleData data) {
+  bool wrapWithTail(VNLChatBubbleData data) {
     return shouldHaveTail(data);
   }
 }
 
-/// Defines the theme for the tail of a [ChatBubble].
-class ChatTailTheme extends ComponentThemeData {
+/// Defines the theme for the tail of a [VNLChatBubble].
+class VNLChatTailTheme extends ComponentThemeData {
   /// The position of the tail relative to the bubble.
   final AxisDirectional? position;
 
@@ -783,7 +783,7 @@ class ChatTailTheme extends ComponentThemeData {
   /// The behavior determining when to show the tail.
   final TailBehavior? tailBehavior;
 
-  /// Creates a [ChatTailTheme].
+  /// Creates a [VNLChatTailTheme].
   ///
   /// Parameters:
   /// - [position] (`AxisDirectional?`, optional): The position of the tail relative to the bubble.
@@ -791,7 +791,7 @@ class ChatTailTheme extends ComponentThemeData {
   /// - [borderRadius] (`BorderRadiusGeometry?`, optional): The border radius of the bubble when a tail is present.
   /// - [tailRadius] (`double?`, optional): The radius of the tail's curve.
   /// - [tailBehavior] (`TailBehavior?`, optional): The behavior determining when to show the tail.
-  const ChatTailTheme({
+  const VNLChatTailTheme({
     this.position,
     this.size,
     this.borderRadius,
@@ -800,7 +800,7 @@ class ChatTailTheme extends ComponentThemeData {
   });
   @override
   String toString() {
-    return 'ChatTailTheme(position: $position, size: $size, borderRadius: $borderRadius, tailRadius: $tailRadius, tailBehavior: $tailBehavior)';
+    return 'VNLChatTailTheme(position: $position, size: $size, borderRadius: $borderRadius, tailRadius: $tailRadius, tailBehavior: $tailBehavior)';
   }
 
   /// Creates a copy of this theme with the given fields replaced with the new values.
@@ -813,15 +813,15 @@ class ChatTailTheme extends ComponentThemeData {
   /// - [tailBehavior] (`ValueGetter<TailBehavior>?`, optional): New tail behavior value.
   ///
   /// Returns:
-  /// A new [ChatTailTheme] with the specified values updated.
-  ChatTailTheme copyWith({
+  /// A new [VNLChatTailTheme] with the specified values updated.
+  VNLChatTailTheme copyWith({
     ValueGetter<AxisDirectional>? position,
     ValueGetter<Size>? size,
     ValueGetter<BorderRadiusGeometry>? borderRadius,
     ValueGetter<double>? tailRadius,
     ValueGetter<TailBehavior>? tailBehavior,
   }) {
-    return ChatTailTheme(
+    return VNLChatTailTheme(
       position: position?.call() ?? this.position,
       size: size?.call() ?? this.size,
       borderRadius: borderRadius?.call() ?? this.borderRadius,
@@ -834,7 +834,7 @@ class ChatTailTheme extends ComponentThemeData {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is ChatTailTheme &&
+    return other is VNLChatTailTheme &&
         other.position == position &&
         other.size == size &&
         other.borderRadius == borderRadius &&
@@ -854,8 +854,8 @@ class ChatTailTheme extends ComponentThemeData {
   }
 }
 
-/// A [ChatBubbleType] that draws an external triangular tail.
-class TailChatBubbleType extends ChatBubbleType {
+/// A [VNLChatBubbleType] that draws an external triangular tail.
+class VNLTailChatBubbleType extends VNLChatBubbleType {
   /// The alignment of the tail along the bubble's edge.
   final AxisAlignmentGeometry? tailAlignment;
 
@@ -877,7 +877,7 @@ class TailChatBubbleType extends ChatBubbleType {
   /// The padding inside the bubble.
   final EdgeInsetsGeometry? padding;
 
-  /// Creates a [TailChatBubbleType].
+  /// Creates a [VNLTailChatBubbleType].
   ///
   /// Parameters:
   /// - [tailAlignment] (`AxisAlignmentGeometry?`, optional): The alignment of the tail along the bubble's edge.
@@ -887,7 +887,7 @@ class TailChatBubbleType extends ChatBubbleType {
   /// - [tailRadius] (`double?`, optional): The radius of the tail's curve.
   /// - [tailBehavior] (`TailBehavior?`, optional): The behavior determining when to show the tail.
   /// - [padding] (`EdgeInsetsGeometry?`, optional): The padding inside the bubble.
-  const TailChatBubbleType({
+  const VNLTailChatBubbleType({
     this.tailAlignment,
     this.position,
     this.size,
@@ -908,8 +908,8 @@ class TailChatBubbleType extends ChatBubbleType {
   /// - [tailBehavior] (`ValueGetter<TailBehavior>?`, optional): New tail behavior value.
   ///
   /// Returns:
-  /// A new [TailChatBubbleType] with the specified values updated.
-  TailChatBubbleType copyWith({
+  /// A new [VNLTailChatBubbleType] with the specified values updated.
+  VNLTailChatBubbleType copyWith({
     ValueGetter<AxisAlignmentGeometry>? tailAlignment,
     ValueGetter<AxisDirectional>? position,
     ValueGetter<Size>? size,
@@ -917,7 +917,7 @@ class TailChatBubbleType extends ChatBubbleType {
     ValueGetter<double>? tailRadius,
     ValueGetter<TailBehavior>? tailBehavior,
   }) {
-    return TailChatBubbleType(
+    return VNLTailChatBubbleType(
       tailAlignment: tailAlignment?.call() ?? this.tailAlignment,
       position: position?.call() ?? this.position,
       size: size?.call() ?? this.size,
@@ -928,11 +928,11 @@ class TailChatBubbleType extends ChatBubbleType {
   }
 
   @override
-  Widget wrap(BuildContext context, Widget child, ChatBubbleData data,
-      ChatBubble chat) {
+  Widget wrap(BuildContext context, Widget child, VNLChatBubbleData data,
+      VNLChatBubble chat) {
     final theme = Theme.of(context);
-    final compTheme = ComponentTheme.maybeOf<ChatTailTheme>(context);
-    final chatTheme = ComponentTheme.maybeOf<ChatTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLChatTailTheme>(context);
+    final chatTheme = VNLComponentTheme.maybeOf<VNLChatTheme>(context);
     final textDirection = Directionality.maybeOf(context) ?? TextDirection.ltr;
     final tailBehavior = styleValue(
         widgetValue: this.tailBehavior,
@@ -1164,20 +1164,20 @@ class _TailPainter extends CustomPainter {
   }
 }
 
-/// Data associated with a [ChatBubble] within a [ChatGroup].
-class ChatBubbleData {
+/// Data associated with a [VNLChatBubble] within a [VNLChatGroup].
+class VNLChatBubbleData {
   /// The index of the bubble in the group.
   final int index;
 
   /// The total number of bubbles in the group.
   final int length;
 
-  /// Creates a [ChatBubbleData].
+  /// Creates a [VNLChatBubbleData].
   ///
   /// Parameters:
   /// - [index] (`int`, required): The index of the bubble in the group.
   /// - [length] (`int`, required): The total number of bubbles in the group.
-  const ChatBubbleData({
+  const VNLChatBubbleData({
     required this.index,
     required this.length,
   });
@@ -1189,12 +1189,12 @@ class ChatBubbleData {
   /// - [length] (`int?`, optional): New length value.
   ///
   /// Returns:
-  /// A new [ChatBubbleData] with the specified values updated.
-  ChatBubbleData copyWith({
+  /// A new [VNLChatBubbleData] with the specified values updated.
+  VNLChatBubbleData copyWith({
     int? index,
     int? length,
   }) {
-    return ChatBubbleData(
+    return VNLChatBubbleData(
       index: index ?? this.index,
       length: length ?? this.length,
     );
@@ -1202,13 +1202,13 @@ class ChatBubbleData {
 
   @override
   String toString() {
-    return 'ChatBubbleData(index: $index, length: $length)';
+    return 'VNLChatBubbleData(index: $index, length: $length)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ChatBubbleData &&
+    return other is VNLChatBubbleData &&
         other.index == index &&
         other.length == length;
   }
@@ -1226,18 +1226,18 @@ class ChatBubbleData {
 ///
 /// Example:
 /// ```dart
-/// ChatBubble(
+/// VNLChatBubble(
 ///   child: Text('Hello World'),
 ///   alignment: AxisAlignment.right,
 ///   color: VNLColors.blue,
 /// )
 /// ```
-class ChatBubble extends StatelessWidget {
+class VNLChatBubble extends StatelessWidget {
   /// The content of the chat bubble.
   final Widget child;
 
   /// The type of the chat bubble.
-  final ChatBubbleType? type;
+  final VNLChatBubbleType? type;
 
   /// The background color of the chat bubble.
   final Color? color;
@@ -1257,18 +1257,18 @@ class ChatBubble extends StatelessWidget {
   /// The width factor of the chat bubble.
   final double? widthFactor;
 
-  /// Creates a [ChatBubble].
+  /// Creates a [VNLChatBubble].
   ///
   /// Parameters:
   /// - [child] (`Widget`, required): The content of the chat bubble.
-  /// - [type] (`ChatBubbleType?`, optional): The type of the chat bubble.
+  /// - [type] (`VNLChatBubbleType?`, optional): The type of the chat bubble.
   /// - [color] (`Color?`, optional): The background color of the chat bubble.
   /// - [alignment] (`AxisAlignmentGeometry?`, optional): The alignment of the chat bubble.
   /// - [border] (`BorderSide?`, optional): The border of the chat bubble.
   /// - [padding] (`EdgeInsetsGeometry?`, optional): The padding inside the chat bubble.
   /// - [borderRadius] (`BorderRadiusGeometry?`, optional): The border radius of the chat bubble.
   /// - [widthFactor] (`double?`, optional): The width factor of the chat bubble.
-  const ChatBubble({
+  const VNLChatBubble({
     super.key,
     required this.child,
     this.type,
@@ -1282,7 +1282,7 @@ class ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final chatTheme = ComponentTheme.maybeOf<ChatTheme>(context);
+    final chatTheme = VNLComponentTheme.maybeOf<VNLChatTheme>(context);
     final textDirection = Directionality.maybeOf(context) ?? TextDirection.ltr;
     final alignment = styleValue(
       widgetValue: this.alignment,
@@ -1292,10 +1292,10 @@ class ChatBubble extends StatelessWidget {
     final type = styleValue(
       widgetValue: this.type,
       themeValue: chatTheme?.type,
-      defaultValue: ChatBubbleType.tail,
+      defaultValue: VNLChatBubbleType.tail,
     );
-    final effectiveData = (Data.maybeOf<ChatBubbleData>(context) ??
-        ChatBubbleData(
+    final effectiveData = (Data.maybeOf<VNLChatBubbleData>(context) ??
+        VNLChatBubbleData(
           index: 0,
           length: 1,
         ));
@@ -1304,10 +1304,10 @@ class ChatBubble extends StatelessWidget {
       themeValue: chatTheme?.widthFactor,
       defaultValue: 0.5,
     );
-    return ChatConstrainedBox(
+    return VNLChatConstrainedBox(
       widthFactor: widthFactor,
       alignment: alignment,
-      child: ComponentTheme(
+      child: VNLComponentTheme(
         data: chatTheme?.copyWith(
               color: color == null ? null : () => color,
               type: () => type,
@@ -1317,7 +1317,7 @@ class ChatBubble extends StatelessWidget {
               borderRadius: borderRadius == null ? null : () => borderRadius,
               widthFactor: widthFactor == 0.5 ? null : () => widthFactor,
             ) ??
-            ChatTheme(
+            VNLChatTheme(
               color: color,
               type: type,
               alignment: alignment,

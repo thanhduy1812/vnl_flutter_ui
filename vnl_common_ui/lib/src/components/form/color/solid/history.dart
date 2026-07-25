@@ -52,7 +52,7 @@ class VNLColorHistoryGrid extends StatelessWidget {
         aspectRatio: 1,
         child: VNLButton(
           style: VNLButtonStyle.outline(
-            density: ButtonDensity.compact,
+            density: VNLButtonDensity.compact,
           ),
           child: SizedBox.shrink(),
         ),
@@ -70,7 +70,7 @@ class VNLColorHistoryGrid extends StatelessWidget {
         aspectRatio: 1,
         child: VNLButton(
           style: const VNLButtonStyle.outline(
-            density: ButtonDensity.compact,
+            density: VNLButtonDensity.compact,
           ),
           onPressed: () {
             onColorPicked?.call(color);

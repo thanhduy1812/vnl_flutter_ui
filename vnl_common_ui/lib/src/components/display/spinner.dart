@@ -72,14 +72,14 @@ abstract class VNLSpinner extends StatelessWidget {
 
   /// Resolve spinner color considering theme overrides.
   Color? resolveColor(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<VNLSpinnerTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLSpinnerTheme>(context);
     return styleValue(
         widgetValue: color, themeValue: compTheme?.color, defaultValue: null);
   }
 
   /// Resolve spinner size considering theme overrides and a default value.
   double resolveSize(BuildContext context, double defaultValue) {
-    final compTheme = ComponentTheme.maybeOf<VNLSpinnerTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLSpinnerTheme>(context);
     return styleValue(
         widgetValue: size,
         themeValue: compTheme?.size,

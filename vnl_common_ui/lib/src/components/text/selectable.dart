@@ -454,7 +454,7 @@ class VNLSelectableText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<VNLSelectableTextTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLSelectableTextTheme>(context);
     final cursorWidth = compTheme?.cursorWidth ?? this.cursorWidth;
     final cursorHeight = compTheme?.cursorHeight ?? this.cursorHeight;
     final cursorRadius = compTheme?.cursorRadius ?? this.cursorRadius;

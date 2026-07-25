@@ -20,7 +20,7 @@ class _SheetExample1State extends State<SheetExample1> {
           // For demo, show raw form values.
           content: Text('Content: ${controller.values}'),
           actions: [
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -49,7 +49,7 @@ class _SheetExample1State extends State<SheetExample1> {
                   child: const Text('Edit profile').large().medium(),
                 ),
                 VNLTextButton(
-                  density: ButtonDensity.icon,
+                  density: VNLButtonDensity.icon,
                   child: const Icon(Icons.close),
                   onPressed: () {
                     // Close the sheet without saving.
@@ -88,7 +88,7 @@ class _SheetExample1State extends State<SheetExample1> {
               alignment: AlignmentDirectional.centerEnd,
               child: VNLFormErrorBuilder(
                 builder: (context, errors, child) {
-                  return PrimaryButton(
+                  return VNLPrimaryButton(
                     // Disable save while there are validation errors.
                     onPressed: errors.isNotEmpty
                         ? null
@@ -120,7 +120,7 @@ class _SheetExample1State extends State<SheetExample1> {
 
   @override
   Widget build(BuildContext context) {
-    return PrimaryButton(
+    return VNLPrimaryButton(
       onPressed: () {
         openSheet(
           context: context,
@@ -129,7 +129,7 @@ class _SheetExample1State extends State<SheetExample1> {
             return buildSheet(context);
           },
           // Slide in from the end (right on LTR).
-          position: OverlayPosition.end,
+          position: VNLOverlayPosition.end,
         );
       },
       child: const Text('Open Sheet'),

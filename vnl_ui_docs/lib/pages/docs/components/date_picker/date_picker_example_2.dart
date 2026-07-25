@@ -18,7 +18,7 @@ class _DatePickerExample2State extends State<DatePickerExample2> {
       children: [
         VNLDateRangePicker(
           value: _value,
-          mode: PromptMode.popover,
+          mode: VNLPromptMode.popover,
           onChanged: (value) {
             setState(() {
               _value = value;
@@ -28,7 +28,7 @@ class _DatePickerExample2State extends State<DatePickerExample2> {
         const Gap(16),
         VNLDateRangePicker(
           value: _value,
-          mode: PromptMode.dialog,
+          mode: VNLPromptMode.dialog,
           // Title for the dialog variant.
           dialogTitle: const Text('Select Date Range'),
           onChanged: (value) {

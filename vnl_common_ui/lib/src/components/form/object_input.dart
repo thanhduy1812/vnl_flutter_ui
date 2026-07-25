@@ -24,7 +24,7 @@ import 'package:vnl_common_ui/vnl_ui.dart';
 ///
 /// VNLDateInput(
 ///   controller: controller,
-///   mode: PromptMode.popover,
+///   mode: VNLPromptMode.popover,
 ///   placeholder: Text('Select date'),
 /// )
 /// ```
@@ -36,7 +36,7 @@ import 'package:vnl_common_ui/vnl_ui.dart';
 /// VNLDateInput(
 ///   initialValue: selectedDate,
 ///   onChanged: (date) => setState(() => selectedDate = date),
-///   mode: PromptMode.dialog,
+///   mode: VNLPromptMode.dialog,
 ///   dialogTitle: Text('Choose Date'),
 /// )
 /// ```
@@ -54,7 +54,7 @@ class VNLDateInput extends StatefulWidget with ControlledComponent<DateTime?> {
   final Widget? placeholder;
 
   /// Presentation mode for date picker (dialog or popover).
-  final PromptMode mode;
+  final VNLPromptMode mode;
 
   /// Initial calendar view to display.
   final VNLCalendarView? initialView;
@@ -72,19 +72,19 @@ class VNLDateInput extends StatefulWidget with ControlledComponent<DateTime?> {
   final Widget? dialogTitle;
 
   /// Initial view type (date, month, or year).
-  final CalendarViewType? initialViewType;
+  final VNLCalendarViewType? initialViewType;
 
   /// Callback to determine date state (enabled/disabled).
   final DateStateBuilder? stateBuilder;
 
   /// Order of date components in the input display.
-  final List<DatePart>? datePartsOrder;
+  final List<VNLDatePart>? datePartsOrder;
 
   /// Separator widget between date parts.
   final VNLInputPart? separator;
 
   /// Custom placeholders for individual date parts.
-  final Map<DatePart, Widget>? placeholders;
+  final Map<VNLDatePart, Widget>? placeholders;
 
   /// Creates a [VNLDateInput].
   ///
@@ -98,25 +98,25 @@ class VNLDateInput extends StatefulWidget with ControlledComponent<DateTime?> {
   /// - [onChanged] (`ValueChanged<DateTime?>?`, optional): date change callback
   /// - [enabled] (bool, default: true): whether input is interactive
   /// - [placeholder] (Widget?, optional): widget shown when no date selected
-  /// - [mode] (PromptMode, default: dialog): date picker presentation mode
+  /// - [mode] (VNLPromptMode, default: dialog): date picker presentation mode
   /// - [initialView] (VNLCalendarView?, optional): starting calendar view
   /// - [popoverAlignment] (AlignmentGeometry?, optional): popover alignment
   /// - [popoverAnchorAlignment] (AlignmentGeometry?, optional): anchor alignment
   /// - [popoverPadding] (EdgeInsetsGeometry?, optional): popover padding
   /// - [dialogTitle] (Widget?, optional): title for dialog mode
-  /// - [initialViewType] (CalendarViewType?, optional): calendar view type
+  /// - [initialViewType] (VNLCalendarViewType?, optional): calendar view type
   /// - [stateBuilder] (DateStateBuilder?, optional): custom date state builder
-  /// - [datePartsOrder] (`List<DatePart>?`, optional): order of date components
+  /// - [datePartsOrder] (`List<VNLDatePart>?`, optional): order of date components
   /// - [separator] (VNLInputPart?, optional): separator between date parts
-  /// - [placeholders] (`Map<DatePart, Widget>?`, optional): placeholders for date parts
+  /// - [placeholders] (`Map<VNLDatePart, Widget>?`, optional): placeholders for date parts
   ///
   /// Example:
   /// ```dart
   /// VNLDateInput(
   ///   controller: controller,
-  ///   mode: PromptMode.popover,
+  ///   mode: VNLPromptMode.popover,
   ///   placeholder: Text('Select date'),
-  ///   datePartsOrder: [DatePart.month, DatePart.day, DatePart.year],
+  ///   datePartsOrder: [VNLDatePart.month, VNLDatePart.day, VNLDatePart.year],
   /// )
   /// ```
   const VNLDateInput({
@@ -126,7 +126,7 @@ class VNLDateInput extends StatefulWidget with ControlledComponent<DateTime?> {
     this.onChanged,
     this.enabled = true,
     this.placeholder,
-    this.mode = PromptMode.dialog,
+    this.mode = VNLPromptMode.dialog,
     this.initialView,
     this.popoverAlignment,
     this.popoverAnchorAlignment,
@@ -245,28 +245,28 @@ class VNLNullableDate {
   /// Retrieves the value of a specific date part.
   ///
   /// Parameters:
-  /// - [part] (`DatePart`, required): The date part to retrieve.
+  /// - [part] (`VNLDatePart`, required): The date part to retrieve.
   ///
   /// Returns: The value of the specified part, or null if not set.
-  int? operator [](DatePart part) {
+  int? operator [](VNLDatePart part) {
     switch (part) {
-      case DatePart.year:
+      case VNLDatePart.year:
         return year;
-      case DatePart.month:
+      case VNLDatePart.month:
         return month;
-      case DatePart.day:
+      case VNLDatePart.day:
         return day;
     }
   }
 
   /// Converts to a map of date parts.
   ///
-  /// Returns: A `Map<DatePart, int>` with non-null parts.
-  Map<DatePart, int> toMap() {
+  /// Returns: A `Map<VNLDatePart, int>` with non-null parts.
+  Map<VNLDatePart, int> toMap() {
     return {
-      if (year != null) DatePart.year: year!,
-      if (month != null) DatePart.month: month!,
-      if (day != null) DatePart.day: day!,
+      if (year != null) VNLDatePart.year: year!,
+      if (month != null) VNLDatePart.month: month!,
+      if (day != null) VNLDatePart.day: day!,
     };
   }
 }
@@ -275,14 +275,14 @@ class _DateInputState extends State<VNLDateInput> {
   late ComponentController<VNLNullableDate> _controller;
 
   VNLNullableDate _convertToDateTime(List<String?> values) {
-    Map<DatePart, String?> parts = {};
+    Map<VNLDatePart, String?> parts = {};
     var datePartsOrder = widget.datePartsOrder ?? VNLookLocalizations.of(context).datePartsOrder;
     for (int i = 0; i < values.length; i++) {
       parts[datePartsOrder[i]] = values[i];
     }
-    String? yearString = parts[DatePart.year];
-    String? monthString = parts[DatePart.month];
-    String? dayString = parts[DatePart.day];
+    String? yearString = parts[VNLDatePart.year];
+    String? monthString = parts[VNLDatePart.month];
+    String? dayString = parts[VNLDatePart.day];
     int? year = yearString == null || yearString.isEmpty ? null : int.tryParse(yearString);
     int? month = monthString == null || monthString.isEmpty ? null : int.tryParse(monthString);
     int? day = dayString == null || dayString.isEmpty ? null : int.tryParse(dayString);
@@ -295,48 +295,48 @@ class _DateInputState extends State<VNLDateInput> {
       return datePartsOrder.map((part) => null).toList();
     }
     var validDateTime = value.getDateTime(
-      defaultYear: datePartsOrder.contains(DatePart.year) ? null : 0,
-      defaultMonth: datePartsOrder.contains(DatePart.month) ? null : 1,
-      defaultDay: datePartsOrder.contains(DatePart.day) ? null : 1,
+      defaultYear: datePartsOrder.contains(VNLDatePart.year) ? null : 0,
+      defaultMonth: datePartsOrder.contains(VNLDatePart.month) ? null : 1,
+      defaultDay: datePartsOrder.contains(VNLDatePart.day) ? null : 1,
     );
     if (validDateTime == null) {
       return datePartsOrder.map((part) => null).toList();
     }
     return datePartsOrder.map((part) {
       switch (part) {
-        case DatePart.year:
+        case VNLDatePart.year:
           return validDateTime.year.toString();
-        case DatePart.month:
+        case VNLDatePart.month:
           return validDateTime.month.toString();
-        case DatePart.day:
+        case VNLDatePart.day:
           return validDateTime.day.toString();
       }
     }).toList();
   }
 
-  double _getWidth(DatePart part) {
+  double _getWidth(VNLDatePart part) {
     switch (part) {
-      case DatePart.year:
+      case VNLDatePart.year:
         return 60;
-      case DatePart.month:
+      case VNLDatePart.month:
         return 40;
-      case DatePart.day:
+      case VNLDatePart.day:
         return 40;
     }
   }
 
-  Widget _getPlaceholder(DatePart part) {
+  Widget _getPlaceholder(VNLDatePart part) {
     var localizations = VNLookLocalizations.of(context);
     return Text(localizations.getDatePartAbbreviation(part));
   }
 
-  int _getLength(DatePart part) {
+  int _getLength(VNLDatePart part) {
     switch (part) {
-      case DatePart.year:
+      case VNLDatePart.year:
         return 4;
-      case DatePart.month:
+      case VNLDatePart.month:
         return 2;
-      case DatePart.day:
+      case VNLDatePart.day:
         return 2;
     }
   }
@@ -356,8 +356,8 @@ class _DateInputState extends State<VNLDateInput> {
   void initState() {
     super.initState();
     _controller = widget.controller == null
-        ? ComponentValueController<VNLNullableDate>(_convertToNullableDate(widget.initialValue))
-        : ConvertedController<DateTime?, VNLNullableDate>(
+        ? VNLComponentValueController<VNLNullableDate>(_convertToNullableDate(widget.initialValue))
+        : VNLConvertedController<DateTime?, VNLNullableDate>(
             widget.controller!,
             BiDirectionalConvert(_convertToNullableDate, _convertFromNullableDate),
           );
@@ -378,8 +378,8 @@ class _DateInputState extends State<VNLDateInput> {
       popupBuilder: (context, controller) {
         return VNLSurfaceCard(
           child: VNLDatePickerDialog(
-            initialViewType: widget.initialViewType ?? CalendarViewType.date,
-            selectionMode: CalendarSelectionMode.single,
+            initialViewType: widget.initialViewType ?? VNLCalendarViewType.date,
+            selectionMode: VNLCalendarSelectionMode.single,
             initialValue: controller.value == null ? null : VNLCalendarValue.single(controller.value!.date),
             initialView: widget.initialView ?? VNLCalendarView.now(),
             stateBuilder: widget.stateBuilder,
@@ -531,28 +531,28 @@ class VNLNullableTimeOfDay {
   /// Retrieves the value of a specific time part.
   ///
   /// Parameters:
-  /// - [part] (`TimePart`, required): The time part to retrieve.
+  /// - [part] (`VNLTimePart`, required): The time part to retrieve.
   ///
   /// Returns: The value of the specified part, or null if not set.
-  int? operator [](TimePart part) {
+  int? operator [](VNLTimePart part) {
     switch (part) {
-      case TimePart.hour:
+      case VNLTimePart.hour:
         return hour;
-      case TimePart.minute:
+      case VNLTimePart.minute:
         return minute;
-      case TimePart.second:
+      case VNLTimePart.second:
         return second;
     }
   }
 
   /// Converts to a map of time parts.
   ///
-  /// Returns: A `Map<TimePart, int>` with non-null parts.
-  Map<TimePart, int> toMap() {
+  /// Returns: A `Map<VNLTimePart, int>` with non-null parts.
+  Map<VNLTimePart, int> toMap() {
     return {
-      if (hour != null) TimePart.hour: hour!,
-      if (minute != null) TimePart.minute: minute!,
-      if (second != null) TimePart.second: second!,
+      if (hour != null) VNLTimePart.hour: hour!,
+      if (minute != null) VNLTimePart.minute: minute!,
+      if (second != null) VNLTimePart.second: second!,
     };
   }
 }
@@ -616,7 +616,7 @@ class VNLTimeInput extends StatefulWidget with ControlledComponent<TimeOfDay?> {
   final VNLInputPart? separator;
 
   /// Custom placeholders for individual time parts.
-  final Map<TimePart, Widget>? placeholders;
+  final Map<VNLTimePart, Widget>? placeholders;
 
   /// Creates a [VNLTimeInput].
   ///
@@ -632,7 +632,7 @@ class VNLTimeInput extends StatefulWidget with ControlledComponent<TimeOfDay?> {
   /// - [placeholder] (Widget?, optional): widget shown when no time selected
   /// - [showSeconds] (bool, default: false): whether to include seconds input
   /// - [separator] (VNLInputPart?, optional): separator between time components
-  /// - [placeholders] (`Map<TimePart, Widget>?`, optional): placeholders for time parts
+  /// - [placeholders] (`Map<VNLTimePart, Widget>?`, optional): placeholders for time parts
   ///
   /// Example:
   /// ```dart
@@ -641,9 +641,9 @@ class VNLTimeInput extends StatefulWidget with ControlledComponent<TimeOfDay?> {
   ///   showSeconds: true,
   ///   separator: VNLInputPart.text(':'),
   ///   placeholders: {
-  ///     TimePart.hour: Text('HH'),
-  ///     TimePart.minute: Text('MM'),
-  ///     TimePart.second: Text('SS'),
+  ///     VNLTimePart.hour: Text('HH'),
+  ///     VNLTimePart.minute: Text('MM'),
+  ///     VNLTimePart.second: Text('SS'),
   ///   },
   /// )
   /// ```
@@ -694,16 +694,16 @@ class _TimeInputState extends State<VNLTimeInput> {
     ];
   }
 
-  double _getWidth(TimePart part) {
+  double _getWidth(VNLTimePart part) {
     return 40;
   }
 
-  Widget _getPlaceholder(TimePart part) {
+  Widget _getPlaceholder(VNLTimePart part) {
     var localizations = VNLookLocalizations.of(context);
     return Text(localizations.getTimePartAbbreviation(part));
   }
 
-  int _getLength(TimePart part) {
+  int _getLength(VNLTimePart part) {
     return 2;
   }
 
@@ -728,8 +728,8 @@ class _TimeInputState extends State<VNLTimeInput> {
   void initState() {
     super.initState();
     _controller = widget.controller == null
-        ? ComponentValueController<VNLNullableTimeOfDay>(_convertToNullableTimeOfDay(widget.initialValue))
-        : ConvertedController<TimeOfDay?, VNLNullableTimeOfDay>(
+        ? VNLComponentValueController<VNLNullableTimeOfDay>(_convertToNullableTimeOfDay(widget.initialValue))
+        : VNLConvertedController<TimeOfDay?, VNLNullableTimeOfDay>(
             widget.controller!,
             BiDirectionalConvert(_convertToNullableTimeOfDay, _convertFromNullableTimeOfDay),
           );
@@ -754,22 +754,22 @@ class _TimeInputState extends State<VNLTimeInput> {
       },
       parts: [
         VNLInputPart.editable(
-          length: _getLength(TimePart.hour),
-          width: _getWidth(TimePart.hour),
-          placeholder: widget.placeholders?[TimePart.hour] ?? _getPlaceholder(TimePart.hour),
+          length: _getLength(VNLTimePart.hour),
+          width: _getWidth(VNLTimePart.hour),
+          placeholder: widget.placeholders?[VNLTimePart.hour] ?? _getPlaceholder(VNLTimePart.hour),
         ),
         widget.separator ?? const VNLInputPart.static(':'),
         VNLInputPart.editable(
-          length: _getLength(TimePart.minute),
-          width: _getWidth(TimePart.minute),
-          placeholder: widget.placeholders?[TimePart.minute] ?? _getPlaceholder(TimePart.minute),
+          length: _getLength(VNLTimePart.minute),
+          width: _getWidth(VNLTimePart.minute),
+          placeholder: widget.placeholders?[VNLTimePart.minute] ?? _getPlaceholder(VNLTimePart.minute),
         ),
         if (widget.showSeconds) ...[
           widget.separator ?? const VNLInputPart.static(':'),
           VNLInputPart.editable(
-            length: _getLength(TimePart.second),
-            width: _getWidth(TimePart.second),
-            placeholder: widget.placeholders?[TimePart.second] ?? _getPlaceholder(TimePart.second),
+            length: _getLength(VNLTimePart.second),
+            width: _getWidth(VNLTimePart.second),
+            placeholder: widget.placeholders?[VNLTimePart.second] ?? _getPlaceholder(VNLTimePart.second),
           ),
         ],
       ],
@@ -837,7 +837,7 @@ class VNLDurationInput extends StatefulWidget with ControlledComponent<Duration?
   final VNLInputPart? separator;
 
   /// Custom placeholders for individual time parts.
-  final Map<TimePart, Widget>? placeholders;
+  final Map<VNLTimePart, Widget>? placeholders;
 
   /// Creates a [VNLDurationInput].
   ///
@@ -853,7 +853,7 @@ class VNLDurationInput extends StatefulWidget with ControlledComponent<Duration?
   /// - [placeholder] (Widget?, optional): widget shown when no duration selected
   /// - [showSeconds] (bool, default: false): whether to include seconds input
   /// - [separator] (VNLInputPart?, optional): separator between duration components
-  /// - [placeholders] (`Map<TimePart, Widget>?`, optional): placeholders for time parts
+  /// - [placeholders] (`Map<VNLTimePart, Widget>?`, optional): placeholders for time parts
   ///
   /// Example:
   /// ```dart
@@ -862,9 +862,9 @@ class VNLDurationInput extends StatefulWidget with ControlledComponent<Duration?
   ///   showSeconds: true,
   ///   separator: VNLInputPart.text(':'),
   ///   placeholders: {
-  ///     TimePart.hour: Text('HH'),
-  ///     TimePart.minute: Text('MM'),
-  ///     TimePart.second: Text('SS'),
+  ///     VNLTimePart.hour: Text('HH'),
+  ///     VNLTimePart.minute: Text('MM'),
+  ///     VNLTimePart.second: Text('SS'),
   ///   },
   /// )
   /// ```
@@ -915,16 +915,16 @@ class _DurationInputState extends State<VNLDurationInput> {
     ];
   }
 
-  double _getWidth(TimePart part) {
+  double _getWidth(VNLTimePart part) {
     return 40;
   }
 
-  Widget _getPlaceholder(TimePart part) {
+  Widget _getPlaceholder(VNLTimePart part) {
     var localizations = VNLookLocalizations.of(context);
     return Text(localizations.getTimePartAbbreviation(part));
   }
 
-  int _getLength(TimePart part) {
+  int _getLength(VNLTimePart part) {
     return 2;
   }
 
@@ -954,8 +954,8 @@ class _DurationInputState extends State<VNLDurationInput> {
   void initState() {
     super.initState();
     _controller = widget.controller == null
-        ? ComponentValueController<VNLNullableTimeOfDay>(_convertToNullableTimeOfDay(widget.initialValue))
-        : ConvertedController<Duration?, VNLNullableTimeOfDay>(
+        ? VNLComponentValueController<VNLNullableTimeOfDay>(_convertToNullableTimeOfDay(widget.initialValue))
+        : VNLConvertedController<Duration?, VNLNullableTimeOfDay>(
             widget.controller!,
             BiDirectionalConvert(_convertToNullableTimeOfDay, _convertFromNullableTimeOfDay),
           );
@@ -980,22 +980,22 @@ class _DurationInputState extends State<VNLDurationInput> {
       },
       parts: [
         VNLInputPart.editable(
-          length: _getLength(TimePart.hour),
-          width: _getWidth(TimePart.hour),
-          placeholder: widget.placeholders?[TimePart.hour] ?? _getPlaceholder(TimePart.hour),
+          length: _getLength(VNLTimePart.hour),
+          width: _getWidth(VNLTimePart.hour),
+          placeholder: widget.placeholders?[VNLTimePart.hour] ?? _getPlaceholder(VNLTimePart.hour),
         ),
         widget.separator ?? const VNLInputPart.static(':'),
         VNLInputPart.editable(
-          length: _getLength(TimePart.minute),
-          width: _getWidth(TimePart.minute),
-          placeholder: widget.placeholders?[TimePart.minute] ?? _getPlaceholder(TimePart.minute),
+          length: _getLength(VNLTimePart.minute),
+          width: _getWidth(VNLTimePart.minute),
+          placeholder: widget.placeholders?[VNLTimePart.minute] ?? _getPlaceholder(VNLTimePart.minute),
         ),
         if (widget.showSeconds) ...[
           widget.separator ?? const VNLInputPart.static(':'),
           VNLInputPart.editable(
-            length: _getLength(TimePart.second),
-            width: _getWidth(TimePart.second),
-            placeholder: widget.placeholders?[TimePart.second] ?? _getPlaceholder(TimePart.second),
+            length: _getLength(VNLTimePart.second),
+            width: _getWidth(VNLTimePart.second),
+            placeholder: widget.placeholders?[VNLTimePart.second] ?? _getPlaceholder(VNLTimePart.second),
           ),
         ],
       ],

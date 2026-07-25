@@ -91,7 +91,7 @@ const gap4xl = 4.0;
 
 /// Defines density settings for spacing throughout the UI.
 ///
-/// [Density] provides base values that are multiplied by padding constants
+/// [VNLDensity] provides base values that are multiplied by padding constants
 /// (e.g., [padXs], [padSm], [padLg]) to produce final pixel values.
 /// This allows consistent scaling of all spacing when switching density modes.
 ///
@@ -105,19 +105,19 @@ const gap4xl = 4.0;
 /// ```dart
 /// // Apply compact density to reduce spacing
 /// Theme(
-///   data: ThemeData(density: Density.compactDensity),
+///   data: ThemeData(density: VNLDensity.compactDensity),
 ///   child: MyApp(),
 /// )
 /// ```
-class Density {
+class VNLDensity {
   /// Linearly interpolates between two density settings.
   ///
   /// Parameters:
-  /// - [a] (`Density`, required): The starting density.
-  /// - [b] (`Density`, required): The ending density.
+  /// - [a] (`VNLDensity`, required): The starting density.
+  /// - [b] (`VNLDensity`, required): The ending density.
   /// - [t] (`double`, required): The interpolation factor (0.0 to 1.0).
-  static Density lerp(Density a, Density b, double t) {
-    return Density(
+  static VNLDensity lerp(VNLDensity a, VNLDensity b, double t) {
+    return VNLDensity(
       baseContainerPadding:
           lerpDouble(a.baseContainerPadding, b.baseContainerPadding, t)!,
       baseGap: lerpDouble(a.baseGap, b.baseGap, t)!,
@@ -127,28 +127,28 @@ class Density {
   }
 
   /// Default density with standard spacing (16px base).
-  static const defaultDensity = Density(
+  static const defaultDensity = VNLDensity(
     baseContainerPadding: 16.0,
     baseGap: 8.0,
     baseContentPadding: 16.0,
   );
 
   /// Reduced density for slightly more compact layouts (12px base).
-  static const reducedDensity = Density(
+  static const reducedDensity = VNLDensity(
     baseContainerPadding: 12.0,
     baseGap: 6.0,
     baseContentPadding: 12.0,
   );
 
   /// Spacious density for more generous spacing (20px base).
-  static const spaciousDensity = Density(
+  static const spaciousDensity = VNLDensity(
     baseContainerPadding: 20.0,
     baseGap: 10.0,
     baseContentPadding: 20.0,
   );
 
   /// Compact density for maximizing content density (8px base).
-  static const compactDensity = Density(
+  static const compactDensity = VNLDensity(
     baseContainerPadding: 8.0,
     baseGap: 4.0,
     baseContentPadding: 8.0,
@@ -163,25 +163,25 @@ class Density {
   /// Base padding for content widgets (VNLButton, VNLTextField, etc.).
   final double baseContentPadding;
 
-  /// Creates a [Density] with custom base values.
+  /// Creates a [VNLDensity] with custom base values.
   ///
   /// Parameters:
   /// - [baseContainerPadding] (`double`, required): Base padding for containers.
   /// - [baseGap] (`double`, required): Base gap between items.
   /// - [baseContentPadding] (`double`, required): Base padding for content.
-  const Density({
+  const VNLDensity({
     required this.baseContainerPadding,
     required this.baseGap,
     required this.baseContentPadding,
   });
 
   /// Creates a copy of this density with the specified values replaced.
-  Density copyWith({
+  VNLDensity copyWith({
     ValueGetter<double>? baseContainerPadding,
     ValueGetter<double>? baseGap,
     ValueGetter<double>? baseContentPadding,
   }) {
-    return Density(
+    return VNLDensity(
       baseContainerPadding: baseContainerPadding == null
           ? this.baseContainerPadding
           : baseContainerPadding(),
@@ -194,12 +194,12 @@ class Density {
 
   @override
   String toString() {
-    return 'Density(baseContainerPadding: $baseContainerPadding, baseGap: $baseGap, baseContentPadding: $baseContentPadding)';
+    return 'VNLDensity(baseContainerPadding: $baseContainerPadding, baseGap: $baseGap, baseContentPadding: $baseContentPadding)';
   }
 
   @override
   bool operator ==(Object other) {
-    return other is Density &&
+    return other is VNLDensity &&
         other.baseContainerPadding == baseContainerPadding &&
         other.baseGap == baseGap &&
         other.baseContentPadding == baseContentPadding;
@@ -219,14 +219,14 @@ abstract interface class DensityEdgeInsetsGeometry extends EdgeInsetsGeometry {
   /// Resolves the density multipliers to actual pixel values.
   ///
   /// Parameters:
-  /// - [basePadding] (`double`, required): The base padding from [Density].
+  /// - [basePadding] (`double`, required): The base padding from [VNLDensity].
   EdgeInsetsGeometry resolveDensity(double basePadding);
 }
 
 /// Direction-aware density edge insets using start/end instead of left/right.
 ///
 /// Use this for RTL-aware layouts. The [start] and [end] values are
-/// multipliers that will be multiplied by the base padding from [Density].
+/// multipliers that will be multiplied by the base padding from [VNLDensity].
 ///
 /// Example:
 /// ```dart
@@ -282,7 +282,7 @@ class DirectionalEdgeInsetsDensity extends EdgeInsetsDirectional
 /// Fixed direction density edge insets using left/right.
 ///
 /// Use this when direction is fixed (not RTL-aware). Values are multipliers
-/// that will be multiplied by the base padding from [Density].
+/// that will be multiplied by the base padding from [VNLDensity].
 ///
 /// Example:
 /// ```dart
@@ -351,11 +351,11 @@ EdgeInsetsGeometry resolveEdgeInsets(
 /// A padding widget that resolves density insets using content padding base.
 ///
 /// Use this for widgets that contain content (buttons, text fields, chips).
-/// The padding is resolved using [Density.baseContentPadding].
+/// The padding is resolved using [VNLDensity.baseContentPadding].
 ///
 /// Example:
 /// ```dart
-/// DensityContentPadding(
+/// VNLDensityContentPadding(
 ///   padding: const DirectionalEdgeInsetsDensity.symmetric(
 ///     horizontal: padLg,
 ///     vertical: padSm,
@@ -363,19 +363,19 @@ EdgeInsetsGeometry resolveEdgeInsets(
 ///   child: Text('VNLButton content'),
 /// )
 /// ```
-class DensityContentPadding extends StatelessWidget {
+class VNLDensityContentPadding extends StatelessWidget {
   /// The padding to apply, can be density-aware or absolute.
   final EdgeInsetsGeometry padding;
 
   /// The child widget to apply padding to.
   final Widget child;
 
-  /// Creates a [DensityContentPadding].
+  /// Creates a [VNLDensityContentPadding].
   ///
   /// Parameters:
   /// - [padding] (`EdgeInsetsGeometry`, required): The padding specification.
   /// - [child] (`Widget`, required): The child to wrap with padding.
-  const DensityContentPadding({
+  const VNLDensityContentPadding({
     super.key,
     required this.padding,
     required this.child,
@@ -398,28 +398,28 @@ class DensityContentPadding extends StatelessWidget {
 /// A padding widget that resolves density insets using container padding base.
 ///
 /// Use this for widgets that contain multiple children (cards, dialogs, panels).
-/// The padding is resolved using [Density.baseContainerPadding].
+/// The padding is resolved using [VNLDensity.baseContainerPadding].
 ///
 /// Example:
 /// ```dart
-/// DensityContainerPadding(
+/// VNLDensityContainerPadding(
 ///   padding: const DirectionalEdgeInsetsDensity.all(padLg),
 ///   child: Column(children: [...]),
 /// )
 /// ```
-class DensityContainerPadding extends StatelessWidget {
+class VNLDensityContainerPadding extends StatelessWidget {
   /// The padding to apply, can be density-aware or absolute.
   final EdgeInsetsGeometry padding;
 
   /// The child widget to apply padding to.
   final Widget child;
 
-  /// Creates a [DensityContainerPadding].
+  /// Creates a [VNLDensityContainerPadding].
   ///
   /// Parameters:
   /// - [padding] (`EdgeInsetsGeometry`, required): The padding specification.
   /// - [child] (`Widget`, required): The child to wrap with padding.
-  const DensityContainerPadding({
+  const VNLDensityContainerPadding({
     super.key,
     required this.padding,
     required this.child,
@@ -442,27 +442,27 @@ class DensityContainerPadding extends StatelessWidget {
 /// A gap widget that resolves spacing using density settings.
 ///
 /// Use this instead of [Gap] when you want spacing to adapt to density.
-/// The [gap] value is a multiplier applied to [Density.baseGap].
+/// The [gap] value is a multiplier applied to [VNLDensity.baseGap].
 ///
 /// Example:
 /// ```dart
 /// Column(
 ///   children: [
 ///     Text('First'),
-///     DensityGap(gap: gapLg),  // Gap adapts to density
+///     VNLDensityGap(gap: gapLg),  // Gap adapts to density
 ///     Text('Second'),
 ///   ],
 /// )
 /// ```
-class DensityGap extends StatelessWidget {
-  /// The gap multiplier, applied to [Density.baseGap].
+class VNLDensityGap extends StatelessWidget {
+  /// The gap multiplier, applied to [VNLDensity.baseGap].
   final double gap;
 
-  /// Creates a [DensityGap].
+  /// Creates a [VNLDensityGap].
   ///
   /// Parameters:
   /// - [gap] (`double`, required): Gap multiplier (use constants like [gapLg]).
-  const DensityGap(
+  const VNLDensityGap(
     this.gap, {
     super.key,
   });
@@ -478,7 +478,7 @@ class DensityGap extends StatelessWidget {
 /// A row widget with density-aware spacing between children.
 ///
 /// Use instead of [Row] when you want the spacing to adapt to density settings.
-/// The [spacing] value is a multiplier applied to [Density.baseGap].
+/// The [spacing] value is a multiplier applied to [VNLDensity.baseGap].
 ///
 /// Example:
 /// ```dart
@@ -552,7 +552,7 @@ class DensityRow extends StatelessWidget {
 /// A column widget with density-aware spacing between children.
 ///
 /// Use instead of [Column] when you want the spacing to adapt to density.
-/// The [spacing] value is a multiplier applied to [Density.baseGap].
+/// The [spacing] value is a multiplier applied to [VNLDensity.baseGap].
 ///
 /// Example:
 /// ```dart
@@ -626,7 +626,7 @@ class DensityColumn extends StatelessWidget {
 /// A flex widget with density-aware spacing between children.
 ///
 /// Use instead of [Flex] when you want the spacing to adapt to density.
-/// The [spacing] value is a multiplier applied to [Density.baseGap].
+/// The [spacing] value is a multiplier applied to [VNLDensity.baseGap].
 ///
 /// Example:
 /// ```dart

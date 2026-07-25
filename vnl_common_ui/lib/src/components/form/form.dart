@@ -38,12 +38,12 @@ abstract class Validator<T> {
   /// Parameters:
   /// - [context] (BuildContext): The build context for localization access
   /// - [value] (T?): The value to validate (may be null)
-  /// - [lifecycle] (FormValidationMode): The current validation trigger mode
+  /// - [lifecycle] (VNLFormValidationMode): The current validation trigger mode
   ///
   /// Returns a `FutureOr<VNLValidationResult?>` that is null for valid values
   /// or contains error information for invalid values.
   FutureOr<VNLValidationResult?> validate(
-      BuildContext context, T? value, FormValidationMode lifecycle);
+      BuildContext context, T? value, VNLFormValidationMode lifecycle);
 
   /// Combines this validator with another validator using AND logic.
   ///
@@ -53,14 +53,14 @@ abstract class Validator<T> {
   /// Parameters:
   /// - [other] (`Validator<T>`): The validator to combine with this one
   ///
-  /// Returns a new [CompositeValidator] that requires both validators to pass.
+  /// Returns a new [VNLCompositeValidator] that requires both validators to pass.
   ///
   /// Example:
   /// ```dart
   /// final combined = requiredValidator.combine(emailValidator);
   /// ```
   Validator<T> combine(Validator<T> other) {
-    return CompositeValidator([this, other]);
+    return VNLCompositeValidator([this, other]);
   }
 
   /// Combines this validator with another using AND logic (alias for [combine]).
@@ -84,14 +84,14 @@ abstract class Validator<T> {
   /// Parameters:
   /// - [other] (`Validator<T>`): The validator to combine with this one using OR logic
   ///
-  /// Returns a new [OrValidator] that requires at least one validator to pass.
+  /// Returns a new [VNLOrValidator] that requires at least one validator to pass.
   ///
   /// Example:
   /// ```dart
   /// final validator = emailValidator | phoneValidator;
   /// ```
   Validator<T> operator |(Validator<T> other) {
-    return OrValidator([this, other]);
+    return VNLOrValidator([this, other]);
   }
 
   /// Negates this validator's result.
@@ -100,14 +100,14 @@ abstract class Validator<T> {
   /// fails when this validator passes. Useful for creating inverse
   /// validation logic.
   ///
-  /// Returns a [NotValidator] that inverts this validator's result.
+  /// Returns a [VNLNotValidator] that inverts this validator's result.
   ///
   /// Example:
   /// ```dart
   /// final notEmpty = ~EmptyValidator<String>();
   /// ```
   Validator<T> operator ~() {
-    return NotValidator(this);
+    return VNLNotValidator(this);
   }
 
   /// Negates this validator's result (alias for `~` operator).
@@ -119,7 +119,7 @@ abstract class Validator<T> {
   /// final notEmpty = -EmptyValidator<String>();
   /// ```
   Validator<T> operator -() {
-    return NotValidator(this);
+    return VNLNotValidator(this);
   }
 
   /// Combines this validator with another using AND logic (alias for [combine]).
@@ -160,7 +160,7 @@ abstract class Validator<T> {
 /// This enumeration controls the timing of validation execution, allowing
 /// fine-grained control over when validation logic runs. Different validation
 /// modes can be used to optimize user experience and performance.
-enum FormValidationMode {
+enum VNLFormValidationMode {
   /// Validation occurs when the field is first created or initialized.
   ///
   /// This mode runs validation immediately when a form field is created,
@@ -193,7 +193,7 @@ enum FormValidationMode {
 /// ```dart
 /// ValidationMode(
 ///   VNLEmailValidator(),
-///   mode: {FormValidationMode.changed, FormValidationMode.submitted},
+///   mode: {VNLFormValidationMode.changed, VNLFormValidationMode.submitted},
 /// )
 /// ```
 class ValidationMode<T> extends Validator<T> {
@@ -201,19 +201,19 @@ class ValidationMode<T> extends Validator<T> {
   final Validator<T> validator;
 
   /// The set of validation modes during which this validator should run.
-  final Set<FormValidationMode> mode;
+  final Set<VNLFormValidationMode> mode;
 
   /// Creates a [ValidationMode] that conditionally validates based on lifecycle mode.
   const ValidationMode(this.validator,
       {this.mode = const {
-        FormValidationMode.changed,
-        FormValidationMode.submitted,
-        FormValidationMode.initial
+        VNLFormValidationMode.changed,
+        VNLFormValidationMode.submitted,
+        VNLFormValidationMode.initial
       }});
 
   @override
   FutureOr<VNLValidationResult?> validate(
-      BuildContext context, T? value, FormValidationMode lifecycle) {
+      BuildContext context, T? value, VNLFormValidationMode lifecycle) {
     if (mode.contains(lifecycle)) {
       return validator.validate(context, value, lifecycle);
     }
@@ -314,13 +314,13 @@ class IgnoreForm<T> extends StatelessWidget {
 
 /// A validator that applies conditional validation based on form state.
 ///
-/// [ConditionalValidator] only executes validation when a predicate condition
+/// [VNLConditionalValidator] only executes validation when a predicate condition
 /// is met. This allows validation rules to depend on other form field values
 /// or dynamic conditions.
 ///
 /// Example:
 /// ```dart
-/// ConditionalValidator<String>(
+/// VNLConditionalValidator<String>(
 ///   (context, value, getFieldValue) async {
 ///     final country = await getFieldValue('country');
 ///     return country == 'US';
@@ -329,7 +329,7 @@ class IgnoreForm<T> extends StatelessWidget {
 ///   dependencies: ['country'],
 /// )
 /// ```
-class ConditionalValidator<T> extends Validator<T> {
+class VNLConditionalValidator<T> extends Validator<T> {
   /// The predicate function that determines if validation should be applied.
   final FuturePredicate<T> predicate;
 
@@ -339,13 +339,13 @@ class ConditionalValidator<T> extends Validator<T> {
   /// List of form field keys this validator depends on.
   final List<FormKey> dependencies;
 
-  /// Creates a [ConditionalValidator] with the specified predicate and dependencies.
-  const ConditionalValidator(this.predicate,
+  /// Creates a [VNLConditionalValidator] with the specified predicate and dependencies.
+  const VNLConditionalValidator(this.predicate,
       {required this.message, this.dependencies = const []});
 
   @override
   FutureOr<VNLValidationResult?> validate(
-      BuildContext context, T? value, FormValidationMode lifecycle) {
+      BuildContext context, T? value, VNLFormValidationMode lifecycle) {
     var result = predicate(value);
     if (result is Future<bool>) {
       return result.then((value) {
@@ -368,7 +368,7 @@ class ConditionalValidator<T> extends Validator<T> {
 
   @override
   operator ==(Object other) {
-    return other is ConditionalValidator &&
+    return other is VNLConditionalValidator &&
         other.predicate == predicate &&
         other.message == message;
   }
@@ -414,7 +414,7 @@ class ValidatorBuilder<T> extends Validator<T> {
 
   @override
   FutureOr<VNLValidationResult?> validate(
-      BuildContext context, T? value, FormValidationMode lifecycle) {
+      BuildContext context, T? value, VNLFormValidationMode lifecycle) {
     return builder(value);
   }
 
@@ -434,18 +434,18 @@ class ValidatorBuilder<T> extends Validator<T> {
 
 /// A validator that negates the result of another validator.
 ///
-/// [NotValidator] inverts the validation logic - it passes when the wrapped
+/// [VNLNotValidator] inverts the validation logic - it passes when the wrapped
 /// validator fails and fails when the wrapped validator passes. Useful for
 /// creating exclusion rules.
 ///
 /// Example:
 /// ```dart
-/// NotValidator(
+/// VNLNotValidator(
 ///   VNLEmailValidator(),
 ///   message: 'Must not be an email address',
 /// )
 /// ```
-class NotValidator<T> extends Validator<T> {
+class VNLNotValidator<T> extends Validator<T> {
   /// The validator whose result will be negated.
   final Validator<T> validator;
 
@@ -453,12 +453,12 @@ class NotValidator<T> extends Validator<T> {
   final String?
       message; // if null, use default message from VNLookLocalizations
 
-  /// Creates a [NotValidator] that negates the result of another validator.
-  const NotValidator(this.validator, {this.message});
+  /// Creates a [VNLNotValidator] that negates the result of another validator.
+  const VNLNotValidator(this.validator, {this.message});
 
   @override
   FutureOr<VNLValidationResult?> validate(
-      BuildContext context, T? value, FormValidationMode state) {
+      BuildContext context, T? value, VNLFormValidationMode state) {
     var localizations = Localizations.of(context, VNLookLocalizations);
     var result = validator.validate(context, value, state);
     if (result is Future<VNLValidationResult?>) {
@@ -477,7 +477,7 @@ class NotValidator<T> extends Validator<T> {
 
   @override
   operator ==(Object other) {
-    return other is NotValidator &&
+    return other is VNLNotValidator &&
         other.validator == validator &&
         other.message == message;
   }
@@ -488,31 +488,31 @@ class NotValidator<T> extends Validator<T> {
 
 /// A validator that combines multiple validators with OR logic.
 ///
-/// [OrValidator] passes if at least one of the wrapped validators passes.
+/// [VNLOrValidator] passes if at least one of the wrapped validators passes.
 /// Only fails if all validators fail. Useful for accepting multiple valid formats.
 ///
 /// Example:
 /// ```dart
-/// OrValidator([
+/// VNLOrValidator([
 ///   VNLEmailValidator(),
 ///   PhoneValidator(),
 /// ])
 /// ```
-class OrValidator<T> extends Validator<T> {
+class VNLOrValidator<T> extends Validator<T> {
   /// The list of validators to combine with OR logic.
   final List<Validator<T>> validators;
 
-  /// Creates an [OrValidator] from a list of validators.
-  const OrValidator(this.validators);
+  /// Creates an [VNLOrValidator] from a list of validators.
+  const VNLOrValidator(this.validators);
 
   @override
   FutureOr<VNLValidationResult?> validate(
-      BuildContext context, T? value, FormValidationMode state) {
+      BuildContext context, T? value, VNLFormValidationMode state) {
     return _chainedValidation(context, value, state, 0);
   }
 
   FutureOr<VNLValidationResult?> _chainedValidation(
-      BuildContext context, T? value, FormValidationMode state, int index) {
+      BuildContext context, T? value, VNLFormValidationMode state, int index) {
     if (index >= validators.length) {
       return null;
     }
@@ -538,7 +538,7 @@ class OrValidator<T> extends Validator<T> {
 
   @override
   Validator<T> operator |(Validator<T> other) {
-    return OrValidator([...validators, other]);
+    return VNLOrValidator([...validators, other]);
   }
 
   @override
@@ -553,7 +553,7 @@ class OrValidator<T> extends Validator<T> {
 
   @override
   operator ==(Object other) {
-    return other is OrValidator && listEquals(other.validators, validators);
+    return other is VNLOrValidator && listEquals(other.validators, validators);
   }
 
   @override
@@ -562,26 +562,26 @@ class OrValidator<T> extends Validator<T> {
 
 /// A validator that ensures a value is not null.
 ///
-/// [NonNullValidator] is a simple validator that fails if the value is null.
+/// [VNLNonNullValidator] is a simple validator that fails if the value is null.
 /// Commonly used to mark fields as required.
 ///
 /// Example:
 /// ```dart
-/// NonNullValidator<String>(
+/// VNLNonNullValidator<String>(
 ///   message: 'This field is required',
 /// )
 /// ```
-class NonNullValidator<T> extends Validator<T> {
+class VNLNonNullValidator<T> extends Validator<T> {
   /// Custom error message, or null to use default localized message.
   final String?
       message; // if null, use default message from VNLookLocalizations
 
-  /// Creates a [NonNullValidator] with an optional custom message.
-  const NonNullValidator({this.message});
+  /// Creates a [VNLNonNullValidator] with an optional custom message.
+  const VNLNonNullValidator({this.message});
 
   @override
   FutureOr<VNLValidationResult?> validate(
-      BuildContext context, T? value, FormValidationMode state) {
+      BuildContext context, T? value, VNLFormValidationMode state) {
     if (value == null) {
       var localizations = Localizations.of(context, VNLookLocalizations);
       return VNLInvalidResult(message ?? localizations.formNotEmpty, state: state);
@@ -591,7 +591,7 @@ class NonNullValidator<T> extends Validator<T> {
 
   @override
   bool operator ==(Object other) {
-    return other is NonNullValidator && other.message == message;
+    return other is VNLNonNullValidator && other.message == message;
   }
 
   @override
@@ -600,7 +600,7 @@ class NonNullValidator<T> extends Validator<T> {
 
 /// A validator that ensures a string is not null or empty.
 ///
-/// [VNLNotEmptyValidator] extends [NonNullValidator] to also check for empty strings.
+/// [VNLNotEmptyValidator] extends [VNLNonNullValidator] to also check for empty strings.
 /// Commonly used for text field validation.
 ///
 /// Example:
@@ -609,13 +609,13 @@ class NonNullValidator<T> extends Validator<T> {
 ///   message: 'Please enter a value',
 /// )
 /// ```
-class VNLNotEmptyValidator extends NonNullValidator<String> {
+class VNLNotEmptyValidator extends VNLNonNullValidator<String> {
   /// Creates a [VNLNotEmptyValidator] with an optional custom message.
   const VNLNotEmptyValidator({super.message});
 
   @override
   FutureOr<VNLValidationResult?> validate(
-      BuildContext context, String? value, FormValidationMode state) {
+      BuildContext context, String? value, VNLFormValidationMode state) {
     if (value == null || value.isEmpty) {
       var localizations = Localizations.of(context, VNLookLocalizations);
       return VNLInvalidResult(message ?? localizations.formNotEmpty, state: state);
@@ -661,7 +661,7 @@ class VNLLengthValidator extends Validator<String> {
 
   @override
   FutureOr<VNLValidationResult?> validate(
-      BuildContext context, String? value, FormValidationMode state) {
+      BuildContext context, String? value, VNLFormValidationMode state) {
     if (value == null) {
       if (min != null) {
         return VNLInvalidResult(
@@ -700,7 +700,7 @@ class VNLLengthValidator extends Validator<String> {
 /// Defines comparison operators for numeric validation.
 ///
 /// Used by [CompareValidator] to specify the type of comparison to perform.
-enum CompareType {
+enum VNLCompareType {
   /// Value must be greater than the compared value.
   greater,
 
@@ -735,7 +735,7 @@ class CompareWith<T extends Comparable<T>> extends Validator<T> {
   final FormKey<T> key;
 
   /// The type of comparison to perform.
-  final CompareType type;
+  final VNLCompareType type;
 
   /// Custom error message, or null to use default localized message.
   final String?
@@ -745,22 +745,22 @@ class CompareWith<T extends Comparable<T>> extends Validator<T> {
   const CompareWith(this.key, this.type, {this.message});
 
   /// Creates a validator that checks for equality with another field.
-  const CompareWith.equal(this.key, {this.message}) : type = CompareType.equal;
+  const CompareWith.equal(this.key, {this.message}) : type = VNLCompareType.equal;
 
   /// Creates a validator that checks if value is greater than another field.
   const CompareWith.greater(this.key, {this.message})
-      : type = CompareType.greater;
+      : type = VNLCompareType.greater;
 
   /// Creates a validator that checks if value is greater than or equal to another field.
   const CompareWith.greaterOrEqual(this.key, {this.message})
-      : type = CompareType.greaterOrEqual;
+      : type = VNLCompareType.greaterOrEqual;
 
   /// Creates a validator that checks if value is less than another field.
-  const CompareWith.less(this.key, {this.message}) : type = CompareType.less;
+  const CompareWith.less(this.key, {this.message}) : type = VNLCompareType.less;
 
   /// Creates a validator that checks if value is less than or equal to another field.
   const CompareWith.lessOrEqual(this.key, {this.message})
-      : type = CompareType.lessOrEqual;
+      : type = VNLCompareType.lessOrEqual;
 
   int _compare(T? a, T? b) {
     if (a == null && b == null) {
@@ -777,7 +777,7 @@ class CompareWith<T extends Comparable<T>> extends Validator<T> {
 
   @override
   FutureOr<VNLValidationResult?> validate(
-      BuildContext context, T? value, FormValidationMode state) {
+      BuildContext context, T? value, VNLFormValidationMode state) {
     var localizations = Localizations.of(context, VNLookLocalizations);
     var otherValue = context.getFormValue(key);
     if (otherValue == null) {
@@ -785,35 +785,35 @@ class CompareWith<T extends Comparable<T>> extends Validator<T> {
     }
     var compare = _compare(value, otherValue);
     switch (type) {
-      case CompareType.greater:
+      case VNLCompareType.greater:
         if (compare <= 0) {
           return VNLInvalidResult(
               message ?? localizations.formGreaterThan(otherValue),
               state: state);
         }
         break;
-      case CompareType.greaterOrEqual:
+      case VNLCompareType.greaterOrEqual:
         if (compare < 0) {
           return VNLInvalidResult(
               message ?? localizations.formGreaterThanOrEqualTo(otherValue),
               state: state);
         }
         break;
-      case CompareType.less:
+      case VNLCompareType.less:
         if (compare >= 0) {
           return VNLInvalidResult(
               message ?? localizations.formLessThan(otherValue),
               state: state);
         }
         break;
-      case CompareType.lessOrEqual:
+      case VNLCompareType.lessOrEqual:
         if (compare > 0) {
           return VNLInvalidResult(
               message ?? localizations.formLessThanOrEqualTo(otherValue),
               state: state);
         }
         break;
-      case CompareType.equal:
+      case VNLCompareType.equal:
         if (compare != 0) {
           return VNLInvalidResult(message ?? localizations.formEqualTo(otherValue),
               state: state);
@@ -883,7 +883,7 @@ class VNLSafePasswordValidator extends Validator<String> {
 
   @override
   FutureOr<VNLValidationResult?> validate(
-      BuildContext context, String? value, FormValidationMode state) {
+      BuildContext context, String? value, VNLFormValidationMode state) {
     if (value == null) {
       return null;
     }
@@ -934,18 +934,18 @@ class VNLSafePasswordValidator extends Validator<String> {
 
 /// A validator that checks if a numeric value meets a minimum threshold.
 ///
-/// [MinValidator] ensures that numeric values are greater than (or equal to)
+/// [VNLMinValidator] ensures that numeric values are greater than (or equal to)
 /// a specified minimum value. Useful for enforcing minimum quantities, ages, etc.
 ///
 /// Example:
 /// ```dart
-/// MinValidator<int>(
+/// VNLMinValidator<int>(
 ///   18,
 ///   inclusive: true,
 ///   message: 'Must be at least 18 years old',
 /// )
 /// ```
-class MinValidator<T extends num> extends Validator<T> {
+class VNLMinValidator<T extends num> extends Validator<T> {
   /// The minimum acceptable value.
   final T min;
 
@@ -956,12 +956,12 @@ class MinValidator<T extends num> extends Validator<T> {
   final String?
       message; // if null, use default message from VNLookLocalizations
 
-  /// Creates a [MinValidator] with the specified minimum value.
-  const MinValidator(this.min, {this.inclusive = true, this.message});
+  /// Creates a [VNLMinValidator] with the specified minimum value.
+  const VNLMinValidator(this.min, {this.inclusive = true, this.message});
 
   @override
   FutureOr<VNLValidationResult?> validate(
-      BuildContext context, T? value, FormValidationMode state) {
+      BuildContext context, T? value, VNLFormValidationMode state) {
     if (value == null) {
       return null;
     }
@@ -987,7 +987,7 @@ class MinValidator<T extends num> extends Validator<T> {
 
   @override
   bool operator ==(Object other) {
-    return other is MinValidator &&
+    return other is VNLMinValidator &&
         other.min == min &&
         other.inclusive == inclusive &&
         other.message == message;
@@ -999,18 +999,18 @@ class MinValidator<T extends num> extends Validator<T> {
 
 /// A validator that checks if a numeric value does not exceed a maximum threshold.
 ///
-/// [MaxValidator] ensures that numeric values are less than (or equal to)
+/// [VNLMaxValidator] ensures that numeric values are less than (or equal to)
 /// a specified maximum value. Useful for enforcing maximum quantities, limits, etc.
 ///
 /// Example:
 /// ```dart
-/// MaxValidator<int>(
+/// VNLMaxValidator<int>(
 ///   100,
 ///   inclusive: true,
 ///   message: 'Must not exceed 100',
 /// )
 /// ```
-class MaxValidator<T extends num> extends Validator<T> {
+class VNLMaxValidator<T extends num> extends Validator<T> {
   /// The maximum acceptable value.
   final T max;
 
@@ -1021,12 +1021,12 @@ class MaxValidator<T extends num> extends Validator<T> {
   final String?
       message; // if null, use default message from VNLookLocalizations
 
-  /// Creates a [MaxValidator] with the specified maximum value.
-  const MaxValidator(this.max, {this.inclusive = true, this.message});
+  /// Creates a [VNLMaxValidator] with the specified maximum value.
+  const VNLMaxValidator(this.max, {this.inclusive = true, this.message});
 
   @override
   FutureOr<VNLValidationResult?> validate(
-      BuildContext context, T? value, FormValidationMode state) {
+      BuildContext context, T? value, VNLFormValidationMode state) {
     if (value == null) {
       return null;
     }
@@ -1052,7 +1052,7 @@ class MaxValidator<T extends num> extends Validator<T> {
 
   @override
   bool operator ==(Object other) {
-    return other is MaxValidator &&
+    return other is VNLMaxValidator &&
         other.max == max &&
         other.inclusive == inclusive &&
         other.message == message;
@@ -1064,19 +1064,19 @@ class MaxValidator<T extends num> extends Validator<T> {
 
 /// A validator that checks if a numeric value falls within a specified range.
 ///
-/// [RangeValidator] ensures values are between minimum and maximum bounds.
+/// [VNLRangeValidator] ensures values are between minimum and maximum bounds.
 /// Both bounds can be inclusive or exclusive depending on configuration.
 ///
 /// Example:
 /// ```dart
-/// RangeValidator<double>(
+/// VNLRangeValidator<double>(
 ///   0.0,
 ///   100.0,
 ///   inclusive: true,
 ///   message: 'Must be between 0 and 100',
 /// )
 /// ```
-class RangeValidator<T extends num> extends Validator<T> {
+class VNLRangeValidator<T extends num> extends Validator<T> {
   /// The minimum acceptable value.
   final T min;
 
@@ -1090,13 +1090,13 @@ class RangeValidator<T extends num> extends Validator<T> {
   final String?
       message; // if null, use default message from VNLookLocalizations
 
-  /// Creates a [RangeValidator] with the specified min and max bounds.
-  const RangeValidator(this.min, this.max,
+  /// Creates a [VNLRangeValidator] with the specified min and max bounds.
+  const VNLRangeValidator(this.min, this.max,
       {this.inclusive = true, this.message});
 
   @override
   FutureOr<VNLValidationResult?> validate(
-      BuildContext context, T? value, FormValidationMode state) {
+      BuildContext context, T? value, VNLFormValidationMode state) {
     if (value == null) {
       return null;
     }
@@ -1122,7 +1122,7 @@ class RangeValidator<T extends num> extends Validator<T> {
 
   @override
   bool operator ==(Object other) {
-    return other is RangeValidator &&
+    return other is VNLRangeValidator &&
         other.min == min &&
         other.max == max &&
         other.inclusive == inclusive &&
@@ -1158,7 +1158,7 @@ class VNLRegexValidator extends Validator<String> {
 
   @override
   FutureOr<VNLValidationResult?> validate(
-      BuildContext context, String? value, FormValidationMode state) {
+      BuildContext context, String? value, VNLFormValidationMode state) {
     if (value == null) {
       return null;
     }
@@ -1203,7 +1203,7 @@ class VNLEmailValidator extends Validator<String> {
 
   @override
   FutureOr<VNLValidationResult?> validate(
-      BuildContext context, String? value, FormValidationMode state) {
+      BuildContext context, String? value, VNLFormValidationMode state) {
     if (value == null) {
       return null;
     }
@@ -1246,7 +1246,7 @@ class VNLURLValidator extends Validator<String> {
 
   @override
   FutureOr<VNLValidationResult?> validate(
-      BuildContext context, String? value, FormValidationMode state) {
+      BuildContext context, String? value, VNLFormValidationMode state) {
     if (value == null) {
       return null;
     }
@@ -1287,7 +1287,7 @@ class CompareTo<T extends Comparable<T>> extends Validator<T> {
   final T? value;
 
   /// The type of comparison to perform.
-  final CompareType type;
+  final VNLCompareType type;
 
   /// Custom error message, or null to use default localized message.
   final String?
@@ -1297,22 +1297,22 @@ class CompareTo<T extends Comparable<T>> extends Validator<T> {
   const CompareTo(this.value, this.type, {this.message});
 
   /// Creates a validator that checks for equality with a value.
-  const CompareTo.equal(this.value, {this.message}) : type = CompareType.equal;
+  const CompareTo.equal(this.value, {this.message}) : type = VNLCompareType.equal;
 
   /// Creates a validator that checks if field value is greater than the specified value.
   const CompareTo.greater(this.value, {this.message})
-      : type = CompareType.greater;
+      : type = VNLCompareType.greater;
 
   /// Creates a validator that checks if field value is greater than or equal to the specified value.
   const CompareTo.greaterOrEqual(this.value, {this.message})
-      : type = CompareType.greaterOrEqual;
+      : type = VNLCompareType.greaterOrEqual;
 
   /// Creates a validator that checks if field value is less than the specified value.
-  const CompareTo.less(this.value, {this.message}) : type = CompareType.less;
+  const CompareTo.less(this.value, {this.message}) : type = VNLCompareType.less;
 
   /// Creates a validator that checks if field value is less than or equal to the specified value.
   const CompareTo.lessOrEqual(this.value, {this.message})
-      : type = CompareType.lessOrEqual;
+      : type = VNLCompareType.lessOrEqual;
 
   int _compare(T? a, T? b) {
     if (a == null && b == null) {
@@ -1329,39 +1329,39 @@ class CompareTo<T extends Comparable<T>> extends Validator<T> {
 
   @override
   FutureOr<VNLValidationResult?> validate(
-      BuildContext context, T? value, FormValidationMode state) {
+      BuildContext context, T? value, VNLFormValidationMode state) {
     var localizations = Localizations.of(context, VNLookLocalizations);
     var compare = _compare(value, this.value);
     switch (type) {
-      case CompareType.greater:
+      case VNLCompareType.greater:
         if (compare <= 0) {
           return VNLInvalidResult(
               message ?? localizations.formGreaterThan(this.value),
               state: state);
         }
         break;
-      case CompareType.greaterOrEqual:
+      case VNLCompareType.greaterOrEqual:
         if (compare < 0) {
           return VNLInvalidResult(
               message ?? localizations.formGreaterThanOrEqualTo(this.value),
               state: state);
         }
         break;
-      case CompareType.less:
+      case VNLCompareType.less:
         if (compare >= 0) {
           return VNLInvalidResult(
               message ?? localizations.formLessThan(this.value),
               state: state);
         }
         break;
-      case CompareType.lessOrEqual:
+      case VNLCompareType.lessOrEqual:
         if (compare > 0) {
           return VNLInvalidResult(
               message ?? localizations.formLessThanOrEqualTo(this.value),
               state: state);
         }
         break;
-      case CompareType.equal:
+      case VNLCompareType.equal:
         if (compare != 0) {
           return VNLInvalidResult(message ?? localizations.formEqualTo(this.value),
               state: state);
@@ -1385,33 +1385,33 @@ class CompareTo<T extends Comparable<T>> extends Validator<T> {
 
 /// A validator that combines multiple validators with AND logic.
 ///
-/// [CompositeValidator] runs multiple validators sequentially and only passes
+/// [VNLCompositeValidator] runs multiple validators sequentially and only passes
 /// if all validators pass. If any validator fails, validation stops and returns
 /// that error. Created automatically when using the `&` operator between validators.
 ///
 /// Example:
 /// ```dart
-/// CompositeValidator([
-///   NonNullValidator(),
+/// VNLCompositeValidator([
+///   VNLNonNullValidator(),
 ///   MinLengthValidator(3),
 ///   VNLEmailValidator(),
 /// ])
 /// ```
-class CompositeValidator<T> extends Validator<T> {
+class VNLCompositeValidator<T> extends Validator<T> {
   /// The list of validators to run sequentially.
   final List<Validator<T>> validators;
 
-  /// Creates a [CompositeValidator] from a list of validators.
-  const CompositeValidator(this.validators);
+  /// Creates a [VNLCompositeValidator] from a list of validators.
+  const VNLCompositeValidator(this.validators);
 
   @override
   FutureOr<VNLValidationResult?> validate(
-      BuildContext context, T? value, FormValidationMode state) {
+      BuildContext context, T? value, VNLFormValidationMode state) {
     return _chainValidation(context, value, state, 0);
   }
 
   FutureOr<VNLValidationResult?> _chainValidation(
-      BuildContext context, T? value, FormValidationMode state, int index) {
+      BuildContext context, T? value, VNLFormValidationMode state, int index) {
     if (index >= validators.length) {
       return null;
     }
@@ -1436,7 +1436,7 @@ class CompositeValidator<T> extends Validator<T> {
 
   @override
   Validator<T> combine(Validator<T> other) {
-    return CompositeValidator([...validators, other]);
+    return VNLCompositeValidator([...validators, other]);
   }
 
   @override
@@ -1451,7 +1451,7 @@ class CompositeValidator<T> extends Validator<T> {
 
   @override
   bool operator ==(Object other) {
-    return other is CompositeValidator &&
+    return other is VNLCompositeValidator &&
         listEquals(other.validators, validators);
   }
 
@@ -1466,7 +1466,7 @@ class CompositeValidator<T> extends Validator<T> {
 /// for successful validation.
 abstract class VNLValidationResult {
   /// The form validation mode that triggered this result.
-  final FormValidationMode state;
+  final VNLFormValidationMode state;
 
   /// Creates a [VNLValidationResult] with the specified validation state.
   const VNLValidationResult({required this.state});
@@ -1611,8 +1611,8 @@ class FormKey<T> extends LocalKey {
 /// VNLForm key type for autocomplete fields with string values.
 typedef AutoCompleteKey = FormKey<String>;
 
-/// VNLForm key type for checkbox fields with [CheckboxState] values.
-typedef CheckboxKey = FormKey<CheckboxState>;
+/// VNLForm key type for checkbox fields with [VNLCheckboxState] values.
+typedef CheckboxKey = FormKey<VNLCheckboxState>;
 
 /// VNLForm key type for chip input fields with list values.
 typedef ChipInputKey<T> = FormKey<List<T>>;
@@ -2136,7 +2136,7 @@ class VNLForm extends StatefulWidget {
 
 class _ValidatorResultStash {
   final FutureOr<VNLValidationResult?> result;
-  final FormValidationMode state;
+  final VNLFormValidationMode state;
 
   const _ValidatorResultStash(this.result, this.state);
 }
@@ -2288,8 +2288,8 @@ class VNLFormController extends ChangeNotifier {
   ///
   /// Parameters:
   /// - [context] (`BuildContext`, required): The build context.
-  /// - [state] (`FormValidationMode`, required): Validation mode to use.
-  void revalidate(BuildContext context, FormValidationMode state) {
+  /// - [state] (`VNLFormValidationMode`, required): Validation mode to use.
+  void revalidate(BuildContext context, VNLFormValidationMode state) {
     bool changed = false;
     for (var entry in _attachedInputs.entries) {
       var key = entry.key;
@@ -2352,8 +2352,8 @@ class VNLFormController extends ChangeNotifier {
       return _validity[key]?.result;
     }
     var lifecycle = oldState == null
-        ? FormValidationMode.initial
-        : FormValidationMode.changed;
+        ? VNLFormValidationMode.initial
+        : VNLFormValidationMode.changed;
     _attachedInputs[key] = state;
     // validate
     var future = validator?.validate(context, value, lifecycle);
@@ -2490,7 +2490,7 @@ class VNLFormEntryErrorBuilder extends StatelessWidget {
   final Widget? child;
 
   /// Validation modes that trigger error display.
-  final Set<FormValidationMode>? modes;
+  final Set<VNLFormValidationMode>? modes;
 
   /// Creates a form entry error builder.
   const VNLFormEntryErrorBuilder(
@@ -2641,7 +2641,7 @@ extension FormExtension on BuildContext {
       var value = entry.value;
       values[key] = value.value;
     }
-    formController.revalidate(this, FormValidationMode.submitted);
+    formController.revalidate(this, VNLFormValidationMode.submitted);
     var errors = <FormKey, VNLValidationResult>{};
     var iterator = formController._validity.entries.iterator;
     var result = _chainedSubmitForm(values, errors, iterator);
@@ -2815,7 +2815,7 @@ class FormField<T> extends StatelessWidget {
   final Validator<T>? validator;
 
   /// Validation modes that trigger error display.
-  final Set<FormValidationMode>? showErrors;
+  final Set<VNLFormValidationMode>? showErrors;
 
   /// Creates a form field.
   const FormField({
@@ -2846,7 +2846,7 @@ class FormField<T> extends StatelessWidget {
       child: VNLFormEntryErrorBuilder(
         modes: showErrors,
         builder: (context, error, child) {
-          return ComponentTheme(
+          return VNLComponentTheme(
             data: VNLFocusOutlineTheme(
               border: error != null
                   ? Border.all(
@@ -2854,7 +2854,7 @@ class FormField<T> extends StatelessWidget {
                       width: 3.0)
                   : null,
             ),
-            child: ComponentTheme(
+            child: VNLComponentTheme(
               data: VNLTextFieldTheme(
                 border: error != null
                     ? Border.all(color: theme.colorScheme.destructive)
@@ -2932,7 +2932,7 @@ class FormInline<T> extends StatelessWidget {
   final Validator<T>? validator;
 
   /// Validation modes that trigger error display.
-  final Set<FormValidationMode>? showErrors;
+  final Set<VNLFormValidationMode>? showErrors;
 
   /// Creates an inline form field.
   const FormInline({
@@ -3047,7 +3047,7 @@ class VNLFormTableLayout extends StatelessWidget {
                   child: VNLFormEntryErrorBuilder(
                     modes: rows[i].showErrors,
                     builder: (context, error, child) {
-                      return ComponentTheme(
+                      return VNLComponentTheme(
                         data: VNLFocusOutlineTheme(
                           border: error != null
                               ? Border.all(
@@ -3056,7 +3056,7 @@ class VNLFormTableLayout extends StatelessWidget {
                                   width: 3.0)
                               : null,
                         ),
-                        child: ComponentTheme(
+                        child: VNLComponentTheme(
                           data: VNLTextFieldTheme(
                             border: error != null
                                 ? Border.all(

@@ -7,7 +7,7 @@ class ButtonExample14 extends StatelessWidget {
   Widget build(BuildContext context) {
     return VNLButtonGroup(
       children: [
-        PrimaryButton(
+        VNLPrimaryButton(
           child: const Text('Primary'),
           onPressed: () {},
         ),

@@ -65,7 +65,7 @@ abstract class VNLCarouselTransition {
     BuildContext context, {
     required double progress,
     required BoxConstraints constraints,
-    required CarouselAlignment alignment,
+    required VNLCarouselAlignment alignment,
     required Axis direction,
     required VNLCarouselSizeConstraint sizeConstraint,
     required double progressedIndex,
@@ -89,7 +89,7 @@ class VNLSlidingCarouselTransition extends VNLCarouselTransition {
     BuildContext context, {
     required double progress,
     required BoxConstraints constraints,
-    required CarouselAlignment alignment,
+    required VNLCarouselAlignment alignment,
     required Axis direction,
     required VNLCarouselSizeConstraint sizeConstraint,
     required double progressedIndex,
@@ -182,7 +182,7 @@ class VNLFadingCarouselTransition extends VNLCarouselTransition {
     BuildContext context, {
     required double progress,
     required BoxConstraints constraints,
-    required CarouselAlignment alignment,
+    required VNLCarouselAlignment alignment,
     required Axis direction,
     required VNLCarouselSizeConstraint sizeConstraint,
     required double progressedIndex,
@@ -266,7 +266,7 @@ typedef CarouselItemBuilder = Widget Function(BuildContext context, int index);
 
 /// A controller for the carousel.
 class VNLCarouselController extends Listenable {
-  final AnimationQueueController _controller = AnimationQueueController();
+  final VNLAnimationQueueController _controller = VNLAnimationQueueController();
 
   /// Whether the carousel should animate.
   bool get shouldAnimate => _controller.shouldTick;
@@ -364,8 +364,8 @@ class VNLCarouselController extends Listenable {
   }
 }
 
-/// CarouselAlignment is used to align the carousel items.
-enum CarouselAlignment {
+/// VNLCarouselAlignment is used to align the carousel items.
+enum VNLCarouselAlignment {
   /// Aligns the carousel items to the start.
   start(0),
 
@@ -378,13 +378,13 @@ enum CarouselAlignment {
   /// The alignment value.
   final double alignment;
 
-  const CarouselAlignment(this.alignment);
+  const VNLCarouselAlignment(this.alignment);
 }
 
 /// Theme data for [VNLCarousel].
 class VNLCarouselTheme extends ComponentThemeData {
   /// The alignment of carousel items.
-  final CarouselAlignment? alignment;
+  final VNLCarouselAlignment? alignment;
 
   /// The scroll direction (horizontal or vertical).
   final Axis? direction;
@@ -421,7 +421,7 @@ class VNLCarouselTheme extends ComponentThemeData {
 
   /// Creates a copy of this theme with the given fields replaced.
   VNLCarouselTheme copyWith({
-    ValueGetter<CarouselAlignment?>? alignment,
+    ValueGetter<VNLCarouselAlignment?>? alignment,
     ValueGetter<Axis?>? direction,
     ValueGetter<bool?>? wrap,
     ValueGetter<bool?>? pauseOnHover,
@@ -529,7 +529,7 @@ class VNLCarousel extends StatefulWidget {
   final VNLCarouselController? controller;
 
   /// The carousel alignment.
-  final CarouselAlignment alignment;
+  final VNLCarouselAlignment alignment;
 
   /// The carousel direction.
   final Axis direction;
@@ -579,7 +579,7 @@ class VNLCarousel extends StatefulWidget {
     required this.itemBuilder,
     this.itemCount,
     this.controller,
-    this.alignment = CarouselAlignment.center,
+    this.alignment = VNLCarouselAlignment.center,
     this.direction = Axis.horizontal,
     this.wrap = true,
     this.pauseOnHover = true,
@@ -624,13 +624,13 @@ class _CarouselState extends State<VNLCarousel>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _theme = ComponentTheme.maybeOf<VNLCarouselTheme>(context);
+    _theme = VNLComponentTheme.maybeOf<VNLCarouselTheme>(context);
   }
 
-  CarouselAlignment get _alignment => styleValue(
+  VNLCarouselAlignment get _alignment => styleValue(
         widgetValue: widget.alignment,
         themeValue: _theme?.alignment,
-        defaultValue: CarouselAlignment.center,
+        defaultValue: VNLCarouselAlignment.center,
       );
 
   Axis get _direction => styleValue(

@@ -231,7 +231,7 @@ class _OverflowMarqueeState extends State<VNLOverflowMarquee>
   @override
   Widget build(BuildContext context) {
     final textDirection = Directionality.of(context);
-    final compTheme = ComponentTheme.maybeOf<VNLOverflowMarqueeTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLOverflowMarqueeTheme>(context);
     final direction = styleValue(
         widgetValue: widget.direction,
         themeValue: compTheme?.direction,

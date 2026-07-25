@@ -17,7 +17,7 @@ class _ToastExample1State extends State<ToastExample1> {
       child: VNLBasic(
         title: const Text('Event has been created'),
         subtitle: const Text('Sunday, July 07, 2024 at 12:00 PM'),
-        trailing: PrimaryButton(
+        trailing: VNLPrimaryButton(
             size: VNLButtonSize.small,
             onPressed: () {
               // Close the toast programmatically when clicking Undo.
@@ -35,68 +35,68 @@ class _ToastExample1State extends State<ToastExample1> {
       spacing: 8,
       runSpacing: 8,
       children: [
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             showToast(
               context: context,
               builder: buildToast,
               // Position bottom-left.
-              location: ToastLocation.bottomLeft,
+              location: VNLToastLocation.bottomLeft,
             );
           },
           child: const Text('Show Bottom Left Toast'),
         ),
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             showToast(
               context: context,
               builder: buildToast,
               // Position bottom-right.
-              location: ToastLocation.bottomRight,
+              location: VNLToastLocation.bottomRight,
             );
           },
           child: const Text('Show Bottom Right Toast'),
         ),
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             showToast(
               context: context,
               builder: buildToast,
               // Position top-left.
-              location: ToastLocation.topLeft,
+              location: VNLToastLocation.topLeft,
             );
           },
           child: const Text('Show Top Left Toast'),
         ),
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             showToast(
               context: context,
               builder: buildToast,
               // Position top-right.
-              location: ToastLocation.topRight,
+              location: VNLToastLocation.topRight,
             );
           },
           child: const Text('Show Top Right Toast'),
         ),
         // bottom center
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             showToast(
               context: context,
               builder: buildToast,
-              location: ToastLocation.bottomCenter,
+              location: VNLToastLocation.bottomCenter,
             );
           },
           child: const Text('Show Bottom Center Toast'),
         ),
         // top center
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             showToast(
               context: context,
               builder: buildToast,
-              location: ToastLocation.topCenter,
+              location: VNLToastLocation.topCenter,
             );
           },
           child: const Text('Show Top Center Toast'),

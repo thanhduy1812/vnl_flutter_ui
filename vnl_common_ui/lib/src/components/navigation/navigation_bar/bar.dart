@@ -26,7 +26,7 @@ class VNLNavigationBar extends StatefulWidget {
   final List<Widget> children;
 
   /// The alignment of items within the navigation bar.
-  final NavigationBarAlignment alignment;
+  final VNLNavigationBarAlignment alignment;
 
   /// The layout orientation of the navigation bar.
   ///
@@ -34,13 +34,13 @@ class VNLNavigationBar extends StatefulWidget {
   final Axis? direction;
 
   /// When labels should be displayed for the items.
-  final NavigationLabelType labelType;
+  final VNLNavigationLabelType labelType;
 
   /// The relative position of labels to their corresponding icons.
-  final NavigationLabelPosition labelPosition;
+  final VNLNavigationLabelPosition labelPosition;
 
   /// The size variant for label text.
-  final NavigationLabelSize labelSize;
+  final VNLNavigationLabelSize labelSize;
 
   /// The background color of the navigation bar.
   final Color? backgroundColor;
@@ -82,11 +82,11 @@ class VNLNavigationBar extends StatefulWidget {
   const VNLNavigationBar({
     super.key,
     required this.children,
-    this.alignment = NavigationBarAlignment.start,
+    this.alignment = VNLNavigationBarAlignment.start,
     this.direction,
-    this.labelType = NavigationLabelType.all,
-    this.labelPosition = NavigationLabelPosition.bottom,
-    this.labelSize = NavigationLabelSize.small,
+    this.labelType = VNLNavigationLabelType.all,
+    this.labelPosition = VNLNavigationLabelPosition.bottom,
+    this.labelSize = VNLNavigationLabelSize.small,
     this.backgroundColor,
     this.padding,
     this.surfaceOpacity,
@@ -142,7 +142,7 @@ class _NavigationBarState extends State<VNLNavigationBar> {
         surfaceBlur: widget.surfaceBlur,
         child: Data.inherit(
           data: VNLNavigationControlData(
-            containerType: NavigationContainerType.bar,
+            containerType: VNLNavigationContainerType.bar,
             parentLabelType: labelType,
             parentLabelSize: labelSize,
             parentPadding: resolvedPadding,

@@ -29,8 +29,8 @@ class VNLControlledColorInput extends StatelessWidget with ControlledComponent<V
   final AlignmentGeometry? popoverAnchorAlignment;
   final EdgeInsetsGeometry? popoverPadding;
   final Widget? placeholder;
-  final PromptMode mode;
-  final ColorPickerMode pickerMode;
+  final VNLPromptMode mode;
+  final VNLColorPickerMode pickerMode;
   final Widget? dialogTitle;
   final bool allowPickFromScreen;
   final bool showLabel;
@@ -47,8 +47,8 @@ class VNLControlledColorInput extends StatelessWidget with ControlledComponent<V
     this.popoverAnchorAlignment,
     this.popoverPadding,
     this.placeholder,
-    this.mode = PromptMode.dialog,
-    this.pickerMode = ColorPickerMode.rgb,
+    this.mode = VNLPromptMode.dialog,
+    this.pickerMode = VNLColorPickerMode.rgb,
     this.dialogTitle,
     this.allowPickFromScreen = true,
     this.showLabel = true,
@@ -85,9 +85,9 @@ class VNLControlledColorInput extends StatelessWidget with ControlledComponent<V
 
 String colorToHex(Color color, [bool showAlpha = true]) {
   if (showAlpha) {
-    return '#${color.value.toRadixString(16)}';
+    return '#${color.toARGB32().toRadixString(16)}';
   } else {
-    return '#${color.value.toRadixString(16).substring(2)}';
+    return '#${color.toARGB32().toRadixString(16).substring(2)}';
   }
 }
 
@@ -111,7 +111,7 @@ class VNLColorHistoryGrid extends StatelessWidget {
     if (color == null) {
       return const AspectRatio(
         aspectRatio: 1,
-        child: VNLButton(style: VNLButtonStyle.outline(density: ButtonDensity.compact), child: Icon(LucideIcons.x)),
+        child: VNLButton(style: VNLButtonStyle.outline(density: VNLButtonDensity.compact), child: Icon(LucideIcons.x)),
       );
     }
     return Container(
@@ -125,7 +125,7 @@ class VNLColorHistoryGrid extends StatelessWidget {
       child: AspectRatio(
         aspectRatio: 1,
         child: VNLButton(
-          style: const VNLButtonStyle.outline(density: ButtonDensity.compact),
+          style: const VNLButtonStyle.outline(density: VNLButtonDensity.compact),
           onPressed: () {
             onColorPicked?.call(color);
           },
@@ -170,7 +170,7 @@ class VNLColorHistoryGrid extends StatelessWidget {
   }
 }
 
-enum ColorPickerMode { rgb, hsl, hsv }
+enum VNLColorPickerMode { rgb, hsl, hsv }
 
 abstract class VNLColorHistoryStorage implements Listenable {
   void addHistory(Color color);
@@ -665,8 +665,8 @@ class VNLColorInputSet extends StatefulWidget {
   final ValueChanged<VNLColorDerivative>? onChanged;
   final ValueChanged<VNLColorDerivative>? onColorChangeEnd;
   final bool showAlpha;
-  final ColorPickerMode mode;
-  final ValueChanged<ColorPickerMode>? onModeChanged;
+  final VNLColorPickerMode mode;
+  final ValueChanged<VNLColorPickerMode>? onModeChanged;
   final VoidCallback? onPickFromScreen;
   final VNLColorHistoryStorage? storage;
 
@@ -676,7 +676,7 @@ class VNLColorInputSet extends StatefulWidget {
     this.onChanged,
     this.onColorChangeEnd,
     this.showAlpha = true,
-    this.mode = ColorPickerMode.rgb,
+    this.mode = VNLColorPickerMode.rgb,
     this.onModeChanged,
     this.onPickFromScreen,
     this.storage,
@@ -730,11 +730,11 @@ class _ColorInputSetState extends State<VNLColorInputSet> {
   Widget _buildContent(BuildContext context, ThemeData theme, double width) {
     switch (_tabIndex) {
       case 0:
-        return _buildColorTab(context, ColorPickerMode.rgb, width);
+        return _buildColorTab(context, VNLColorPickerMode.rgb, width);
       case 1:
-        return _buildColorTab(context, ColorPickerMode.hsl, width);
+        return _buildColorTab(context, VNLColorPickerMode.hsl, width);
       case 2:
-        return _buildColorTab(context, ColorPickerMode.hsv, width);
+        return _buildColorTab(context, VNLColorPickerMode.hsv, width);
       case 3:
       default:
         return _buildRecentTab(context);
@@ -756,7 +756,7 @@ class _ColorInputSetState extends State<VNLColorInputSet> {
     );
   }
 
-  Widget _buildColorTab(BuildContext context, ColorPickerMode mode, double width) {
+  Widget _buildColorTab(BuildContext context, VNLColorPickerMode mode, double width) {
     if (width < 500) {
       return VNLMiniColorPickerSet(
         key: ValueKey(mode),
@@ -796,7 +796,7 @@ class VNLColorPickerSet extends StatefulWidget {
   final ValueChanged<VNLColorDerivative>? onColorChangeEnd;
   final bool showAlpha;
   final VoidCallback? onPickFromScreen;
-  final ColorPickerMode mode;
+  final VNLColorPickerMode mode;
 
   const VNLColorPickerSet({
     super.key,
@@ -804,7 +804,7 @@ class VNLColorPickerSet extends StatefulWidget {
     this.onColorChanged,
     this.onColorChangeEnd,
     this.showAlpha = true,
-    this.mode = ColorPickerMode.rgb,
+    this.mode = VNLColorPickerMode.rgb,
     this.onPickFromScreen,
   });
 
@@ -829,25 +829,25 @@ class _ColorPickerSetState extends State<VNLColorPickerSet> {
     VNLColorDerivative color = widget.color;
     var rgbColor = color.toColor();
     if (widget.showAlpha) {
-      _hexController.text = '#${rgbColor.value.toRadixString(16)}';
+      _hexController.text = '#${rgbColor.toARGB32().toRadixString(16)}';
     } else {
-      _hexController.text = '#${rgbColor.value.toRadixString(16).substring(2)}';
+      _hexController.text = '#${rgbColor.toARGB32().toRadixString(16).substring(2)}';
     }
     switch (widget.mode) {
-      case ColorPickerMode.rgb:
-        _aController.text = rgbColor.red.toString();
-        _bController.text = rgbColor.green.toString();
-        _cController.text = rgbColor.blue.toString();
+      case VNLColorPickerMode.rgb:
+        _aController.text = (rgbColor.r * 255).round().toString();
+        _bController.text = (rgbColor.g * 255).round().toString();
+        _cController.text = (rgbColor.b * 255).round().toString();
         _alphaController.text = (color.opacity * 255).toInt().toString();
         break;
-      case ColorPickerMode.hsl:
+      case VNLColorPickerMode.hsl:
         final hsl = color.toHSLColor();
         _aController.text = hsl.hue.toInt().toString();
         _bController.text = (hsl.saturation * 100).toInt().toString();
         _cController.text = (hsl.lightness * 100).toInt().toString();
         _alphaController.text = (color.opacity * 100).toInt().toString();
         break;
-      case ColorPickerMode.hsv:
+      case VNLColorPickerMode.hsv:
         final hsv = color.toHSVColor();
         _aController.text = hsv.hue.toInt().toString();
         _bController.text = (hsv.saturation * 100).toInt().toString();
@@ -864,25 +864,25 @@ class _ColorPickerSetState extends State<VNLColorPickerSet> {
       VNLColorDerivative color = widget.color;
       var rgbColor = color.toColor();
       if (widget.showAlpha) {
-        _hexController.text = '#${rgbColor.value.toRadixString(16)}';
+        _hexController.text = '#${rgbColor.toARGB32().toRadixString(16)}';
       } else {
-        _hexController.text = '#${rgbColor.value.toRadixString(16).substring(2)}';
+        _hexController.text = '#${rgbColor.toARGB32().toRadixString(16).substring(2)}';
       }
       switch (widget.mode) {
-        case ColorPickerMode.rgb:
-          _aController.text = rgbColor.red.toString();
-          _bController.text = rgbColor.green.toString();
-          _cController.text = rgbColor.blue.toString();
+        case VNLColorPickerMode.rgb:
+          _aController.text = (rgbColor.r * 255).round().toString();
+          _bController.text = (rgbColor.g * 255).round().toString();
+          _cController.text = (rgbColor.b * 255).round().toString();
           _alphaController.text = (color.opacity * 255).toInt().toString();
           break;
-        case ColorPickerMode.hsl:
+        case VNLColorPickerMode.hsl:
           final hsl = color.toHSLColor();
           _aController.text = hsl.hue.toInt().toString();
           _bController.text = (hsl.saturation * 100).toInt().toString();
           _cController.text = (hsl.lightness * 100).toInt().toString();
           _alphaController.text = (color.opacity * 100).toInt().toString();
           break;
-        case ColorPickerMode.hsv:
+        case VNLColorPickerMode.hsv:
           final hsv = color.toHSVColor();
           _aController.text = hsv.hue.toInt().toString();
           _bController.text = (hsv.saturation * 100).toInt().toString();
@@ -909,7 +909,7 @@ class _ColorPickerSetState extends State<VNLColorPickerSet> {
     double cValue = double.tryParse(c) ?? 0;
     double alphaValue = double.tryParse(alpha) ?? 0;
     switch (widget.mode) {
-      case ColorPickerMode.rgb:
+      case VNLColorPickerMode.rgb:
         widget.onColorChanged?.call(
           widget.color.changeToColor(
             Color.fromARGB(
@@ -921,7 +921,7 @@ class _ColorPickerSetState extends State<VNLColorPickerSet> {
           ),
         );
         break;
-      case ColorPickerMode.hsl:
+      case VNLColorPickerMode.hsl:
         widget.onColorChanged?.call(
           widget.color.changeToHSL(
             HSLColor.fromAHSL(
@@ -933,7 +933,7 @@ class _ColorPickerSetState extends State<VNLColorPickerSet> {
           ),
         );
         break;
-      case ColorPickerMode.hsv:
+      case VNLColorPickerMode.hsv:
         widget.onColorChanged?.call(
           widget.color.changeToHSV(
             HSVColor.fromAHSV(
@@ -961,17 +961,17 @@ class _ColorPickerSetState extends State<VNLColorPickerSet> {
     String bLabel;
     String cLabel;
     switch (widget.mode) {
-      case ColorPickerMode.rgb:
+      case VNLColorPickerMode.rgb:
         aLabel = localizations.colorRed;
         bLabel = localizations.colorGreen;
         cLabel = localizations.colorBlue;
         break;
-      case ColorPickerMode.hsl:
+      case VNLColorPickerMode.hsl:
         aLabel = localizations.colorHue;
         bLabel = localizations.colorSaturation;
         cLabel = localizations.colorLightness;
         break;
-      case ColorPickerMode.hsv:
+      case VNLColorPickerMode.hsv:
         aLabel = localizations.colorHue;
         bLabel = localizations.colorSaturation;
         cLabel = localizations.colorValue;
@@ -997,10 +997,10 @@ class _ColorPickerSetState extends State<VNLColorPickerSet> {
                       ),
                       clipBehavior: Clip.antiAlias,
                       child:
-                          widget.mode == ColorPickerMode.hsl
+                          widget.mode == VNLColorPickerMode.hsl
                               ? VNLHSLColorPickerArea(
                                 color: color.toHSLColor(),
-                                sliderType: HSLColorSliderType.satLum,
+                                sliderType: VNLHSLColorSliderType.satLum,
                                 reverse: true,
                                 onColorChanged: (value) {
                                   widget.onColorChanged?.call(
@@ -1024,7 +1024,7 @@ class _ColorPickerSetState extends State<VNLColorPickerSet> {
                                     widget.color.changeToHSVValue(value.value).changeToHSVSaturation(value.saturation),
                                   );
                                 },
-                                sliderType: HSVColorSliderType.satVal,
+                                sliderType: VNLHSVColorSliderType.satVal,
                                 reverse: true,
                                 onColorEnd: (value) {
                                   widget.onColorChangeEnd?.call(
@@ -1055,13 +1055,13 @@ class _ColorPickerSetState extends State<VNLColorPickerSet> {
                       borderRadius: BorderRadius.circular(theme.radiusLg),
                     ),
                     child:
-                        widget.mode == ColorPickerMode.hsl
+                        widget.mode == VNLColorPickerMode.hsl
                             ? VNLHSLColorPickerArea(
                               color: HSLColor.fromAHSL(color.opacity, color.hslHue, 1, 0.5),
                               onColorEnd: (value) {
                                 widget.onColorChangeEnd?.call(widget.color.changeToHSLHue(value.hue));
                               },
-                              sliderType: HSLColorSliderType.hue,
+                              sliderType: VNLHSLColorSliderType.hue,
                               radius: Radius.circular(theme.radiusLg),
                               reverse: true,
                               onColorChanged: (value) {
@@ -1074,7 +1074,7 @@ class _ColorPickerSetState extends State<VNLColorPickerSet> {
                               onColorChanged: (value) {
                                 widget.onColorChanged?.call(widget.color.changeToHSVHue(value.hue));
                               },
-                              sliderType: HSVColorSliderType.hue,
+                              sliderType: VNLHSVColorSliderType.hue,
                               reverse: true,
                               onColorEnd: (value) {
                                 widget.onColorChangeEnd?.call(widget.color.changeToHSVHue(value.hue));
@@ -1093,10 +1093,10 @@ class _ColorPickerSetState extends State<VNLColorPickerSet> {
                         borderRadius: BorderRadius.circular(theme.radiusLg),
                       ),
                       child:
-                          widget.mode == ColorPickerMode.hsl
+                          widget.mode == VNLColorPickerMode.hsl
                               ? VNLHSLColorPickerArea(
                                 color: HSLColor.fromAHSL(color.opacity, color.hslHue, color.hslSat, color.hslVal),
-                                sliderType: HSLColorSliderType.alpha,
+                                sliderType: VNLHSLColorSliderType.alpha,
                                 reverse: true,
                                 radius: Radius.circular(theme.radiusLg),
                                 onColorChanged: (value) {
@@ -1111,7 +1111,7 @@ class _ColorPickerSetState extends State<VNLColorPickerSet> {
                                 onColorChanged: (value) {
                                   widget.onColorChanged?.call(widget.color.changeToAlpha(value.alpha));
                                 },
-                                sliderType: HSVColorSliderType.alpha,
+                                sliderType: VNLHSVColorSliderType.alpha,
                                 radius: Radius.circular(theme.radiusLg),
                                 reverse: true,
                                 onColorEnd: (value) {
@@ -1136,9 +1136,9 @@ class _ColorPickerSetState extends State<VNLColorPickerSet> {
                     } else {
                       color = widget.color.toColor();
                       if (widget.showAlpha) {
-                        _hexController.text = '#${color.value.toRadixString(16)}';
+                        _hexController.text = '#${color.toARGB32().toRadixString(16)}';
                       } else {
-                        _hexController.text = '#${color.value.toRadixString(16).substring(2)}';
+                        _hexController.text = '#${color.toARGB32().toRadixString(16).substring(2)}';
                       }
                     }
                     widget.onColorChanged?.call(VNLColorDerivative.fromColor(color));
@@ -1231,7 +1231,7 @@ class VNLMiniColorPickerSet extends StatefulWidget {
   final ValueChanged<VNLColorDerivative>? onColorChangeEnd;
   final bool showAlpha;
   final VoidCallback? onPickFromScreen;
-  final ColorPickerMode mode;
+  final VNLColorPickerMode mode;
 
   const VNLMiniColorPickerSet({
     super.key,
@@ -1239,7 +1239,7 @@ class VNLMiniColorPickerSet extends StatefulWidget {
     this.onColorChanged,
     this.onColorChangeEnd,
     this.showAlpha = true,
-    this.mode = ColorPickerMode.rgb,
+    this.mode = VNLColorPickerMode.rgb,
     this.onPickFromScreen,
   });
 
@@ -1267,10 +1267,10 @@ class _MiniColorPickerSetState extends State<VNLMiniColorPickerSet> {
               ),
               clipBehavior: Clip.antiAlias,
               child:
-                  widget.mode == ColorPickerMode.hsl
+                  widget.mode == VNLColorPickerMode.hsl
                       ? VNLHSLColorPickerArea(
                         color: color.toHSLColor(),
-                        sliderType: HSLColorSliderType.satLum,
+                        sliderType: VNLHSLColorSliderType.satLum,
                         reverse: true,
                         onColorChanged: (value) {
                           widget.onColorChanged?.call(
@@ -1290,7 +1290,7 @@ class _MiniColorPickerSetState extends State<VNLMiniColorPickerSet> {
                             widget.color.changeToHSVValue(value.value).changeToHSVSaturation(value.saturation),
                           );
                         },
-                        sliderType: HSVColorSliderType.satVal,
+                        sliderType: VNLHSVColorSliderType.satVal,
                         reverse: true,
                         onColorEnd: (value) {
                           widget.onColorChangeEnd?.call(
@@ -1309,13 +1309,13 @@ class _MiniColorPickerSetState extends State<VNLMiniColorPickerSet> {
                 borderRadius: BorderRadius.circular(theme.radiusLg),
               ),
               child:
-                  widget.mode == ColorPickerMode.hsl
+                  widget.mode == VNLColorPickerMode.hsl
                       ? VNLHSLColorPickerArea(
                         color: HSLColor.fromAHSL(color.opacity, color.hslHue, 1, 0.5),
                         onColorEnd: (value) {
                           widget.onColorChangeEnd?.call(widget.color.changeToHSLHue(value.hue));
                         },
-                        sliderType: HSLColorSliderType.hue,
+                        sliderType: VNLHSLColorSliderType.hue,
                         radius: Radius.circular(theme.radiusLg),
                         reverse: true,
                         onColorChanged: (value) {
@@ -1328,7 +1328,7 @@ class _MiniColorPickerSetState extends State<VNLMiniColorPickerSet> {
                         onColorChanged: (value) {
                           widget.onColorChanged?.call(widget.color.changeToHSVHue(value.hue));
                         },
-                        sliderType: HSVColorSliderType.hue,
+                        sliderType: VNLHSVColorSliderType.hue,
                         reverse: true,
                         onColorEnd: (value) {
                           widget.onColorChangeEnd?.call(widget.color.changeToHSVHue(value.hue));
@@ -1347,10 +1347,10 @@ class _MiniColorPickerSetState extends State<VNLMiniColorPickerSet> {
                   borderRadius: BorderRadius.circular(theme.radiusLg),
                 ),
                 child:
-                    widget.mode == ColorPickerMode.hsl
+                    widget.mode == VNLColorPickerMode.hsl
                         ? VNLHSLColorPickerArea(
                           color: HSLColor.fromAHSL(color.opacity, color.hslHue, 1, 0.5),
-                          sliderType: HSLColorSliderType.alpha,
+                          sliderType: VNLHSLColorSliderType.alpha,
                           reverse: true,
                           radius: Radius.circular(theme.radiusLg),
                           onColorChanged: (value) {
@@ -1365,7 +1365,7 @@ class _MiniColorPickerSetState extends State<VNLMiniColorPickerSet> {
                           onColorChanged: (value) {
                             widget.onColorChanged?.call(widget.color.changeToAlpha(value.alpha));
                           },
-                          sliderType: HSVColorSliderType.alpha,
+                          sliderType: VNLHSVColorSliderType.alpha,
                           radius: Radius.circular(theme.radiusLg),
                           reverse: true,
                           onColorEnd: (value) {
@@ -1391,8 +1391,8 @@ class VNLColorInput extends StatelessWidget {
   final AlignmentGeometry? popoverAnchorAlignment;
   final EdgeInsetsGeometry? popoverPadding;
   final Widget? placeholder;
-  final PromptMode mode;
-  final ColorPickerMode pickerMode;
+  final VNLPromptMode mode;
+  final VNLColorPickerMode pickerMode;
   final Widget? dialogTitle;
   final bool allowPickFromScreen;
   final bool showLabel;
@@ -1407,8 +1407,8 @@ class VNLColorInput extends StatelessWidget {
     this.popoverAnchorAlignment,
     this.popoverPadding,
     this.placeholder,
-    this.mode = PromptMode.dialog,
-    this.pickerMode = ColorPickerMode.rgb,
+    this.mode = VNLPromptMode.dialog,
+    this.pickerMode = VNLColorPickerMode.rgb,
     this.dialogTitle,
     this.allowPickFromScreen = true,
     this.showLabel = false,
@@ -1434,7 +1434,7 @@ class VNLColorInput extends StatelessWidget {
           onChanged?.call(value);
         }
       },
-      density: !showLabel ? ButtonDensity.iconDense : ButtonDensity.normal,
+      density: !showLabel ? VNLButtonDensity.iconDense : VNLButtonDensity.normal,
       builder: (context, value) {
         if (!showLabel) {
           return Container(
@@ -1493,7 +1493,7 @@ class VNLColorInput extends StatelessWidget {
           showAlpha: showAlpha,
           initialMode: pickerMode,
           onPickFromScreen:
-              allowPickFromScreen && mode == PromptMode.popover
+              allowPickFromScreen && mode == VNLPromptMode.popover
                   ? () async {
                     await handler.close();
                     if (!context.mounted) return;
@@ -1516,7 +1516,7 @@ class VNLColorInputPopup extends StatefulWidget {
   final ValueChanged<VNLColorDerivative>? onChanged;
   final ValueChanged<VNLColorDerivative>? onColorChangeEnd;
   final bool showAlpha;
-  final ColorPickerMode initialMode;
+  final VNLColorPickerMode initialMode;
   final VoidCallback? onPickFromScreen;
   final VNLColorHistoryStorage? storage;
 
@@ -1526,7 +1526,7 @@ class VNLColorInputPopup extends StatefulWidget {
     this.onChanged,
     this.onColorChangeEnd,
     this.showAlpha = true,
-    this.initialMode = ColorPickerMode.rgb,
+    this.initialMode = VNLColorPickerMode.rgb,
     this.onPickFromScreen,
     this.storage,
   });
@@ -1536,7 +1536,7 @@ class VNLColorInputPopup extends StatefulWidget {
 }
 
 class _ColorInputPopupState extends State<VNLColorInputPopup> {
-  late ColorPickerMode _mode;
+  late VNLColorPickerMode _mode;
 
   @override
   void initState() {
@@ -1563,16 +1563,16 @@ class _ColorInputPopupState extends State<VNLColorInputPopup> {
   }
 }
 
-enum HSVColorSliderType { hue, hueSat, hueVal, hueAlpha, sat, satVal, satAlpha, val, valAlpha, alpha }
+enum VNLHSVColorSliderType { hue, hueSat, hueVal, hueAlpha, sat, satVal, satAlpha, val, valAlpha, alpha }
 
-enum HSLColorSliderType { hue, hueSat, hueLum, hueAlpha, sat, satLum, satAlpha, lum, lumAlpha, alpha }
+enum VNLHSLColorSliderType { hue, hueSat, hueLum, hueAlpha, sat, satLum, satAlpha, lum, lumAlpha, alpha }
 
 Future<VNLColorDerivative> showColorPickerDialog({
   required BuildContext context,
   required VNLColorDerivative color,
   ValueChanged<VNLColorDerivative>? onColorChanged,
   Widget? title,
-  ColorPickerMode initialMode = ColorPickerMode.rgb,
+  VNLColorPickerMode initialMode = VNLColorPickerMode.rgb,
   bool showAlpha = true,
   bool allowPickFromScreen = true,
   VNLColorHistoryStorage? historyStorage,
@@ -1633,12 +1633,12 @@ Future<VNLColorDerivative> showColorPicker({
   AlignmentGeometry anchorAlignment = AlignmentDirectional.bottomStart,
   bool follow = true,
   Offset? offset,
-  PopoverConstraint widthConstraint = PopoverConstraint.flexible,
-  PopoverConstraint heightConstraint = PopoverConstraint.flexible,
+  VNLPopoverConstraint widthConstraint = VNLPopoverConstraint.flexible,
+  VNLPopoverConstraint heightConstraint = VNLPopoverConstraint.flexible,
   required VNLColorDerivative color,
   ValueChanged<VNLColorDerivative>? onColorChanged,
   bool showAlpha = true,
-  ColorPickerMode initialMode = ColorPickerMode.rgb,
+  VNLColorPickerMode initialMode = VNLColorPickerMode.rgb,
   bool allowPickFromScreen = true,
   ValueChanged<VNLColorDerivative>? onColorChangeEnd,
   VNLColorHistoryStorage? historyStorage,
@@ -1704,7 +1704,7 @@ class _ColorPickerDialog extends StatefulWidget {
   final VNLColorDerivative color;
   final ValueChanged<VNLColorDerivative>? onColorChanged;
   final bool showAlpha;
-  final ColorPickerMode initialMode;
+  final VNLColorPickerMode initialMode;
   final bool allowPickFromScreen;
   final Widget? title;
 
@@ -1713,7 +1713,7 @@ class _ColorPickerDialog extends StatefulWidget {
     required this.color,
     this.onColorChanged,
     this.showAlpha = true,
-    this.initialMode = ColorPickerMode.rgb,
+    this.initialMode = VNLColorPickerMode.rgb,
     this.allowPickFromScreen = true,
     this.title,
   });
@@ -1723,7 +1723,7 @@ class _ColorPickerDialog extends StatefulWidget {
 }
 
 class _ColorPickerDialogState extends State<_ColorPickerDialog> {
-  late ColorPickerMode _mode;
+  late VNLColorPickerMode _mode;
   late VNLColorDerivative _color;
 
   @override
@@ -1763,7 +1763,7 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
           },
           child: Text(localizations.buttonCancel),
         ),
-        PrimaryButton(
+        VNLPrimaryButton(
           onPressed: () {
             widget.onColorChanged?.call(_color);
             Navigator.of(context).pop(_ColorPickerDialogResult(color: _color));
@@ -1780,7 +1780,7 @@ class _ColorPickerPopup extends StatefulWidget {
   final ValueChanged<VNLColorDerivative>? onColorChanged;
   final ValueChanged<VNLColorDerivative>? onColorChangeEnd;
   final bool showAlpha;
-  final ColorPickerMode initialMode;
+  final VNLColorPickerMode initialMode;
   final bool allowPickFromScreen;
 
   const _ColorPickerPopup({
@@ -1788,7 +1788,7 @@ class _ColorPickerPopup extends StatefulWidget {
     this.onColorChanged,
     this.onColorChangeEnd,
     this.showAlpha = true,
-    this.initialMode = ColorPickerMode.rgb,
+    this.initialMode = VNLColorPickerMode.rgb,
     this.allowPickFromScreen = true,
   });
 
@@ -1797,7 +1797,7 @@ class _ColorPickerPopup extends StatefulWidget {
 }
 
 class _ColorPickerPopupState extends State<_ColorPickerPopup> {
-  late ColorPickerMode _mode;
+  late VNLColorPickerMode _mode;
   late VNLColorDerivative _color;
 
   @override
@@ -1987,13 +1987,13 @@ final class _HSVColor extends VNLColorDerivative {
   double get hsvVal => color.value;
 
   @override
-  int get red => color.toColor().red;
+  int get red => (color.toColor().r * 255).round();
 
   @override
-  int get green => color.toColor().green;
+  int get green => (color.toColor().g * 255).round();
 
   @override
-  int get blue => color.toColor().blue;
+  int get blue => (color.toColor().b * 255).round();
 }
 
 final class _HSLColor extends VNLColorDerivative {
@@ -2067,20 +2067,20 @@ final class _HSLColor extends VNLColorDerivative {
   double get hsvVal => color.toHSV().value;
 
   @override
-  int get red => color.toColor().red;
+  int get red => (color.toColor().r * 255).round();
 
   @override
-  int get green => color.toColor().green;
+  int get green => (color.toColor().g * 255).round();
 
   @override
-  int get blue => color.toColor().blue;
+  int get blue => (color.toColor().b * 255).round();
 }
 
 class VNLHSVColorPickerArea extends StatefulWidget {
   final HSVColor color;
   final ValueChanged<HSVColor>? onColorChanged;
   final ValueChanged<HSVColor>? onColorEnd;
-  final HSVColorSliderType sliderType;
+  final VNLHSVColorSliderType sliderType;
   final bool reverse;
   final Radius radius;
   final EdgeInsets padding;
@@ -2127,70 +2127,70 @@ class _HSVColorPickerAreaState extends State<VNLHSVColorPickerArea> {
     );
     _currentVertical = ((localPosition.dy - widget.padding.top) / (size.height - widget.padding.vertical)).clamp(0, 1);
     if (widget.reverse) {
-      if (widget.sliderType == HSVColorSliderType.hueSat) {
+      if (widget.sliderType == VNLHSVColorSliderType.hueSat) {
         _hue = _currentHorizontal * 360;
         _saturation = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.hueVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueVal) {
         _hue = _currentHorizontal * 360;
         _value = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.hueAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueAlpha) {
         _hue = _currentHorizontal * 360;
         _alpha = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.satVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satVal) {
         _saturation = _currentHorizontal;
         _value = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.satAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satAlpha) {
         _saturation = _currentHorizontal;
         _alpha = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.valAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.valAlpha) {
         _value = _currentHorizontal;
         _alpha = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hue) {
         _hue = _currentHorizontal * 360;
-      } else if (widget.sliderType == HSVColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.sat) {
         _saturation = _currentHorizontal;
-      } else if (widget.sliderType == HSVColorSliderType.val) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.val) {
         _value = _currentHorizontal;
-      } else if (widget.sliderType == HSVColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.alpha) {
         _alpha = _currentHorizontal;
       }
     } else {
-      if (widget.sliderType == HSVColorSliderType.hueSat) {
+      if (widget.sliderType == VNLHSVColorSliderType.hueSat) {
         _hue = _currentVertical * 360;
         _saturation = _currentHorizontal;
-      } else if (widget.sliderType == HSVColorSliderType.hueVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueVal) {
         _hue = _currentVertical * 360;
         _value = _currentHorizontal;
-      } else if (widget.sliderType == HSVColorSliderType.hueAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueAlpha) {
         _hue = _currentVertical * 360;
         _alpha = _currentHorizontal;
-      } else if (widget.sliderType == HSVColorSliderType.satVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satVal) {
         _saturation = _currentVertical;
         _value = _currentHorizontal;
-      } else if (widget.sliderType == HSVColorSliderType.satAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satAlpha) {
         _saturation = _currentVertical;
         _alpha = _currentHorizontal;
-      } else if (widget.sliderType == HSVColorSliderType.valAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.valAlpha) {
         _value = _currentVertical;
         _alpha = _currentHorizontal;
-      } else if (widget.sliderType == HSVColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hue) {
         _hue = _currentVertical * 360;
-      } else if (widget.sliderType == HSVColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.sat) {
         _saturation = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.val) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.val) {
         _value = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.alpha) {
         _alpha = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.valAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.valAlpha) {
         _value = _currentHorizontal;
         _alpha = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hue) {
         _hue = _currentVertical * 360;
-      } else if (widget.sliderType == HSVColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.sat) {
         _saturation = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.val) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.val) {
         _value = _currentVertical;
-      } else if (widget.sliderType == HSVColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.alpha) {
         _alpha = _currentVertical;
       }
     }
@@ -2214,10 +2214,10 @@ class _HSVColorPickerAreaState extends State<VNLHSVColorPickerArea> {
   }
 
   bool get isSingleChannel {
-    return widget.sliderType == HSVColorSliderType.hue ||
-        widget.sliderType == HSVColorSliderType.sat ||
-        widget.sliderType == HSVColorSliderType.val ||
-        widget.sliderType == HSVColorSliderType.alpha;
+    return widget.sliderType == VNLHSVColorSliderType.hue ||
+        widget.sliderType == VNLHSVColorSliderType.sat ||
+        widget.sliderType == VNLHSVColorSliderType.val ||
+        widget.sliderType == VNLHSVColorSliderType.alpha;
   }
 
   @override
@@ -2343,47 +2343,47 @@ class _HSVColorPickerAreaState extends State<VNLHSVColorPickerArea> {
   double get vertical {
     HSVColor hsv = widget.color;
     if (widget.reverse) {
-      if (widget.sliderType == HSVColorSliderType.hueSat) {
+      if (widget.sliderType == VNLHSVColorSliderType.hueSat) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.hueVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueVal) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.hueAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueAlpha) {
         return hsv.alpha;
-      } else if (widget.sliderType == HSVColorSliderType.satVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satVal) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.satAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satAlpha) {
         return hsv.alpha;
-      } else if (widget.sliderType == HSVColorSliderType.valAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.valAlpha) {
         return hsv.alpha;
-      } else if (widget.sliderType == HSVColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hue) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.sat) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.val) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.val) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.alpha) {
         return hsv.alpha;
       }
     } else {
-      if (widget.sliderType == HSVColorSliderType.hueSat) {
+      if (widget.sliderType == VNLHSVColorSliderType.hueSat) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.hueVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueVal) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.hueAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueAlpha) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.satVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satVal) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.satAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satAlpha) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.valAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.valAlpha) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hue) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.sat) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.val) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.val) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.alpha) {
         return hsv.alpha;
       }
     }
@@ -2393,47 +2393,47 @@ class _HSVColorPickerAreaState extends State<VNLHSVColorPickerArea> {
   double get horizontal {
     HSVColor hsv = widget.color;
     if (widget.reverse) {
-      if (widget.sliderType == HSVColorSliderType.hueSat) {
+      if (widget.sliderType == VNLHSVColorSliderType.hueSat) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.hueVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueVal) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.hueAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueAlpha) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.satVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satVal) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.satAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satAlpha) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.valAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.valAlpha) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hue) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.sat) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.val) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.val) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.alpha) {
         return hsv.alpha;
       }
     } else {
-      if (widget.sliderType == HSVColorSliderType.hueSat) {
+      if (widget.sliderType == VNLHSVColorSliderType.hueSat) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.hueVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueVal) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.hueAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hueAlpha) {
         return hsv.alpha;
-      } else if (widget.sliderType == HSVColorSliderType.satVal) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satVal) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.satAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.satAlpha) {
         return hsv.alpha;
-      } else if (widget.sliderType == HSVColorSliderType.valAlpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.valAlpha) {
         return hsv.alpha;
-      } else if (widget.sliderType == HSVColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.hue) {
         return hsv.hue / 360;
-      } else if (widget.sliderType == HSVColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.sat) {
         return hsv.saturation;
-      } else if (widget.sliderType == HSVColorSliderType.val) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.val) {
         return hsv.value;
-      } else if (widget.sliderType == HSVColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSVColorSliderType.alpha) {
         return hsv.alpha;
       }
     }
@@ -2445,7 +2445,7 @@ class VNLHSLColorPickerArea extends StatefulWidget {
   final HSLColor color;
   final ValueChanged<HSLColor>? onColorChanged;
   final ValueChanged<HSLColor>? onColorEnd;
-  final HSLColorSliderType sliderType;
+  final VNLHSLColorSliderType sliderType;
   final bool reverse;
   final Radius radius;
   final EdgeInsets padding;
@@ -2492,59 +2492,59 @@ class _HSLColorPickerAreaState extends State<VNLHSLColorPickerArea> {
     );
     _currentVertical = ((localPosition.dy - widget.padding.top) / (size.height - widget.padding.vertical)).clamp(0, 1);
     if (widget.reverse) {
-      if (widget.sliderType == HSLColorSliderType.hueSat) {
+      if (widget.sliderType == VNLHSLColorSliderType.hueSat) {
         _hue = _currentHorizontal * 360;
         _saturation = _currentVertical;
-      } else if (widget.sliderType == HSLColorSliderType.hueLum) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.hueLum) {
         _hue = _currentHorizontal * 360;
         _lightness = _currentVertical;
-      } else if (widget.sliderType == HSLColorSliderType.hueAlpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.hueAlpha) {
         _hue = _currentHorizontal * 360;
         _alpha = _currentVertical;
-      } else if (widget.sliderType == HSLColorSliderType.satLum) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.satLum) {
         _saturation = _currentHorizontal;
         _lightness = _currentVertical;
-      } else if (widget.sliderType == HSLColorSliderType.satAlpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.satAlpha) {
         _saturation = _currentHorizontal;
         _alpha = _currentVertical;
-      } else if (widget.sliderType == HSLColorSliderType.lumAlpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.lumAlpha) {
         _lightness = _currentHorizontal;
         _alpha = _currentVertical;
-      } else if (widget.sliderType == HSLColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.hue) {
         _hue = _currentHorizontal * 360;
-      } else if (widget.sliderType == HSLColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.sat) {
         _saturation = _currentHorizontal;
-      } else if (widget.sliderType == HSLColorSliderType.lum) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.lum) {
         _lightness = _currentHorizontal;
-      } else if (widget.sliderType == HSLColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.alpha) {
         _alpha = _currentHorizontal;
       }
     } else {
-      if (widget.sliderType == HSLColorSliderType.hueSat) {
+      if (widget.sliderType == VNLHSLColorSliderType.hueSat) {
         _hue = _currentVertical * 360;
         _saturation = _currentHorizontal;
-      } else if (widget.sliderType == HSLColorSliderType.hueLum) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.hueLum) {
         _hue = _currentVertical * 360;
         _lightness = _currentHorizontal;
-      } else if (widget.sliderType == HSLColorSliderType.hueAlpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.hueAlpha) {
         _hue = _currentVertical * 360;
         _alpha = _currentHorizontal;
-      } else if (widget.sliderType == HSLColorSliderType.satLum) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.satLum) {
         _saturation = _currentVertical;
         _lightness = _currentHorizontal;
-      } else if (widget.sliderType == HSLColorSliderType.satAlpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.satAlpha) {
         _saturation = _currentVertical;
         _alpha = _currentHorizontal;
-      } else if (widget.sliderType == HSLColorSliderType.lumAlpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.lumAlpha) {
         _lightness = _currentVertical;
         _alpha = _currentHorizontal;
-      } else if (widget.sliderType == HSLColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.hue) {
         _hue = _currentVertical * 360;
-      } else if (widget.sliderType == HSLColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.sat) {
         _saturation = _currentVertical;
-      } else if (widget.sliderType == HSLColorSliderType.lum) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.lum) {
         _lightness = _currentVertical;
-      } else if (widget.sliderType == HSLColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.alpha) {
         _alpha = _currentVertical;
       }
     }
@@ -2568,10 +2568,10 @@ class _HSLColorPickerAreaState extends State<VNLHSLColorPickerArea> {
   }
 
   bool get isSingleChannel {
-    return widget.sliderType == HSLColorSliderType.hue ||
-        widget.sliderType == HSLColorSliderType.sat ||
-        widget.sliderType == HSLColorSliderType.lum ||
-        widget.sliderType == HSLColorSliderType.alpha;
+    return widget.sliderType == VNLHSLColorSliderType.hue ||
+        widget.sliderType == VNLHSLColorSliderType.sat ||
+        widget.sliderType == VNLHSLColorSliderType.lum ||
+        widget.sliderType == VNLHSLColorSliderType.alpha;
   }
 
   @override
@@ -2697,47 +2697,47 @@ class _HSLColorPickerAreaState extends State<VNLHSLColorPickerArea> {
   double get vertical {
     HSLColor hsl = widget.color;
     if (widget.reverse) {
-      if (widget.sliderType == HSLColorSliderType.hueSat) {
+      if (widget.sliderType == VNLHSLColorSliderType.hueSat) {
         return hsl.saturation;
-      } else if (widget.sliderType == HSLColorSliderType.hueLum) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.hueLum) {
         return hsl.lightness;
-      } else if (widget.sliderType == HSLColorSliderType.hueAlpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.hueAlpha) {
         return hsl.alpha;
-      } else if (widget.sliderType == HSLColorSliderType.satLum) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.satLum) {
         return hsl.lightness;
-      } else if (widget.sliderType == HSLColorSliderType.satAlpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.satAlpha) {
         return hsl.alpha;
-      } else if (widget.sliderType == HSLColorSliderType.lumAlpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.lumAlpha) {
         return hsl.alpha;
-      } else if (widget.sliderType == HSLColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.hue) {
         return hsl.hue / 360;
-      } else if (widget.sliderType == HSLColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.sat) {
         return hsl.saturation;
-      } else if (widget.sliderType == HSLColorSliderType.lum) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.lum) {
         return hsl.lightness;
-      } else if (widget.sliderType == HSLColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.alpha) {
         return hsl.alpha;
       }
     } else {
-      if (widget.sliderType == HSLColorSliderType.hueSat) {
+      if (widget.sliderType == VNLHSLColorSliderType.hueSat) {
         return hsl.hue / 360;
-      } else if (widget.sliderType == HSLColorSliderType.hueLum) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.hueLum) {
         return hsl.hue / 360;
-      } else if (widget.sliderType == HSLColorSliderType.hueAlpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.hueAlpha) {
         return hsl.hue / 360;
-      } else if (widget.sliderType == HSLColorSliderType.satLum) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.satLum) {
         return hsl.saturation;
-      } else if (widget.sliderType == HSLColorSliderType.satAlpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.satAlpha) {
         return hsl.saturation;
-      } else if (widget.sliderType == HSLColorSliderType.lumAlpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.lumAlpha) {
         return hsl.lightness;
-      } else if (widget.sliderType == HSLColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.hue) {
         return hsl.hue / 360;
-      } else if (widget.sliderType == HSLColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.sat) {
         return hsl.saturation;
-      } else if (widget.sliderType == HSLColorSliderType.lum) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.lum) {
         return hsl.lightness;
-      } else if (widget.sliderType == HSLColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.alpha) {
         return hsl.alpha;
       }
     }
@@ -2747,47 +2747,47 @@ class _HSLColorPickerAreaState extends State<VNLHSLColorPickerArea> {
   double get horizontal {
     HSLColor hsl = widget.color;
     if (widget.reverse) {
-      if (widget.sliderType == HSLColorSliderType.hueSat) {
+      if (widget.sliderType == VNLHSLColorSliderType.hueSat) {
         return hsl.hue / 360;
-      } else if (widget.sliderType == HSLColorSliderType.hueLum) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.hueLum) {
         return hsl.hue / 360;
-      } else if (widget.sliderType == HSLColorSliderType.hueAlpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.hueAlpha) {
         return hsl.hue / 360;
-      } else if (widget.sliderType == HSLColorSliderType.satLum) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.satLum) {
         return hsl.saturation;
-      } else if (widget.sliderType == HSLColorSliderType.satAlpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.satAlpha) {
         return hsl.saturation;
-      } else if (widget.sliderType == HSLColorSliderType.lumAlpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.lumAlpha) {
         return hsl.lightness;
-      } else if (widget.sliderType == HSLColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.hue) {
         return hsl.hue / 360;
-      } else if (widget.sliderType == HSLColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.sat) {
         return hsl.saturation;
-      } else if (widget.sliderType == HSLColorSliderType.lum) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.lum) {
         return hsl.lightness;
-      } else if (widget.sliderType == HSLColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.alpha) {
         return hsl.alpha;
       }
     } else {
-      if (widget.sliderType == HSLColorSliderType.hueSat) {
+      if (widget.sliderType == VNLHSLColorSliderType.hueSat) {
         return hsl.saturation;
-      } else if (widget.sliderType == HSLColorSliderType.hueLum) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.hueLum) {
         return hsl.lightness;
-      } else if (widget.sliderType == HSLColorSliderType.hueAlpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.hueAlpha) {
         return hsl.alpha;
-      } else if (widget.sliderType == HSLColorSliderType.satLum) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.satLum) {
         return hsl.lightness;
-      } else if (widget.sliderType == HSLColorSliderType.satAlpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.satAlpha) {
         return hsl.alpha;
-      } else if (widget.sliderType == HSLColorSliderType.lumAlpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.lumAlpha) {
         return hsl.alpha;
-      } else if (widget.sliderType == HSLColorSliderType.hue) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.hue) {
         return hsl.hue / 360;
-      } else if (widget.sliderType == HSLColorSliderType.sat) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.sat) {
         return hsl.saturation;
-      } else if (widget.sliderType == HSLColorSliderType.lum) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.lum) {
         return hsl.lightness;
-      } else if (widget.sliderType == HSLColorSliderType.alpha) {
+      } else if (widget.sliderType == VNLHSLColorSliderType.alpha) {
         return hsl.alpha;
       }
     }
@@ -2796,7 +2796,7 @@ class _HSLColorPickerAreaState extends State<VNLHSLColorPickerArea> {
 }
 
 class VNLHSVColorPickerPainter extends CustomPainter {
-  final HSVColorSliderType sliderType;
+  final VNLHSVColorSliderType sliderType;
   final HSVColor color;
   final bool reverse;
 
@@ -2810,7 +2810,7 @@ class VNLHSVColorPickerPainter extends CustomPainter {
     pp.style = PaintingStyle.fill;
     var canvasHeight = size.height;
     var canvasWidth = size.width;
-    if (sliderType == HSVColorSliderType.hueSat) {
+    if (sliderType == VNLHSVColorSliderType.hueSat) {
       // if reverse, then its sat hue
       if (reverse) {
         double width = canvasWidth / 360;
@@ -2841,7 +2841,7 @@ class VNLHSVColorPickerPainter extends CustomPainter {
           }
         }
       }
-    } else if (sliderType == HSVColorSliderType.hueVal) {
+    } else if (sliderType == VNLHSVColorSliderType.hueVal) {
       // if reverse, then its val hue
       if (reverse) {
         double width = canvasWidth / 360;
@@ -2872,7 +2872,7 @@ class VNLHSVColorPickerPainter extends CustomPainter {
           }
         }
       }
-    } else if (sliderType == HSVColorSliderType.satVal) {
+    } else if (sliderType == VNLHSVColorSliderType.satVal) {
       // if reverse, then its val sat
       if (reverse) {
         double width = canvasWidth / 100;
@@ -2903,7 +2903,7 @@ class VNLHSVColorPickerPainter extends CustomPainter {
           }
         }
       }
-    } else if (sliderType == HSVColorSliderType.hueAlpha) {
+    } else if (sliderType == VNLHSVColorSliderType.hueAlpha) {
       // if reverse, then its alpha hue
       if (reverse) {
         double width = canvasWidth / 360;
@@ -2934,7 +2934,7 @@ class VNLHSVColorPickerPainter extends CustomPainter {
           }
         }
       }
-    } else if (sliderType == HSVColorSliderType.satAlpha) {
+    } else if (sliderType == VNLHSVColorSliderType.satAlpha) {
       // if reverse, then its alpha sat
       if (reverse) {
         double width = canvasWidth / 100;
@@ -2965,7 +2965,7 @@ class VNLHSVColorPickerPainter extends CustomPainter {
           }
         }
       }
-    } else if (sliderType == HSVColorSliderType.valAlpha) {
+    } else if (sliderType == VNLHSVColorSliderType.valAlpha) {
       // if reverse, then its alpha val
       if (reverse) {
         double width = canvasWidth / 100;
@@ -2996,7 +2996,7 @@ class VNLHSVColorPickerPainter extends CustomPainter {
           }
         }
       }
-    } else if (sliderType == HSVColorSliderType.hue) {
+    } else if (sliderType == VNLHSVColorSliderType.hue) {
       if (reverse) {
         double width = canvasWidth / 360;
         for (var i = 0; i < 360; i++) {
@@ -3018,7 +3018,7 @@ class VNLHSVColorPickerPainter extends CustomPainter {
           canvas.drawRect(Rect.fromLTWH(0, i * height, canvasWidth, height), paint);
         }
       }
-    } else if (sliderType == HSVColorSliderType.sat) {
+    } else if (sliderType == VNLHSVColorSliderType.sat) {
       if (reverse) {
         double width = canvasWidth / 100;
         for (var i = 0; i < 100; i++) {
@@ -3040,7 +3040,7 @@ class VNLHSVColorPickerPainter extends CustomPainter {
           canvas.drawRect(Rect.fromLTWH(0, i * height, canvasWidth, height), paint);
         }
       }
-    } else if (sliderType == HSVColorSliderType.val) {
+    } else if (sliderType == VNLHSVColorSliderType.val) {
       if (reverse) {
         double width = canvasWidth / 100;
         for (var i = 0; i < 100; i++) {
@@ -3062,7 +3062,7 @@ class VNLHSVColorPickerPainter extends CustomPainter {
           canvas.drawRect(Rect.fromLTWH(0, i * height, canvasWidth, height), paint);
         }
       }
-    } else if (sliderType == HSVColorSliderType.alpha) {
+    } else if (sliderType == VNLHSVColorSliderType.alpha) {
       if (reverse) {
         double width = canvasWidth / 100;
         for (var i = 0; i < 100; i++) {
@@ -3092,27 +3092,27 @@ class VNLHSVColorPickerPainter extends CustomPainter {
     if (oldDelegate.reverse != reverse || oldDelegate.sliderType != sliderType) {
       return true;
     }
-    if (sliderType == HSVColorSliderType.hueSat) {
+    if (sliderType == VNLHSVColorSliderType.hueSat) {
       return oldDelegate.color.value != color.value;
-    } else if (sliderType == HSVColorSliderType.hueVal) {
+    } else if (sliderType == VNLHSVColorSliderType.hueVal) {
       return oldDelegate.color.saturation != color.saturation;
-    } else if (sliderType == HSVColorSliderType.satVal) {
+    } else if (sliderType == VNLHSVColorSliderType.satVal) {
       return oldDelegate.color.hue != color.hue;
-    } else if (sliderType == HSVColorSliderType.alpha) {
+    } else if (sliderType == VNLHSVColorSliderType.alpha) {
       return oldDelegate.color.value != color.value ||
           oldDelegate.color.saturation != color.saturation ||
           oldDelegate.color.hue != color.hue;
-    } else if (sliderType == HSVColorSliderType.hue) {
+    } else if (sliderType == VNLHSVColorSliderType.hue) {
       return oldDelegate.color.saturation != color.saturation || oldDelegate.color.value != color.value;
-    } else if (sliderType == HSVColorSliderType.sat) {
+    } else if (sliderType == VNLHSVColorSliderType.sat) {
       return oldDelegate.color.hue != color.hue || oldDelegate.color.value != color.value;
-    } else if (sliderType == HSVColorSliderType.val) {
+    } else if (sliderType == VNLHSVColorSliderType.val) {
       return oldDelegate.color.hue != color.hue || oldDelegate.color.saturation != color.saturation;
-    } else if (sliderType == HSVColorSliderType.hueAlpha) {
+    } else if (sliderType == VNLHSVColorSliderType.hueAlpha) {
       return oldDelegate.color.value != color.value;
-    } else if (sliderType == HSVColorSliderType.satAlpha) {
+    } else if (sliderType == VNLHSVColorSliderType.satAlpha) {
       return oldDelegate.color.hue != color.hue;
-    } else if (sliderType == HSVColorSliderType.valAlpha) {
+    } else if (sliderType == VNLHSVColorSliderType.valAlpha) {
       return oldDelegate.color.hue != color.hue;
     }
     return false;
@@ -3120,7 +3120,7 @@ class VNLHSVColorPickerPainter extends CustomPainter {
 }
 
 class VNLHSLColorPickerPainter extends CustomPainter {
-  final HSLColorSliderType sliderType;
+  final VNLHSLColorSliderType sliderType;
   final HSLColor color;
   final bool reverse;
 
@@ -3134,7 +3134,7 @@ class VNLHSLColorPickerPainter extends CustomPainter {
     pp.style = PaintingStyle.fill;
     var canvasHeight = size.height;
     var canvasWidth = size.width;
-    if (sliderType == HSLColorSliderType.hueSat) {
+    if (sliderType == VNLHSLColorSliderType.hueSat) {
       // if reverse, then its sat hue
       if (reverse) {
         double width = canvasWidth / 360;
@@ -3165,7 +3165,7 @@ class VNLHSLColorPickerPainter extends CustomPainter {
           }
         }
       }
-    } else if (sliderType == HSLColorSliderType.hueLum) {
+    } else if (sliderType == VNLHSLColorSliderType.hueLum) {
       // if reverse, then its lum hue
       if (reverse) {
         double width = canvasWidth / 360;
@@ -3196,7 +3196,7 @@ class VNLHSLColorPickerPainter extends CustomPainter {
           }
         }
       }
-    } else if (sliderType == HSLColorSliderType.satLum) {
+    } else if (sliderType == VNLHSLColorSliderType.satLum) {
       // if reverse, then its lum sat
       if (reverse) {
         double width = canvasWidth / 100;
@@ -3227,7 +3227,7 @@ class VNLHSLColorPickerPainter extends CustomPainter {
           }
         }
       }
-    } else if (sliderType == HSLColorSliderType.hueAlpha) {
+    } else if (sliderType == VNLHSLColorSliderType.hueAlpha) {
       // if reverse, then its alpha hue
       if (reverse) {
         double width = canvasWidth / 360;
@@ -3258,7 +3258,7 @@ class VNLHSLColorPickerPainter extends CustomPainter {
           }
         }
       }
-    } else if (sliderType == HSLColorSliderType.satAlpha) {
+    } else if (sliderType == VNLHSLColorSliderType.satAlpha) {
       // if reverse, then its alpha sat
       if (reverse) {
         double width = canvasWidth / 100;
@@ -3289,7 +3289,7 @@ class VNLHSLColorPickerPainter extends CustomPainter {
           }
         }
       }
-    } else if (sliderType == HSLColorSliderType.lumAlpha) {
+    } else if (sliderType == VNLHSLColorSliderType.lumAlpha) {
       // if reverse, then its alpha lum
       if (reverse) {
         double width = canvasWidth / 100;
@@ -3320,7 +3320,7 @@ class VNLHSLColorPickerPainter extends CustomPainter {
           }
         }
       }
-    } else if (sliderType == HSLColorSliderType.hue) {
+    } else if (sliderType == VNLHSLColorSliderType.hue) {
       if (reverse) {
         double width = canvasWidth / 360;
         for (var i = 0; i < 360; i++) {
@@ -3342,7 +3342,7 @@ class VNLHSLColorPickerPainter extends CustomPainter {
           canvas.drawRect(Rect.fromLTWH(0, i * height, canvasWidth, height), paint);
         }
       }
-    } else if (sliderType == HSLColorSliderType.sat) {
+    } else if (sliderType == VNLHSLColorSliderType.sat) {
       if (reverse) {
         double width = canvasWidth / 100;
         for (var i = 0; i < 100; i++) {
@@ -3364,7 +3364,7 @@ class VNLHSLColorPickerPainter extends CustomPainter {
           canvas.drawRect(Rect.fromLTWH(0, i * height, canvasWidth, height), paint);
         }
       }
-    } else if (sliderType == HSLColorSliderType.lum) {
+    } else if (sliderType == VNLHSLColorSliderType.lum) {
       if (reverse) {
         double width = canvasWidth / 100;
         for (var i = 0; i < 100; i++) {
@@ -3386,7 +3386,7 @@ class VNLHSLColorPickerPainter extends CustomPainter {
           canvas.drawRect(Rect.fromLTWH(0, i * height, canvasWidth, height), paint);
         }
       }
-    } else if (sliderType == HSLColorSliderType.alpha) {
+    } else if (sliderType == VNLHSLColorSliderType.alpha) {
       if (reverse) {
         double width = canvasWidth / 100;
         for (var i = 0; i < 100; i++) {
@@ -3416,27 +3416,27 @@ class VNLHSLColorPickerPainter extends CustomPainter {
     if (oldDelegate.reverse != reverse || oldDelegate.sliderType != sliderType) {
       return true;
     }
-    if (sliderType == HSLColorSliderType.hueSat) {
+    if (sliderType == VNLHSLColorSliderType.hueSat) {
       return oldDelegate.color.lightness != color.lightness;
-    } else if (sliderType == HSLColorSliderType.hueLum) {
+    } else if (sliderType == VNLHSLColorSliderType.hueLum) {
       return oldDelegate.color.saturation != color.saturation;
-    } else if (sliderType == HSLColorSliderType.satLum) {
+    } else if (sliderType == VNLHSLColorSliderType.satLum) {
       return oldDelegate.color.hue != color.hue;
-    } else if (sliderType == HSLColorSliderType.alpha) {
+    } else if (sliderType == VNLHSLColorSliderType.alpha) {
       return oldDelegate.color.lightness != color.lightness ||
           oldDelegate.color.saturation != color.saturation ||
           oldDelegate.color.hue != color.hue;
-    } else if (sliderType == HSLColorSliderType.hue) {
+    } else if (sliderType == VNLHSLColorSliderType.hue) {
       return oldDelegate.color.lightness != color.lightness || oldDelegate.color.saturation != color.saturation;
-    } else if (sliderType == HSLColorSliderType.sat) {
+    } else if (sliderType == VNLHSLColorSliderType.sat) {
       return oldDelegate.color.hue != color.hue || oldDelegate.color.lightness != color.lightness;
-    } else if (sliderType == HSLColorSliderType.lum) {
+    } else if (sliderType == VNLHSLColorSliderType.lum) {
       return oldDelegate.color.hue != color.hue || oldDelegate.color.saturation != color.saturation;
-    } else if (sliderType == HSLColorSliderType.hueAlpha) {
+    } else if (sliderType == VNLHSLColorSliderType.hueAlpha) {
       return oldDelegate.color.lightness != color.lightness;
-    } else if (sliderType == HSLColorSliderType.satAlpha) {
+    } else if (sliderType == VNLHSLColorSliderType.satAlpha) {
       return oldDelegate.color.hue != color.hue;
-    } else if (sliderType == HSLColorSliderType.lumAlpha) {
+    } else if (sliderType == VNLHSLColorSliderType.lumAlpha) {
       return oldDelegate.color.hue != color.hue;
     }
     return false;

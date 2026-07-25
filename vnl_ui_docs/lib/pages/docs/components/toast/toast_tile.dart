@@ -12,7 +12,7 @@ class ToastTile extends StatelessWidget implements IComponentPage {
       child: VNLBasic(
         title: const Text('Event has been created'),
         subtitle: const Text('Sunday, July 07, 2024 at 12:00 PM'),
-        trailing: PrimaryButton(
+        trailing: VNLPrimaryButton(
             size: VNLButtonSize.small,
             onPressed: () {},
             child: const Text('Undo')),

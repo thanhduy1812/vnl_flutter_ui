@@ -12,7 +12,7 @@ typedef WrapperBuilder = Widget Function(
 
 /// A widget that conditionally wraps its child with a builder function.
 ///
-/// [Wrapper] provides flexible control over whether and how to wrap a child widget.
+/// [VNLWrapper] provides flexible control over whether and how to wrap a child widget.
 /// It can optionally apply a custom builder function and maintain the widget
 /// structure across rebuilds using a keyed subtree.
 ///
@@ -23,7 +23,7 @@ typedef WrapperBuilder = Widget Function(
 ///
 /// Example:
 /// ```dart
-/// Wrapper(
+/// VNLWrapper(
 ///   wrap: true,
 ///   builder: (context, child) => Container(
 ///     padding: EdgeInsets.all(8),
@@ -32,7 +32,7 @@ typedef WrapperBuilder = Widget Function(
 ///   child: Text('Hello'),
 /// )
 /// ```
-class Wrapper extends StatefulWidget {
+class VNLWrapper extends StatefulWidget {
   /// The child widget to be wrapped.
   final Widget child;
 
@@ -56,11 +56,11 @@ class Wrapper extends StatefulWidget {
   /// Defaults to false.
   final bool maintainStructure;
 
-  /// Creates a [Wrapper] widget.
+  /// Creates a [VNLWrapper] widget.
   ///
   /// The [child] parameter is required. The [wrap] parameter defaults to true,
   /// and [maintainStructure] defaults to false.
-  const Wrapper({
+  const VNLWrapper({
     super.key,
     required this.child,
     this.builder,
@@ -69,10 +69,10 @@ class Wrapper extends StatefulWidget {
   });
 
   @override
-  State<Wrapper> createState() => _WrapperState();
+  State<VNLWrapper> createState() => _WrapperState();
 }
 
-class _WrapperState extends State<Wrapper> {
+class _WrapperState extends State<VNLWrapper> {
   final GlobalKey _key = GlobalKey();
   @override
   Widget build(BuildContext context) {

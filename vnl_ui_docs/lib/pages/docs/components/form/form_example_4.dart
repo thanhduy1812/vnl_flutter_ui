@@ -16,11 +16,11 @@ class _FormExample4State extends State<FormExample4> {
   // ✅ Each key uses the correct typed alias for the widget it pairs with.
   //    Always use const to preserve key identity across rebuilds.
   final _nameKey = const TextFieldKey('name'); // VNLTextField → String
-  final _agreeKey = const CheckboxKey('agree'); // VNLCheckbox → CheckboxState
+  final _agreeKey = const CheckboxKey('agree'); // VNLCheckbox → VNLCheckboxState
   final _birthdayKey = const DatePickerKey('birthday'); // VNLDatePicker → DateTime
   final _notifyKey = const SwitchKey('notify'); // VNLSwitch → bool
 
-  CheckboxState _agreeState = CheckboxState.unchecked;
+  VNLCheckboxState _agreeState = VNLCheckboxState.unchecked;
   bool _notifyState = false;
 
   @override
@@ -31,7 +31,7 @@ class _FormExample4State extends State<FormExample4> {
         onSubmit: (context, values) {
           // Read values with full type safety — no casting needed.
           String? name = _nameKey[values];
-          CheckboxState? agree = _agreeKey[values];
+          VNLCheckboxState? agree = _agreeKey[values];
           DateTime? birthday = _birthdayKey[values];
           bool? notify = _notifyKey[values];
           showDialog(
@@ -50,7 +50,7 @@ class _FormExample4State extends State<FormExample4> {
                   ],
                 ),
                 actions: [
-                  PrimaryButton(
+                  VNLPrimaryButton(
                     onPressed: () => Navigator.of(context).pop(),
                     child: const Text('Close'),
                   ),
@@ -74,10 +74,10 @@ class _FormExample4State extends State<FormExample4> {
                     initialValue: 'Jane Doe',
                   ),
                 ),
-                FormInline<CheckboxState>(
+                FormInline<VNLCheckboxState>(
                   key: _agreeKey,
                   label: const Text('I agree to the terms'),
-                  validator: const CompareTo.equal(CheckboxState.checked,
+                  validator: const CompareTo.equal(VNLCheckboxState.checked,
                       message: 'You must agree'),
                   child: Align(
                     alignment: AlignmentDirectional.centerEnd,
@@ -95,7 +95,7 @@ class _FormExample4State extends State<FormExample4> {
                   key: _birthdayKey,
                   label: const Text('Birthday'),
                   validator:
-                      const NonNullValidator(message: 'Please select a date'),
+                      const VNLNonNullValidator(message: 'Please select a date'),
                   child: const VNLControlledDatePicker(),
                 ),
                 FormInline<bool>(
@@ -118,7 +118,7 @@ class _FormExample4State extends State<FormExample4> {
             const Gap(24),
             VNLFormErrorBuilder(
               builder: (context, errors, child) {
-                return PrimaryButton(
+                return VNLPrimaryButton(
                   onPressed: errors.isEmpty ? () => context.submitForm() : null,
                   child: const Text('Submit'),
                 );

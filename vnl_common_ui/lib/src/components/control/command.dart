@@ -319,7 +319,7 @@ class _CommandState extends State<VNLCommand> {
     final theme = Theme.of(context);
     bool canPop = Navigator.of(context).canPop();
     final localization = VNLookLocalizations.of(context);
-    return SubFocusScope(
+    return VNLSubFocusScope(
         autofocus: true,
         builder: (context, state) {
           return Actions(
@@ -360,7 +360,7 @@ class _CommandState extends State<VNLCommand> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      ComponentTheme(
+                      VNLComponentTheme(
                         data: const VNLFocusOutlineTheme(
                           border: Border.fromBorderSide(BorderSide.none),
                         ),
@@ -378,7 +378,7 @@ class _CommandState extends State<VNLCommand> {
                                 .iconMutedForeground()),
                             if (canPop)
                               VNLInputFeature.trailing(VNLGhostButton(
-                                density: ButtonDensity.iconDense,
+                                density: VNLButtonDensity.iconDense,
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
@@ -622,7 +622,7 @@ class _CommandItemState extends State<VNLCommandItem> {
           },
         ),
       },
-      child: SubFocus(
+      child: VNLSubFocus(
         builder: (context, state) {
           return VNLClickable(
             onPressed: widget.onTap,

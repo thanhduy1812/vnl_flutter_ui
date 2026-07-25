@@ -10,7 +10,7 @@ import 'package:vnl_common_ui/shadcn_flutter.dart';
 ///
 /// The theme supports advanced features like spark effects for enhanced visual
 /// feedback and animation control for performance optimization scenarios.
-class LinearProgressIndicatorTheme extends ComponentThemeData {
+class VNLLinearProgressIndicatorTheme extends ComponentThemeData {
   /// The primary color of the progress indicator fill.
   ///
   /// Type: `Color?`. If null, uses theme's primary color. Applied to the
@@ -47,14 +47,14 @@ class LinearProgressIndicatorTheme extends ComponentThemeData {
   /// instantly without transitions for performance optimization.
   final bool? disableAnimation;
 
-  /// Creates a [LinearProgressIndicatorTheme].
+  /// Creates a [VNLLinearProgressIndicatorTheme].
   ///
   /// All parameters are optional and can be null to use intelligent defaults
   /// based on the current theme configuration and design system values.
   ///
   /// Example:
   /// ```dart
-  /// const LinearProgressIndicatorTheme(
+  /// const VNLLinearProgressIndicatorTheme(
   ///   color: VNLColors.blue,
   ///   backgroundColor: VNLColors.grey,
   ///   minHeight: 4.0,
@@ -62,7 +62,7 @@ class LinearProgressIndicatorTheme extends ComponentThemeData {
   ///   showSparks: true,
   /// );
   /// ```
-  const LinearProgressIndicatorTheme({
+  const VNLLinearProgressIndicatorTheme({
     this.color,
     this.backgroundColor,
     this.minHeight,
@@ -72,7 +72,7 @@ class LinearProgressIndicatorTheme extends ComponentThemeData {
   });
 
   /// Returns a copy of this theme with the given fields replaced.
-  LinearProgressIndicatorTheme copyWith({
+  VNLLinearProgressIndicatorTheme copyWith({
     ValueGetter<Color?>? color,
     ValueGetter<Color?>? backgroundColor,
     ValueGetter<double?>? minHeight,
@@ -80,7 +80,7 @@ class LinearProgressIndicatorTheme extends ComponentThemeData {
     ValueGetter<bool?>? showSparks,
     ValueGetter<bool?>? disableAnimation,
   }) {
-    return LinearProgressIndicatorTheme(
+    return VNLLinearProgressIndicatorTheme(
       color: color == null ? this.color : color(),
       backgroundColor:
           backgroundColor == null ? this.backgroundColor : backgroundColor(),
@@ -95,7 +95,7 @@ class LinearProgressIndicatorTheme extends ComponentThemeData {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is LinearProgressIndicatorTheme &&
+    return other is VNLLinearProgressIndicatorTheme &&
         other.color == color &&
         other.backgroundColor == backgroundColor &&
         other.minHeight == minHeight &&
@@ -139,7 +139,7 @@ const int _kIndeterminateLinearDuration = 1800;
 /// - Smooth animated transitions with disable option
 /// - RTL (right-to-left) text direction support
 /// - Custom painting for optimal rendering performance
-/// - Comprehensive theming via [LinearProgressIndicatorTheme]
+/// - Comprehensive theming via [VNLLinearProgressIndicatorTheme]
 /// - Responsive sizing with theme scaling integration
 ///
 /// The indeterminate animation uses precisely timed curves to create a natural,
@@ -227,7 +227,7 @@ class VNLLinearProgressIndicator extends StatelessWidget {
   ///
   /// The component automatically handles both determinate and indeterminate modes
   /// based on whether [value] is provided. Theming and visual effects can be
-  /// customized through individual parameters or via [LinearProgressIndicatorTheme].
+  /// customized through individual parameters or via [VNLLinearProgressIndicatorTheme].
   ///
   /// Parameters:
   /// - [value] (double?, optional): VNLProgress completion (0.0-1.0) or null for indeterminate
@@ -263,7 +263,7 @@ class VNLLinearProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final directionality = Directionality.of(context);
-    final compTheme = ComponentTheme.maybeOf<LinearProgressIndicatorTheme>(
+    final compTheme = VNLComponentTheme.maybeOf<VNLLinearProgressIndicatorTheme>(
       context,
     );
     final colorValue = styleValue(

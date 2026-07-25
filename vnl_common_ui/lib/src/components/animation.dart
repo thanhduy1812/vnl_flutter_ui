@@ -211,7 +211,7 @@ class AnimatedValueBuilderState<T> extends State<AnimatedValueBuilder<T>>
   }
 }
 
-enum RepeatMode {
+enum VNLRepeatMode {
   repeat,
   reverse,
   pingPong,
@@ -227,7 +227,7 @@ class RepeatedAnimationBuilder<T> extends StatefulWidget {
   final Duration? reverseDuration;
   final Curve curve;
   final Curve? reverseCurve;
-  final RepeatMode mode;
+  final VNLRepeatMode mode;
   final Widget Function(BuildContext context, T value, Widget? child)? builder;
   final Widget Function(BuildContext context, Animation<T> animation)?
       animationBuilder;
@@ -242,7 +242,7 @@ class RepeatedAnimationBuilder<T> extends StatefulWidget {
     required this.duration,
     this.curve = Curves.linear,
     this.reverseCurve,
-    this.mode = RepeatMode.repeat,
+    this.mode = VNLRepeatMode.repeat,
     required this.builder,
     this.child,
     this.lerp,
@@ -257,7 +257,7 @@ class RepeatedAnimationBuilder<T> extends StatefulWidget {
     required this.duration,
     this.curve = Curves.linear,
     this.reverseCurve,
-    this.mode = RepeatMode.repeat,
+    this.mode = VNLRepeatMode.repeat,
     required this.animationBuilder,
     this.child,
     this.lerp,
@@ -285,8 +285,8 @@ class _RepeatedAnimationBuilderState<T>
     _controller = AnimationController(
       vsync: this,
     );
-    if (widget.mode == RepeatMode.reverse ||
-        widget.mode == RepeatMode.pingPongReverse) {
+    if (widget.mode == VNLRepeatMode.reverse ||
+        widget.mode == VNLRepeatMode.pingPongReverse) {
       _reverse = true;
       _controller.duration = widget.reverseDuration ?? widget.duration;
       _controller.reverseDuration = widget.duration;
@@ -320,8 +320,8 @@ class _RepeatedAnimationBuilderState<T>
     }
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        if (widget.mode == RepeatMode.pingPong ||
-            widget.mode == RepeatMode.pingPongReverse) {
+        if (widget.mode == VNLRepeatMode.pingPong ||
+            widget.mode == VNLRepeatMode.pingPongReverse) {
           _controller.reverse();
           _reverse = true;
         } else {
@@ -329,8 +329,8 @@ class _RepeatedAnimationBuilderState<T>
           _controller.forward();
         }
       } else if (status == AnimationStatus.dismissed) {
-        if (widget.mode == RepeatMode.pingPong ||
-            widget.mode == RepeatMode.pingPongReverse) {
+        if (widget.mode == VNLRepeatMode.pingPong ||
+            widget.mode == VNLRepeatMode.pingPongReverse) {
           _controller.forward();
           _reverse = false;
         } else {
@@ -356,8 +356,8 @@ class _RepeatedAnimationBuilderState<T>
         oldWidget.reverseCurve != widget.reverseCurve ||
         oldWidget.mode != widget.mode ||
         oldWidget.play != widget.play) {
-      if (widget.mode == RepeatMode.reverse ||
-          widget.mode == RepeatMode.pingPongReverse) {
+      if (widget.mode == VNLRepeatMode.reverse ||
+          widget.mode == VNLRepeatMode.pingPongReverse) {
         _controller.duration = widget.reverseDuration ?? widget.duration;
         _controller.reverseDuration = widget.duration;
         _curvedAnimation.dispose();

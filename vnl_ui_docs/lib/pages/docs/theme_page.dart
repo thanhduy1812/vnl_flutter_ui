@@ -102,11 +102,11 @@ const List<_AccentOption> _accentOptions = [
   _AccentOption(id: 'rose', label: 'Rose', color: VNLColors.rose),
 ];
 
-const Map<String, Density> _densityOptions = {
-  'Compact': Density.compactDensity,
-  'Reduced': Density.reducedDensity,
-  'Default': Density.defaultDensity,
-  'Spacious': Density.spaciousDensity,
+const Map<String, VNLDensity> _densityOptions = {
+  'Compact': VNLDensity.compactDensity,
+  'Reduced': VNLDensity.reducedDensity,
+  'Default': VNLDensity.defaultDensity,
+  'Spacious': VNLDensity.spaciousDensity,
 };
 
 const Map<String, double> _radiusOptions = {
@@ -171,7 +171,7 @@ class _ThemePageState extends State<ThemePage> {
   late String baseKey;
   late String accentKey;
   late double radius;
-  late Density density;
+  late VNLDensity density;
   late double scaling;
   late double surfaceOpacity;
   late double surfaceBlur;
@@ -179,7 +179,7 @@ class _ThemePageState extends State<ThemePage> {
   bool applyDirectly = true;
 
   bool previewSwitch = true;
-  CheckboxState previewCheckbox = CheckboxState.checked;
+  VNLCheckboxState previewCheckbox = VNLCheckboxState.checked;
   VNLSliderValue previewSlider = const VNLSliderValue.single(0.6);
 
   final ScrollController _scrollController = ScrollController();
@@ -193,7 +193,7 @@ class _ThemePageState extends State<ThemePage> {
     baseKey = 'slate';
     accentKey = 'base';
     radius = 0.5;
-    density = Density.defaultDensity;
+    density = VNLDensity.defaultDensity;
     scaling = 1.0;
     surfaceOpacity = 1.0;
     surfaceBlur = 0.0;
@@ -234,7 +234,7 @@ class _ThemePageState extends State<ThemePage> {
         child: ClipRect(
           child: PageStorage(
             bucket: docsBucket,
-            child: Scaffold(
+            child: VNLScaffold(
               headers: [
                 Container(
                   color:
@@ -245,14 +245,14 @@ class _ThemePageState extends State<ThemePage> {
                     children: [
                       VNLMediaQueryVisibility(
                         minWidth: breakpointWidth,
-                        alternateChild: AppBar(
+                        alternateChild: VNLAppBar(
                           padding: EdgeInsets.symmetric(
                             vertical: 12 * Theme.of(context).scaling,
                             horizontal: 18 * Theme.of(context).scaling,
                           ),
                           leading: [
                             VNLGhostButton(
-                              density: ButtonDensity.icon,
+                              density: VNLButtonDensity.icon,
                               onPressed: () {
                                 _openDrawer(context);
                               },
@@ -336,7 +336,7 @@ class _ThemePageState extends State<ThemePage> {
                                   onPressed: () {
                                     context.goNamed('introduction');
                                   },
-                                  density: ButtonDensity.compact,
+                                  density: VNLButtonDensity.compact,
                                   child: const Text('Docs'),
                                 ),
                                 const Text('Theme'),
@@ -400,9 +400,9 @@ class _ThemePageState extends State<ThemePage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _buildKitchenPaymentMethod(context),
-          const DensityGap(gap2xl),
+          const VNLDensityGap(gap2xl),
           _buildKitchenInputs(context),
-          const DensityGap(gap2xl),
+          const VNLDensityGap(gap2xl),
           _buildKitchenAppearanceSettings(context),
         ],
       ),
@@ -410,14 +410,14 @@ class _ThemePageState extends State<ThemePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(child: _buildKitchenPaymentMethod(context)),
-          const DensityGap(gap2xl),
+          const VNLDensityGap(gap2xl),
           Expanded(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 400),
               child: _buildKitchenInputs(context),
             ),
           ),
-          const DensityGap(gap2xl),
+          const VNLDensityGap(gap2xl),
           Expanded(child: _buildKitchenAppearanceSettings(context)),
         ],
       ),
@@ -432,15 +432,15 @@ class _ThemePageState extends State<ThemePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text('Payment Method').medium,
-          const DensityGap(gapXs),
+          const VNLDensityGap(gapXs),
           const Text('All transactions are secure and encrypted.').muted.small,
-          const DensityGap(gapXl),
+          const VNLDensityGap(gapXl),
           const Text('Name on VNLCard').medium,
-          const DensityGap(gapSm),
+          const VNLDensityGap(gapSm),
           const VNLTextField(
             placeholder: Text('John Doe'),
           ),
-          const DensityGap(gapXl),
+          const VNLDensityGap(gapXl),
           Row(
             children: [
               Flexible(
@@ -449,21 +449,21 @@ class _ThemePageState extends State<ThemePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('VNLCard Number').medium,
-                    const DensityGap(gapSm),
+                    const VNLDensityGap(gapSm),
                     const VNLTextField(
                       placeholder: Text('1234 5678 9012 3456'),
                     ),
                   ],
                 ),
               ),
-              const DensityGap(gapXl),
+              const VNLDensityGap(gapXl),
               Flexible(
                 flex: 1,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('CVV').medium,
-                    const DensityGap(gapSm),
+                    const VNLDensityGap(gapSm),
                     const VNLTextField(
                       placeholder: Text('123'),
                     ),
@@ -472,9 +472,9 @@ class _ThemePageState extends State<ThemePage> {
               ),
             ],
           ),
-          const DensityGap(gapMd),
+          const VNLDensityGap(gapMd),
           const Text('Enter your 16-digit number.').muted,
-          const DensityGap(gapLg),
+          const VNLDensityGap(gapLg),
           // [Month | Year]
           Row(
             children: [
@@ -484,7 +484,7 @@ class _ThemePageState extends State<ThemePage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Text('Month').medium,
-                    const DensityGap(gapSm),
+                    const VNLDensityGap(gapSm),
                     Select<String>(
                       placeholder: const Text('MM'),
                       itemBuilder: (context, item) => Text(item),
@@ -504,14 +504,14 @@ class _ThemePageState extends State<ThemePage> {
                   ],
                 ),
               ),
-              const DensityGap(gapXl),
+              const VNLDensityGap(gapXl),
               Flexible(
                 flex: 1,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Text('Year').medium,
-                    const DensityGap(gapSm),
+                    const VNLDensityGap(gapSm),
                     Select<String>(
                       placeholder: const Text('YYYY'),
                       itemBuilder: (context, item) => Text(item),
@@ -533,38 +533,38 @@ class _ThemePageState extends State<ThemePage> {
               ),
             ],
           ),
-          const DensityGap(gapXl),
+          const VNLDensityGap(gapXl),
           const VNLDivider(),
-          const DensityGap(gapXl),
+          const VNLDensityGap(gapXl),
           const Text('Billing Address').medium,
-          const DensityGap(gapXs),
+          const VNLDensityGap(gapXs),
           const Text('The billing address associated with your payment method')
               .muted
               .small,
-          const DensityGap(gapMd),
+          const VNLDensityGap(gapMd),
           VNLCheckbox(
-            state: CheckboxState.checked,
+            state: VNLCheckboxState.checked,
             onChanged: (value) {},
             trailing: const Text('Same as shipping address'),
           ),
-          const DensityGap(gapXl),
+          const VNLDensityGap(gapXl),
           const VNLDivider(),
-          const DensityGap(gapXl),
+          const VNLDensityGap(gapXl),
           const Text('Comments').medium,
-          const DensityGap(gapSm),
+          const VNLDensityGap(gapSm),
           const VNLTextArea(
             placeholder: Text('Add any additional comments'),
             expandableHeight: true,
             minHeight: 70,
           ),
-          const DensityGap(gapLg),
+          const VNLDensityGap(gapLg),
           Row(
             children: [
               VNLButton.primary(
                 child: const Text('Submit'),
                 onPressed: () {},
               ),
-              const DensityGap(gapMd),
+              const VNLDensityGap(gapMd),
               VNLButton.outline(
                 child: const Text('Cancel'),
                 onPressed: () {},
@@ -581,19 +581,19 @@ class _ThemePageState extends State<ThemePage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _buildKitchenMembers(context),
-        const DensityGap(gapXl),
+        const VNLDensityGap(gapXl),
         _buildKitchenBadges(context),
-        const DensityGap(gapXl),
+        const VNLDensityGap(gapXl),
         _buildKitchenChatBox(context),
-        const DensityGap(gapXl),
+        const VNLDensityGap(gapXl),
         _buildKitchenPriceRange(),
-        const DensityGap(gapXl),
+        const VNLDensityGap(gapXl),
         _buildKitchenSearch(),
-        const DensityGap(gapXl),
+        const VNLDensityGap(gapXl),
         _buildKitchenURL(),
-        const DensityGap(gapXl),
+        const VNLDensityGap(gapXl),
         _buildKitchenAIChat(),
-        const DensityGap(gapXl),
+        const VNLDensityGap(gapXl),
         _buildKitchenMentions(),
       ],
     );
@@ -614,7 +614,7 @@ class _ThemePageState extends State<ThemePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text('Two-factor authentication').medium,
-                      const DensityGap(gapXs),
+                      const VNLDensityGap(gapXs),
                       const Text('Verify via email or phone number.')
                           .muted
                           .small,
@@ -623,7 +623,7 @@ class _ThemePageState extends State<ThemePage> {
                 ),
                 VNLButton.primary(
                   style: const VNLButtonStyle.primary(
-                    density: ButtonDensity.dense,
+                    density: VNLButtonDensity.dense,
                   ),
                   child: const Text('Enable'),
                   onPressed: () {},
@@ -631,12 +631,12 @@ class _ThemePageState extends State<ThemePage> {
               ],
             ),
           ),
-          const DensityGap(gapMd),
+          const VNLDensityGap(gapMd),
           VNLCard(
             child: Row(
               children: [
                 const Icon(LucideIcons.badgeCheck).iconMutedForeground(),
-                const DensityGap(gapSm),
+                const VNLDensityGap(gapSm),
                 Expanded(
                   child: const Text('Your profile has been verified.').medium,
                 ),
@@ -644,17 +644,17 @@ class _ThemePageState extends State<ThemePage> {
               ],
             ),
           ),
-          const DensityGap(gapXl),
+          const VNLDensityGap(gapXl),
           VNLDivider(
             child: const Text('Appearance Settings').muted.small,
           ),
-          const DensityGap(gapXl),
+          const VNLDensityGap(gapXl),
           const Text('Compute Environment').medium,
-          const DensityGap(gapXs),
+          const VNLDensityGap(gapXs),
           const Text('Select the compute environment for your cluster.')
               .muted
               .small,
-          const DensityGap(gapMd),
+          const VNLDensityGap(gapMd),
           RadioCard(
             filled: true,
             value: true,
@@ -668,14 +668,14 @@ class _ThemePageState extends State<ThemePage> {
                     const VNLRadio(value: true),
                   ],
                 ),
-                const DensityGap(gapSm),
+                const VNLDensityGap(gapSm),
                 const Text(
                   'Run GPU workloads on a K8s configured cluster. This is the default.',
                 ).muted.small,
               ],
             ),
           ),
-          const DensityGap(gapSm),
+          const VNLDensityGap(gapSm),
           RadioCard(
             filled: true,
             value: false,
@@ -689,16 +689,16 @@ class _ThemePageState extends State<ThemePage> {
                     const VNLRadio(value: false),
                   ],
                 ),
-                const DensityGap(gapSm),
+                const VNLDensityGap(gapSm),
                 const Text(
                   'Access a VM configured cluster to run workloads. (Coming soon)',
                 ).muted.small,
               ],
             ),
           ),
-          const DensityGap(gapXl),
+          const VNLDensityGap(gapXl),
           const VNLDivider(),
-          const DensityGap(gapXl),
+          const VNLDensityGap(gapXl),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -708,7 +708,7 @@ class _ThemePageState extends State<ThemePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('Number of GPUs').medium,
-                    const DensityGap(gapXs),
+                    const VNLDensityGap(gapXs),
                     const Text('You can add more later.').muted.small,
                   ],
                 ),
@@ -727,9 +727,9 @@ class _ThemePageState extends State<ThemePage> {
               )
             ],
           ),
-          const DensityGap(gapXl),
+          const VNLDensityGap(gapXl),
           const VNLDivider(),
-          const DensityGap(gapXl),
+          const VNLDensityGap(gapXl),
           Row(
             children: [
               Expanded(
@@ -737,7 +737,7 @@ class _ThemePageState extends State<ThemePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('Wallpaper Tinting').medium,
-                    const DensityGap(gapXs),
+                    const VNLDensityGap(gapXs),
                     const Text('Allow the wallpaper to be tinted.').muted.small,
                   ],
                 ),
@@ -755,7 +755,7 @@ class _ThemePageState extends State<ThemePage> {
 
   Widget _buildKitchenMembers(BuildContext context) {
     return VNLDashedContainer(
-        child: DensityContainerPadding(
+        child: VNLDensityContainerPadding(
       padding: const EdgeInsetsDensity.all(padLg),
       child: Column(
         children: [
@@ -768,17 +768,17 @@ class _ThemePageState extends State<ThemePage> {
               VNLAvatar(initials: 'MD'),
             ],
           ),
-          const DensityGap(gapXl),
+          const VNLDensityGap(gapXl),
           const Text('No Team Members').small,
-          const DensityGap(gapSm),
+          const VNLDensityGap(gapSm),
           const Text('Invite your team to collaborate on this project.')
               .muted
               .small,
-          const DensityGap(gapMd),
+          const VNLDensityGap(gapMd),
           VNLButton(
             leading: const Icon(Icons.add),
             style: const VNLButtonStyle.primary(
-              density: ButtonDensity.dense,
+              density: VNLButtonDensity.dense,
             ),
             onPressed: () {},
             child: const Text('Invite Members').small,
@@ -801,7 +801,7 @@ class _ThemePageState extends State<ThemePage> {
             ),
             child: const Text('Syncing').small,
           ),
-          const DensityGap(gapSm),
+          const VNLDensityGap(gapSm),
           VNLSecondaryBadge(
             leading: const Center(
               child: VNLCircularProgressIndicator(
@@ -810,7 +810,7 @@ class _ThemePageState extends State<ThemePage> {
             ),
             child: const Text('Updating').small,
           ),
-          const DensityGap(gapSm),
+          const VNLDensityGap(gapSm),
           VNLOutlineBadge(
             leading: const Center(
               child: VNLCircularProgressIndicator(
@@ -828,7 +828,7 @@ class _ThemePageState extends State<ThemePage> {
     return IntrinsicHeight(
       child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         VNLIconButton.outline(icon: const Icon(Icons.add), onPressed: () {}),
-        const DensityGap(gapSm),
+        const VNLDensityGap(gapSm),
         Expanded(
           child: VNLTextField(
             placeholder: const Text('Send a message...'),
@@ -846,7 +846,7 @@ class _ThemePageState extends State<ThemePage> {
                     child: VNLIconButton.ghost(
                       icon: const Icon(LucideIcons.audioLines),
                       onPressed: () {},
-                      shape: ButtonShape.circle,
+                      shape: VNLButtonShape.circle,
                     ),
                   ),
                 ),
@@ -863,9 +863,9 @@ class _ThemePageState extends State<ThemePage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Text('Price Range').medium,
-        const DensityGap(gapXs),
+        const VNLDensityGap(gapXs),
         const Text('Set your budget range (\$320 - \$800)').muted,
-        const DensityGap(gapMd),
+        const VNLDensityGap(gapMd),
         VNLSlider(
           value: const VNLSliderValue.ranged(320, 800),
           min: 0,
@@ -913,14 +913,14 @@ class _ThemePageState extends State<ThemePage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   VNLIconButton.outline(
-                      density: ButtonDensity.iconDense,
+                      density: VNLButtonDensity.iconDense,
                       icon: const Icon(Icons.add),
                       onPressed: () {}),
-                  const DensityGap(gapSm),
+                  const VNLDensityGap(gapSm),
                   Builder(builder: (context) {
                     return VNLButton(
                       style: const VNLButtonStyle.ghost(
-                        density: ButtonDensity.dense,
+                        density: VNLButtonDensity.dense,
                       ),
                       child: const Text('Auto'),
                       onPressed: () {
@@ -949,11 +949,11 @@ class _ThemePageState extends State<ThemePage> {
                   }),
                   const Spacer(),
                   const Text('52% Used').muted.small.center(),
-                  const DensityGap(gapSm),
+                  const VNLDensityGap(gapSm),
                   const VNLVerticalDivider(),
-                  const DensityGap(gapSm),
+                  const VNLDensityGap(gapSm),
                   VNLIconButton.primary(
-                    density: ButtonDensity.iconDense,
+                    density: VNLButtonDensity.iconDense,
                     icon: const Icon(Icons.arrow_upward),
                     onPressed: () {},
                   )
@@ -971,9 +971,9 @@ class _ThemePageState extends State<ThemePage> {
       placeholder: const Text('@sunarya-thito'),
       features: [
         VNLInputFeature.trailing(VNLIconButton.primary(
-          density: ButtonDensity.iconDense,
+          density: VNLButtonDensity.iconDense,
           size: VNLButtonSize.small,
-          shape: ButtonShape.circle,
+          shape: VNLButtonShape.circle,
           icon: const Icon(Icons.check),
           onPressed: () {},
         )),
@@ -990,7 +990,7 @@ class _ThemePageState extends State<ThemePage> {
           'https://github.com/sunarya-thito/shadcn_flutter',
         ),
         child: VNLGhostButton(
-          density: ButtonDensity.icon,
+          density: VNLButtonDensity.icon,
           onPressed: () {
             openInNewTab('https://github.com/sunarya-thito/shadcn_flutter');
           },
@@ -1001,7 +1001,7 @@ class _ThemePageState extends State<ThemePage> {
         ),
       ),
       VNLGhostButton(
-        density: ButtonDensity.icon,
+        density: VNLButtonDensity.icon,
         onPressed: () {
           openInNewTab('https://pub.dev/packages/shadcn_flutter');
         },
@@ -1018,9 +1018,9 @@ class _ThemePageState extends State<ThemePage> {
     ];
   }
 
-  AppBar _buildAppBar(EdgeInsets padding) {
+  VNLAppBar _buildAppBar(EdgeInsets padding) {
     final theme = Theme.of(context);
-    return AppBar(
+    return VNLAppBar(
       padding: padding,
       title: VNLBasic(
         leading: FlutterLogo(
@@ -1179,7 +1179,7 @@ class _ThemePageState extends State<ThemePage> {
                   _buildFlavorTag(),
                   const Spacer(),
                   VNLTextButton(
-                    density: ButtonDensity.icon,
+                    density: VNLButtonDensity.icon,
                     size: VNLButtonSize.small,
                     onPressed: () {
                       closeDrawer(context);
@@ -1223,7 +1223,7 @@ class _ThemePageState extends State<ThemePage> {
                                             content: const Text(
                                                 'This page is still under development. Please come back later.'),
                                             actions: [
-                                              PrimaryButton(
+                                              VNLPrimaryButton(
                                                 onPressed: () {
                                                   Navigator.of(context).pop();
                                                 },
@@ -1257,7 +1257,7 @@ class _ThemePageState extends State<ThemePage> {
           ),
         );
       },
-      position: OverlayPosition.left,
+      position: VNLOverlayPosition.left,
     );
   }
 
@@ -1277,7 +1277,7 @@ class _ThemePageState extends State<ThemePage> {
         .key;
     final densityKey = _densityOptions.entries
         .firstWhere((entry) => entry.value == density,
-            orElse: () => const MapEntry('Default', Density.defaultDensity))
+            orElse: () => const MapEntry('Default', VNLDensity.defaultDensity))
         .key;
     final scalingKey = _scalingOptions.entries
         .firstWhere((entry) => entry.value == scaling,
@@ -1449,7 +1449,7 @@ class _ThemePageState extends State<ThemePage> {
             ),
           ),
           const Gap(16),
-          const Text('Density').small().semiBold(),
+          const Text('VNLDensity').small().semiBold(),
           const Gap(8),
           Select<String>(
             value: densityKey,
@@ -1461,7 +1461,7 @@ class _ThemePageState extends State<ThemePage> {
             },
             itemBuilder: (context, item) =>
                 _selectRow(const Icon(Icons.line_weight, size: 16), item),
-            placeholder: const Text('Density'),
+            placeholder: const Text('VNLDensity'),
             popup: SelectPopup(
               items: VNLSelectItemList(
                 children: [
@@ -1682,7 +1682,7 @@ class _ThemePageState extends State<ThemePage> {
     }
   }
 
-  void _updateDensity(MyAppState state, Density nextDensity) {
+  void _updateDensity(MyAppState state, VNLDensity nextDensity) {
     setState(() {
       density = nextDensity;
     });
@@ -1730,10 +1730,10 @@ class _ThemePageState extends State<ThemePage> {
   }
 
   String _densityCode() {
-    if (density == Density.compactDensity) return 'Density.compactDensity';
-    if (density == Density.reducedDensity) return 'Density.reducedDensity';
-    if (density == Density.spaciousDensity) return 'Density.spaciousDensity';
-    return 'Density.defaultDensity';
+    if (density == VNLDensity.compactDensity) return 'VNLDensity.compactDensity';
+    if (density == VNLDensity.reducedDensity) return 'VNLDensity.reducedDensity';
+    if (density == VNLDensity.spaciousDensity) return 'VNLDensity.spaciousDensity';
+    return 'VNLDensity.defaultDensity';
   }
 
   String _schemeCode() {
@@ -1748,7 +1748,7 @@ class _ThemePageState extends State<ThemePage> {
     final isDefaultScheme = isDark && baseKey == 'slate' && accentKey == 'base';
     final isDefaultTheme = isDefaultScheme &&
         radius == 0.5 &&
-        density == Density.defaultDensity &&
+        density == VNLDensity.defaultDensity &&
         surfaceOpacity == 1.0 &&
         surfaceBlur == 0.0;
     final isDefaultScaling = scaling == 1.0;
@@ -1777,7 +1777,7 @@ class _ThemePageState extends State<ThemePage> {
     if (radius != 0.5) {
       themeLines.add('\t\tradius: $radius,');
     }
-    if (density != Density.defaultDensity) {
+    if (density != VNLDensity.defaultDensity) {
       themeLines.add('\t\tdensity: ${_densityCode()},');
     }
     if (surfaceOpacity != 1.0) {
@@ -1867,7 +1867,7 @@ class _ThemeSidebarState extends State<_ThemeSidebar> {
                             content: const Text(
                                 'This page is still under development. Please come back later.'),
                             actions: [
-                              PrimaryButton(
+                              VNLPrimaryButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },

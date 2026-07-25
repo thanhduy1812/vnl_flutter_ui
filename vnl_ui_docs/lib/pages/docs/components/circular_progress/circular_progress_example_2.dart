@@ -37,7 +37,7 @@ class _CircularProgressExample2State extends State<CircularProgressExample2> {
               child: const Text('Reset'),
             ),
             const Gap(16),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 setState(() {
                   // Decrease by 10%.
@@ -47,7 +47,7 @@ class _CircularProgressExample2State extends State<CircularProgressExample2> {
               child: const Text('Decrease by 10'),
             ),
             const Gap(16),
-            PrimaryButton(
+            VNLPrimaryButton(
               onPressed: () {
                 setState(() {
                   // Increase by 10%.

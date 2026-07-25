@@ -1,4 +1,3 @@
-library vnl_ui_extension;
 
 // This file exports extensions only.
 

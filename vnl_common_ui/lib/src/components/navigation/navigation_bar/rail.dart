@@ -39,7 +39,7 @@ class VNLNavigationRail extends StatefulWidget {
   final Color? backgroundColor;
 
   /// Alignment of navigation items along the main axis.
-  final NavigationRailAlignment alignment;
+  final VNLNavigationRailAlignment alignment;
 
   /// Layout direction (horizontal or vertical).
   final Axis direction;
@@ -48,13 +48,13 @@ class VNLNavigationRail extends StatefulWidget {
   final double? spacing;
 
   /// Type of label display behavior.
-  final NavigationLabelType labelType;
+  final VNLNavigationLabelType labelType;
 
   /// Position of labels relative to icons.
-  final NavigationLabelPosition labelPosition;
+  final VNLNavigationLabelPosition labelPosition;
 
   /// Size variant for labels.
-  final NavigationLabelSize labelSize;
+  final VNLNavigationLabelSize labelSize;
 
   /// Internal padding of the navigation rail.
   final EdgeInsetsGeometry? padding;
@@ -110,21 +110,21 @@ class VNLNavigationRail extends StatefulWidget {
   ///
   /// Parameters:
   /// - [children] (`List<Widget>`, required): Navigation destinations
-  /// - [alignment] (NavigationRailAlignment, default: center): Item alignment along main axis
+  /// - [alignment] (VNLNavigationRailAlignment, default: center): Item alignment along main axis
   /// - [direction] (Axis, default: vertical): Layout orientation of the rail
-  /// - [labelType] (NavigationLabelType, default: selected): When to show labels
-  /// - [labelPosition] (NavigationLabelPosition, default: bottom): VNLLabel positioning
+  /// - [labelType] (VNLNavigationLabelType, default: selected): When to show labels
+  /// - [labelPosition] (VNLNavigationLabelPosition, default: bottom): VNLLabel positioning
   /// - [selectedKey] (Key?, optional): Currently selected item key
   /// - [onSelected] (`ValueChanged<Key?>?`, optional): Selection change callback
   const VNLNavigationRail({
     super.key,
     this.backgroundColor,
-    this.alignment = NavigationRailAlignment.center,
+    this.alignment = VNLNavigationRailAlignment.center,
     this.direction = Axis.vertical,
     this.spacing,
-    this.labelType = NavigationLabelType.selected,
-    this.labelPosition = NavigationLabelPosition.bottom,
-    this.labelSize = NavigationLabelSize.small,
+    this.labelType = VNLNavigationLabelType.selected,
+    this.labelPosition = VNLNavigationLabelPosition.bottom,
+    this.labelSize = VNLNavigationLabelSize.small,
     this.padding,
     this.constraints,
     this.expandedSize,
@@ -166,7 +166,7 @@ class _NavigationRailState extends State<VNLNavigationRail> {
     var resolvedPadding = parentPadding.resolve(directionality);
 
     final baseData = VNLNavigationControlData(
-      containerType: NavigationContainerType.rail,
+      containerType: VNLNavigationContainerType.rail,
       parentLabelType: widget.labelType,
       parentLabelPosition: widget.labelPosition,
       parentLabelSize: widget.labelSize,

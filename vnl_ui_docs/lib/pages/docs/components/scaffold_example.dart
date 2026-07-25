@@ -11,10 +11,10 @@ class ScaffoldExample extends StatelessWidget {
     return ComponentPage(
       name: 'scaffold',
       description: 'A scaffold is a top-level container for a page.',
-      displayName: 'Scaffold',
+      displayName: 'VNLScaffold',
       children: [
         WidgetUsageExample(
-          title: 'Scaffold Example',
+          title: 'VNLScaffold Example',
           path: 'lib/pages/docs/components/scaffold/scaffold_example_1.dart',
           child: VNLOutlinedContainer(
             child: const ScaffoldExample1().sized(

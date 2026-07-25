@@ -11,7 +11,7 @@ class StepperExample3 extends StatefulWidget {
 class _StepperExample3State extends State<StepperExample3> {
   final VNLStepperController controller = VNLStepperController(
     stepStates: {
-      1: StepState.failed,
+      1: VNLStepState.failed,
     },
     currentStep: 1,
   );
@@ -30,7 +30,7 @@ class _StepperExample3State extends State<StepperExample3> {
                 VNLSecondaryButton(
                   child: Text('Prev'),
                 ),
-                PrimaryButton(
+                VNLPrimaryButton(
                   child: Text('Next'),
                 ),
               ],
@@ -49,7 +49,7 @@ class _StepperExample3State extends State<StepperExample3> {
                 VNLSecondaryButton(
                   child: Text('Prev'),
                 ),
-                PrimaryButton(
+                VNLPrimaryButton(
                   child: Text('Next'),
                 ),
               ],
@@ -68,7 +68,7 @@ class _StepperExample3State extends State<StepperExample3> {
                 VNLSecondaryButton(
                   child: Text('Prev'),
                 ),
-                PrimaryButton(
+                VNLPrimaryButton(
                   child: Text('Finish'),
                 ),
               ],

@@ -33,7 +33,7 @@ class CardExample1 extends StatelessWidget {
                 onPressed: () {},
               ),
               const Spacer(),
-              PrimaryButton(
+              VNLPrimaryButton(
                 child: const Text('Deploy'),
                 onPressed: () {},
               ),

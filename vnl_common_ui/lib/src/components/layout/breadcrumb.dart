@@ -159,7 +159,7 @@ class VNLBreadcrumb extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final compTheme = ComponentTheme.maybeOf<VNLBreadcrumbTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLBreadcrumbTheme>(context);
     final sep = separator ?? compTheme?.separator ?? VNLBreadcrumb.arrowSeparator;
     final pad = styleValue(
       widgetValue: padding,

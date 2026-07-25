@@ -31,7 +31,7 @@ class _RefreshTriggerExample1State extends State<RefreshTriggerExample1> {
             children: [
               const Text('Pull Me'),
               const Gap(16),
-              PrimaryButton(
+              VNLPrimaryButton(
                 onPressed: () {
                   // Programmatically trigger the refresh without a pull gesture.
                   _refreshTriggerKey.currentState!.refresh();

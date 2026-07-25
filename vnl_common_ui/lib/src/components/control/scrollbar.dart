@@ -208,7 +208,7 @@ class _ShadcnScrollbarState extends RawScrollbarState<_ShadcnScrollbar> {
 
   @override
   void updateScrollbarPainter() {
-    final compTheme = ComponentTheme.maybeOf<VNLScrollbarTheme>(context);
+    final compTheme = VNLComponentTheme.maybeOf<VNLScrollbarTheme>(context);
     scrollbarPainter
       ..color = styleValue(
           widgetValue: widget.color,

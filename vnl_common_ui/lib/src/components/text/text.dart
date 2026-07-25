@@ -606,7 +606,7 @@ extension TextExtension on Widget {
           final defaultTextStyle = DefaultTextStyle.of(context);
           return VNLButton(
             style: const VNLButtonStyle.link(
-              density: ButtonDensity.compact,
+              density: VNLButtonDensity.compact,
             ),
             onPressed: onPressed,
             child: Builder(
